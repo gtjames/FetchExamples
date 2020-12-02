@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>APIS Gone Wild</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body>
+    <label for="json">Show JSON</label>
+    <input type="checkbox" id="json">
+    <br>
+    <fieldset>
+        <legend>Search for Movies:</legend>
+        <label for="movie">Search Movies</label>
+        <input type="text" id="movie">
+        <button id="getMovies">Get Moves</button>
+        <div id="movieList"></div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Get the Weather Forecast:</legend>
+        <label for="city">Get the Weather For:</label>
+        <input type="text" id="city" value='Fort Worth'>
+        <label for="lat">latitude</label>
+        <input type="text" id="lat">
+        <label for="lon">Longitude</label>
+        <input type="text" id="lon">
+        <button id="getWeather">Get Weather</button>
+        <div id="weatherList"></div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Astronomy Picture of the Day:</legend>
+        <label for="queryDate">NASA APOD</label>
+        <input type="date" id="queryDate">
+        <button id="getNasa">Get APOD for Date</button>
+        <div class='grid-container'>
+            <div class="grid-item">
+                <h2 id="nasaDate"></h2>
+                <h2 id="nasaTitle"></h2>
+                <div id=media></div>
+                <p id="nasaExplanation"></p>
+            </div>
+        </div>
+    </fieldset>
+
+    <script src="examples.js" type="module"></script>
+
+</body>
+
+</html>

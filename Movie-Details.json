@@ -1,0 +1,366 @@
+{
+    "URL": "https://imdb-api.com/en/API/Title/k_qa7p2g6c/tt0034583",
+    "id": "tt0034583",
+    "title": "Casablanca",
+    "originalTitle": "",
+    "fullTitle": "Casablanca (1942)",
+    "type": "Movie",
+    "year": "1942",
+    "image": "https://imdb-api.com/images/original/MV5BY2IzZGY2YmEtYzljNS00NTM5LTgwMzUtMzM1NjQ4NGI0OTk0XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_Ratio0.6791_AL_.jpg",
+    "releaseDate": "1943-01-23",
+    "runtimeMins": "102",
+    "runtimeStr": "1h 42mins",
+    "plot": "The story of Rick Blaine, a cynical world-weary ex-patriate who runs a nightclub in Casablanca, Morocco during the early stages of WWII. Despite the pressure he constantly receives from the local authorities, Rick's cafe has become a kind of haven for refugees seeking to obtain illicit letters that will help them escape to America. But when Ilsa, a former lover of Rick's, and her husband, show up to his cafe one day, Rick faces a tough challenge which will bring up unforeseen complications, heartbreak and ultimately an excruciating decision to make.",
+    "plotLocal": "",
+    "plotLocalIsRtl": false,
+    "awards": "Top Rated Movies #49 | Won 3 Oscars. Another 5 wins & 9 nominations.",
+    "directors": "Michael Curtiz",
+    "directorList": [{
+        "id": "nm0002031",
+        "name": "Michael Curtiz"
+    }],
+    "writers": "Julius J. Epstein, Philip G. Epstein, Howard Koch, Murray Burnett, Joan Alison, Casey Robinson",
+    "writerList": [{
+            "id": "nm0258493",
+            "name": "Julius J. Epstein"
+        },
+        {
+            "id": "nm0258525",
+            "name": "Philip G. Epstein"
+        },
+        {
+            "id": "nm0462321",
+            "name": "Howard Koch"
+        },
+        {
+            "id": "nm0122417",
+            "name": "Murray Burnett"
+        },
+        {
+            "id": "nm0019706",
+            "name": "Joan Alison"
+        },
+        {
+            "id": "nm0732452",
+            "name": "Casey Robinson"
+        }
+    ],
+    "stars": "Humphrey Bogart, Ingrid Bergman, Paul Henreid, Claude Rains",
+    "starList": [{
+            "id": "nm0000007",
+            "name": "Humphrey Bogart"
+        },
+        {
+            "id": "nm0000006",
+            "name": "Ingrid Bergman"
+        },
+        {
+            "id": "nm0002134",
+            "name": "Paul Henreid"
+        },
+        {
+            "id": "nm0001647",
+            "name": "Claude Rains"
+        }
+    ],
+    "actorList": [{
+            "id": "nm0000007",
+            "image": "https://imdb-api.com/images/original/MV5BMTIyOTE3MDM5Ml5BMl5BanBnXkFtZTYwMzA2MTM2._V1_Ratio0.7727_AL_.jpg",
+            "name": "Humphrey Bogart",
+            "asCharacter": "Rick Blaine"
+        },
+        {
+            "id": "nm0000006",
+            "image": "https://imdb-api.com/images/original/MV5BMTYzMTgzMTIwOV5BMl5BanBnXkFtZTYwNzI5MzI2._V1_Ratio0.7727_AL_.jpg",
+            "name": "Ingrid Bergman",
+            "asCharacter": "Ilsa Lund"
+        },
+        {
+            "id": "nm0002134",
+            "image": "https://imdb-api.com/images/original/MV5BMjMyOTQ0ODg1NF5BMl5BanBnXkFtZTcwMjM2MjYwOA@@._V1_Ratio0.7727_AL_.jpg",
+            "name": "Paul Henreid",
+            "asCharacter": "Victor Laszlo"
+        },
+        {
+            "id": "nm0001647",
+            "image": "https://imdb-api.com/images/original/MV5BMTQwNDc3NjQ1OF5BMl5BanBnXkFtZTcwMjQ0NjI5Nw@@._V1_Ratio0.7273_AL_.jpg",
+            "name": "Claude Rains",
+            "asCharacter": "Captain Louis Renault"
+        },
+        {
+            "id": "nm0891998",
+            "image": "https://imdb-api.com/images/original/MV5BNDQyMTk3OTM1OV5BMl5BanBnXkFtZTcwNDc5MzQ3OA@@._V1_Ratio0.7273_AL_.jpg",
+            "name": "Conrad Veidt",
+            "asCharacter": "Major Heinrich Strasser"
+        },
+        {
+            "id": "nm0002113",
+            "image": "https://imdb-api.com/images/original/MV5BOTU1MDc1NTc4MF5BMl5BanBnXkFtZTcwNTA5NDYwOA@@._V1_Ratio0.8636_AL_.jpg",
+            "name": "Sydney Greenstreet",
+            "asCharacter": "Signor Ferrari"
+        },
+        {
+            "id": "nm0000048",
+            "image": "https://imdb-api.com/images/original/MV5BMTI2MzM0ODQwOV5BMl5BanBnXkFtZTYwMjYwNjI2._V1_Ratio0.7273_AL_.jpg",
+            "name": "Peter Lorre",
+            "asCharacter": "Ugarte"
+        },
+        {
+            "id": "nm0757064",
+            "image": "https://imdb-api.com/images/original/MV5BMTA5MjU0NTczMTleQTJeQWpwZ15BbWU3MDUxOTQ2MDg@._V1_Ratio0.7273_AL_.jpg",
+            "name": "S.Z. Sakall",
+            "asCharacter": "Carl (as S.K. Sakall)"
+        },
+        {
+            "id": "nm0495495",
+            "image": "https://imdb-api.com/images/original/MV5BMTk1MjUxODQ2OF5BMl5BanBnXkFtZTgwNzUxNzE5ODE@._V1_Ratio0.7727_AL_.jpg",
+            "name": "Madeleine Lebeau",
+            "asCharacter": "Yvonne (as Madeleine LeBeau)"
+        },
+        {
+            "id": "nm0933330",
+            "image": "https://imdb-api.com/images/original/MV5BODcxOTE5MTgyNl5BMl5BanBnXkFtZTcwNzg4NDYwOA@@._V1_Ratio0.7727_AL_.jpg",
+            "name": "Dooley Wilson",
+            "asCharacter": "Sam"
+        },
+        {
+            "id": "nm0656226",
+            "image": "https://imdb-api.com/images/original/MV5BMTcyNDA0MzE3Nl5BMl5BanBnXkFtZTcwNDY4NDYzMQ@@._V1_Ratio0.7273_AL_.jpg",
+            "name": "Joy Page",
+            "asCharacter": "Annina Brandel"
+        },
+        {
+            "id": "nm0702798",
+            "image": "https://imdb-api.com/images/original/MV5BMjEyNjg1NTM5Ml5BMl5BanBnXkFtZTcwNjkxNzYxOA@@._V1_Ratio0.7273_AL_.jpg",
+            "name": "John Qualen",
+            "asCharacter": "Berger"
+        },
+        {
+            "id": "nm0455893",
+            "image": "https://imdb-api.com/images/original/MV5BYmY2YTUzMDgtOGVmYS00Yjc4LWE5ZWUtM2FhNjc5ZWEzZDljXkEyXkFqcGdeQXVyMDMxMjQwMw@@._V1_Ratio0.7273_AL_.jpg",
+            "name": "Leonid Kinskey",
+            "asCharacter": "Sascha"
+        },
+        {
+            "id": "nm0092290",
+            "image": "https://imdb-api.com/images/original/MV5BYWM2NzNmZTctYjJkNi00YjBjLWIyMjgtNjMyMWYxNDZlZmI0XkEyXkFqcGdeQXVyNTk5NzQ5Ng@@._V1_Ratio1.2727_AL_.jpg",
+            "name": "Curt Bois",
+            "asCharacter": "Pickpocket"
+        }
+    ],
+    "fullCast": null,
+    "genres": "Drama, Romance, War",
+    "genreList": [{
+            "key": "Drama",
+            "value": "Drama"
+        },
+        {
+            "key": "Romance",
+            "value": "Romance"
+        },
+        {
+            "key": "War",
+            "value": "War"
+        }
+    ],
+    "companies": "Warner Bros.",
+    "companyList": [{
+        "id": "co0002663",
+        "name": "Warner Bros."
+    }],
+    "countries": "USA",
+    "countryList": [{
+        "key": "USA",
+        "value": "USA"
+    }],
+    "languages": "English, French, German, Italian",
+    "languageList": [{
+            "key": "English",
+            "value": "English"
+        },
+        {
+            "key": "French",
+            "value": "French"
+        },
+        {
+            "key": "German",
+            "value": "German"
+        },
+        {
+            "key": "Italian",
+            "value": "Italian"
+        }
+    ],
+    "contentRating": "PG",
+    "imDbRating": "8.5",
+    "imDbRatingVotes": "499249",
+    "metacriticRating": "100",
+    "ratings": null,
+    "wikipedia": null,
+    "posters": null,
+    "images": null,
+    "trailer": null,
+    "boxOffice": {
+        "budget": "$950,000 (estimated)",
+        "openingWeekendUSA": "$181,494, 12 April 1992",
+        "grossUSA": "$4,108,411",
+        "cumulativeWorldwideGross": "$4,374,761"
+    },
+    "tagline": "They had a date with fate in Casablanca!",
+    "keywords": "nazi,anti nazi,casablanca morocco,french morocco,1940s",
+    "keywordList": [
+        "nazi",
+        "anti nazi",
+        "casablanca morocco",
+        "french morocco",
+        "1940s"
+    ],
+    "similars": [{
+            "id": "tt0054215",
+            "title": "Psycho",
+            "fullTitle": "Psycho (1960)",
+            "year": "1960",
+            "image": "https://imdb-api.com/images/original/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A Phoenix secretary embezzles forty thousand dollars from her employer's client, goes on the run, and checks into a remote motel run by a young man under the domination of his mother.",
+            "directors": "Alfred Hitchcock",
+            "stars": "Anthony Perkins, Janet Leigh, Vera Miles",
+            "genres": "Horror, Mystery, Thriller",
+            "imDbRating": "8.5"
+        },
+        {
+            "id": "tt0033467",
+            "title": "Citizen Kane",
+            "fullTitle": "Citizen Kane (1941)",
+            "year": "1941",
+            "image": "https://imdb-api.com/images/original/MV5BYjBiOTYxZWItMzdiZi00NjlkLWIzZTYtYmFhZjhiMTljOTdkXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "Following the death of publishing tycoon Charles Foster Kane, reporters scramble to uncover the meaning of his final utterance; 'Rosebud'.",
+            "directors": "Orson Welles",
+            "stars": "Orson Welles, Joseph Cotten, Dorothy Comingore",
+            "genres": "Drama, Mystery",
+            "imDbRating": "8.3"
+        },
+        {
+            "id": "tt0047396",
+            "title": "Rear Window",
+            "fullTitle": "Rear Window (1954)",
+            "year": "1954",
+            "image": "https://imdb-api.com/images/original/MV5BYjJkZGVjMDMtMzNmZS00NDQ3LWE1YWEtMDlmYjExMTA4MGFkXkEyXkFqcGdeQXVyODY0NzcxNw@@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A wheelchair-bound photographer spies on his neighbors from his apartment window and becomes convinced one of them has committed murder.",
+            "directors": "Alfred Hitchcock",
+            "stars": "James Stewart, Grace Kelly, Wendell Corey",
+            "genres": "Mystery, Thriller",
+            "imDbRating": "8.4"
+        },
+        {
+            "id": "tt0073486",
+            "title": "One Flew Over the Cuckoo's Nest",
+            "fullTitle": "One Flew Over the Cuckoo's Nest (1975)",
+            "year": "1975",
+            "image": "https://imdb-api.com/images/original/MV5BZjA0OWVhOTAtYWQxNi00YzNhLWI4ZjYtNjFjZTEyYjJlNDVlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A criminal pleads insanity and is admitted to a mental institution, where he rebels against the oppressive nurse and rallies up the scared patients.",
+            "directors": "Milos Forman",
+            "stars": "Jack Nicholson, Louise Fletcher, Will Sampson",
+            "genres": "Drama",
+            "imDbRating": "8.7"
+        },
+        {
+            "id": "tt0050083",
+            "title": "12 Angry Men",
+            "fullTitle": "12 Angry Men (1957)",
+            "year": "1957",
+            "image": "https://imdb-api.com/images/original/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.",
+            "directors": "Sidney Lumet",
+            "stars": "Henry Fonda, Lee J. Cobb, Martin Balsam",
+            "genres": "Drama",
+            "imDbRating": "8.9"
+        },
+        {
+            "id": "tt0253474",
+            "title": "The Pianist",
+            "fullTitle": "The Pianist (2002)",
+            "year": "2002",
+            "image": "https://imdb-api.com/images/original/MV5BOWRiZDIxZjktMTA1NC00MDQ2LWEzMjUtMTliZmY3NjQ3ODJiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_Ratio0.7263_AL_.jpg",
+            "plot": "A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.",
+            "directors": "Roman Polanski",
+            "stars": "Adrien Brody, Thomas Kretschmann, Frank Finlay",
+            "genres": "Biography, Drama, Music",
+            "imDbRating": "8.5"
+        },
+        {
+            "id": "tt0052357",
+            "title": "Vertigo",
+            "fullTitle": "Vertigo (1958)",
+            "year": "1958",
+            "image": "https://imdb-api.com/images/original/MV5BYTE4ODEwZDUtNDFjOC00NjAxLWEzYTQtYTI1NGVmZmFlNjdiL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A former police detective juggles wrestling with his personal demons and becoming obsessed with a hauntingly beautiful woman.",
+            "directors": "Alfred Hitchcock",
+            "stars": "James Stewart, Kim Novak, Barbara Bel Geddes",
+            "genres": "Mystery, Romance, Thriller",
+            "imDbRating": "8.3"
+        },
+        {
+            "id": "tt0114814",
+            "title": "The Usual Suspects",
+            "fullTitle": "The Usual Suspects (1995)",
+            "year": "1995",
+            "image": "https://imdb-api.com/images/original/MV5BYTViNjMyNmUtNDFkNC00ZDRlLThmMDUtZDU2YWE4NGI2ZjVmXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which began when five criminals met at a seemingly random police lineup.",
+            "directors": "Bryan Singer",
+            "stars": "Kevin Spacey, Gabriel Byrne, Chazz Palminteri",
+            "genres": "Crime, Mystery, Thriller",
+            "imDbRating": "8.5"
+        },
+        {
+            "id": "tt0021749",
+            "title": "City Lights",
+            "fullTitle": "City Lights (1931)",
+            "year": "1931",
+            "image": "https://imdb-api.com/images/original/MV5BY2I4MmM1N2EtM2YzOS00OWUzLTkzYzctNDc5NDg2N2IyODJmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "With the aid of a wealthy erratic tippler, a dewy-eyed tramp who has fallen in love with a sightless flower girl accumulates money to be able to help her medically.",
+            "directors": "Charles Chaplin",
+            "stars": "Charles Chaplin, Virginia Cherrill, Florence Lee",
+            "genres": "Comedy, Drama, Romance",
+            "imDbRating": "8.5"
+        },
+        {
+            "id": "tt0118799",
+            "title": "Life Is Beautiful",
+            "fullTitle": "Life Is Beautiful (1997)",
+            "year": "1997",
+            "image": "https://imdb-api.com/images/original/MV5BYmJmM2Q4NmMtYThmNC00ZjRlLWEyZmItZTIwOTBlZDQ3NTQ1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son from the dangers around their camp.",
+            "directors": "Roberto Benigni",
+            "stars": "Roberto Benigni, Nicoletta Braschi, Giorgio Cantarini",
+            "genres": "Comedy, Drama, Romance",
+            "imDbRating": "8.6"
+        },
+        {
+            "id": "tt0102926",
+            "title": "The Silence of the Lambs",
+            "fullTitle": "The Silence of the Lambs (1991)",
+            "year": "1991",
+            "image": "https://imdb-api.com/images/original/MV5BNjNhZTk0ZmEtNjJhMi00YzFlLWE1MmEtYzM1M2ZmMGMwMTU4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer, a madman who skins his victims.",
+            "directors": "Jonathan Demme",
+            "stars": "Jodie Foster, Anthony Hopkins, Lawrence A. Bonney",
+            "genres": "Crime, Drama, Thriller",
+            "imDbRating": "8.6"
+        },
+        {
+            "id": "tt0060196",
+            "title": "The Good, the Bad and the Ugly",
+            "fullTitle": "The Good, the Bad and the Ugly (1966)",
+            "year": "1966",
+            "image": "https://imdb-api.com/images/original/MV5BOTQ5NDI3MTI4MF5BMl5BanBnXkFtZTgwNDQ4ODE5MDE@._V1_Ratio0.6737_AL_.jpg",
+            "plot": "A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.",
+            "directors": "Sergio Leone",
+            "stars": "Clint Eastwood, Eli Wallach, Lee Van Cleef",
+            "genres": "Western",
+            "imDbRating": "8.8"
+        }
+    ],
+    "tvSeriesInfo": null,
+    "tvEpisodeInfo": null,
+    "errorMessage": ""
+}

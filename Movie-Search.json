@@ -1,0 +1,42 @@
+{
+    "URL": "https://imdb-api.com/en/API/SearchMovie/k_qa7p2g6c/Titanic",
+    "searchType": "Movie",
+    "expression": "Titanic",
+    "results": [{
+            "id": "tt0120338",
+            "resultType": "Title",
+            "image": "https://imdb-api.com/images/original/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_Ratio0.7273_AL_.jpg",
+            "title": "Titanic",
+            "description": "(1997)"
+        },
+        {
+            "id": "tt0051994",
+            "resultType": "Title",
+            "image": "https://imdb-api.com/images/original/MV5BOWRiZDljY2YtOWJiNy00OTUyLTgzMmMtMzBlYTI0YTYwYTkzL2ltYWdlXkEyXkFqcGdeQXVyNjQzNDI3NzY@._V1_Ratio0.7273_AL_.jpg",
+            "title": "A Night to Remember",
+            "description": "(1958) aka \"La última noche del Titanic\""
+        },
+        {
+            "id": "tt1640571",
+            "resultType": "Title",
+            "image": "https://imdb-api.com/images/original/MV5BMTMxMjQ1MjA5Ml5BMl5BanBnXkFtZTcwNjIzNjg1Mw@@._V1_Ratio0.7273_AL_.jpg",
+            "title": "Titanic II",
+            "description": "(2010) (Video)"
+        },
+        {
+            "id": "tt0081400",
+            "resultType": "Title",
+            "image": "https://imdb-api.com/images/original/MV5BNTQyZGI0NDgtYTM0ZC00NTdkLTk2OTItYTgwYmYwNjZlNDRlXkEyXkFqcGdeQXVyMTY5Nzc4MDY@._V1_Ratio0.7273_AL_.jpg",
+            "title": "Raise the Titanic",
+            "description": "(1980)"
+        },
+        {
+            "id": "tt0046435",
+            "resultType": "Title",
+            "image": "https://imdb-api.com/images/original/MV5BMTU3NTUyMTc3Nl5BMl5BanBnXkFtZTgwOTA2MDE3MTE@._V1_Ratio0.7273_AL_.jpg",
+            "title": "Titanic",
+            "description": "(1953)"
+        }
+    ],
+    "errorMessage": ""
+}
