@@ -262,7 +262,6 @@ function getNasa() {
     let queryDate = document.getElementById('queryDate')
     let nasaDate = document.getElementById('nasaDate')
     let nasaTitle = document.getElementById('nasaTitle')
-    let nasaImage = document.getElementById('nasaImage')
     let nasaExplanation = document.getElementById('nasaExplanation')
     let media = document.getElementById('media')
 
@@ -284,7 +283,7 @@ function getNasa() {
 
             //  sometimes we get an image other times we get a video
             if (apod.media_type === 'image') {
-                media.innerHTML = `<img id="nasaImage" src="${apod.url}" height="200px" alt="">`;
+                media.innerHTML = `<img src="${apod.hdurl}" height="300px" alt="">`;
             }
             else {
                 media.innerHTML = `<iframe width="960" height="540" src="${apod.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>`;
