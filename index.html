@@ -16,19 +16,22 @@
         <label for="movie">Search Movies</label>
         <input type="text" id="movie">
         <button id="getMovies">Get Moves</button>
-        <div id="movieList"></div>
+        <div id="movieList" class='grid-container'></div>
     </fieldset>
 
     <fieldset>
         <legend>Get the Weather Forecast:</legend>
+        <label for="allDays">Show Full Forecast:</label>
+        <input type="checkbox" id="allDays">
         <label for="city">Get the Weather For:</label>
         <input type="text" id="city" value='Fort Worth'>
-        <label for="lat">latitude</label>
+        <br>
+        <label for="lat">Latitude</label>
         <input type="text" id="lat">
         <label for="lon">Longitude</label>
         <input type="text" id="lon">
         <button id="getWeather">Get Weather</button>
-        <div id="weatherList"></div>
+        <div id="weatherList" class='grid-container'></div>
     </fieldset>
 
     <fieldset>
@@ -38,10 +41,10 @@
         <button id="getNasa">Get APOD for Date</button>
         <div class='grid-container'>
             <div class="grid-item">
-                <h2 id="nasaDate"></h2>
-                <h2 id="nasaTitle"></h2>
+                <h2 id="date"></h2>
+                <h2 id="title"></h2>
                 <div id=media></div>
-                <p id="nasaExplanation"></p>
+                <p id="explanation"></p>
             </div>
         </div>
     </fieldset>
