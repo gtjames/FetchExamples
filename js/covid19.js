@@ -3,11 +3,13 @@ country.addEventListener('blur', selectCountry);
 
 document.getElementById('getStats').addEventListener('click', getStats);
 
+//  if the country in the input field is changed lets change the background color of that countries row
 function selectCountry() {
     let row = document.getElementById(this.value);
     row.classList.toggle('selected');
 }
 
+//  the button was pushed. so make request for COVID data
 function getStats() {
     fetch("https://corona-virus-world-and-india-data.p.rapidapi.com/api", {
             "method": "GET",
