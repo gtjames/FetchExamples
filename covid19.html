@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World COVID Stats</title>
+    <link rel="stylesheet" href="styles/covid19.css">
+</head>
+<body>
+    <div class="header">
+        <div class="button">
+            <label for="country">Highlight Country</label>
+            <input type="text" id='country'>
+            <button id='getStats'>Get COVID Stats</button>
+        </div>
+    </div>
+    <br><br><br><br>
+    <table>
+    <thead>
+        <tr>
+            <th>Country</th>
+            <th>Cases</th>
+            <th>Deaths</th>
+            <th>Total Recovered</th>
+            <th>New Deaths</th>
+            <th>New Cases</th>
+            <th>Serious Critical</th>
+            <th>Active Cases</th>
+            <th>Cases / 1M Pop</th>
+            <th>Deaths / 1M Pop</th>
+            <th>Total Tests</th>
+            <th>Tests / 1M Pop</th>
+        </tr>
+    </thead>
+    <tbody id='countries'>
+     
+    </tbody>
+</table>
+</body>
+<script src="js/covid19.js"></script>
+</html>

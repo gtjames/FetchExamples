@@ -33,7 +33,7 @@ function getMovies() {
     let json       = document.getElementById('json').checked;       //  show JSON or not
 
     //  no movie? no search
-    if (movieTitle.value.length == 0) {
+    if (movieTitle.value.length === 0) {
         movieList.innerText = "Enter a Movie to search for";
         return;
     }    

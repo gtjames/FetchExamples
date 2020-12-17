@@ -1,0 +1,91 @@
+{
+    "get": "teams/statistics",
+    "parameters": {
+        "league": "1",
+        "season": "2015",
+        "team": "6"
+    },
+    "errors": [],
+    "results": 1,
+    "response": {
+        "country": {
+            "id": 1,
+            "name": "USA",
+            "code": "US",
+            "flag": "https://media.api-sports.io/flags/us.svg"
+        },
+        "league": {
+            "id": 1,
+            "name": "MLB",
+            "type": "League",
+            "logo": "https://media.api-sports.io/baseball/leagues/1.png",
+            "season": 2015
+        },
+        "team": {
+            "id": 6,
+            "name": "Chicago Cubs",
+            "logo": "https://media.api-sports.io/baseball/teams/6.png"
+        },
+        "games": {
+            "played": {
+                "home": 99,
+                "away": 102,
+                "all": 201
+            },
+            "wins": {
+                "home": {
+                    "total": 60,
+                    "percentage": "0.606"
+                },
+                "away": {
+                    "total": 56,
+                    "percentage": "0.549"
+                },
+                "all": {
+                    "total": 116,
+                    "percentage": "0.577"
+                }
+            },
+            "loses": {
+                "home": {
+                    "total": 39,
+                    "percentage": "0.394"
+                },
+                "away": {
+                    "total": 46,
+                    "percentage": "0.451"
+                },
+                "all": {
+                    "total": 85,
+                    "percentage": "0.423"
+                }
+            }
+        },
+        "goals": {
+            "for": {
+                "total": {
+                    "home": 429,
+                    "away": 467,
+                    "all": 896
+                },
+                "average": {
+                    "home": "4.3",
+                    "away": "4.6",
+                    "all": "4.5"
+                }
+            },
+            "against": {
+                "total": {
+                    "home": 399,
+                    "away": 425,
+                    "all": 824
+                },
+                "average": {
+                    "home": "4.0",
+                    "away": "4.2",
+                    "all": "4.1"
+                }
+            }
+        }
+    }
+}

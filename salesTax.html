@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get State Sales Tax Data</title>
+</head>
+
+<body>
+    <label for="zip">Enter a zip code</label>
+    <input type="number" id='zip' value=76010>
+    <button id='request'>Push me</button>
+    <table>
+        <caption id='state'></caption>
+        <thead>
+            <tr><th>Tax Rate            </th><th>Tax Value      </th></tr>
+        </thead>
+        <tbody>
+            <tr><td>State Sales Tax Rate</td><td id="stateRate"></td></tr>
+            <tr><td>Combined Rate       </td><td id="combined"> </td></tr>
+            <tr><td>County Sales Tax    </td><td id='county'>   </td></tr>
+            <tr><td>City Sales Tax      </td><td id='city'>     </td></tr>
+            <tr><td>Special Sales Tax   </td><td id='special'>  </td></tr>
+            <tr><td>Risk                </td><td id='risk'>     </td></tr>
+        </tbody>
+    </table>
+
+</body>
+<script>
+    document.getElementById('request').addEventListener('click', getTaxData)
+
+    function getTaxData() {
+        let zipCode = document.getElementById('zip').value;
+        fetch(`https://u-s-a-sales-taxes-per-zip-code.p.rapidapi.com/${zipCode}`, {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-key": "AIxP56HptHmshgNo3oo3eXKMlJvXp13w59gjsnNT2jFu4oqvqs",
+                    "x-rapidapi-host": "u-s-a-sales-taxes-per-zip-code.p.rapidapi.com"
+                }
+            })
+            .then(resp => resp.json()) //  wait for the response and convert it to JSON
+            .then(taxData => { //  with the resulting JSON data do something
+                console.table(taxData);
+                document.getElementById('state').innerText = taxData.state;
+                document.getElementById('stateRate').innerText = taxData.state_rate;
+                document.getElementById('combined').innerText = taxData.estimated_combined_rate;
+                document.getElementById('county').innerText = taxData.estimated_county_rate;
+                document.getElementById('city').innerText = taxData.estimated_city_rate;
+                document.getElementById('special').innerText = taxData.estimated_special_rate;
+                document.getElementById('risk').innerText = taxData.risk_level;
+            })
+            .catch(err => console.error(err));
+    }
+
+    let sampleResult = {
+        state: "UT",
+        state_rate: 0.0485,
+        estimated_combined_rate: 0.0725,
+        estimated_county_rate: 0.008,
+        estimated_city_rate: 0.011,
+        estimated_special_rate: 0.005,
+        risk_level: 5,
+    }
+</script>
+
+</html>

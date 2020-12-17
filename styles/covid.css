@@ -1,0 +1,26 @@
+* {
+    transition: .5s;
+    background-color: rgb(129, 175, 127);
+}
+
+table, td, tr, th {
+    border: 1px solid darkblue;
+    border-collapse: collapse;
+}
+
+tr:nth-child(even) { background-color: Lightgreen; } 
+tr:nth-child(odd)  { background-color: lightgoldenrodyellow; }
+
+tr:hover { 
+    background-color: lightsteelblue;
+}
+
+td:hover {
+    transform: scale(2.2);
+    background-color: red;
+    border-radius: 20px;;
+ }
+
+ tr.selected {
+    background-color: white;
+ }

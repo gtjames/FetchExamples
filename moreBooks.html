@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Search</title>
+</head>
+<body>
+    <table>
+        <thead>
+
+        </thead>
+        <tbody id='bookList'>
+        </tbody>
+    </table>
+
+</body>
+<script>
+bookSearch ('Harry Potter')
+function bookSearch() {    
+    let tableBody = document.getElementById('bookList');
+
+    let book = 'Harry Potter';
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${book}`)
+        .then(resp => resp.json())          //  wait for the response and convert it to JSON
+        .then(books => {                    //  with the resulting JSON data do something
+            var list = books.items.map(b => ({ title: b.volumeInfo.title, desc: b.volumeInfo.description, 
+                                    author: b.volumeInfo.authors[0], pageCount: b.volumeInfo.pageCount, 
+                                    image: b.volumeInfo.imageLinks.thumbnail }))
+            console.table(list);
+
+            let innerHTML = '';
+            innerHTML = list.map(b => `<tr><td><img src=${b.image}></td><td>${b.title}</td><td>${b.author}</td><td>${b.pageCount}</td><td>${b.desc}</td></tr>`).join("\n");
+            tableBody.innerHTML = innerHTML;    
+        });
+    }
+</script>
+
+</html>
