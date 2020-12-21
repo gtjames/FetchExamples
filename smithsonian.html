@@ -4,81 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Search</title>
+    <title>Search Smithsonian</title>
     <style>
         table {
             border-collapse: collapse;
             width: 80%;
         }
 
-        td,
-        th {
+        td, th {
             border: 1px solid;
             padding: 8px;
         }
 
-        .ATOZ {
-            background-image: linear-gradient(180deg, lightgray, darkgrey);
-        }
+        .ATOZ { background-image: linear-gradient(180deg, lightgray, darkgrey); }
+        .ZTOA { background-image: linear-gradient(180deg, darkgrey, lightgray); }
 
-        .ZTOA {
-            background-image: linear-gradient(180deg, darkgrey, lightgray);
-        }
-
-        tr:nth-child(odd) {
-            background-color: lightgray;
-        }
-
-        tr:nth-child(even) {
-            background-color: darkgrey;
-        }
+        tr:nth-child(odd) { background-color: lightgray; }
+        tr:nth-child(even) { background-color: darkgrey; }
     </style>
 </head>
 
 <body>
-    <label for="bookSearch">Search for a Title</label>
-    <input type="text" id="bookSearch">
+    <label for="Search">Search for a Title</label>
+    <input type="text" id="Search">
     <table id='sortedTable'>
         <thead>
-            <tr>
-                <td onclick='callSort(this, 0)'>Book Cover</td>
-                <td onclick='callSort(this, 1)'>Title</td>
-                <td onclick='callSort(this, 2)'>Author</td>
-                <td onclick='callSort(this, 3)'>Page Count</td>
-                <td onclick='callSort(this, 4)'>Synopsis</td>
-            </tr>
-
+            <tr><td onclick='callSort(this, 0)'>Title</td></tr>
         </thead>
-        <tbody id='bookList'>
+        <tbody id='list'>
         </tbody>
     </table>
 </body>
 <script>
-    let search = document.getElementById('bookSearch');
-    search.addEventListener('blur', bookSearch);
+    let search = document.getElementById('Search');
+    search.addEventListener('blur', Search);
 
-    function bookSearch() {
-        let tableBody = document.getElementById('bookList');
+    function Search() {
 
-        let book = this.value;
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=${book}`)
+        // https://api.data.gov/docs/si/
+        // https://edan.si.edu/openaccess/apidocs/
+        // https://api.data.gov/signup/                //  to get a key
+
+        //  https://api.usa.gov/crime/fbi/sapi/api/data/arrest/agencies/all/dui/offense/01%2F01%2F2020/12%2F20%2F2020?API_KEY=iiHnOKfno2Mgkt5AynpvPpUQTEyxE77jo1RU8PIv
+        //  https://api.usa.gov/crime/fbi/sapi/{desired_endpiont}?api_key=<API_KEY>
+        //  https://api.usa.gov/crime/fbi/sapi/api/agencies?api_key=SGbN3A7rycjJ1AvdyVOV7irtOnBFf7HuxVyOSJXW
+
+        let tableBody = document.getElementById('list');
+
+        let key = 'SGbN3A7rycjJ1AvdyVOV7irtOnBFf7HuxVyOSJXW';
+
+        let searchTerm = this.value;
+
+        fetch(`https://api.si.edu/openaccess/api/v1.0/search?q=${searchTerm}&api_key=${key}`)
             .then(resp => resp.json()) //  wait for the response and convert it to JSON
-            .then(books => { //  with the resulting JSON data do something
-                books.items.forEach(b => {
-                    if (typeof b.volumeInfo.authors === 'undefined') b.volumeInfo.authors = ['not listed'];
-                    if (typeof b.volumeInfo.imageLinks === 'undefined') b.volumeInfo.imageLinks = {
-                        thumbnail: 'images/missingImage.jpg'
-                    };
-                });
-                var list = books.items.map(b => ({
-                    title: b.volumeInfo.title,
-                    desc: b.volumeInfo.description,
-                    author: b.volumeInfo.authors[0],
-                    pageCount: b.volumeInfo.pageCount,
-                    image: b.volumeInfo.imageLinks.thumbnail
+            .then(things => { //  with the resulting JSON data do something
+                var list = things.response.rows.map(x => ({
+                    link: x.content.descriptiveNonRepeating.guid,
+                    title: x.title
                 }))
                 tableBody.innerHTML = list.map(b =>
-                    `<tr><td><img src=${b.image} height='120px'</td><td>${b.title}</td><td>${b.author}</td><td>${b.pageCount}</td><td>${b.desc}</td></tr>`
+                    `<tr><td><a href=${b.link}>${b.title}</a></td></tr>`
                 ).join("\n");
             });
     }

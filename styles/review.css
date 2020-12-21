@@ -1,0 +1,12 @@
+* {
+    margin: 5px;
+}
+
+input:focus, select:focus {
+    box-shadow: 6px 6px 6px gray;
+}
+
+input:hover, select:hover {
+    background-color: hotpink;
+}
+

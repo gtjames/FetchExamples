@@ -1,0 +1,849 @@
+{
+    "kind": "books#volumes",
+    "totalItems": 2035,
+    "items": [
+        {
+            "kind": "books#volume",
+            "id": "z7TQ8NSooS4C",
+            "etag": "JN3EBiI2rvA",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/z7TQ8NSooS4C",
+            "volumeInfo": {
+                "title": "Java NIO",
+                "subtitle": "Regular Expressions and High-Performance I/O",
+                "authors": [
+                    "Ron Hitchens"
+                ],
+                "publisher": "\"O'Reilly Media, Inc.\"",
+                "publishedDate": "2002-08-27",
+                "description": "The java New I/O (NIO) packages in J2SE 1.4 introduce many new, indispensable features previously unavailable to Java programmers. These include APIs for high-performance I/O operations, regular expression processing, and character set coding. These new libraries are a treasure trove for java developers. The NIO APIs are especially valuable where high-performance I/O is a requirement, but they can also be useful in a wide range of scenarios. The new APIs let you work directly with I/O buffers, multiplex nonblocking streams, do scattering reads and gathering writes, do channel-to-channel transfers, work with memory-mapped files, manage file locks, and much more. The new high-performance Regular Expression Library provides sophisticated, Perl-like regex-processing features such as pattern matching, search and replace, capture groups, look ahead assertions, and many others. The Charset API gives you complete control over character set encoding and decoding, which are vital for properly managing the exchange of documents on the Web, for localization, or for other purposes. You can also create and install your own custom character sets. Staying current with the latent java technology is never easy. NIO, new in Java 1.4, is quite possibly the most important new java feature since Swing. Understanding it thoroughly is essential for any serious Java developer. NIO closes the gap between java and natively compiled languages and enables java applications to achieve maximum I/O performance by effectively leveraging operating-system services in a portable way. Java NIO is a comprehensive guide to the java New I/O facilities. It lots you take full advantage of NIO features and shows you how they work, what they can do for you, and when you should use them. This book brings you up to speed on NIO and shows you how to bring your I/O-bound Java applications up to speed as well. Java NIO is an essential part of any Java professional's library.",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "0596002882"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780596002886"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": true
+                },
+                "pageCount": 282,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 3,
+                "ratingsCount": 1,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": true,
+                "contentVersion": "2.5.3.0.preview.1",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=z7TQ8NSooS4C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=z7TQ8NSooS4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=z7TQ8NSooS4C&pg=PT239&dq=Java&hl=&cd=1&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=z7TQ8NSooS4C&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Java_NIO.html?hl=&id=z7TQ8NSooS4C"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": true
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=z7TQ8NSooS4C&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "The custom Rot13 charset (continued) 222 | Chapter6: CharacterSets import <b>java</b><br>\n.nio.charset.CharsetDecoder; import <b>java</b>.nio.charset.CoderResult; import <b>java</b>.<br>\nutil.Map; import <b>java</b>.util.Iterator; import <b>java</b>.io.Writer; import <b>java</b>.io.PrintStream&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "lfHo7uMk7r4C",
+            "etag": "UVQsQbs8AkU",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/lfHo7uMk7r4C",
+            "volumeInfo": {
+                "title": "TCP/IP Sockets in Java",
+                "subtitle": "Practical Guide for Programmers",
+                "authors": [
+                    "Kenneth L. Calvert",
+                    "Michael J. Donahoo"
+                ],
+                "publisher": "Morgan Kaufmann",
+                "publishedDate": "2011-08-29",
+                "description": "The networking capabilities of the Java platform have been extended considerably since the first edition of the book. This new edition covers version 1.5-1.7, the most current iterations, as well as making the following improvements: The API (application programming interface) reference sections in each chapter, which describe the relevant parts of each class, have been replaced with (i) a summary section that lists the classes and methods used in the code, and (ii) a \"gotchas\" section that mentions nonobvious or poorly-documented aspects of the objects. In addition, the book covers several new classes and capabilities introduced in the last few revisions of the Java platform. New abstractions to be covered include NetworkInterface, InterfaceAddress, Inet4/6Address, SocketAddress/InetSocketAddress, Executor, and others; extended access to low-level network information; support for IPv6; more complete access to socket options; and scalable I/O. The example code is also modified to take advantage of new language features such as annotations, enumerations, as well as generics and implicit iterators where appropriate. Most Internet applications use sockets to implement network communication protocols. This book's focused, tutorial-based approach helps the reader master the tasks and techniques essential to virtually all client-server projects using sockets in Java. Chapter 1 provides a general overview of networking concepts to allow readers to synchronize the concepts with terminology. Chapter 2 introduces the mechanics of simple clients and servers. Chapter 3 covers basic message construction and parsing. Chapter 4 then deals with techniques used to build more robust clients and servers. Chapter 5 (NEW) introduces the scalable interface facilities which were introduced in Java 1.5, including the buffer and channel abstractions. Chapter 6 discusses the relationship between the programming constructs and the underlying protocol implementations in more detail. Programming concepts are introduced through simple program examples accompanied by line-by-line code commentary that describes the purpose of every part of the program. No other resource presents so concisely or so effectively the material necessary to get up and running with Java sockets programming. Focused, tutorial-based instruction in key sockets programming techniques allows reader to quickly come up to speed on Java applications. Concise and up-to-date coverage of the most recent platform (1.7) for Java applications in networking technology.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_10",
+                        "identifier": "0080568785"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780080568782"
+                    }
+                ],
+                "readingModes": {
+                    "text": true,
+                    "image": true
+                },
+                "pageCount": 192,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4,
+                "ratingsCount": 2,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": true,
+                "contentVersion": "1.4.5.0.preview.3",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=lfHo7uMk7r4C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=lfHo7uMk7r4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=lfHo7uMk7r4C&pg=PA51&dq=Java&hl=&cd=2&source=gbs_api",
+                "infoLink": "https://play.google.com/store/books/details?id=lfHo7uMk7r4C&source=gbs_api",
+                "canonicalVolumeLink": "https://play.google.com/store/books/details?id=lfHo7uMk7r4C"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "FOR_SALE_AND_RENTAL",
+                "isEbook": true,
+                "listPrice": {
+                    "amount": 28.95,
+                    "currencyCode": "USD"
+                },
+                "retailPrice": {
+                    "amount": 15.63,
+                    "currencyCode": "USD"
+                },
+                "buyLink": "https://play.google.com/store/books/details?id=lfHo7uMk7r4C&rdid=book-lfHo7uMk7r4C&rdot=1&source=gbs_api",
+                "offers": [{
+                        "finskyOfferType": 1,
+                        "listPrice": {
+                            "amountInMicros": 28950000,
+                            "currencyCode": "USD"
+                        },
+                        "retailPrice": {
+                            "amountInMicros": 15630000,
+                            "currencyCode": "USD"
+                        },
+                        "giftable": true
+                    },
+                    {
+                        "finskyOfferType": 3,
+                        "listPrice": {
+                            "amountInMicros": 10420000,
+                            "currencyCode": "USD"
+                        },
+                        "retailPrice": {
+                            "amountInMicros": 9590000,
+                            "currencyCode": "USD"
+                        },
+                        "rentalDuration": {
+                            "unit": "DAY",
+                            "count": 90
+                        }
+                    }
+                ]
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": true,
+                    "acsTokenLink": "http://books.google.com/books/download/TCP_IP_Sockets_in_Java-sample-epub.acsm?id=lfHo7uMk7r4C&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                },
+                "pdf": {
+                    "isAvailable": true,
+                    "acsTokenLink": "http://books.google.com/books/download/TCP_IP_Sockets_in_Java-sample-pdf.acsm?id=lfHo7uMk7r4C&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=lfHo7uMk7r4C&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "Framer.<b>java</b> 0 import <b>java</b>.io.IOException; 1 import <b>java</b>.io.OutputStream; 2 3 <br>\npublic interface Framer { 4 void frameMsg(byte[] message, OutputStream out) <br>\nthrows IOException; 5 byte[] nextMsg() throws IOException; 6 } Framer.<b>java</b> The <br>\nclass&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "diqHjRjMhW0C",
+            "etag": "LeO5jWFZL/k",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/diqHjRjMhW0C",
+            "volumeInfo": {
+                "title": "Wicked Cool Java",
+                "subtitle": "Code Bits, Open-source Libraries, and Project Ideas",
+                "authors": [
+                    "Brian D. Eubanks"
+                ],
+                "publisher": "No Starch Press",
+                "publishedDate": "2005",
+                "description": "Containing 101 fun, interesting, and useful ways to get more out of Java, this title targets developers and system architects who have some basic Java knowledge but may not be familiar with the wide range of libraries available.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_13",
+                        "identifier": "9781593270612"
+                    },
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "1593270615"
+                    }
+                ],
+                "readingModes": {
+                    "text": true,
+                    "image": true
+                },
+                "pageCount": 224,
+                "printType": "BOOK",
+                "categories": [
+                    "COMPUTERS"
+                ],
+                "averageRating": 3.5,
+                "ratingsCount": 5,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": true,
+                "contentVersion": "2.0.2.0.preview.3",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=diqHjRjMhW0C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=diqHjRjMhW0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=diqHjRjMhW0C&pg=PA162&dq=Java&hl=&cd=3&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=diqHjRjMhW0C&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Wicked_Cool_Java.html?hl=&id=diqHjRjMhW0C"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": true
+                },
+                "pdf": {
+                    "isAvailable": true
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=diqHjRjMhW0C&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "with. Low-Level. <b>Java</b>. Sound. For those of you who want to work with low-level <br>\nsignal processing (and individual sound samples), the <b>Java</b> Sound API provides <br>\nthe ability to do this. You can read and write data streams to and from audio ports,<br>\n&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "ka2VUBqHiWkC",
+            "etag": "XAsoKQVJIsU",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/ka2VUBqHiWkC",
+            "volumeInfo": {
+                "title": "Effective Java",
+                "authors": [
+                    "Joshua Bloch"
+                ],
+                "publisher": "Addison-Wesley Professional",
+                "publishedDate": "2008-05-08",
+                "description": "Are you looking for a deeper understanding of the Java™ programming language so that you can write code that is clearer, more correct, more robust, and more reusable? Look no further! Effective Java™, Second Edition, brings together seventy-eight indispensable programmer’s rules of thumb: working, best-practice solutions for the programming challenges you encounter every day. This highly anticipated new edition of the classic, Jolt Award-winning work has been thoroughly updated to cover Java SE 5 and Java SE 6 features introduced since the first edition. Bloch explores new design patterns and language idioms, showing you how to make the most of features ranging from generics to enums, annotations to autoboxing. Each chapter in the book consists of several “items” presented in the form of a short, standalone essay that provides specific advice, insight into Java platform subtleties, and outstanding code examples. The comprehensive descriptions and explanations for each item illuminate what to do, what not to do, and why. Highlights include: New coverage of generics, enums, annotations, autoboxing, the for-each loop, varargs, concurrency utilities, and much more Updated techniques and best practices on classic topics, including objects, classes, libraries, methods, and serialization How to avoid the traps and pitfalls of commonly misunderstood subtleties of the language Focus on the language and its most fundamental libraries: java.lang, java.util, and, to a lesser extent, java.util.concurrent and java.io Simply put, Effective Java™, Second Edition, presents the most practical, authoritative guidelines available for writing efficient, well-designed programs.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_10",
+                        "identifier": "0132778041"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780132778046"
+                    }
+                ],
+                "readingModes": {
+                    "text": true,
+                    "image": true
+                },
+                "pageCount": 368,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4.5,
+                "ratingsCount": 35,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": true,
+                "contentVersion": "0.3.5.0.preview.3",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=ka2VUBqHiWkC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=ka2VUBqHiWkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=ka2VUBqHiWkC&pg=PA93&dq=Java&hl=&cd=4&source=gbs_api",
+                "infoLink": "https://play.google.com/store/books/details?id=ka2VUBqHiWkC&source=gbs_api",
+                "canonicalVolumeLink": "https://play.google.com/store/books/details?id=ka2VUBqHiWkC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "FOR_SALE",
+                "isEbook": true,
+                "listPrice": {
+                    "amount": 43.99,
+                    "currencyCode": "USD"
+                },
+                "retailPrice": {
+                    "amount": 31.72,
+                    "currencyCode": "USD"
+                },
+                "buyLink": "https://play.google.com/store/books/details?id=ka2VUBqHiWkC&rdid=book-ka2VUBqHiWkC&rdot=1&source=gbs_api",
+                "offers": [{
+                    "finskyOfferType": 1,
+                    "listPrice": {
+                        "amountInMicros": 43990000,
+                        "currencyCode": "USD"
+                    },
+                    "retailPrice": {
+                        "amountInMicros": 31720000,
+                        "currencyCode": "USD"
+                    },
+                    "giftable": true
+                }]
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED_FOR_ACCESSIBILITY",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=ka2VUBqHiWkC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "The <b>Java</b> programming language provides two mechanisms for defining a type <br>\nthat permits multiple implementations: interfaces and abstract classes. The most <br>\nobvious difference between the two mechanisms is that abstract classes are&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "bIchilfV3bcC",
+            "etag": "+W0Mf3LHZR0",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/bIchilfV3bcC",
+            "volumeInfo": {
+                "title": "Multithreaded Programming with Java Technology",
+                "authors": [
+                    "Bil Lewis",
+                    "Daniel J. Berg"
+                ],
+                "publisher": "Prentice Hall Professional",
+                "publishedDate": "2000",
+                "description": "\"Multithreaded Programming with Java Technology is the first complete guide to multithreaded development with the Java 2 platform. Multithreading experts Bil Lewis and Daniel J. Berg cover the underlying structures upon which threads are built; thread construction; and thread lifecycles, including birth, life, death, and cancellation. Next, using extensive code examples, they cover everything developers need to know to make the most of multithreading.\"--BOOK JACKET.Title Summary field provided by Blackwell North America, Inc. All Rights Reserved",
+                "industryIdentifiers": [{
+                        "type": "ISBN_10",
+                        "identifier": "0130170070"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780130170071"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": true
+                },
+                "pageCount": 461,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4,
+                "ratingsCount": 1,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "0.0.3.0.preview.1",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=bIchilfV3bcC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=bIchilfV3bcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=bIchilfV3bcC&pg=PA147&dq=Java&hl=&cd=5&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=bIchilfV3bcC&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Multithreaded_Programming_with_Java_Tech.html?hl=&id=bIchilfV3bcC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED_FOR_ACCESSIBILITY",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=bIchilfV3bcC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "You could write an “ unlock_all ” routine , but it would probably just make your <br>\ncode even more confusing and very likely lead you to make mistakes . In <b>Java</b> , <br>\nsynchronized sections are also recursive ( Code Example 7–2 ) . One <br>\nsynchronized&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "wqR2eOdZOqcC",
+            "etag": "y+a/VrCF630",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/wqR2eOdZOqcC",
+            "volumeInfo": {
+                "title": "Java Input/output",
+                "authors": [
+                    "Elliotte Rusty Harold"
+                ],
+                "publisher": "\"O'Reilly Media, Inc.\"",
+                "publishedDate": "1999",
+                "description": "Intermediate programmers can refer to this guide to gain a solid understanding of text formatting in an object-oriented language. \"Java I/O\" explores streams, which provide simple ways to read and write data of different types, and shows how to control number formatting, use characters aside from the standard (but outdated) ASCII character set, and get a head start on writing truly multi-lingual software.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_10",
+                        "identifier": "1565924851"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9781565924857"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": true
+                },
+                "pageCount": 568,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4,
+                "ratingsCount": 1,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "3.1.2.0.preview.1",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=wqR2eOdZOqcC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=wqR2eOdZOqcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=wqR2eOdZOqcC&pg=PA146&dq=Java&hl=&cd=6&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=wqR2eOdZOqcC&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Java_Input_output.html?hl=&id=wqR2eOdZOqcC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": true
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=wqR2eOdZOqcC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "This is what the <b>java</b> . io.ByteArrayInputStream class gives you . Similarly , you <br>\nmight want to send a group of double - precision , floating - point numbers across <br>\nthe network with UDP . Before you can do this , you have to convert the numbers<br>\n&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "uYKYS_kH_YcC",
+            "etag": "rhnUGMuet/M",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/uYKYS_kH_YcC",
+            "volumeInfo": {
+                "title": "Programming With Java:A Primer 3E",
+                "authors": [
+                    "Balagurusamy"
+                ],
+                "publisher": "Tata McGraw-Hill Education",
+                "publishedDate": "2006-12-01",
+                "industryIdentifiers": [{
+                        "type": "ISBN_10",
+                        "identifier": "0070617139"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780070617131"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": true
+                },
+                "pageCount": 490,
+                "printType": "BOOK",
+                "categories": [
+                    "Java (Computer program language)"
+                ],
+                "averageRating": 4,
+                "ratingsCount": 47,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "3.1.2.0.preview.1",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=uYKYS_kH_YcC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=uYKYS_kH_YcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=uYKYS_kH_YcC&pg=PR19&dq=Java&hl=&cd=7&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=uYKYS_kH_YcC&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Programming_With_Java_A_Primer_3E.html?hl=&id=uYKYS_kH_YcC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=uYKYS_kH_YcC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "Preface to the Third Edition Sun Microsystems has added many improvements <br>\nand enhancements to <b>Java</b> since its release in 1995 . <b>Java</b> 2 , released in 1999 , <br>\nincorporated a number of new features to improve its performance . The latest&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "t3Ed6NF8mDMC",
+            "etag": "sv7yQvKY4Q0",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/t3Ed6NF8mDMC",
+            "volumeInfo": {
+                "title": "Java 1.4 Game Programming",
+                "authors": [
+                    "Andrew Mulholland",
+                    "Glenn Murphy"
+                ],
+                "publisher": "Wordware Publishing, Inc.",
+                "publishedDate": "2003",
+                "description": "\"Java 1.4 Game Programming\" covers a number of key features in the game development environment, including graphics, sound, input, networking, and databases.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_13",
+                        "identifier": "9781556229633"
+                    },
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "1556229631"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": true
+                },
+                "pageCount": 647,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4.5,
+                "ratingsCount": 2,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=t3Ed6NF8mDMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=t3Ed6NF8mDMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=t3Ed6NF8mDMC&pg=PA264&dq=Java&hl=&cd=8&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=t3Ed6NF8mDMC&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Java_1_4_Game_Programming.html?hl=&id=t3Ed6NF8mDMC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=t3Ed6NF8mDMC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "<b>Java</b> uses separate threads for many aspects of what was just explained, such as <br>\nmouse input from the (separate to your main loop thread) Event Dispatch Thread <br>\nor when using passive rendering, which is also handled by the Event Dispatch&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "9NaYku1OY4cC",
+            "etag": "gjPgI8cbTgU",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/9NaYku1OY4cC",
+            "volumeInfo": {
+                "title": "Java Web Services in a Nutshell",
+                "authors": [
+                    "Kim Topley"
+                ],
+                "publisher": "\"O'Reilly Media, Inc.\"",
+                "publishedDate": "2003",
+                "description": "Provides both a tutorial and a quick reference guide to the Java APIs for Web services development, with a study of the different types of Web services, an explanation of JWSDP, and other documentation and supplementary material.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_10",
+                        "identifier": "0596003994"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780596003999"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": true
+                },
+                "pageCount": 642,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4,
+                "ratingsCount": 1,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "2.0.1.0.preview.1",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=9NaYku1OY4cC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=9NaYku1OY4cC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=9NaYku1OY4cC&pg=PA150&dq=Java&hl=&cd=9&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=9NaYku1OY4cC&dq=Java&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Java_Web_Services_in_a_Nutshell.html?hl=&id=9NaYku1OY4cC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": true
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=9NaYku1OY4cC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "Until these JSRs are completed and their implementations become part of the <br>\n<b>Java</b> platform, you can still make use of the authentication mechanisms already <br>\nprovided for HTTP to add a level of security to your service. In this section, you&#39;ll <br>\nsee&nbsp;..."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "r10U16kgmkwC",
+            "etag": "msmMJbY6abk",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/r10U16kgmkwC",
+            "volumeInfo": {
+                "title": "Object-Oriented Programming and Java",
+                "authors": [
+                    "Danny Poo",
+                    "Derek Kiong",
+                    "Swarnalatha Ashok"
+                ],
+                "publisher": "Springer Science & Business Media",
+                "publishedDate": "2007-09-07",
+                "description": "Covering the latest in Java technologies, Object-Oriented Programming and Java teaches the subject in a systematic, fundamentals-first approach. It begins with the description of real-world object interaction scenarios and explains how they can be translated, represented and executed using object-oriented programming paradigm. By establishing a solid foundation in the understanding of object-oriented programming concepts and their applications, this book provides readers with the pre-requisites for writing proper object-oriented programs using Java.",
+                "industryIdentifiers": [{
+                        "type": "ISBN_13",
+                        "identifier": "9781846289637"
+                    },
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "1846289637"
+                    }
+                ],
+                "readingModes": {
+                    "text": true,
+                    "image": true
+                },
+                "pageCount": 322,
+                "printType": "BOOK",
+                "categories": [
+                    "Computers"
+                ],
+                "averageRating": 4,
+                "ratingsCount": 2,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": true,
+                "contentVersion": "3.3.10.0.preview.3",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=r10U16kgmkwC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=r10U16kgmkwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=r10U16kgmkwC&pg=PA136&dq=Java&hl=&cd=10&source=gbs_api",
+                "infoLink": "https://play.google.com/store/books/details?id=r10U16kgmkwC&source=gbs_api",
+                "canonicalVolumeLink": "https://play.google.com/store/books/details?id=r10U16kgmkwC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "FOR_SALE_AND_RENTAL",
+                "isEbook": true,
+                "listPrice": {
+                    "amount": 74.99,
+                    "currencyCode": "USD"
+                },
+                "retailPrice": {
+                    "amount": 59.99,
+                    "currencyCode": "USD"
+                },
+                "buyLink": "https://play.google.com/store/books/details?id=r10U16kgmkwC&rdid=book-r10U16kgmkwC&rdot=1&source=gbs_api",
+                "offers": [{
+                        "finskyOfferType": 1,
+                        "listPrice": {
+                            "amountInMicros": 74990000,
+                            "currencyCode": "USD"
+                        },
+                        "retailPrice": {
+                            "amountInMicros": 59990000,
+                            "currencyCode": "USD"
+                        },
+                        "giftable": true
+                    },
+                    {
+                        "finskyOfferType": 3,
+                        "listPrice": {
+                            "amountInMicros": 26250000,
+                            "currencyCode": "USD"
+                        },
+                        "retailPrice": {
+                            "amountInMicros": 22840000,
+                            "currencyCode": "USD"
+                        },
+                        "rentalDuration": {
+                            "unit": "DAY",
+                            "count": 90
+                        }
+                    }
+                ]
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED_FOR_ACCESSIBILITY",
+                "epub": {
+                    "isAvailable": true,
+                    "acsTokenLink": "http://books.google.com/books/download/Object_Oriented_Programming_and_Java-sample-epub.acsm?id=r10U16kgmkwC&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                },
+                "pdf": {
+                    "isAvailable": true,
+                    "acsTokenLink": "http://books.google.com/books/download/Object_Oriented_Programming_and_Java-sample-pdf.acsm?id=r10U16kgmkwC&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=r10U16kgmkwC&hl=&printsec=frontcover&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "As there are a large number of classes in the <b>Java</b> API, it is fruitful to organize <br>\nand group them according to their functionality. In JDK 1.5, the basic <b>Java</b> API is <br>\norganized into six packages among others: <b>java</b>.lang, <b>java</b>.io, <b>java</b>.util, <b>java</b>.net,&nbsp;..."
+            }
+        }
+    ]
+}
