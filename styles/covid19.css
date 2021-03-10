@@ -10,7 +10,7 @@ table, td, tr, th {
 }
 td:hover {
     background-color: #66FCF1;
-    transform: scale(1.3);
+    transform: scale(1.1);
 }
 
 tr:nth-child(even) {
@@ -21,7 +21,6 @@ tr:nth-child(odd) {
     background-color: lightcyan;
 }
 tr:hover {
-    transform: scale(1.2);
     background-color: #45A29E;
     border-radius: 20px;
 }

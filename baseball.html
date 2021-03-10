@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Baseball</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/EdgeTech.css" rel="stylesheet" media="screen"/>
+</head>
+
+<body style="background-image: url('/images/MLB-Logo.png')">
+    <div class="container">
+        <label for="season">Conference</label>
+        <select id="season">
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+        </select>
+        <label for="league">League</label>
+        <input type="number" min="1" max="16" value="1" id="league">
+    
+        <button onclick='getMLBTeams()'>Get MLB Teams</button>
+        <h3>Teams</h3>
+        <table id="team"></table>
+        <section id="teams"></section>
+    
+        <script src='js/baseball.js'></script>
+    </div>
+</body>
+    
+</html>

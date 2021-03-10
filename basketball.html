@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>NBA</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/EdgeTech.css" rel="stylesheet" media="screen"/>
+</head>
+
+<body background='/images/NBA-Logo.jpg'>
+<div class="container">
+    <label for="conference">Conference</label>
+    <select id="conference">
+        <option value="west">West</option>
+        <option value="east">East</option>
+        <option value="utah">Utah</option>
+<!--        <option value="vegas">Vegas</option>-->
+<!--        <option value="standard">Standard</option>-->
+        <option value="sacramento">Sacramento</option>
+    </select>
+    <button onclick='getNBATeams()'>Get NBA Teams</button>
+    <section id="teams"></section>
+
+    <div class="tab">
+        <button id="rosterBtn" class="tablinks" onClick="openTab(event.currentTarget, 'rosterTab')">Players</button>
+        <button id="playerBtn" class="tablinks" onClick="openTab(event.currentTarget, 'playerTab')">Player Stats</button>
+        <button id="G2015Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2015Tab')">2015</button>
+        <button id="G2016Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2016Tab')">2016</button>
+        <button id="G2017Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2017Tab')">2017</button>
+        <button id="G2018Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2018Tab')">2018</button>
+        <button id="G2019Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2019Tab')">2019</button>
+        <button id="G2020Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2020Tab')">2020</button>
+        <button id="DannyBtn"  class="tablinks" onClick="openTab(event.currentTarget, 'DannyTab')">Danny</button>
+    </div>
+
+    <div id="DannyTab" class="tabcontent">
+        hey look at me
+        <h1>hey now you're a rock star</h1>
+    </div>
+
+    <div id="rosterTab" class="tabcontent">
+        <h3>Players</h3>
+        <table class='row'>
+            <thead>
+            <tr>
+                <th>Name</th>           <th>College</th>
+                <th>Date of Birth</th>  <th>Position</th>   <th>Jersey #</th>
+            </tr>
+            </thead>
+            <tbody id="rosterRows"></tbody>
+        </table>
+    </div>
+    <div id="playerTab" class="tabcontent">
+        <h3 id="player">Player Stats for: </h3>
+        <table class="row">
+            <thead><tr>
+                <th>points</th>     <th>min</th>    <th>fgm</th>    <th>fga</th>        <th>fgp</th>    <th>ftm</th>        <th>fta</th>
+                <th>ftp</th>        <th>tpm</th>    <th>tpa</th>    <th>tpp</th>        <th>offReb</th> <th>defReb</th>     <th>totReb</th>
+                <th>assists</th>    <th>pFouls</th> <th>steals</th> <th>turnovers</th>  <th>blocks</th> <th>plusMinus</th>
+            </tr></thead>
+            <tbody id="playerRows"></tbody>
+        </table>
+    </div>
+    <div id="G2015Tab" class="tabcontent">
+        <h3>2015 Games</h3>
+        <table class="row">
+            <thead>
+            <tr>
+                <th>arena</th>      <th>city</th>       <th>Game Length</th>
+                <th>Home Team</th>  <th>Points</th>     <th></th>
+                <th>Visitors</th>   <th>Points</th>     <th></th>
+            </tr>
+            </thead>
+            <tbody id="G2015Rows"></tbody>
+        </table>
+    </div>
+    <div id="G2016Tab" class="tabcontent">
+        <h3>2016 Games</h3>
+        <table class="row">
+            <thead>
+            <tr>
+                <th>arena</th>      <th>city</th>       <th>Game Length</th>
+                <th>Home Team</th>  <th>Points</th>     <th></th>
+                <th>Visitors</th>   <th>Points</th>     <th></th>
+            </tr>
+            </thead>
+            <tbody id="G2016Rows"></tbody>
+        </table>
+    </div>
+    <div id="G2017Tab" class="tabcontent">
+        <h3>2017 Games</h3>
+        <table class="row">
+            <thead>
+            <tr>
+                <th>arena</th>      <th>city</th>       <th>Game Length</th>
+                <th>Home Team</th>  <th>Points</th>     <th></th>
+                <th>Visitors</th>   <th>Points</th>     <th></th>
+            </tr>
+            </thead>
+            <tbody id="G2017Rows"></tbody>
+        </table>
+    </div>
+    <div id="G2018Tab" class="tabcontent">
+        <h3>2018 Games</h3>
+        <table class="row">
+            <thead>
+            <tr>
+                <th>arena</th>      <th>city</th>       <th>Game Length</th>
+                <th>Home Team</th>  <th>Points</th>     <th></th>
+                <th>Visitors</th>   <th>Points</th>     <th></th>
+            </tr>
+            </thead>
+            <tbody id="G2018Rows"></tbody>
+        </table>
+    </div>
+    <div id="G2019Tab" class="tabcontent">
+        <h3>2019 Games</h3>
+        <table class="row">
+            <thead>
+            <tr>
+                <th>arena</th>      <th>city</th>       <th>Game Length</th>
+                <th>Home Team</th>  <th>Points}</th>    <th></th>
+                <th>Visitors</th>   <th>Points}</th>    <th></th>
+            </tr>
+            </thead>
+            <tbody id="G2019Rows"></tbody>
+        </table>
+    </div>
+    <div id="G2020Tab" class="tabcontent">
+        <h3>2020 Games</h3>
+        <table class="row">
+            <thead>
+            <tr>
+                <th>arena</th>      <th>city</th>       <th>Game Length</th>
+                <th>Home Team</th>  <th>Points}</th>    <th></th>
+                <th>Visitors</th>   <th>Points}</th>    <th></th>
+            </tr>
+            </thead>
+            <tbody id="G2020Rows"></tbody>
+        </table>
+    </div>
+</div>
+<script src='js/basketball.js'></script>
+</body>
+
+</html>

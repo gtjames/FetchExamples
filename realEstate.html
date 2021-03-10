@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Search for Homes</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/EdgeTech.css" rel="stylesheet" media="screen"/>
+</head>
+
+<body background='images/Realtor.png'>
+
+<div class="container">
+    <label for="city">City</label>
+    <input type="text" id="city" value="Kennedale">
+
+    <label for="state">State</label>
+    <input type="text" id="state">
+
+    <label for="zip">Zip Code</label>
+    <input type="text" id="zip">
+
+    <label for="sqFtMin">Min. Sq Feet</label>
+    <select id="sqFtMin">
+        <option value="1000">1000</option>
+        <option value="2000" selected>2000</option>
+        <option value="3000">3000</option>
+        <option value="5000">5000</option>
+        <option value="6000">6000</option>
+    </select>
+
+    <label for="sqFtMax">Max. Sq Feet</label>
+    <select id="sqFtMax">
+        <option value="2000">2000</option>
+        <option value="3000">3000</option>
+        <option value="4000" selected>4000</option>
+        <option value="5000">5000</option>
+        <option value="6000">6000</option>
+        <option value="9000">9000</option>
+    </select>
+
+    <label for="baths"># of Baths</label>
+    <select id="baths">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <label for="beds"># of Beds</label>
+    <select id="beds">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3"> selected3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <label for="radius">Search Distance</label>
+    <select id="radius">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+    </select>
+
+    <label for="priceMin">Min. Price</label>
+    <select id="priceMin">
+        <option value="0">$0K</option>
+        <option value="100000 selected">$100K</option>
+        <option value="300000">$300K</option>
+        <option value="600000">$600K</option>
+        <option value="1000000">$1M</option>
+    </select>
+
+    <label for="priceMax">Max. Price</label>
+    <select id="priceMax">
+        <option value="100000">$100K</option>
+        <option value="300000" selected>$300K</option>
+        <option value="600000">$600K</option>
+        <option value="1000000">$1M</option>
+        <option value="8000000">$8M</option>
+    </select>
+
+    <label for="page">Page #</label>
+    <input id="page" type="number" min="0" max="100">
+
+    <label for="limit"># per Page</label>
+    <select id="limit">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="1000">100</option>
+    </select>
+
+    <button onclick='getHomes()'>Find your Dream Home!</button>
+
+    <h3 onclick="getPropertyById()">Homes</h3>
+    <table class="row">
+        <thead>
+        <tr>
+            <th>Price</th>          <th>Sq Footage</th>     <th>City</th>   <th>Address</th>
+            <th>Baths</th>          <th># of Bedrooms</th>  <th>Agent</th>
+            <th>Home Listing</th>   <th>Virtual Tour</th>
+        </tr>
+        </thead>
+        <tbody id="homeList"></tbody>
+    </table>
+    </div>
+</div>
+<script src='js/realEstate.js'></script>
+</body>
+
+</html>
