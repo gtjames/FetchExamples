@@ -47,7 +47,7 @@ function showHomes(homes) {
     let html = ``;
     for (let home of homes) {
         if (home.thumbnail === undefined) home.thumbnail = '';
-        if (home.agents[0].photo === undefined) home.agents[0].photo = {href: ''};
+        if (home.agents[0].photo === undefined||home.agents[0].photo === null) home.agents[0].photo = {href: ''};
         if (home.virtual_tour === undefined) home.virtual_tour = {href: ''};
 
         let price = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}).format(home.price);
