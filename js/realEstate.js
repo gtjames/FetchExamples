@@ -22,11 +22,11 @@ function getHomes() {
     url += sqFtMin.length   > 0 ? `&sqft_min=${sqFtMin}`     : '';
     url += sqFtMax.length   > 0 ? `&sqft_max=${sqFtMax}`     : '';
     url += priceMin.length  > 0 ? `&price_min=${priceMin}`   : '';
-    url += priceMax.length  > 0 ? `&price_max=${priceMax}` : '';
-    url += zip.length       > 0 ? `&postal_code=${zip}` : '';
+    url += priceMax.length  > 0 ? `&price_max=${priceMax}`   : '';
+    url += zip.length       > 0 ? `&postal_code=${zip}`      : '';
     url += baths.length     > 0 ? `&baths_min=${baths}`      : '';
     url += radius.length    > 0 ? `&radius=${radius}`        : '';
-    url += beds.length      > 0 ? `&radius=${beds}`          : '';
+    url += beds.length      > 0 ? `&beds=${beds}`            : '';
 
     fetch(url, {
         "method": "GET",

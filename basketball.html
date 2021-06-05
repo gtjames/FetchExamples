@@ -3,7 +3,7 @@
 <head lang="en">
     <title>NBA</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/EdgeTech.css" rel="stylesheet" media="screen"/>
+    <link href="styles/table2Style.css" rel="stylesheet" media="screen"/>
 </head>
 
 <body background='/images/NBA-Logo.jpg'>
@@ -18,6 +18,7 @@
         <option value="sacramento">Sacramento</option>
     </select>
     <button onclick='getNBATeams()'>Get NBA Teams</button>
+        <p>Choose a conference. Click on a Team and Click on a Player. Then check out the different tabs</p>
     <section id="teams"></section>
 
     <div class="tab">
@@ -29,12 +30,6 @@
         <button id="G2018Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2018Tab')">2018</button>
         <button id="G2019Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2019Tab')">2019</button>
         <button id="G2020Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2020Tab')">2020</button>
-        <button id="DannyBtn"  class="tablinks" onClick="openTab(event.currentTarget, 'DannyTab')">Danny</button>
-    </div>
-
-    <div id="DannyTab" class="tabcontent">
-        hey look at me
-        <h1>hey now you're a rock star</h1>
     </div>
 
     <div id="rosterTab" class="tabcontent">

@@ -10,7 +10,7 @@ document.getElementById('getWeather').addEventListener('click', getWeather);
 function getWeather() {
     let weatherList = document.getElementById('weatherList');        //  all weather reports go here
     let city        = document.getElementById('city');               //  City input field
-    let allDays     = document.getElementById('allDays').checked;    //  show all days of the forecast
+    //  let allDays     = document.getElementById('allDays').checked;    //  show all days of the forecast
 
     if (city.value.length === 0) {
         weatherList.innerHTML = 'Please Enter the City name';

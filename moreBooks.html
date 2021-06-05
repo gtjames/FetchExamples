@@ -17,6 +17,11 @@
             padding: 8px;
         }
 
+        input {
+            border-radius: 20px;
+            background-color: lightsteelblue;
+        }
+
         .ATOZ {
             background-image: linear-gradient(180deg, lightgray, darkgrey);
         }
@@ -36,8 +41,9 @@
 </head>
 
 <body>
-    <label for="bookSearch">Search for a Title</label>
+    <label for="bookSearch">Search for a Title then tab out</label>
     <input type="text" id="bookSearch">
+    <p>Columns are sortable</p>
     <table id='sortedTable'>
         <thead>
             <tr>

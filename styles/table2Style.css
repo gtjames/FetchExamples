@@ -65,3 +65,5 @@ table, td, th {
     border-top: none;
     background-color: #ccc;
 }
+
+.container { margin-left: 100px; }

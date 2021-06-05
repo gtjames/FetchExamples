@@ -39,7 +39,7 @@ function getStats() {
 }
 
 function buildRow(country) {
-    let innerHTML = `
+    return `
 <tr id='${country.country_name}'>
     <td>${country.country_name}</td>
     <td>${country.cases}</td>
@@ -54,5 +54,4 @@ function buildRow(country) {
     <td>${country.total_tests}</td>
     <td>${country.tests_per_1m_population}</td>
 </tr>`;
-    return innerHTML;
 }
