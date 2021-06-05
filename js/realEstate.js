@@ -46,18 +46,18 @@ function showHomes(homes) {
     let homeTable = document.getElementById('homeList');
     let html = ``;
     for (let home of homes) {
-        if (home.thumbnail == undefined) home.thumbnail = '';
-        if (home.agents[0].photo == undefined) home.agents[0].photo = {href: ''};
-        if (home.virtual_tour == undefined) home.virtual_tour = {href: ''};
+        if (home.thumbnail === undefined) home.thumbnail = '';
+        if (home.agents[0].photo === undefined) home.agents[0].photo = {href: ''};
+        if (home.virtual_tour === undefined) home.virtual_tour = {href: ''};
 
         let price = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}).format(home.price);
 
         html += `<tr>
 		       <td>${price}</td>               <td>${home.building_size.size}</td> <td>${home.address.city}</td>
                <td>${home.address.line}</td>   <td>${home.baths_full}</td>         <td>${home.beds}</td>
-               <td><img src='${home.agents[0].photo.href}' width=100px height=100px><br>${home.agents[0].name}</>
+               <td><img src='${home.agents[0].photo.href}' width=100px height=100px alt=""><br>${home.agents[0].name}</>
 		       <td><a href="${home.rdc_web_url}"       target="_blank">${home.property_id}</a></td>
-		       <td><a href="${home.virtual_tour.href}" target="_blank"><img src="${home.thumbnail}" width=200px height=100px> </a></td>
+		       <td><a href="${home.virtual_tour.href}" target="_blank"><img src="${home.thumbnail}" width=200px height=100px alt=""> </a></td>
             </tr>`;
     }
     homeTable.innerHTML = html;

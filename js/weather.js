@@ -41,7 +41,7 @@ function getWeather() {
                 innerHTML +=`
                     <div class="grid-item">
                         <h2>Date: ${niceDate(day.dt, 0)} ${niceTime(day.dt, 0)}</h2>
-                        <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png'> ${day.weather[0].description}</p>
+                        <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png' alt=""> ${day.weather[0].description}</p>
                         <p>Wind at ${day.wind.speed} mph out of the ${windDirection(day.wind.deg)}</p>
                         <p>Sunrise: ${niceTime(weather.city.sunrise, 0)} / Sunset: ${niceTime(weather.city.sunset, 0)}</p>
                         <p>Temp: ${day.main.temp}</p>

@@ -69,7 +69,7 @@ function getMovies() {
                             <h4>${movie.title}</h4>
                         </a>
                         <h4>Description: ${movie.description}</h4>
-                        <img src='${movie.image}' height="200px" id="${movie.id}">
+                        <img src='${movie.image}' height="200px" id="${movie.id}" alt="">
                     </div>`;
             }
 
@@ -120,7 +120,7 @@ function movieDetails() {
                     <h4>Description: ${movie.title}</h4>
                     <h4>Relesase Date: ${movie.releaseDate}</h4>
                     <h4>Plot: ${movie.plot}</h4>
-                    <img src='${movie.image}' height="200px"'>
+                    <img src='${movie.image}' height="200px" alt="">
                 <ul>`;
 
             //  show the actor's name, picture, the character they playe and add a link to IMDB for the actor
@@ -143,19 +143,20 @@ function movieDetails() {
  *          Get the current weather forecast either of the city or the Lat Long location
  */
 function getWeather() {
-    if (!locationRetrieved) {
-        weatherList.innerText = "Be patient, location not yet retrieved";
-        return;
-    }
-
     let weatherList = document.getElementById('weatherList');               //  all weather reports go here
+    let city        = document.getElementById('city');                      //  city
     let cityEntered = document.getElementById('city').value.length > 0;     //  was the City entered?
     let latitude    = document.getElementById('lat');                       //  Latitude
     let longitude   = document.getElementById('lon');                       //  Longitude
     let allDays     = document.getElementById('allDays').checked;           //  show all days of the forecast
     let json        = document.getElementById('json').checked;              //  show JSON or not
 
-    //  let's build the API based on the data from the form. 
+    if (!locationRetrieved) {
+        weatherList.innerText = "Be patient, location not yet retrieved";
+        return;
+    }
+
+    //  let's build the API based on the data from the form.
     //      If city is entered use forecast data
     //      otherwise use the onecall API
     let url =`https://api.openweathermap.org/data/2.5/`;
@@ -196,7 +197,7 @@ function getWeather() {
                     `<div class="grid-item">
                         <h2>Date: ${day.date}</h2>
                         <h4>Temp: Low ${day.min}&deg; / High: ${day.max}&deg;</h4>
-                        <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.icon}@2x.png'> ${day.description}</p>
+                        <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.icon}@2x.png' alt=""> ${day.description}</p>
                         <p>Chance of rain at ${day.pop}%</p>
                         <p>Wind at ${day.wind_speed} mph out of the ${day.windDirection}</p>
                         <p>Sunrise: ${day.sunrise} / Sunset: ${day.sunset}</p>
@@ -221,7 +222,7 @@ function getWeather() {
  */
 function cityToWeather(data, all) {
     let wx = {};
-    wx.daily = data.list.filter((w,i) =>  all || i % 4 == 0).map(d => ({
+    wx.daily = data.list.filter((w,i) =>  all || i % 4 === 0).map(d => ({
         date:           niceDate(d.dt, data.city.timezone) + ' ' + niceTime(d.dt, data.city.timezone),
         min:            KtoF(d.main.temp_min),
         max:            KtoF(d.main.temp_max),
@@ -299,9 +300,10 @@ function getNasa() {
     fetch(url)
         .then(response => response.json())  //  wait for the response and convert it to JSON
         .then(apod => {                     //  with the resulting JSON data do something
-            
+
+            apod.explanation = undefined;
             if (json) {                     //  if JSON is checked show only the JSON data
-                document.body.innerText = JSON.stringify(wx);
+                document.body.innerText = JSON.stringify(apod);
                 return;
             }
 
@@ -310,7 +312,7 @@ function getNasa() {
                 media.innerHTML = `<img src="${apod.hdurl}" height="300px" alt="">`;
             }
             else {
-                media.innerHTML = `<iframe width="960" height="540" src="${apod.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>`;
+                media.innerHTML = `<iframe width="960" height="540" src="${apod.url}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>`;
             }
             //  extract the interesting data from the JSON object and show it to the user
             date.innerText = apod.date;

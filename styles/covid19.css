@@ -34,10 +34,10 @@ td:hover {
     background-color: slategray;
     height: 115px;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
-    margin: 0%;
+    margin: 0;
 }
 
 label {

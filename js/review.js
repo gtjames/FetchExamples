@@ -7,7 +7,7 @@ colorField.addEventListener('change', changeColor);
 let error = document.getElementById('error');
 
 function validateName() {
-    if (this.value.length == 0) {
+    if (this.value.length === 0) {
         error.innerHTML = 'User Name is missing';
     } else {
         error.innerHTML = '';

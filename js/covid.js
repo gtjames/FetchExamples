@@ -24,8 +24,8 @@ function getStats() {
             covid.world_total.country_name = 'The World';
             covid.world_total.cases = covid.world_total.total_cases;
             covid.world_total.deaths = covid.world_total.total_deaths;
-            covid.world_total.total_tests = "",
-                covid.world_total.tests_per_1m_population = "";
+            covid.world_total.total_tests = "";
+            covid.world_total.tests_per_1m_population = "";
 
             table.innerHTML = buildRow(covid.world_total);
 
@@ -41,7 +41,7 @@ function getStats() {
 }
 
 function buildRow(country) {
-    let innerHTML = `
+    return `
 <tr id='${country.country_name}'>
     <td>${country.country_name}</td>
     <td>${country.cases}</td>
@@ -56,5 +56,4 @@ function buildRow(country) {
     <td>${country.total_tests}</td>
     <td>${country.tests_per_1m_population}</td>
 </tr>`;
-    return innerHTML;
 }

@@ -127,7 +127,7 @@ function buildGalaxy(img, name, dist, year, desc ) {
     if ( desc.indexOf('[') >= 0) desc = desc.substring(0,desc.indexOf('['));
     return `
 <tr>
-    <td><img src=${img}></td>
+    <td><img src=${img} alt=""></td>
     <td>${name}</td>
     <td>${dist}</td>
     <td>${year}</td>
