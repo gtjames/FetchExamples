@@ -2,32 +2,44 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baseball</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/table2Style.css" rel="stylesheet" media="screen"/>
+    <link href="styles/styles.css" media="screen" rel="stylesheet"/>
 </head>
 
-<body style="background-image: url('/images/MLB-Logo.png')">
-    <div class="container">
-        <label for="season">Conference</label>
-        <select id="season">
-            <option value="2015">2015</option>
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-        </select>
-        <label for="league">League</label>
-        <input type="number" min="1" max="16" value="1" id="league">
-    
-        <button onclick='getMLBTeams()'>Get MLB Teams</button>
-        <h3>Teams</h3>
-        <table id="team"></table>
-        <section id="teams"></section>
-    
-        <script src='js/baseball.js'></script>
+<body background='images/MLB-Logo.png'>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul id='menu' class="nav navbar-nav">
+            </ul>
+        </div>
     </div>
+</nav>
+
+<div class="container">
+    <label for="season">Conference</label>
+    <select id="season">
+        <option value="2015">2015</option>
+        <option value="2016">2016</option>
+        <option value="2017">2017</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+    </select>
+    <label for="league">League</label>
+    <input type="number" min="1" max="16" value="1" id="league">
+
+    <button onclick='getMLBTeams()'>Get MLB Teams</button>
+    <h3>Teams</h3>
+    <table id="team"></table>
+    <section id="teams"></section>
+
+</div>
 </body>
-    
+<script src='js/baseball.js'></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Baseball')</script>
+
 </html>

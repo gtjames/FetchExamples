@@ -3,7 +3,7 @@
 
 let key = '10f0d3c959mshe5fca1f0098b852p17d5bajsncdeef06aead7';			//  rapid API
 
-/*
+/**
  *  The 'Get NBA Teams' button was pushed
  *      request the list of teams in the conference selected
  *
@@ -28,7 +28,7 @@ function getNBATeams() {
         });
 }
 
-/*
+/**
  *  Create the HTML to show the team logo and name
  *  clicking on the logo will trigger a request to show the players and the games
  *
@@ -48,7 +48,7 @@ function showNBATeams(teams) {
     teamTable.innerHTML = html +'</div>';
 }
 
-/*
+/**
  *      Using the teamId call the two methods that will
  *      request the team roster AND list of games for that team
  */
@@ -111,7 +111,7 @@ function showNBATeamRoster(players) {
     teamTable.innerHTML = html + '</table>';
 }
 
-/*
+/**
  *      get a list of all games played for a team
  *
  *   .d8888b.                                       .d8888b.  888             888
@@ -137,7 +137,7 @@ function getNBAGameStats(teamId) {
         .catch(err => console.error(err));
 }
 
-/*
+/**
  *      Show game stats
  *      Home and Visitors teams and scores and where the game was played
  *
@@ -164,7 +164,7 @@ function gamesByYear(games, tab) {
 
 }
 
-/*
+/**
  *      get a list of all games played for this player
  *
  *      888888ba  dP                                        .d88888b    dP              dP
@@ -204,7 +204,8 @@ function showNBAPlayerStats(playerStats, playerName) {
 
     let html = ``;
     for (let stats of playerStats) {
-        html += `<tr>
+        if (stats.points === "") continue;      //  skip games not played
+            html += `<tr>
 			<td>${stats.points}</td>   <td>${stats.min}</td>     <td>${stats.fgm}</td>  <td>${stats.fga}</td>  <td>${stats.fgp}</td>
 			<td>${stats.ftm}</td>      <td>${stats.fta}</td>     <td>${stats.ftp}</td>  <td>${stats.tpm}</td>  <td>${stats.tpa}</td>
             <td>${stats.tpp}</td>      <td>${stats.offReb}</td>  <td>${stats.defReb}</td>  <td>${stats.totReb}</td>  <td>${stats.assists}</td>
@@ -215,7 +216,7 @@ function showNBAPlayerStats(playerStats, playerName) {
     stats.innerHTML = html;
 }
 
-/*
+/**
  *                                           dP              dP
  *                                           88              88
  * .d8888b.  88d888b.  .d8888b.  88d888b.  d8888d  .d8888b.  88d888b.

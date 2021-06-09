@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
+
     <title>NBA</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/table2Style.css" rel="stylesheet" media="screen"/>
+    <link href="styles/styles.css" media="screen"  rel="stylesheet"/>
 </head>
 
-<body background='/images/NBA-Logo.jpg'>
+<body background='images/NBA-Logo.jpg'>
+<nav class="navbar navbar-dark bg-warning">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul id='menu' class="nav navbar-nav">
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="container">
     <label for="conference">Conference</label>
     <select id="conference">
         <option value="west">West</option>
         <option value="east">East</option>
         <option value="utah">Utah</option>
-<!--        <option value="vegas">Vegas</option>-->
-<!--        <option value="standard">Standard</option>-->
+        <!--        <option value="vegas">Vegas</option>-->
+        <!--        <option value="standard">Standard</option>-->
         <option value="sacramento">Sacramento</option>
     </select>
     <button onclick='getNBATeams()'>Get NBA Teams</button>
-        <p>Choose a conference. Click on a Team and Click on a Player. Then check out the different tabs</p>
+    <p>Choose a conference. Click on a Team and Click on a Player. Then check out the different tabs</p>
     <section id="teams"></section>
 
     <div class="tab">
@@ -34,7 +45,7 @@
 
     <div id="rosterTab" class="tabcontent">
         <h3>Players</h3>
-        <table class='row'>
+        <table class='row sortable'>
             <thead>
             <tr>
                 <th>Name</th>           <th>College</th>
@@ -46,7 +57,7 @@
     </div>
     <div id="playerTab" class="tabcontent">
         <h3 id="player">Player Stats for: </h3>
-        <table class="row">
+        <table class="row sortable">
             <thead><tr>
                 <th>points</th>     <th>min</th>    <th>fgm</th>    <th>fga</th>        <th>fgp</th>    <th>ftm</th>        <th>fta</th>
                 <th>ftp</th>        <th>tpm</th>    <th>tpa</th>    <th>tpp</th>        <th>offReb</th> <th>defReb</th>     <th>totReb</th>
@@ -57,7 +68,7 @@
     </div>
     <div id="G2015Tab" class="tabcontent">
         <h3>2015 Games</h3>
-        <table class="row">
+        <table class="row sortable">
             <thead>
             <tr>
                 <th>arena</th>      <th>city</th>       <th>Game Length</th>
@@ -70,7 +81,7 @@
     </div>
     <div id="G2016Tab" class="tabcontent">
         <h3>2016 Games</h3>
-        <table class="row">
+        <table class="row sortable">
             <thead>
             <tr>
                 <th>arena</th>      <th>city</th>       <th>Game Length</th>
@@ -83,7 +94,7 @@
     </div>
     <div id="G2017Tab" class="tabcontent">
         <h3>2017 Games</h3>
-        <table class="row">
+        <table class="row sortable">
             <thead>
             <tr>
                 <th>arena</th>      <th>city</th>       <th>Game Length</th>
@@ -96,7 +107,7 @@
     </div>
     <div id="G2018Tab" class="tabcontent">
         <h3>2018 Games</h3>
-        <table class="row">
+        <table class="row sortable">
             <thead>
             <tr>
                 <th>arena</th>      <th>city</th>       <th>Game Length</th>
@@ -109,7 +120,7 @@
     </div>
     <div id="G2019Tab" class="tabcontent">
         <h3>2019 Games</h3>
-        <table class="row">
+        <table class="row sortable">
             <thead>
             <tr>
                 <th>arena</th>      <th>city</th>       <th>Game Length</th>
@@ -122,7 +133,7 @@
     </div>
     <div id="G2020Tab" class="tabcontent">
         <h3>2020 Games</h3>
-        <table class="row">
+        <table class="row sortable">
             <thead>
             <tr>
                 <th>arena</th>      <th>city</th>       <th>Game Length</th>
@@ -134,7 +145,9 @@
         </table>
     </div>
 </div>
-<script src='js/basketball.js'></script>
 </body>
-
+<script src='js/basketball.js'></script>
+<script src="js/menu.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>makeMeActive('Basketball')</script>
 </html>

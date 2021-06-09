@@ -6,7 +6,7 @@
         // Sass configuration
         "label": "Sass Compile",
         "type": "shell",
-        "command": "node-sass coins.scss coins.css",
+        "command": "node-sass styles.scss styles.css",
         "group": "build"
     }]
 }

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Smithsonian</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
         table {
             border-collapse: collapse;
@@ -30,11 +31,19 @@
 </head>
 
 <body>
-    <label for="Search">Search the Smithsonian archives then tab out</label>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul id='menu' class="nav navbar-nav">
+            </ul>
+        </div>
+    </div>
+</nav>
+<label for="Search">Search the Smithsonian archives then tab out</label>
     <input type="text" id="Search">
-    <table id='sortedTable'>
+    <table class='sortable'>
         <thead>
-            <tr><td onclick='callSort(this, 0)'>Title</td></tr>
+            <tr><th>Title</th></tr>
         </thead>
         <tbody id='list'>
         </tbody>
@@ -63,7 +72,7 @@
         fetch(`https://api.si.edu/openaccess/api/v1.0/search?q=${searchTerm}&api_key=${key}`)
             .then(resp => resp.json()) //  wait for the response and convert it to JSON
             .then(things => { //  with the resulting JSON data do something
-                var list = things.response.rows.map(x => ({
+                let list = things.response.rows.map(x => ({
                     link: x.content.descriptiveNonRepeating.guid,
                     title: x.title
                 }))
@@ -72,65 +81,9 @@
                 ).join("\n");
             });
     }
-    
-    //--------------------------------------------------------------------------
-    //		our sorting algorithms
-    //--------------------------------------------------------------------------
-    var lastSortCol = null;
-
-    function callSort(ele, column) {
-        ele.className = (ele.className == "ATOZ" || ele.className.length == 0) ? "ZTOA" : "ATOZ";
-        if (lastSortCol !== null && lastSortCol !== ele)
-            lastSortCol.className = "";
-        lastSortCol = ele;
-        return sort_table_rows('sortedTable', column, (ele.className == "ATOZ") ? 1 : -1)
-    }
-
-    var is_number_pattern = /^\d+(\.\d+)?$/;
-    /* Column 0 is the first column */
-    function sort_table_rows(id, column_number, sortOrder) {
-
-        function sort_by_chosen_column(a, b) {
-            /* Fetch the text from the row, excluding spaces */
-            a = a.cells.item(column_number);
-            a = (a.innerText || a.textContent);
-            a = a.replace(/^\s+/, "").replace(/\s+$/, "");
-
-            b = b.cells.item(column_number);
-            b = (b.innerText || b.textContent);
-            b = b.replace(/^\s+/, "").replace(/\s+$/, "");
-
-            /* Special handling for numbers */
-            if (a.match(is_number_pattern) && b.match(is_number_pattern)) return (parseFloat(a) - parseFloat(
-                b)) * sortOrder;
-
-            /* All the rest is alphabetical order */
-            else if (a < b) return -1 * sortOrder;
-            else if (a > b) return 1 * sortOrder;
-            else return 0;
-        }
-
-        var table = document.getElementById(id);
-        /*
-         * To skip the header, ask for the tbodies. 
-         * You actually can have more than one.
-         */
-        for (var i = 0; i < table.tBodies.length; i++) {
-            var tbody = table.tBodies.item(i);
-            /* Move into an array */
-            var rows = [];
-            while (tbody.rows.length > 0) {
-                rows.push(tbody.rows.item(0));
-                tbody.deleteRow(0);
-            }
-            /* Sort the array */
-            rows = rows.sort(sort_by_chosen_column);
-            /* Move back out */
-            while (rows.length > 0)
-                tbody.appendChild(rows.shift());
-        }
-        return false;
-    }
 </script>
+<script src="js/menu.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>makeMeActive('Smithsonian')</script>
 
 </html>

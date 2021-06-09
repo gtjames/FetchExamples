@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
+
     <title>Search for Homes</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/table2Style.css" rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
+    <link href="styles/styles.css" media="screen" rel="stylesheet" />
 </head>
 
 <body background='images/Realtor.png'>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul id='menu' class="nav navbar-nav">
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="container">
     <label for="city">City</label>
@@ -96,7 +106,7 @@
     <button onclick='getHomes()'>Find your Dream Home!</button>
 
     <h3 onclick="getPropertyById()">Homes</h3>
-    <table class="row">
+    <table class="row sortable">
         <thead>
         <tr>
             <th>Price</th>          <th>Sq Footage</th>     <th>City</th>   <th>Address</th>
@@ -108,7 +118,10 @@
     </table>
     </div>
 </div>
-<script src='js/realEstate.js'></script>
 </body>
+<script src='js/realEstate.js'></script>
+<script src="js/menu.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>makeMeActive('Real Estate')</script>
 
 </html>

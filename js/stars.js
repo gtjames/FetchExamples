@@ -20,13 +20,15 @@ function getStars() {
             //            rows.forEach(tr => console.log(tr))
             rows.shift();
             rows.shift();
+            rows.pop();
+            rows.pop();
             let thead =  document.getElementById('thead');
             thead.innerHTML = `
             <tr>
-                <th>Name</th>
-                <th>Distance</th>
-                <th>Discovery Year</th>
-                <th>Description</th>
+                <th onclick="callSort(this, 0)">Name</th>
+                <th onclick="callSort(this, 1)">Distance</th>
+                <th onclick="callSort(this, 2)">Discovery Year</th>
+                <th onclick="callSort(this, 3)">Description</th>
             </tr>
             `;
 
@@ -96,10 +98,10 @@ function getGalaxies() {
             thead.innerHTML = `
             <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Distance</th>
-                <th>Description</th>
-                <th>Diameter</th>
+                <th onclick="callSort(this, 1)">Name</th>
+                <th onclick="callSort(this, 2)">Distance</th>
+                <th onclick="callSort(this, 3)">Description</th>
+                <th onclick="callSort(this, 4)">Diameter</th>
             </tr>
             `;
 
@@ -111,7 +113,6 @@ function getGalaxies() {
                     let img = tds[1].children[0];
                     src = 'https' + img.children[0].src.substring(4)
                 }
-                console.log(tds[2].innerText);
                 innerHtml += buildGalaxy(src, tds[2].innerText, tds[4].innerText, tds[9].innerText, tds[10].innerText);
             }
             let table = document.getElementById('stars');
@@ -127,7 +128,7 @@ function buildGalaxy(img, name, dist, year, desc ) {
     if ( desc.indexOf('[') >= 0) desc = desc.substring(0,desc.indexOf('['));
     return `
 <tr>
-    <td><img src=${img} alt=""></td>
+    <td><img src=${img}></td>
     <td>${name}</td>
     <td>${dist}</td>
     <td>${year}</td>
