@@ -18,7 +18,7 @@ export function getLocation(msgId) {
 export function showPosition(position) {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
-    message.innerText = "location retrieved";
+    message.innerText = `location retrieved: ${lon.toFixed(3)} ${lat.toFixed(3)} `;
     locationRetrieved = true;
 }
 

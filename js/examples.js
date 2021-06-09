@@ -1,13 +1,4 @@
-import {
-    getLocation,
-    lat,
-    lon,
-    locationRetrieved,
-    KtoF,
-    niceDate,
-    niceTime,
-    windDirection
-} from './utils.js';
+import {getLocation, KtoF, lat, locationRetrieved, lon, niceDate, niceTime, windDirection} from './utils.js';
 
 /**
  *      Initialization
@@ -301,7 +292,6 @@ function getNasa() {
         .then(response => response.json())  //  wait for the response and convert it to JSON
         .then(apod => {                     //  with the resulting JSON data do something
 
-            apod.explanation = undefined;
             if (json) {                     //  if JSON is checked show only the JSON data
                 document.body.innerText = JSON.stringify(apod);
                 return;

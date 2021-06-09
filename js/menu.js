@@ -1,5 +1,6 @@
 let menu = document.getElementById('menu');
 let menuOptions = [
+    {link: 'index.html', text: 'Examples'},
     {link: 'coins.html', text: 'Crypto'},
     {link: 'allCoins.html', text: 'Crypto Currency'},
     {link: 'covid19.html', text: 'COVID 19'},
