@@ -1,5 +1,6 @@
 let menu = document.getElementById('menu');
 let menuOptions = [
+    {link: 'index.html', text: '   '},
     {link: 'index.html', text: 'Examples'},
     {link: 'coins.html', text: 'Crypto'},
     {link: 'allCoins.html', text: 'Crypto Currency'},
@@ -10,7 +11,8 @@ let menuOptions = [
     {link: 'stars.html', text: 'Stars'},
     {link: 'weather.html', text: 'Weather'},
     {link: 'churchStats.html', text: 'Stats'}
-]
+];
+
 for ( {link, text} of menuOptions) {
     menu.innerHTML += `
         <a id="${text}" href="${link}" class="w3-bar-item w3-button tabs">${text}</a>`;
