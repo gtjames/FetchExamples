@@ -5,53 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Church Stats</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/covid19.css">
-</head>
-
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css">
+    <link rel="stylesheet" href="styles/styles.css">
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul id='menu' class="nav navbar-nav">
-            </ul>
-        </div>
-    </div>
-</nav>
-<h1>Church Membership around the world</h1>
-<div class="header">
-    <div class="button">
-        <button id='getChurchStats'>Church Membership stats(per Wikipedia)</button>
-        <p>Make sure that CORS is enabled</p>
-        <p>This will actually read a the source of an HTML page!</p>
-    </div>
-</div>
-<table class="sortable">
-    <thead id='thead'>
-    <tr>
-        <th>Country</th>
-        <th>Continent</th>
-        <th>Membership</th>
-        <th>Population</th>
-        <th>% of Pop</th>
-        <th>Temples</th>
-        <th>Missions</th>
-        <th>Districts</th>
-        <th>Stakes</th>
-        <th>Wards</th>
-        <th>Branches</th>
-        <th>Congregations</th>
-        <th>Family History Centers</th>
-    </tr>
-    </thead>
-    <tbody id='countries'>
 
-    </tbody>
-</table>
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-center">
+    <h3>Church Membership around the world</h3>
+    <button id='getChurchStats'>Church Membership stats(per Wikipedia)</button>
+    <p>Make sure that CORS is enabled</p>
+    <p>This will actually read the source of an HTML page! <a id="url" href="">Click here to see</a></p>
+</div>
+
+<div class="w3-container w3-theme-l3">
+    <table class="sortable">
+        <thead id='thead'>
+        <tr class="w3-theme-d4">
+            <th>Country</th>        <th>Continent</th>      <th>Membership</th>
+            <th>Population</th>     <th>% of Pop</th>       <th>Temples</th>
+            <th>Missions</th>       <th>Districts</th>      <th>Stakes</th>
+            <th>Wards</th>          <th>Branches</th>       <th>Congregations</th>
+            <th>Family History Centers</th>
+        </tr>
+        </thead>
+        <tbody id='countries'></tbody>
+    </table>
+</div>
 </body>
 <script src="js/churchStats.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/sortColumns.js"></script>
-<script>makeMeActive('Membership Stats')</script>
+<script>makeMeActive('Stats')</script>
 
 </html>

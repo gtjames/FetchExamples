@@ -4,21 +4,18 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baseball</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-deep-orange.css">
     <link href="styles/styles.css" media="screen" rel="stylesheet"/>
 </head>
 
 <body background='images/MLB-Logo.png'>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul id='menu' class="nav navbar-nav">
-            </ul>
-        </div>
-    </div>
-</nav>
 
-<div class="container">
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
     <label for="season">Conference</label>
     <select id="season">
         <option value="2015">2015</option>
@@ -32,11 +29,15 @@
     <input type="number" min="1" max="16" value="1" id="league">
 
     <button onclick='getMLBTeams()'>Get MLB Teams</button>
-    <h3>Teams</h3>
-    <table id="team"></table>
-    <section id="teams"></section>
-
+    <div class="w3-container w3-theme-l3 w3-padding-16">
+        <table id="team"></table>
+    </div>
 </div>
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="teams"></section>
+</div>
+
+
 </body>
 <script src='js/baseball.js'></script>
 <script src="js/menu.js"></script>

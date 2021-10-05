@@ -3,7 +3,8 @@ document.getElementById('getGalaxies').addEventListener('click', getGalaxies);
 
 //  the button was pushed. so make request for the Nearby Stars
 function getStars() {
-    fetch("https://en.wikipedia.org/wiki/List_of_nearest_stars_and_brown_dwarfs")
+    let starsURL = 'https://en.wikipedia.org/wiki/List_of_nearest_stars_and_brown_dwarfs';
+    fetch(starsURL)
         .then(resp => resp.text())
         .then(html => {
 
@@ -24,10 +25,10 @@ function getStars() {
             rows.pop();
             let thead =  document.getElementById('thead');
             thead.innerHTML = `
-            <tr>
+            <tr class="w3-theme-d2">
                 <th onclick="callSort(this, 0)">Name</th>
                 <th onclick="callSort(this, 1)">Distance</th>
-                <th onclick="callSort(this, 2)">Discovery Year</th>
+                <th onclick="callSort(this, 2)">Year Discovered</th>
                 <th onclick="callSort(this, 3)">Description</th>
             </tr>
             `;
@@ -55,6 +56,7 @@ function getStars() {
             }
             let table = document.getElementById('stars');
             table.innerHTML = innerHtml;
+            document.getElementById('href').href = starsURL;
         })
         .catch(err => console.error(err) );
 }
@@ -75,7 +77,8 @@ function buildStar(name, dist, year, desc ) {
 
 //  the button was pushed. so make request for the Nearby Galaxies
 function getGalaxies() {
-    fetch("https://en.wikipedia.org/wiki/List_of_nearest_galaxies")
+    let galaxiesURL = 'https://en.wikipedia.org/wiki/List_of_nearest_galaxies';
+    fetch(galaxiesURL)
         .then(resp => resp.text())
         .then(html => {
 
@@ -96,7 +99,7 @@ function getGalaxies() {
             rows.pop();
             let thead =  document.getElementById('thead');
             thead.innerHTML = `
-            <tr>
+            <tr class="w3-theme-d2">
                 <th></th>
                 <th onclick="callSort(this, 1)">Name</th>
                 <th onclick="callSort(this, 2)">Distance</th>
@@ -117,6 +120,7 @@ function getGalaxies() {
             }
             let table = document.getElementById('stars');
             table.innerHTML = innerHtml;
+            document.getElementById('href').href = galaxiesURL;
         })
         .catch(err => console.error(err) );
 }

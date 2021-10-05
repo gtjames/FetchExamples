@@ -1,0 +1,68 @@
+[
+  {
+    "reps_picklist": [
+      {
+        "uid": "15",
+        "userid": "00maryrep",
+        "name": "Mary Rep",
+        "type": "Sales Rep"
+      },
+      {
+        "uid": "70",
+        "userid": "RepAA",
+        "name": "Rep AA",
+        "type": "Sales Rep"
+      },
+      {
+        "uid": "71",
+        "userid": "RepBB",
+        "name": "Rep BB",
+        "type": "Sales Rep"
+      },
+      {
+        "uid": "72",
+        "userid": "RepCC",
+        "name": "Rep CC",
+        "type": "Sales Rep"
+      },
+      {
+        "uid": "73",
+        "userid": "RepGTJ",
+        "name": "Rep GTJ",
+        "type": "Sales Rep"
+      }
+    ],
+    "corps_picklist": [
+      {
+        "uid": "67",
+        "userid": "CorpAA",
+        "name": "Corp AA",
+        "type": "Corporate"
+      },
+      {
+        "uid": "68",
+        "userid": "Corp BB",
+        "name": "Corp BB",
+        "type": "Corporate"
+      },
+      {
+        "uid": "69",
+        "userid": "CorpCC",
+        "name": "Corp CC",
+        "type": "Corporate"
+      },
+      {
+        "uid": "74",
+        "userid": "CorpGTJ",
+        "name": "Corp GTJ",
+        "type": "Corporate"
+      },
+      {
+        "uid": "11",
+        "userid": "00marycorp",
+        "name": "Mary Corporation",
+        "type": "Corporate"
+      }
+    ]
+  }
+]

@@ -35,17 +35,19 @@ function getWeather() {
             let innerHTML = "";
 
             //  City API (forecast)
+            let color = 0;
             for (let day of weather.list) {
+                color++;
                 //  let's build a nice card for each day of the weather data
                 //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
                 innerHTML +=`
-                    <div class="grid-item">
-                        <h2>Date: ${niceDate(day.dt, 0)} ${niceTime(day.dt, 0)}</h2>
-                        <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png' alt=""> ${day.weather[0].description}</p>
-                        <p>Wind at ${day.wind.speed} mph out of the ${windDirection(day.wind.deg)}</p>
-                        <p>Sunrise: ${niceTime(weather.city.sunrise, 0)} / Sunset: ${niceTime(weather.city.sunset, 0)}</p>
-                        <p>Temp: ${day.main.temp}</p>
-                    </div>`;
+                <div class="w3-container w3-border-bottom w3-border-black w3-quarter w3-${(color%2)>0 ? 'theme-l2':'theme-d2'}">
+                    <h4>Date: ${niceDate(day.dt, 0)} ${niceTime(day.dt, 0)}</h4>
+                    <p>Forecast:<br> <img src='http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png' alt="" height="70%"> ${day.weather[0].description}</p>
+                    <p>Wind at ${day.wind.speed} mph out of the ${windDirection(day.wind.deg)}</p>
+                    <p>Sunrise: ${niceTime(weather.city.sunrise, 0)} / Sunset: ${niceTime(weather.city.sunset, 0)}</p>
+                    <p>Temp: ${day.main.temp}</p>
+                </div>`;
             }
             //  and finally take the finished URL and stuff it into the web page
             weatherList.innerHTML = innerHTML;

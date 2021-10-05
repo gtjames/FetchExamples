@@ -5,30 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World COVID Stats</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/covid19.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-brown.css">
+    <link href="styles/styles.css" rel="stylesheet">
 </head>
-
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul id='menu' class="nav navbar-nav">
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="header">
-    <div class="button">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme">
         <button id='getStats'>Get COVID Stats</button>
         <br>
         <label for="country">Highlight Country</label>
         <input type="text" id='country'>
-    </div>
     <p>Click the button to get World stats. Enter a country name and tab out to highlight that country</p>
 </div>
-<br><br><br><br>
-<table class="sortable">
+
+<table class="sortable w3-theme-l4">
     <thead>
     <tr>
         <th>Country</th>
@@ -53,6 +48,6 @@
 <script src="js/covid19.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/sortColumns.js"></script>
-<script>makeMeActive('COVID 19')</script>
+<script>makeMeActive('COVID')</script>
 
 </html>

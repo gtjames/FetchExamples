@@ -3,22 +3,28 @@ body {
     background-repeat: no-repeat;
 }
 
-table, td, th {
+table, tr, td, th {
+    transition: .5s;
     border: 1px solid black;
     border-collapse: collapse;
-    margin: 20px;
+    margin-top: 5px;
     padding: 8px;
     text-align: center;
 }
 
-.table-striped {
-    background-color: #e6e4d8;
+tr.selected { background-color: greenyellow; }
+
+tr:hover {
+    background-color: #45A29E;
+    border-radius: 20px;
+    /*transform: scale(1.1);*/
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td,
-.table-striped>thead>tr:nth-child(odd)>th {
-    background-color: rgba(48, 38, 126, 0.5);
-}
+tr:nth-child(even) { background-color: lightblue; }
+tr:nth-child(odd)  { background-color: lightcyan; }
+
+.ATOZ {background: url("../images/atoz.png") no-repeat right top;}
+.ZTOA {background: url("../images/ztoa.png") no-repeat left bottom;}
 
 /* Style the tab */
 .tab {
@@ -65,8 +71,6 @@ table, td, th {
     border-top: none;
     background-color: #ccc;
 }
-
-.container { margin-left: 100px; }
 
 /*      used in the bit-coins and weather apps      */
 .grid-container {

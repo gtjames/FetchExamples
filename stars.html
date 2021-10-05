@@ -5,37 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nearby Stars and Galaxies</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/covid19.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul id='menu' class="nav navbar-nav">
-            </ul>
-        </div>
-    </div>
-</nav>
-<h1>Nearby Stars</h1>
-    <div class="header">
-        <div class="button">
-            <button id='getStars'>Get Nearby Stars</button>
-            <button id='getGalaxies'>Get Nearby Galaxies</button>
-            <p>Make sure that CORS is enabled</p>
-            <p>This will actually read a the source of an HTML page!</p>
-        </div>
-    </div>
-    <table class="sortable">
-        <thead id='thead'>
 
-        </thead>
-        <tbody id='stars'>
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
 
-        </tbody>
+<div class="w3-container w3-theme w3-padding-16">
+    <button id='getStars'>Get Nearby Stars</button>
+    <button id='getGalaxies'>Get Nearby Galaxies</button>
+    <p>Make sure that CORS is enabled</p>
+    <div>
+        This will actually read the source of an HTML page!
+        <a href="" id="href">See the Original Source here</a>
+    </div>
+</div>
+
+<div class="w3-container w3-theme-l2">
+    <table class="w3-table-all w3-hoverable sortable">
+        <thead id='thead'></thead>
+        <tbody id='stars'></tbody>
     </table>
+</div>
 </body>
+
 <script src="js/stars.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/sortColumns.js"></script>
