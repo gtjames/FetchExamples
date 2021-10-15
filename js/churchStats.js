@@ -15,7 +15,7 @@ function getChurchStats() {
             // Example:
             let tbody =  doc.getElementsByTagName('tbody');
             //  this retrieves ALL table bodies. We only care about the first one tbody[0]
-            let rows = Array.from(tbody[1].getElementsByTagName('tr'));
+            let rows = Array.from(tbody[2].getElementsByTagName('tr'));
             //            rows.forEach(tr => console.log(tr))
             rows.shift();       //  remove the header row
             let innerHTML = rows.reduce( (accum, tr) => accum + buildStat(Array.from(tr.children)), "");
