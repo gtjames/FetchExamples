@@ -5,7 +5,7 @@ body {
 }
 
 table, tr, td, th {
-    transition: .5s;
+    transition: .2s;
     border: 1px solid black;
     border-collapse: collapse;
     margin-top: 5px;

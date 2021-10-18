@@ -1,0 +1,3 @@
+.w3-table-all tr:nth-child(even) { color:#000 !important; background-color:#b7fff8}
+.w3-table-all tr:nth-child(odd)  { color:#000 !important; background-color:#26ffe9}
+.w3-hoverable tbody tr:hover {color:#fff !important; background-color:#00dcc6}

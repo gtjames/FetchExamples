@@ -25,7 +25,7 @@ function getStars() {
             rows.pop();
             let thead =  document.getElementById('thead');
             thead.innerHTML = `
-            <tr class="w3-theme-d2">
+            <tr class="w3-theme-d1">
                 <th onclick="callSort(this, 0)">Name</th>
                 <th onclick="callSort(this, 1)">Distance</th>
                 <th onclick="callSort(this, 2)">Year Discovered</th>
@@ -125,14 +125,14 @@ function getGalaxies() {
         .catch(err => console.error(err) );
 }
 
-function buildGalaxy(img, name, dist, year, desc ) {
+function buildGalaxy(img, name, dist, year, desc) {
     if ( name.indexOf('[') >= 0) name = name.substring(0,name.indexOf('['));
     if ( dist.indexOf('[') >= 0) dist = dist.substring(0,dist.indexOf('['));
     if ( year.indexOf('[') >= 0) year = year.substring(0,year.indexOf('['));
     if ( desc.indexOf('[') >= 0) desc = desc.substring(0,desc.indexOf('['));
     return `
 <tr>
-    <td><img src=${img}></td>
+    <td><img alt="" src=${img}></td>
     <td>${name}</td>
     <td>${dist}</td>
     <td>${year}</td>

@@ -2,8 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baseball</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-deep-orange.css">
     <link href="styles/styles.css" media="screen" rel="stylesheet"/>
@@ -33,7 +34,12 @@
 
     <button onclick='getMLBTeams()'>Get MLB Teams</button>
     <div class="w3-container w3-theme-l3 w3-padding-16">
-        <table id="team"></table>
+        <table id="team">
+            <tr class="w3-theme-l1">
+                <th>Season</th>         <th>Games Played</th>   <th>Wins</th>
+                <th>Percent Wins</th>   <th>Loses</th>          <th>Percent Loses</th>  <th></th>
+            </tr>
+        </table>
     </div>
 </div>
 <div class="w3-row w3-theme-l3 w3-center">

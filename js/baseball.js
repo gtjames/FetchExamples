@@ -57,7 +57,7 @@ function showStats(teamStats) {
     let games = teamStats.response.games;
     // let goals = teamStats.response.goals;
 
-    html = `<tr class="w3-theme-l1"><th>${teamStats.parameters.season} Season</th><th>Games Played</th><th>Wins</th><th>Percent Wins</th><th>Loses</th><th>Percent Loses</th>`;
+    html = `<tr class="w3-theme-l1"><th>${teamStats.parameters.season} Season</th><th>Games Played</th><th>Wins</th><th>Percent Wins</th><th>Loses</th><th>Percent Loses</th><th></th></tr>`;
     html += `
 		<tr class="w3-theme-l3"><td>Home:</td><td>${games.played.home}</td><td>${games.wins.home.total}</td><td>${(games.wins.home.percentage*100).toFixed(0)}%</td><td>${games.loses.home.total}</td><td>${(games.loses.home.percentage*100).toFixed(0)}%</td><td>The ${teamStats.response.team.name}                 <img src=${teamStats.response.team.logo}    width=100px height=70px></td></tr>
 		<tr class="w3-theme-l4"><td>Away:</td><td>${games.played.away}</td><td>${games.wins.away.total}</td><td>${(games.wins.away.percentage*100).toFixed(0)}%</td><td>${games.loses.away.total}</td><td>${(games.loses.away.percentage*100).toFixed(0)}%</td><td>play in the ${teamStats.response.league.name}       <img src=${teamStats.response.league.logo}  width=100px height=70px></td></tr>
