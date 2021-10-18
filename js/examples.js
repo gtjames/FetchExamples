@@ -30,7 +30,7 @@ function getMovies() {
     }    
 
     //  add movie to the search API
-    let url = `https://imdb-api.com/en/API/SearchMovie/k_qa7p2g6c/${movieTitle.value}`;
+    let url = `https://imdb-api.com/en/API/SearchMovie/k_lLeNEBFq/${movieTitle.value}`;
     console.log(url);
 
     //  make the request
