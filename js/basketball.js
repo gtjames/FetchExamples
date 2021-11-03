@@ -41,7 +41,7 @@ function showNBATeams(teams) {
         if (team.logo.length === 0) team.logo = '/images/NBA-Logo.jpg';
         html += `
 			<div class="w3-col m4 l2" style="border-style: solid">
-				<img src='${team.logo}' height=80px width=80px onclick='getGamesAndRoster(${team.teamId})'>
+				<img src='${team.logo}' height=80px width=80px alt="" onclick='getGamesAndRoster(${team.teamId})'>
 			    <h6>${team.fullName}</h6>
 			</div>`;
     }
@@ -90,17 +90,20 @@ function getNBATeamRoster(teamId) {
  *
  *          An event is added to the player name. Click on the name to get the players list of games
  */
+let row = 0;
 function showNBATeamRoster(players) {
     let teamTable = document.getElementById('rosterRows');
     let html = ``;
     for (let player of players) {
         let playerId;
-        if      (player.leagues.standard != undefined)    playerId = player.leagues.standard;
-        else if (player.leagues.utah     != undefined)    playerId = player.leagues.utah;
-        else if (player.leagues.vegas    != undefined)    playerId = player.leagues.vegas;
-        else if (player.leagues.sacramento != undefined)  playerId = player.leagues.sacramento;
+        if      (player.leagues.standard   !== undefined)    playerId = player.leagues.standard;
+        else if (player.leagues.utah       !== undefined)    playerId = player.leagues.utah;
+        else if (player.leagues.vegas      !== undefined)    playerId = player.leagues.vegas;
+        else if (player.leagues.sacramento !== undefined)  playerId = player.leagues.sacramento;
         else                                              playerId = {pos: 'none', jersey: JSON.stringify(player.leagues)};
-        html += `<tr>
+        row++;
+        html += `
+        <tr class="w3-theme-${row%2===1?'l2':'l3'}">
 			<td onclick="getNBAPlayerStats(${player.playerId}, '${player.firstName} ${player.lastName}')"><a>${player.firstName} ${player.lastName}<a/></td>
 			<td>${player.collegeName}</td>
 			<td>${player.dateOfBirth}</td>
@@ -145,7 +148,7 @@ function getNBAGameStats(teamId) {
  */
 function showTeamGameStats(games) {
     for (let year = 2015; year <= 2020; year++ ) {
-        let gamesForTheYear = games.filter(g => g.seasonYear == year);
+        let gamesForTheYear = games.filter(g => g.seasonYear === year);
         gamesByYear(gamesForTheYear, 'G' + year);
     }
 }
@@ -154,10 +157,11 @@ function gamesByYear(games, tab) {
     let teamTable = document.getElementById(tab + 'Rows');
     html = ``;
     for (let game of games) {
-        html += `<tr>
+        row++;
+        html += `<tr class="w3-theme-${row%2>0?'l2':'l3'}">
 		        <td>${game.arena} </td><td>${game.city}</td><td>${game.gameDuration} </td>
-		        <td>${game.hTeam.fullName}</td><td>${game.hTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.hTeam.teamId})'><img src='${game.hTeam.logo}' width=100px height=100px></td>
-		        <td>${game.vTeam.fullName}</td><td>${game.vTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.vTeam.teamId})'><img src='${game.vTeam.logo}' width=100px height=100px></td>
+		        <td>${game.hTeam.fullName}</td><td>${game.hTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.hTeam.teamId})'><img src='${game.hTeam.logo}' alt="" width=100px height=100px></td>
+		        <td>${game.vTeam.fullName}</td><td>${game.vTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.vTeam.teamId})'><img src='${game.vTeam.logo}' alt="" width=100px height=100px></td>
             </tr>`;
     }
     teamTable.innerHTML = html;
@@ -202,10 +206,12 @@ function showNBAPlayerStats(playerStats, playerName) {
 
     openTab(document.getElementById('playerBtn'), 'playerTab')
 
+
     let html = ``;
     for (let stats of playerStats) {
+        row++;
         if (stats.points === "") continue;      //  skip games not played
-            html += `<tr>
+            html += `<tr class="w3-theme-${row%2>0?'l2':'l3'}">
 			<td>${stats.points}</td>   <td>${stats.min}</td>     <td>${stats.fgm}</td>  <td>${stats.fga}</td>  <td>${stats.fgp}</td>
 			<td>${stats.ftm}</td>      <td>${stats.fta}</td>     <td>${stats.ftp}</td>  <td>${stats.tpm}</td>  <td>${stats.tpa}</td>
             <td>${stats.tpp}</td>      <td>${stats.offReb}</td>  <td>${stats.defReb}</td>  <td>${stats.totReb}</td>  <td>${stats.assists}</td>

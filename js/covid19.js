@@ -1,6 +1,7 @@
 let country = document.getElementById('country');
 country.addEventListener('blur', selectCountry);
 
+//  this is my button to request the COVID data
 document.getElementById('getStats').addEventListener('click', getStats);
 
 //  if the country in the input field is changed lets change the background color of that countries row
@@ -20,11 +21,9 @@ function getStats() {
         })
         .then(resp => resp.json())              //  wait for the response and convert it to JSON
         .then(covid => {                        //  with the resulting JSON data do something
-            console.table(covid);
+            console.table(covid.countries_stat);
             
             //  put a break point here to look at the data coming from the COVID API
-            
-            let table = document.getElementById('countries');
 
             let innerHtml = '';
 
@@ -32,15 +31,19 @@ function getStats() {
             for (const country of covid.countries_stat) {
                 innerHtml += buildRow(country);
             }
-            
-            table.innerHTML = innerHtml;
+
+            //  get a reference to our tbody in our page
+            let table = document.getElementById('countries');
+            table.innerHTML = innerHtml;        //  push in our created HTML text
 
         }).catch(err => {   console.error(err);     });
 }
 
+let r = 0;
 function buildRow(country) {
+    r++;
     return `
-<tr id='${country.country_name}'>
+<tr class="w3-theme-${r%2?'l1':'l3'}" id='${country.country_name}'>
     <td>${country.country_name}</td>
     <td>${country.cases}</td>
     <td>${country.deaths}</td>
