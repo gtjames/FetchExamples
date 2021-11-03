@@ -6,7 +6,7 @@ const urlApi_global = "https://api.coinlore.net/api/global/";
 //Api url of top10 information
 const urlApi_topTen = "https://api.coinlore.net/api/tickers/?start=0&limit=10";
 
-function showGoblobalResume() {
+function showGlobalResume() {
   //fetch API for global info
   fetch(urlApi_global)
   .then((response) => response.json())
@@ -206,4 +206,4 @@ fetch(urlApi_topTen)
 }
 
 //export
-export{showGoblobalResume,showTop10Coins};
+export{showGlobalResume,showTop10Coins};

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lambda</title>
+</head>
+<body>
+<!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
+<label for="name">New Quote</label>
+<input type="text" id="name">
+<button id="save">Save Quote</button>
+
+<label for="firstName">New Student</label>
+<input type="text" id="firstName">
+<button id="saveStudent">Save Quote</button>
+<!--</form>-->
+<table>
+    <thead> <tr> <th>ID</th> <th>Text</th> </tr> </thead>
+    <tbody id="rows"></tbody>
+</table>
+</body>
+<script>
+	let rows = document.getElementById("rows");
+
+	window.addEventListener("load", () => getQuotes());
+	window.addEventListener("load", () => getStudents());
+
+	let saveQuote = document.getElementById("save");
+	let quote = document.getElementById("name");
+	saveQuote.addEventListener("click", () => createQuote);
+
+	function createQuote() {
+		rows.innerHTML = '';            //  empty out the list
+		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+			method: 'POST',
+			mode: "no-cors", // or without this line
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': '*/*',
+				'Cache-Control': 'no-cache',
+				'Accept-Encoding': 'gzip, deflate, br',
+				'Connection': 'keep-alive'
+			},
+			body: JSON.stringify({name: quote.value })
+		})
+            .then(response => response.json())
+			.then(data => getList())
+			.catch(err => {
+				console.log('Fetch Error :', err);
+			});
+	}
+
+	function getQuotes() {
+		//fetch API for global info
+		fetch("https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev")
+			.then((response) => response.json())
+			.then((quotes) => {
+				//assigning values
+                quotes.forEach(q => {
+                    let tr = `<tr> <td>${(new Date(+q.id)).toString().substring(4,24)}</td> <td>${q.Name}</td> </tr>`;
+					rows.innerHTML += tr;
+				});
+				rows.innerHTML += 'ta da! ' + new Date().toTimeString();
+			})
+			.catch(function(err) {
+				console.log('Fetch Error :', err);
+        });
+	}
+
+//--------------------------------------
+
+	let saveStudent = document.getElementById("saveStudent");
+	let firstName = document.getElementById("firstName");
+	saveStudent.addEventListener("click", () => createStudnet());
+
+	function createStudent(){
+		rows.innerHTML = '';            //  empty out the list
+		fetch('https://759y9aw8fh.execute-api.us-east-2.amazonaws.com/dev', {
+			method: 'POST',
+			mode: "no-cors", // or without this line
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': '*/*',
+				'Cache-Control': 'no-cache',
+				'Accept-Encoding': 'gzip, deflate, br',
+				'Connection': 'keep-alive'
+			},
+			body: JSON.stringify({name: quote.value })
+		})
+			.then(response => response.json())
+			.then(data => getStudentList())
+			.catch(err => {
+				console.log('Fetch Error :', err);
+			});
+	}
+
+	function getStudents() {
+		//fetch API for global info
+		fetch("https://759y9aw8fh.execute-api.us-east-2.amazonaws.com/dev")
+			.then((response) => response.json())
+			.then((quotes) => {
+				let rows = document.getElementById("rows");
+				//assigning values
+				quotes.forEach(q => {
+					let tr = `<tr> <td>${q.name}</td> <td>${q.lastName}</td> </tr>`;
+					rows.innerHTML += tr;
+				});
+				rows.innerHTML += 'ta da! ' + new Date().toTimeString();
+			})
+			.catch(function(err) {
+				console.log('Fetch Error :', err);
+			});
+	}
+</script>
+</html>
