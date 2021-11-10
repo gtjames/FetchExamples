@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>Weather Forecast</title>
+</head>
+
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <legend>Get the Weather Forecast:</legend>
+    <label for="allDays">Show Full Forecast:</label>
+    <input type="checkbox" id="allDays">
+    <br>
+
+    <label for="city">Get the Weather For:</label>
+    <input type="text" id="city" value='Fort Worth'>
+    <br>
+
+    <button id="getWeather">Get Weather</button>
+
+</div>
+
+<div id="weatherList" class="w3-row">
+    nothing to start with
+</div>
+</body>
+<script src="js/weather.js" ></script>
+<script src="js/menu.js" ></script>
+<script>makeMeActive('Weather')</script>
+
+</html>
