@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Lambda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+    <link href="styles/styles.css" media="screen"  rel="stylesheet"/>
 </head>
 <body>
-<!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
-<label for="quote">New Quote</label>
-<input type="text" id="quote">
-<button id="save">Save Quote</button>
 
-<label for="names">New Student</label>
-<input type="text" id="names">
-<button id="saveStudent">Save Student</button>
-<!--</form>-->
-<table>
-    <thead> <tr> <th>ID</th> <th>Text</th> <th>Delete</th> </tr> </thead>
-    <tbody id="rows"></tbody>
-</table>
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
+    <label for="quote">New Quote</label>
+    <input type="text" id="quote">
+    <button id="save">Save Quote</button>
+
+    <label for="names">New Student</label>
+    <input type="text" id="names">
+    <button id="saveStudent">Save Student</button>
+    <!--</form>-->
+</div>
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>ID</th> <th>Text</th> <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+    </table>
+</div>
 </body>
 <script>
 	let rows = document.getElementById("rows");
@@ -39,22 +56,28 @@
 			},
 			body: JSON.stringify({name: quote.value })
 		})
-            .then(response => response.json())
 			.then(data => getQuoteList())
 			.catch(err => console.log('Fetch Error :', err) );
 	}
 
+	let row = 0;
 	function getQuoteList() {
 		//fetch API for global info
 		fetch("https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev")
-			.then((response) => response.json())
-			.then((quotes) => {
-				//assigning values
+			.then(response => response.json())
+			.then(quotes => {
                 quotes.forEach(q => {
-                    let tr = `<tr>  <td>${(new Date(+q.id)).toString().substring(4,24)}</td> <td>${q.Name}</td> <td id="${q.id}">X</td>  </tr>`;
+					row++;
+                    let tr = `
+                    <tr class="w3-theme-${row % 2 > 0 ?"l2":"l3"}">
+                        <td>${(new Date(+q.id)).toString().substring(4,24)}</td>
+                        <td>${q.Name}</td>
+                        <td id="${q.id}">X</td>
+                    </tr>`;
 					rows.innerHTML += tr;
 				});
-				rows.innerHTML += '<tr> <td>ta da!</td><td>' + new Date().toTimeString()+"</td>  </tr>";
+				row++;
+				rows.innerHTML += `<tr class="w3-theme-${row % 2 > 0 ?"l2":"l3"}"> <td>ta da!</td><td>${new Date().toTimeString()}</td><td></td></tr>`;
 				quotes.forEach(q => {
 					let ref = document.getElementById(q.id);
 					ref.addEventListener('click', () => deleteQuote(q.id));
