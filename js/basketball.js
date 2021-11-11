@@ -23,9 +23,7 @@ function getNBATeams() {
     })
         .then(response => response.json())
         .then(teams => showNBATeams(teams.api.teams))       //  this function will list all teams in the conference
-        .catch(err => {
-            console.error(err);
-        });
+        .catch(err => console.error(err));
 }
 
 /**
@@ -40,7 +38,7 @@ function showNBATeams(teams) {
     for (let team of teams) {
         if (team.logo.length === 0) team.logo = '/images/NBA-Logo.jpg';
         html += `
-			<div class="w3-col m4 l2" style="border-style: solid">
+			<div class="grid-item m4 l2" style="border-style: solid">
 				<img src='${team.logo}' height=80px width=80px alt="" onclick='getGamesAndRoster(${team.teamId})'>
 			    <h6>${team.fullName}</h6>
 			</div>`;
@@ -148,7 +146,7 @@ function getNBAGameStats(teamId) {
  */
 function showTeamGameStats(games) {
     for (let year = 2015; year <= 2020; year++ ) {
-        let gamesForTheYear = games.filter(g => g.seasonYear === year);
+        let gamesForTheYear = games.filter(g => +g.seasonYear === year);
         gamesByYear(gamesForTheYear, 'G' + year);
     }
 }

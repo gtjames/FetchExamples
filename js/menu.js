@@ -2,6 +2,7 @@ let menu = document.getElementById('menu');
 let menuOptions = [
     {link: 'index.html', text: '   '},
     {link: 'index.html', text: 'Examples'},
+    {link: 'orig-allCoins.html', text: 'Orig Bit Coins'},
     {link: 'coins.html', text: 'Crypto'},
     {link: 'allCoins.html', text: 'Crypto Currency'},
     {link: 'covid19.html', text: 'COVID'},

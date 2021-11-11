@@ -41,7 +41,7 @@ function getWeather() {
                 //  let's build a nice card for each day of the weather data
                 //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
                 innerHTML +=`
-                <div class="w3-container w3-border-bottom w3-border-black w3-quarter w3-${(color%2)>0 ? 'theme-l2':'theme-d2'}">
+                <div class="grid-item w3-border-bottom w3-border-black w3-quarter w3-${(color%2)>0 ? 'theme-l2':'theme-d2'}">
                     <h4>Date: ${niceDate(day.dt, 0)} ${niceTime(day.dt, 0)}</h4>
                     <p>Forecast:<br> <img src='http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png' alt="" height="70%"> ${day.weather[0].description}</p>
                     <p>Wind at ${day.wind.speed} mph out of the ${windDirection(day.wind.deg)}</p>
