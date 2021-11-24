@@ -1,6 +1,5 @@
 let menu = document.getElementById('menu');
 let menuOptions = [
-    {link: 'index.html', text: '   '},
     {link: 'index.html', text: 'Examples'},
     {link: 'orig-allCoins.html', text: 'Orig Bit Coins'},
     {link: 'coins.html', text: 'Crypto'},
@@ -11,6 +10,7 @@ let menuOptions = [
     {link: 'basketball.html', text: 'Basketball'},
     {link: 'stars.html', text: 'Stars'},
     {link: 'weather.html', text: 'Weather'},
+    {link: 'disney.html', text: 'Disney'},
     {link: 'churchStats.html', text: 'Stats'}
 ];
 

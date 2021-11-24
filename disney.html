@@ -40,16 +40,17 @@
 				li += `<li>${films}</li>`;
 			}
 
+			if ( typeof character.imageUrl === 'undefined')
+				character.imageUrl = " /rev";
 			out.innerHTML += 		`
-<div class="w3-container w3-theme-l3 w3-padding-16">
-    <a href="${character.sourceUrl}">${character.name}</a>
-    <br>
-    <img id="img" src="${character.imageUrl.substr(0, character.imageUrl.indexOf('/rev'))}" width="160" height="160" alt="">
-    <ul class='w3-table-all sortable w3-theme' id="movies">
-        ${li}
-    </ul>
-</div>
-`
+                <div class="w3-container w3-theme-l3 w3-padding-16">
+                    <a href="${character.sourceUrl}">${character.name}</a>
+                    <br>
+                    <img src="${character.imageUrl.substr(0, character.imageUrl.indexOf('/rev'))}" width="160" height="160" alt="">
+                    <ul class='w3-table-all sortable w3-theme' id="movies">
+                        ${li}
+                    </ul>
+                </div>`
 		}
     }
 
@@ -68,7 +69,6 @@
 
 </script>
 <script src="js/menu.js"></script>
-<script src="js/sortColumns.js"></script>
-<script>makeMeActive('Books')</script>
+<script>makeMeActive('Disney')</script>
 
 </html>
