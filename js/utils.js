@@ -27,13 +27,22 @@ export function showPosition(position) {
 //  We add 11.25 to push all directions 11.25 degrees clockwise
 //  Then we mod the degrees with 360 to force all results between 0 and 359
 //  finally we can divide by 22.5 because we have 16 (360 / 16 equals 22.5) different wind directions
-export function windDirection(degrees) {
-    let direction = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
+export function windDirection(degrees, long) {
+    let direction;
+    if (long)
+        direction =["North",  "North by North East", "North East",  "East by North East",
+            "East",    "East by South East", "South East", "South by South East",
+            "South",  "South by South West", "South West",  "West by South West",
+            "West",    "West by North West", "North West", "North by North West",
+            "North"];
+    else
+        direction = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
 
     degrees = Math.round(degrees + 11.25) % 360;
     let index = Math.floor(degrees / 22.5);
     return direction[index];
 }
+
 
 //  strip out just the MM/DD/YYY from the date
 //  convert from UNIX date time and take the time zone offset into consideration

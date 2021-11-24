@@ -1,6 +1,6 @@
 document.getElementById('getStars').addEventListener('click', getStars);
 document.getElementById('getGalaxies').addEventListener('click', getGalaxies);
-
+let rows = 0;
 //  the button was pushed. so make request for the Nearby Stars
 function getStars() {
     let starsURL = 'https://en.wikipedia.org/wiki/List_of_nearest_stars_and_brown_dwarfs';
@@ -62,12 +62,13 @@ function getStars() {
 }
 
 function buildStar(name, dist, year, desc ) {
+    rows++;
     if ( name.indexOf('[') >= 0) name = name.substring(0,name.indexOf('['));
     if ( dist.indexOf('[') >= 0) dist = dist.substring(0,dist.indexOf('['));
     if ( year.indexOf('[') >= 0) year = year.substring(0,year.indexOf('['));
     if ( desc.indexOf('[') >= 0) desc = desc.substring(0,desc.indexOf('['));
     return `
-<tr id='${name}'>
+<tr class="w3-theme-${rows%2>0?'l2':'d1'}" id='${name}'>
     <td>${name}</td>
     <td>${dist}</td>
     <td>${year}</td>
@@ -126,12 +127,13 @@ function getGalaxies() {
 }
 
 function buildGalaxy(img, name, dist, year, desc) {
+    rows++;
     if ( name.indexOf('[') >= 0) name = name.substring(0,name.indexOf('['));
     if ( dist.indexOf('[') >= 0) dist = dist.substring(0,dist.indexOf('['));
     if ( year.indexOf('[') >= 0) year = year.substring(0,year.indexOf('['));
     if ( desc.indexOf('[') >= 0) desc = desc.substring(0,desc.indexOf('['));
     return `
-<tr>
+<tr class="w3-theme-${rows%2>0?'l2':'d1'}">
     <td><img alt="" src=${img}></td>
     <td>${name}</td>
     <td>${dist}</td>

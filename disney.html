@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Disney Characters</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="characterSearch">Search for a Character</label>
+    <input type="text" id="characterSearch" value="elsa">
+    <button id="search">Search</button>
+</div>
+<div id="out"></div>
+</body>
+<script>
+	let out = document.getElementById('out');
+	let search = document.getElementById('search');
+    search.addEventListener('click', searchCharacter);
+    let allCharacters = [];
+
+    function searchCharacter() {
+        let name = document.getElementById('characterSearch');
+		out.innerHTML = '';
+        let d = allCharacters.filter(c => c.name.toUpperCase().indexOf(name.value.toUpperCase()) >= 0);
+		if ( d.length == 0 )            return;
+		name.value = d[0].name;
+		for (let character of d) {
+			let li = "";
+			for (let films of character.films) {
+				li += `<li>${films}</li>`;
+			}
+
+			out.innerHTML += 		`
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <a href="${character.sourceUrl}">${character.name}</a>
+    <br>
+    <img id="img" src="${character.imageUrl.substr(0, character.imageUrl.indexOf('/rev'))}" width="160" height="160" alt="">
+    <ul class='w3-table-all sortable w3-theme' id="movies">
+        ${li}
+    </ul>
+</div>
+`
+		}
+    }
+
+    for (let i = 1; i <= 149; i++) {
+        getAllCharacters(i);
+    }
+
+    function getAllCharacters(page) {
+        let url = `https://api.disneyapi.dev/characters?page=${page}`;
+        fetch(url)
+            .then(resp => resp.json())          //  wait for the response and convert it to JSON
+            .then(character => {                    //  with the resulting JSON data do something
+                allCharacters = allCharacters.concat(character.data);
+            });
+    }
+
+</script>
+<script src="js/menu.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>makeMeActive('Books')</script>
+
+</html>
