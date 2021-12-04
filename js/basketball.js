@@ -37,8 +37,8 @@ function showNBATeams(teams) {
     let html = `<div class="row">`;
     for (let team of teams) {
         if (team.logo.length === 0) team.logo = '/images/NBA-Logo.jpg';
-        html += `<div class="w3-col m4 l2" style="border-style: solid">
-				<img src='${team.logo}' height=80px width=80px alt="" onclick='getGamesAndRoster(${team.teamId})'>
+        html += `<div class="w3-col m4 l2 bball-card" style="border-style: solid">
+				<img src='${team.logo}' alt="" onclick='getGamesAndRoster(${team.teamId})'>
 			    <h6>${team.fullName}</h6>
         </div>`;
     }

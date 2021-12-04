@@ -10,6 +10,7 @@ let menuOptions = [
     {link: 'basketball.html', text: 'Basketball'},
     {link: 'stars.html', text: 'Stars'},
     {link: 'weather.html', text: 'Weather'},
+    {link: 'art.html', text: 'World Art'},
     {link: 'disney.html', text: 'Disney'},
     {link: 'churchStats.html', text: 'Stats'}
 ];

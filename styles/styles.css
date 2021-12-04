@@ -87,3 +87,50 @@ tr:nth-child(odd)  { background-color: lightcyan; }
     padding: 5px;
     text-align: center;
 }
+
+.bball-card {
+    border-style: solid;
+    border-radius: 30px;
+    height: 200px;
+}
+
+.bball-card > img {
+    margin:10px;
+    width:120px;
+    height:120px;
+    transition:all 0.5s ;
+}
+
+.disney-card {
+    border-style: solid;
+    border-radius: 30px;
+    height: 300px;
+}
+
+.disney-card > img {
+    float:left;
+    margin:10px;
+    width:160px;
+    height:160px;
+    transition:all 0.5s ;
+}
+
+.disney-card > img:hover {
+    width:180px;
+    height:180px;
+}
+
+.art-card {
+    border-style: solid;
+    border-radius: 30px;
+    height: 400px;
+}
+
+.art-card > img {
+    border-radius: 15px;
+    margin:10px;
+    width:300px;
+    height:300px;
+    transition:all 0.5s ;
+}
+

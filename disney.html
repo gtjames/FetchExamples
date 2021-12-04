@@ -17,24 +17,44 @@
 
 <div class="w3-container w3-theme w3-padding-16">
     <label for="characterSearch">Search for a Character</label>
-    <input type="text" id="characterSearch" value="elsa">
+    <input type="text" id="characterSearch" value="Princess">
     <button id="search">Search</button>
 </div>
-<div id="out"></div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
 </body>
 <script>
-	let out = document.getElementById('out');
+	let card = document.getElementById('card');
 	let search = document.getElementById('search');
-    search.addEventListener('click', searchCharacter);
+
+	search.addEventListener('click', searchCharacter);
     let allCharacters = [];
+	if (localStorage.getItem('disneyCharacters') !== null) {
+		allCharacters = JSON.parse(localStorage.getItem('disneyCharacters'));
+		card.innerHTML = `Found ${allCharacters.length} Characters in LS`;
+	} else {
+		for (let i = 1; i <= 149; i++) {
+			getAllCharacters(i);
+		}
+	}
 
     function searchCharacter() {
-        let name = document.getElementById('characterSearch');
-		out.innerHTML = '';
+		localStorage.setItem('disneyCharacters', JSON.stringify(allCharacters));
+		let name = document.getElementById('characterSearch');
+		if ( name.value.length < 3) {
+			card.innerHTML = `Name must be 3 or more characters`;
+			return;
+        }
+		card.innerHTML = '';
         let d = allCharacters.filter(c => c.name.toUpperCase().indexOf(name.value.toUpperCase()) >= 0);
-		if ( d.length == 0 )            return;
+		if ( d.length === 0 )            return;
 		name.value = d[0].name;
+		let row = 0;
 		for (let character of d) {
+			row++;
 			let li = "";
 			for (let films of character.films) {
 				li += `<li>${films}</li>`;
@@ -42,20 +62,16 @@
 
 			if ( typeof character.imageUrl === 'undefined')
 				character.imageUrl = " /rev";
-			out.innerHTML += 		`
-                <div class="w3-container w3-theme-l3 w3-padding-16">
+			card.innerHTML += `
+                <div class="w3-col m4 l3 w3-theme-d${(row%5)+1} disney-card">
                     <a href="${character.sourceUrl}">${character.name}</a>
                     <br>
-                    <img src="${character.imageUrl.substr(0, character.imageUrl.indexOf('/rev'))}" width="160" height="160" alt="">
-                    <ul class='w3-table-all sortable w3-theme' id="movies">
+                    <img src="${character.imageUrl.substr(0, character.imageUrl.indexOf('/rev'))}" alt="">
+                    <ul class='w3-theme-l${(row%5)+1}' id="movies">
                         ${li}
                     </ul>
-                </div>`
-		}
-    }
-
-    for (let i = 1; i <= 149; i++) {
-        getAllCharacters(i);
+                </div>`;
+        }
     }
 
     function getAllCharacters(page) {
@@ -64,6 +80,7 @@
             .then(resp => resp.json())          //  wait for the response and convert it to JSON
             .then(character => {                    //  with the resulting JSON data do something
                 allCharacters = allCharacters.concat(character.data);
+				character.data.forEach(one =>  out.innerHTML = `Loading Characters: ${allCharacters.length} so far ${one.name}`);
             });
     }
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Art Treasures</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+  <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+  <label for="search">Search for a Work of Art</label>
+  <input type="text" id="search" value="van Gogh">
+  <button id="doSearch">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+  <section id="card"></section>
+</div>
+
+</body>
+<script>
+  let card = document.getElementById('card');
+  let search = document.getElementById('search');
+  document.getElementById('doSearch').addEventListener('click', searchArt);
+  let row = 0;
+  function searchArt() {
+    let url = `https://api.europeana.eu/record/v2/search.json?query=${search.value}&wskey=gperglagenti`;
+    fetch(url)
+            .then(resp => resp.json())          //  wait for the response and convert it to JSON
+            .then(art => buildCard(art) );
+  }
+
+  function buildCard(art) {
+    for (let item of art.items) {
+      row++;
+      if ( typeof item.dcDescription === 'undefined')
+        item.dcDescription = ['undef'];
+      card.innerHTML += `
+        <div class="w3-col m4 l3 w3-theme-d${(row%5)+1} art-card">
+            <h4>${item.title[0]}</h4>
+            <a href="${item.edmIsShownAt}">${item.dataProvider}</a>
+            <br>
+            <img src="${item.edmIsShownBy}" alt="">
+            <p>${item.dcDescription[0]}</p>
+        </div>`;
+    }
+  }
+
+</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('World Art')</script>
+
+</html>
