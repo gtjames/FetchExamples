@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>News</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .disney-card { height: 400px; }
+    </style>
+
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="newsSearch">Search for a Character</label>
+    <input type="text" id="newsSearch" value="SpaceX">
+    <select id="lang">
+        <option value="en">English</option>
+        <option value="nl">Nederlands</option>
+    </select>
+    <button id="search">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+</body>
+<script>
+	let card = document.getElementById('card');
+	let term = document.getElementById('newsSearch');
+	let lang = document.getElementById('lang');
+	document.getElementById('search').addEventListener('click', getNews);
+
+	/**
+     *
+        "title": "Banners honour veterans in Ajax",
+        "description": "Ajax council and the local legion have unveiled 25 banners to honour veterans and active service personnel.",
+    "content": "Brian McLennan, Patricia Milne and Mike Lescombe from the Ajax Legion, along with the Town of Ajax, unveiled banners to honour local veterans on Oct. 1. October 1, 2021\nTwenty-five banners honouring veterans and active service personnel are now linin... [1638 chars]",
+        "url": "https://www.thestar.com/local-ajax/news/2021/10/07/banners-honour-veterans-in-ajax.html",
+        "image": "https://images.thestar.com/0JvOp-zO0aqEnF5GaTAiSmF60m0=/1086x1086/smart/filters:cb(2700061000)/https://www.thestar.com/content/dam/localcommunities/ajax_news_advertiser/news/2021/10/07/banners-honour-veterans-in-ajax/10491093_AZlocalheros.JPG",
+        "publishedAt": "2021-10-07T07:00:00Z",
+        "source": {
+            "name": "Toronto Star",
+            "url": "https://www.thestar.com"
+        }
+	 * @param story
+	 */
+	let row = 0;
+
+    function buidlNewsCard(story) {
+        row++;
+        let li = "";
+        return `
+            <div class="w3-col m4 l3 w3-theme-${row%10>5?"l":"d"}${(row%5)+1} disney-card">
+                <a href="${story.url}">${story.title}</a>
+                <br>
+                <img src="${story.image}" alt="">
+                ${story.content}
+            </div>`;
+    }
+
+    function getNews() {
+		/**
+		 * 		https://gnews.io/api/v4/top-headlines?token=04ea6452dc4a86b9ee13f2ab289bdc38&lang=en&topic=science
+		 *
+		 *		topic	breaking-news	Set the articles topic. Topics available are
+		 *		breaking-news, world, nation, business, technology, entertainment, sports, science and health.
+		 */
+		const token = "04ea6452dc4a86b9ee13f2ab289bdc38";
+		const URL = "https://gnews.io/api/v4/";
+        let req = `${URL}search?q=${term.value}&sortby=relevance&lang=${lang.value}&token=${token}`;
+		fetch(req)
+            .then(resp => resp.json())          //  wait for the response and convert it to JSON
+            .then(stories => card.innerHTML = stories.articles.reduce( (accum, story) => accum + buidlNewsCard(story), "") );
+    }
+
+</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('News')</script>
+
+</html>
