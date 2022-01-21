@@ -86,7 +86,7 @@ function movieDetails() {
     let json      = document.getElementById('json').checked;        //  show JSON or not
 
     //  the id of the image is the IMDB ID we want details on
-    let url = `https://imdb-api.com/en/API/Title/k_qa7p2g6c/${this.id}`; //  search for movies with this ID
+    let url = `https://imdb-api.com/en/API/Title/k_lLeNEBFq/${this.id}`; //  search for movies with this ID
     console.log(url);
 
     //  using the movie details API get additional data about the movie
