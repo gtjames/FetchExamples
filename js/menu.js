@@ -1,3 +1,4 @@
+//  dynamically create the whole menu bar including the theme drop down
 let menu = document.getElementById('menu');
 let menuOptions = [
     {link: 'index.html', text: 'Examples'},
@@ -28,7 +29,7 @@ menu.innerHTML += `
         <option value='purple'>purple</option>
         <option value='deep-purple'>deep-purple</option>
         <option value='indigo'>indigo</option>
-        <option value='ble'>blue</option>
+        <option value='blue'>blue</option>
         <option value='light-blue'>light-blue</option>
         <option value='cyan'>cyan</option>
         <option value='teal'>teal</option>
@@ -49,10 +50,25 @@ menu.innerHTML += `
     </select>
     `;
 
+    //  get the ref to the CSS link for the theme
 let css = document.getElementById('css');
+    //  get the ref to the theme drop down list
 let theme = document.getElementById('theme');
+
+    //  Find the current theme color of the css for the page
+    //  it is the text after w3-theme- and before the .css
+let choice = css.href.split("w3-theme-")[1].split('.css')[0];
+    //  yes we are being cheap here. We will just add a new option
+    //  to the list of color themes and put the current theme at the top of the list
+    //  this is faster than finding the color theme in the list and making it the selected item
+theme.innerHTML = `<option value='${choice}'>${choice}</option>${theme.innerHTML}`;
+    
+    //  add an event listener to the drop down list
+    //  when the list changes alter the css.href to be the new color theme from the drop down
 theme.addEventListener('change', () => css.href = `https://www.w3schools.com/lib/w3-theme-${theme.value}.css` );
 
+    //  This will change the tab color to dark grey to indicate it is the active tab
+    //  first of all it will find any tab with the dark-grey class and remove it from that tab
 function makeMeActive(tabName) {
     let tabs = document.getElementsByClassName('tabs');
     for (let tab of tabs) {

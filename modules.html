@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Basic Math</title>
+</head>
+
+<body>
+<script type="module">
+  //  this code works great
+  //  first of all the script block specifies that it is a module.
+  //  Hence it knows about cool stuff like import
+  import { sqRoot, getUrlVar, favNum, randNum } from './basicMath.js';
+
+  //    lets try to get a number from the URL param 'num'
+  let num = getUrlVar('num');           //  get the value of the URL param: num
+  if (typeof num === 'undefined') {     //  not there? use the favNum which came from our import file
+      num = favNum;                     // default to the favorite number
+  }
+
+  let ans = sqRoot(num);                //  calculate the Square Root
+
+  //  push to the web page for fun
+  document.body.innerHTML += `The square root of ${num} is ${ans}<br>`;
+
+  //    let's also generate a random number using our imported randNum function 
+  //        which is also a fat arrow function
+  document.body.innerHTML += `Random number less than ${num} is ${randNum(num)}<br>`;
+</script>
+<script>
+  // The code here is showing a BAD way to use an imported function
+  // after you have seen that the sqRoot code below does not work.
+  //        console.log(num);     //    Uncomment this line
+  // you will see that the variable num is not visible between script blocks either
+  // it is as if the script tag inserts an opening and closing set of curly braces around the code,
+  // thus scope blocking everything in the tag
+
+  //  now uncomment the 
+  //        let ans = sqRoot(441);    //  sqRoot is undefined. We cannot get past this point
+  //        document.body.innerHTML += `The square root of 441 is ${ans}<br>`;
+  //  looking in the console you will see that this code does not work
+  //  What are your thoughts on why that is?
+  //  it seems like if we imported the file from above it would still be visible
+  //  but that is not how modules work. The SCOPE of the imports is just in that script tag
+  //    so sqRoot is NOT visible here
+</script>
+</body>
+
+</html>

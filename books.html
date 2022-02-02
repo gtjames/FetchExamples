@@ -41,33 +41,40 @@
         let searchText = document.getElementById('bookSearch').value;
         fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchText}`)
             .then(resp => resp.json())          //  wait for the response and convert it to JSON
-            .then(books => {                    //  with the resulting JSON data do something
-                books.items.forEach(b => {
-                    if (typeof b.volumeInfo.authors === 'undefined') b.volumeInfo.authors = ['not listed'];
-                    if (typeof b.volumeInfo.imageLinks === 'undefined') b.volumeInfo.imageLinks = {
-                        thumbnail: 'images/missingImage.jpg'
-                    };
-                });
-				//  the map function will string out the few attributes we are interested in
-                //  and save to a new array
-                let bookList = books.items.map(b => ({
-                    title: b.volumeInfo.title,
-                    desc: b.volumeInfo.description,
-                    author: b.volumeInfo.authors[0],
-                    pageCount: b.volumeInfo.pageCount,
-                    image: b.volumeInfo.imageLinks.thumbnail
-                }))
-                let tableBody = document.getElementById('bookList');
-				//  the map function will take out attributes and merge into
-                //  an array representing a TR element
-                //  the final join will take these strings in the array and create one BIG string
-                //  which we will put into the tableBody
-				tableBody.innerHTML = bookList.map((b,idx) =>
-					`<tr class="w3-theme-${idx%2>0?'l2':'l3'}"><td><img src=${b.image} height='120px' alt=""></td><td>${b.title}</td><td>${b.author}</td><td>${b.pageCount}</td><td>${b.desc}</td></tr>`
-				).join("\n");
-            });
+            .then(books => showBooks(books));
     }
-
+    function showBooks(books) {
+        //  with the resulting JSON data do something
+        books.items.forEach(b => {
+            if (typeof b.volumeInfo.authors === 'undefined') b.volumeInfo.authors = ['not listed'];
+            if (typeof b.volumeInfo.imageLinks === 'undefined') b.volumeInfo.imageLinks = {
+                thumbnail: 'images/missingImage.jpg'
+            };
+        });
+        //  the map function will string out the few attributes we are interested in
+        //  and save to a new array
+        let bookList = books.items.map(b => ({
+            title: b.volumeInfo.title,
+            desc: b.volumeInfo.description,
+            author: b.volumeInfo.authors[0],
+            pageCount: b.volumeInfo.pageCount,
+            image: b.volumeInfo.imageLinks.thumbnail
+        }))
+        let tableBody = document.getElementById('bookList');
+        //  the map function will take out attributes and merge into
+        //  an array representing a TR element
+        //  the final join will take these strings in the array and create one BIG string
+        //  which we will put into the tableBody
+        tableBody.innerHTML = bookList.map((b,idx) =>
+            `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
+                <td><img src=${b.image} height='120px' alt=""></td>
+                <td>${b.title}</td>
+                <td>${b.author}</td>
+                <td>${b.pageCount}</td>
+                <td>${b.desc}</td>
+            </tr>`
+        ).join("\n");
+    }
 </script>
 <script src="js/menu.js"></script>
 <script src="js/sortColumns.js"></script>
