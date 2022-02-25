@@ -14,7 +14,7 @@ function getChurchStats() {
             // You can now even select part of that html as you would in the regular DOM
             // Example:
             let tbody =  doc.getElementsByTagName('tbody');
-            //  this retrieves ALL table bodies. We only care about the first one tbody[0]
+            //  this retrieves ALL table bodies. We only care about the first one tbody[1]
             let rows = Array.from(tbody[1].getElementsByTagName('tr'));
             //            rows.forEach(tr => console.log(tr))
             rows.shift();       //  remove the header row

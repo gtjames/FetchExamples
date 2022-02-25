@@ -80,7 +80,14 @@
         let req = `${URL}search?q=${term.value}&sortby=relevance&lang=${lang.value}&token=${token}`;
 		fetch(req)
             .then(resp => resp.json())          //  wait for the response and convert it to JSON
-            .then(stories => card.innerHTML = stories.articles.reduce( (accum, story) => accum + buidlNewsCard(story), "") );
+            .then(stories => {
+                card.innerHTML = '';
+                stories.articles.forEach(story => {
+                    let storyHTML = buidlNewsCard(story);
+                    card.innerHTML += storyHTML
+                }); 
+            })
+//            .then(stories => card.innerHTML = stories.articles.reduce( (accum, story) => accum + buidlNewsCard(story), "") );
     }
 
 </script>

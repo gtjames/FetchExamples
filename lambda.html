@@ -61,8 +61,6 @@
                     </tr>`;
 					rows.innerHTML += tr;
 				});
-				row++;
-				rows.innerHTML += `<tr class="w3-theme-${row % 2 > 0 ?"l2":"l3"}"> <td>ta da!</td><td>${new Date().toTimeString()}</td><td></td></tr>`;
 				quotes.forEach(q => {
 					let ref = document.getElementById("D"+q.id);                //  get reference to the Delete 'button'
 					ref.addEventListener('click', () => deleteQuote(q.id));     //  add the deleteQuote event listener
