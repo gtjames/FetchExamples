@@ -80,7 +80,7 @@
             .then(resp => resp.json())          //  wait for the response and convert it to JSON
             .then(character => {                    //  with the resulting JSON data do something
                 allCharacters = allCharacters.concat(character.data);
-				character.data.forEach(one =>  out.innerHTML = `Loading Characters: ${allCharacters.length} so far ${one.name}`);
+				character.data.forEach(one =>  card.innerHTML = `Loading Characters: ${allCharacters.length} so far ${one.name}`);
             });
     }
 
