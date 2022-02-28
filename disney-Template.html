@@ -24,11 +24,21 @@
 <div class="w3-row w3-theme-l3 w3-center">
     <section id="card"></section>
 </div>
+<template id="cardTemplate">
+    <div id="div" class="w3-col m4 l3 disney-card">
+        <a id="a" href="">character.name</a>
+        <br>
+        <img id="img" src="" alt="">
+        <ul id="ul" class='w3-theme-l${(row%5)+1}' id="movies">
+        </ul>
+    </div>
+</template>
 
 </body>
 <script>
 	let card = document.getElementById('card');
 	let search = document.getElementById('search');
+    let cardTemplate = document.getElementById('cardTemplate');
 
 	search.addEventListener('click', searchCharacter);
     let allCharacters = [];
@@ -53,26 +63,38 @@
 		if ( d.length === 0 )            return;
 		name.value = d[0].name;
 		let row = 0;
+
 		for (let character of d) {
-			row++;
 			let li = "";
-			for (let films of character.films) {
-				li += `<li>${films}</li>`;
-			}
+			for (let films of character.films)          li += `<li>${films}</li>`;
 
 			if ( typeof character.imageUrl === 'undefined')
 				character.imageUrl = " /rev";
-			card.innerHTML += `
-                <div class="w3-col m4 l3 w3-theme-d${(row%5)+1} disney-card">
-                    <a href="${character.sourceUrl}">${character.name}</a>
-                    <br>
-                    <img src="${character.imageUrl}" alt="">
-                    <ul class='w3-theme-l${(row%5)+1}' id="movies">
-                        ${li}
-                    </ul>
-                </div>`;
+                // ${character.imageUrl.substr(0, character.imageUrl.indexOf('/rev'))}
+
+			card.appendChild(createCard(character, li, ++row));
         }
     }
+
+function createCard(character, li, row) {
+    const node = cardTemplate.content.cloneNode(true);
+    const div    = node.querySelector('#div')
+    const link   = node.querySelector('#a')
+    const img    = node.querySelector('#img')
+    const ul     = node.querySelector('#ul')
+
+    div.class += ` w3-theme-d${(row%5)+1}`;
+
+    link.href = character.sourceUrl;
+    link.innerHTML = character.name;
+
+    img.src = character.imageUrl;
+
+    ul.innerHTML = li;
+    ul.class = `w3-theme-l${(row%5)+1}`;
+
+    return node;
+}
 
     function getAllCharacters(page) {
         let url = `https://api.disneyapi.dev/characters?page=${page}`;
