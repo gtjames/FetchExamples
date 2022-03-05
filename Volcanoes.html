@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Document</title>
-    <script src="./js/volcanoes.js"></script>
     <style>
       .types {
         display: flex;
@@ -24,7 +24,25 @@
   </head>
   <body>
     <h1>Pokemon</h1>
+    <div class="w3-container">
     <ul id="typeList" class="types"></ul>
-    <ul id="pokeList" class="pokemon"></ul>
+    <ul id="volcanoesList" class="pokemon"></ul>
+
+    <div id="id01" class="w3-modal">
+      <div class="w3-modal-content" style="max-width:600px">
+        <header class="w3-container w3-teal"> 
+          <h3 id="volcano">Volcano Name</h3>
+        </header>
+        <div class="w3-container">
+          <table>
+            <thead><tr><th>Year</th><th>Deaths</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <footer id="details" class="w3-container w3-teal"></footer>
+      </div>
+    </div>
+
   </body>
+<script src="./js/volcanoes.js"></script>
 </html>

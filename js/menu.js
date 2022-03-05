@@ -13,6 +13,7 @@ let menuOptions = [
     {link: 'stars.html', text: 'Stars'},
     {link: 'weather.html', text: 'Weather'},
     {link: 'art.html', text: 'World Art'},
+    {link: 'Volcanoes.html', text: 'Volcanoes'},
     {link: 'disney.html', text: 'Disney'},
     {link: 'churchStats.html', text: 'Stats'}
 ];
