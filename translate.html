@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>News</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-<ul id="speech"></ul>
-<ul id="translation"></ul>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="phrase">Phrase</label>
+    <input type="text" id="phrase">
+    <button id="translate">Translate</button>
+
+    <ul id="speech"></ul>
+    <ul id="translation"></ul>
+</div>
 </body>
 <script>
-	let speech = document.getElementById("speech");
-	let translation = document.getElementById("translation");
+	let speech      = document.getElementById("speech");
+    let translation = document.getElementById("translation");
+    let translate   = document.getElementById("translate");
+    let phrase      = document.getElementById("phrase");
+    translate.addEventListener('click', translatePhrase);
 
+    function translatePhrase() {
+        let text = phrase.value;
+        howDoYouSay(text, "en", "nl");
+    }
 	// speech to text
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -42,9 +65,9 @@
 
 	function howDoYouSay(text, from, to) {
 		const params = new URLSearchParams();
-		params.append("to", to);
-		params.append("from", from);
-		params.append("texts", text);
+		params.append("to",     to);
+		params.append("from",   from);
+		params.append("texts",  text);
 
 		const options = {
 			method: "POST",
@@ -56,15 +79,16 @@
 			body: params,
 		};
 
-		fetch("https://lecto-translation.p.rapidapi.com/v1/translate/text", options)
-			.then((response) => response.json())
-			.then((json) => {
+		fetch("https://lecto-translation.p.rapidapi.com/v1/translate/text?to=nl&from=en", options)
+			.then(response => response.json())
+			.then(json => {
 				let text = json.translations[0].translated[0];
 				translation.innerHTML += `<li>${text}</li>`;
-				speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 				recognition.start();
 			})
 			.catch( error => console.error(error));
 	}
 </script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Translate')</script>
 </html>

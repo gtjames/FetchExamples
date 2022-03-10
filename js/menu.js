@@ -15,7 +15,8 @@ let menuOptions = [
     {link: 'art.html', text: 'World Art'},
     {link: 'Volcanoes.html', text: 'Volcanoes'},
     {link: 'disney.html', text: 'Disney'},
-    {link: 'churchStats.html', text: 'Stats'}
+    {link: 'churchStats.html', text: 'Stats'},
+    {link: 'translate.html', text: 'Translate'},
 ];
 
 for ( {link, text} of menuOptions) {

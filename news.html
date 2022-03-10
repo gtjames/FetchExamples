@@ -56,9 +56,8 @@
 	 */
 	let row = 0;
 
-    function buidlNewsCard(story) {
+    function buildNewsCard(story) {
         row++;
-        let li = "";
         return `
             <div class="w3-col m4 l3 w3-theme-${row%10>5?"l":"d"}${(row%5)+1} disney-card">
                 <a href="${story.url}">${story.title}</a>
@@ -72,22 +71,23 @@
 		/**
 		 * 		https://gnews.io/api/v4/top-headlines?token=04ea6452dc4a86b9ee13f2ab289bdc38&lang=en&topic=science
 		 *
-		 *		topic	breaking-news	Set the articles topic. Topics available are
+		 *		topic	breaking-news	Set the article's topic. Topics available are
 		 *		breaking-news, world, nation, business, technology, entertainment, sports, science and health.
 		 */
 		const token = "04ea6452dc4a86b9ee13f2ab289bdc38";
 		const URL = "https://gnews.io/api/v4/";
         let req = `${URL}search?q=${term.value}&sortby=relevance&lang=${lang.value}&token=${token}`;
+        console.log(req);
 		fetch(req)
             .then(resp => resp.json())          //  wait for the response and convert it to JSON
             .then(stories => {
                 card.innerHTML = '';
                 stories.articles.forEach(story => {
-                    let storyHTML = buidlNewsCard(story);
+                    let storyHTML = buildNewsCard(story);
                     card.innerHTML += storyHTML
                 }); 
-            })
-//            .then(stories => card.innerHTML = stories.articles.reduce( (accum, story) => accum + buidlNewsCard(story), "") );
+            });
+//            .then(stories => card.innerHTML = stories.articles.reduce( (accum, story) => accum + buildNewsCard(story), "") );
     }
 
 </script>
