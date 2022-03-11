@@ -52,12 +52,19 @@ menu.innerHTML += `
     </select>
     `;
 
-    //  get the ref to the CSS link for the theme
+//  get the ref to the CSS link for the theme
 let css = document.getElementById('css');
-    //  get the ref to the theme drop down list
+
+//  get the ref to the theme drop down list
 let theme = document.getElementById('theme');
 
-    //  Find the current theme color of the css for the page
+let activeTab = document.title;
+
+let themeColor = localStorage.getItem(activeTab);
+if ( themeColor !== null)
+    css.href = `https://www.w3schools.com/lib/w3-theme-${themeColor}.css`
+
+//  Find the current theme color of the css for the page
     //  it is the text after w3-theme- and before the .css
 let choice = css.href.split("w3-theme-")[1].split('.css')[0];
     //  yes we are being cheap here. We will just add a new option
@@ -67,7 +74,10 @@ theme.innerHTML = `<option value='${choice}'>${choice}</option>${theme.innerHTML
     
     //  add an event listener to the drop down list
     //  when the list changes alter the css.href to be the new color theme from the drop down
-theme.addEventListener('change', () => css.href = `https://www.w3schools.com/lib/w3-theme-${theme.value}.css` );
+theme.addEventListener('change', () => {
+    css.href = `https://www.w3schools.com/lib/w3-theme-${theme.value}.css`
+    localStorage.setItem(activeTab, theme.value);
+} );
 
     //  This will change the tab color to dark grey to indicate it is the active tab
     //  first of all it will find any tab with the dark-grey class and remove it from that tab
@@ -76,5 +86,6 @@ function makeMeActive(tabName) {
     for (let tab of tabs) {
         tab.className = tab.className.replace(" w3-dark-grey", "");
     }
+    activeTab = tabName;
     document.getElementById(tabName).className += " w3-dark-grey";
 }

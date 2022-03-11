@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>News</title>
+    <title>Translate</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -18,22 +18,29 @@
 <div class="w3-container w3-theme w3-padding-16">
     <label for="phrase">Phrase</label>
     <input type="text" id="phrase">
+    <select id="fromSelect"></select>
+    <select id="toSelect"></select>
     <button id="translate">Translate</button>
 
-    <ul id="speech"></ul>
-    <ul id="translation"></ul>
+    <ul id="speech" class="w3-theme-d3"></ul>
+    <ul id="translation" class="w3-theme-l3"></ul>
 </div>
 </body>
 <script>
 	let speech      = document.getElementById("speech");
     let translation = document.getElementById("translation");
     let translate   = document.getElementById("translate");
-    let phrase      = document.getElementById("phrase");
+	let phrase      = document.getElementById("phrase");
+	let fromLang    = document.getElementById("fromSelect");
+	let toLang      = document.getElementById("toSelect");
     translate.addEventListener('click', translatePhrase);
+    getLanguages();
 
     function translatePhrase() {
-        let text = phrase.value;
-        howDoYouSay(text, "en", "nl");
+		let sourceLang = fromLang.value;
+		let targetLang = toLang.value;
+		speech.innerHTML += `<li>You typed: ${phrase.value}</li>`;
+		howDoYouSay(phrase.value, sourceLang, targetLang);
     }
 	// speech to text
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -79,7 +86,7 @@
 			body: params,
 		};
 
-		fetch("https://lecto-translation.p.rapidapi.com/v1/translate/text?to=nl&from=en", options)
+		fetch("https://lecto-translation.p.rapidapi.com/v1/translate/text", options)
 			.then(response => response.json())
 			.then(json => {
 				let text = json.translations[0].translated[0];
@@ -88,6 +95,28 @@
 			})
 			.catch( error => console.error(error));
 	}
+
+	function getLanguages() {
+		fetch("https://lecto-translation.p.rapidapi.com/v1/translate/languages", {
+			"method": "GET",
+			"headers": {
+				"x-rapidapi-host": "lecto-translation.p.rapidapi.com",
+				"x-rapidapi-key": "498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5"
+			}
+		})
+			.then(response => response.json())
+			.then(languages => {
+				langList(languages.languages, true,  fromLang);
+				langList(languages.languages, false, toLang);
+			})
+			.catch(err => {console.error(err);});
+    }
+
+	function langList(list, src, select) {
+		select.innerHTML = list.filter(l => src ? l.support_source: l.support_target)
+			.map(l => `<option value="${l.language_code}">${l.display_name}</option>option>`).join('\n');
+    }
+
 </script>
 <script src="js/menu.js"></script>
 <script>makeMeActive('Translate')</script>
