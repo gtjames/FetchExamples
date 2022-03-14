@@ -55,9 +55,9 @@
 	}
 
 	function getColorCode() {
-		var makeColorCode = '0123456789ABCDEF';
-		var code = '#';
-		for (var count = 0; count < 6; count++) {
+		let makeColorCode = '0123456789ABCDEF';
+		let code = '#';
+		for (let count = 0; count < 6; count++) {
 			code =code+ makeColorCode[Math.floor(Math.random() * 16)];
 		}
 		return code;
