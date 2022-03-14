@@ -1,5 +1,5 @@
 //  dynamically create the whole menu bar including the theme drop down
-let menu = document.getElementById('menu');
+
 let menuOptions = [
     {link: 'index.html', text: 'Examples'},
     {link: 'orig-allCoins.html', text: 'Orig Bit Coins'},
@@ -19,11 +19,14 @@ let menuOptions = [
     {link: 'translate.html', text: 'Translate'},
 ];
 
+let menu = document.getElementById('menu');
+//  add in the navigation links
 for ( {link, text} of menuOptions) {
     menu.innerHTML += `
         <a id="${text}" href="${link}" class="w3-bar-item w3-button tabs">${text}</a>`;
 }
 
+//  add in the CSS style options
 menu.innerHTML += `
     <select id="theme">
         <option value='red'>red</option>
@@ -60,32 +63,35 @@ let theme = document.getElementById('theme');
 
 let activeTab = document.title;
 
+//  If there is an entry in LS for the style for this page use it
 let themeColor = localStorage.getItem(activeTab);
 if ( themeColor !== null)
     css.href = `https://www.w3schools.com/lib/w3-theme-${themeColor}.css`
 
 //  Find the current theme color of the css for the page
-    //  it is the text after w3-theme- and before the .css
+//  it is the text after w3-theme- and before the .css
 let choice = css.href.split("w3-theme-")[1].split('.css')[0];
-    //  yes we are being cheap here. We will just add a new option
-    //  to the list of color themes and put the current theme at the top of the list
-    //  this is faster than finding the color theme in the list and making it the selected item
+
+//  yes we are being cheap here. We will just add a new option
+//  to the list of color themes and put the current theme at the top of the list
+//  this is faster than finding the color theme in the list and making it the selected item
 theme.innerHTML = `<option value='${choice}'>${choice}</option>${theme.innerHTML}`;
-    
-    //  add an event listener to the drop down list
-    //  when the list changes alter the css.href to be the new color theme from the drop down
+
+//  add an event listener to the style drop down list
+//  when the list changes alter the css.href to be the new color theme from the drop down
+//  save the new style to LS
 theme.addEventListener('change', () => {
     css.href = `https://www.w3schools.com/lib/w3-theme-${theme.value}.css`
     localStorage.setItem(activeTab, theme.value);
 } );
 
-    //  This will change the tab color to dark grey to indicate it is the active tab
-    //  first of all it will find any tab with the dark-grey class and remove it from that tab
+//  This will change the tab color to dark grey to indicate it is the active tab
+//  first of all it will find any tab with the dark-grey class and remove it from that tab (not needed)
 function makeMeActive(tabName) {
     let tabs = document.getElementsByClassName('tabs');
-    for (let tab of tabs) {
-        tab.className = tab.className.replace(" w3-dark-grey", "");
-    }
+    // for (let tab of tabs) {      //  no need for this since we are reloading the page everytime
+    //     tab.className = tab.className.replace(" w3-theme-d5", "");
+    // }
     activeTab = tabName;
-    document.getElementById(tabName).className += " w3-dark-grey";
+    document.getElementById(tabName).className += " w3-theme-d5";
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Me in Pi</title>
+</head>
+<body>
+    <lable for="name">What is Your Name</lable>
+    <input type="text" id="name" name="name"></input>
+    <br>
+    <label for="bday">What is your DOB MMDDYY</label>
+    <input type="text" id="bday">
+    <h2 id="foundYou"></h2>
+    <button id="search">Search</button>
+</body>
+<script>
+    let piData;
+
+	let name = document.getElementById('name');
+	let bday = document.getElementById('bday');
+	let foundYou = document.getElementById('foundYou');
+
+	window.addEventListener("load", function () {
+		fetch('https://raw.githubusercontent.com/gtjames/csv/master/Pi-1%20Million.txt')
+			.then(resp => resp.text())
+			.then(resp => piData = resp)
+	});
+
+	document.getElementById('search').addEventListener('click', findMeInPi);
+
+	function findMeInPi() {
+
+		let where = piData.search(bday.value);
+
+		if (where < 0)
+			foundYou.innerText = 'Sorry ' + name.value + '. Pi has never heard of you';
+		else
+			foundYou.innerText = 'Pi found ' + name.value + ' at: ' + where;
+	}
+</script>
+</html>

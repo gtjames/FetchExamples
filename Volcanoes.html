@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Volcanoes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
     <style>
       .types {
         display: flex;
@@ -22,29 +24,34 @@
       }
     </style>
   </head>
-  <body>
-    <h1>Pokemon</h1>
-    <div class="w3-container">
-      <ul id="typeList" class="types"></ul>
-      <ul id="volcanoesList" class="pokemon"></ul>
-    </div>
 
-    <div id="id01" class="w3-modal">
-      <div class="w3-modal-content" style="max-width:600px">
-        <header class="w3-container w3-teal"> 
+  <body>
+  <div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+  </div>
+
+  <div class="w3-row w3-theme-l3 w3-center">
+    <ul id="typeList" class="types w3-theme-l4"></ul>
+    <ul id="volcanoesList" class="w3-theme-l4"></ul>
+  </div>
+
+  <div id="id01" class="w3-modal">
+      <div class="w3-modal-content w3-theme-d4" style="max-width:600px">
+        <header class="w3-container  w3-theme-d1">
           <h3 id="volcano">Volcano Name</h3>
         </header>
-        <div class="w3-container">
-          <table>
+        <div class="w3-container w3-theme-d4">
+          <table class='w3-theme'>
             <thead><tr><th>Year</th><th>Deaths</th></tr></thead>
             <tbody id="rows"></tbody>
           </table>
         </div>
-        <footer id="details" class="w3-container w3-teal"></footer>
+        <footer id="details" class="w3-container w3-theme-d1"></footer>
       </div>
     </div>
 
 </body>
-<script src="./js/volcanoes.js"></script>
+<script src="js/volcanoes.js"></script>
+<script src="js/menu.js"></script>
 <script>makeMeActive('Volcanoes')</script>
 </html>

@@ -127,6 +127,4 @@ fetch(urlAllCoins)
     tbody.appendChild(tr);
   }
 })
-.catch(function(err) {
-  console.log('Fetch Error :', err);
-});
+.catch(err => console.log('Fetch Error :', err));
