@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Find Me in Pi</title>
+    <style>
+        body {
+            background-color: #00bcd4;
+        }
+    </style>
 </head>
 <body>
-    <label for="name">What is Your Name</label>
-    <input type="text" id="name" name="name">
-    <br>
-    <label for="bday">What is your DOB MMDDYY</label>
-    <input type="text" id="bday">
-    <h2 id="foundYou"></h2>
-    <button id="search">Search</button>
-    <p>Didn't have the time to make this pretty. Too many Pi(e) activities to attend</p>
+<table>
+    <tr>
+        <td><label for="name">What is Your Name</label></td>
+        <td><input type="text" id="name" name="name"></td>
+    </tr>
+    <tr>
+        <td><label for="bday">What is your Date of Birth</label></td>
+        <td><input type="text" id="bday" placeholder="MMDDYY"></td>
+    </tr>
+    <tr>
+        <td><button id="search">Search</button></td>
+    </tr>
+</table>
+<h2 id="foundYou">Didn't have the time to make this pretty. Too many Pi(e) activities to attend</h2>
 </body>
 <script>
     let piData;
@@ -33,10 +44,23 @@
 
 		let where = piData.search(bday.value);
 
-		if (where < 0)
+		if (where < 0) {
 			foundYou.innerText = 'Sorry ' + name.value + '. Pi has never heard of you';
-		else
+			document.body.style.backgroundColor = 'grey';
+		}
+		else {
 			foundYou.innerText = 'Pi found ' + name.value + ' at: ' + where;
+			document.body.style.backgroundColor = getColorCode();
+		}
+	}
+
+	function getColorCode() {
+		var makeColorCode = '0123456789ABCDEF';
+		var code = '#';
+		for (var count = 0; count < 6; count++) {
+			code =code+ makeColorCode[Math.floor(Math.random() * 16)];
+		}
+		return code;
 	}
 </script>
 </html>
