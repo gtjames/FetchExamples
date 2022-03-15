@@ -39,7 +39,7 @@
      *          (actually 1,000,006,000,009)
      *
      *-------------------------------------------------------------------------------------------------*/
-	let max = 1000003;			//		 71,751,894;        //  we can go as high as 71M squared.
+	let max = 1000003;            //  71751894;        //  we can go as high as 71M squared.
 	let primes = getPrimes(max);
 
 	/*-------------------------------------------------------------------------------------------------
@@ -73,6 +73,9 @@
 				break; 								//  all factors consumed, leave
 			}
 		}
+		//  this is wrong it just says the '2nd' factor has a sqrt > 1G and could still have factors
+		if (factors.length === 1 && factors[0] !== num)
+			factors.push(num);
 		return (factors.length === 1);
 	}
 
