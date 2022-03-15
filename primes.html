@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Primes</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td><label for="favorite">Give me your favorite number</label></td>
+        <td><input type="text" id="favorite"></td>
+    </tr>
+    <tr>
+        <td><button id="search">Search</button></td>
+    </tr>
+</table>
+<h3 id="foundYou">Didn't have the time to make this pretty. Too many Pi(e) activities to attend</h3>
+
+</body>
+<script>
+	/**
+	 * Created by Gary James on 4/24/2017.
+	 */
+	let name = document.getElementById('name');
+	let favorite = document.getElementById('favorite');
+	let foundYou = document.getElementById('foundYou');
+
+	document.getElementById('search').addEventListener('click', findPrimes);
+
+	/*-------------------------------------------------------------------------------------------------
+     *	How about something a little more challenging
+     *  When it comes to loops and breaks
+     *
+     *  How many primes are there less than a particular number?
+     *
+     *      BTW we are getting all of the primes less than 1,000,003
+     *      Because it is the first prime north of 1M
+     *      and that allows us to calculate the factors of all numbers less the 1 Trillion
+     *          (actually 1,000,006,000,009)
+     *
+     *-------------------------------------------------------------------------------------------------*/
+	let max = 1000003;			//		 71,751,894;        //  we can go as high as 71M squared.
+	let primes = getPrimes(max);
+
+	/*-------------------------------------------------------------------------------------------------
+     *  Convenience method to test numbers
+     -------------------------------------------------------------------------------------------------*/
+	function findPrimes() {
+		let factors = [];
+		let number = +favorite.value;
+
+		let prime = findPrimeFactors(number, primes, factors);
+
+        foundYou.innerHTML = `The factors of ${number} are: ${collectTerms(factors)} ${((prime) ? " Boo Ya! This baby is prime" : "")}`;
+        document.body.style.backgroundColor = getColorCode();
+	}
+
+	/*-------------------------------------------------------------------------------------------------
+     *
+     *  take a number and an array of primes and determine all prime factors for that number
+     *  return true if the number itself is prime
+     *
+     *-------------------------------------------------------------------------------------------------*/
+	function findPrimeFactors(num, primes, factors) {
+		let sqrtNum = Math.floor(Math.sqrt(num));
+		for (let i = 0; i < primes.length; i++) {
+			if (primes[i] > sqrtNum) { 				//  We've gone through all of the primes < the SQRT of the number
+				factors.push(num); 					//  so this number must be prime!
+				break; 								//  get out of the loop and take the not prime return at the bottom
+			} else if ((num % primes[i]) === 0) { 	//  is the number evenly divisible by a prime number
+				factors.push(primes[i]); 			//  Looks like we found a prime factor of our number, save it
+				findPrimeFactors(num / primes[i], primes.slice(i), factors); //  recursively consume all other factors
+				break; 								//  all factors consumed, leave
+			}
+		}
+		return (factors.length === 1);
+	}
+
+	/*-------------------------------------------------------------------------------------------------
+     *
+     *  Get a list of all primes below a max number
+     *  and do it efficiently. This is my own design and I think quite elegant!
+     *
+     *-------------------------------------------------------------------------------------------------*/
+	function getPrimes(max) {
+		let sieve = [];
+		let primes = [2]; 									//  save 2 as prime, it is the only even prime and we now only look at odd numbers
+		for (let i = 3; i <= max; i += 2) { 				//  start at 3 and do a +2 increment to ignore all even
+			if (!sieve[i]) { 								//  sieve == false if the number is prime
+				primes.push(i); 							//  if false sieve[i] has not yet been marked -- it is prime
+				for (let j = 3 * i; j <= max; j += 2 * i) { //  just mark the odd multiples of i, thus ignoring even numbers
+					sieve[j] = true; 						//  true : number is composite: not a prime
+				}
+			}
+		}
+		return primes;
+	}
+
+	/*-------------------------------------------------------------------------------------------------
+     *
+     *  take the factors of a number and collect the terms together
+     *  1024 = 2*2*2*2*2*2*2*2*2*2 looks better as 2^10
+     *
+     *-------------------------------------------------------------------------------------------------*/
+	function collectTerms(factors) {
+		let collect = "",
+			power;
+		for (let i = 0; i < factors.length; i++) {
+			power = 1; 							//  always start with the factor raised to the power of 1
+			let base = factors[i]; 				//  base factor to compare the next factors against
+			while (base === factors[i + 1]) { 	//  does this factor match a previous factor?
+				power++; 						//  it does so increase the power to which that number s/b raised
+				if (++i === factors.length) 	//  go to the next factor only if we are not at the end of the list
+					break; 						//  we are at the end, so get out of the loop
+			}
+			collect += ((collect.length === 0) ? "" : " × ") + base + ((power > 1) ? "^" + power : "");
+		}
+		return collect;
+	}
+
+	function getColorCode() {
+		let makeColorCode = '0123456789ABCDEF';
+		let code = '#';
+		for (let count = 0; count < 6; count++) {
+			code =code+ makeColorCode[Math.floor(Math.random() * 16)];
+		}
+		return code;
+	}
+
+</script>
+</html>
