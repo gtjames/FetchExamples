@@ -1,19 +1,18 @@
 /*
 When the page loads
-    Get list of pokemon types.
-    filter out types with no pokemon (shadow and unknown)
-    render type list out (need type name and url to get all pokemon of that type)
+    Get list of Volcano types.
+    render type list
     attach a listener to respond to a click on the type.
-        when clicked it should pull the type url and retrieve the data
-        render the list of pokemon
+        when clicked it should pull all volcanoes of that type
+        render the list of volcanoes
         style the clicked type as active
 */
 
 let volcanoes = [];
-// watch for a click on a type and display the list of pokemon for that type
+// watch for a click on a type and display the list of Volcanoes for that type
 document.getElementById("typeList").addEventListener("click", typeClickedHandler);
 
-// watch for a click on a type and display the list of pokemon for that type
+// watch for a click on a type and display the list of Volcanoes for that type
 document.getElementById("volcanoesList").addEventListener("click", listVolcanoes);
 
 document.getElementById("id01").addEventListener("click", closeModal);
@@ -93,7 +92,7 @@ window.addEventListener("load", function () {
     // how did we know that we needed to look at list.results?  we looked at the data returned from the API!
     types.forEach((type) => {
       const li = `<li data-url='${type}'>${type}</li>`;
-      // our data contains the url we need to use to grab the pokemon of that type. We can embed it into our element using the data- prefix
+      // our data contains the url we need to use to grab the Volcano of that type. We can embed it into our element using the data- prefix
       element.innerHTML += li;
     });
   }

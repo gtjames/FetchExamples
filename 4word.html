@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Me in Pi</title>
+  <style>
+    body {
+      background-color: #00bcd4;
+    }
+  </style>
+</head>
+<body>
+<table>
+  <tr>
+    <td><label for="guess">What is your Date of Birth</label></td>
+    <td><input id="guess"></td>
+  </tr>
+  <tr>
+    <td><button id="search">Search</button></td>
+  </tr>
+</table>
+<h3 id="foundYou">Didn't have the time to make this pretty. Too many Pi(e) activities to attend</h3>
+</body>
+<script>
+  let fiveLetters, hiddenWord;
+
+  let guess = document.getElementById('guess');
+  let foundYou = document.getElementById('foundYou');
+
+  window.addEventListener("load", function () {
+    document.body.style.backgroundColor = getColorCode();
+
+    fetch('https://raw.githubusercontent.com/gtjames/csv/master/five.txt')
+            .then(resp => resp.text())
+            .then(words => setup(words) )
+  });
+
+  document.getElementById('search').addEventListener('click', search);
+
+  function setup(words) {
+    fiveLetters = words.split('\n');
+    hiddenWord = select();
+  }
+  function select() {
+    let index = Math.random() * fiveLetters.length;
+    return fiveLetters[index];
+  }
+
+  function search() {
+
+  }
+  function getColorCode() {
+    let makeColorCode = '0123456789ABCDEF';
+    let code = '#';
+    for (let count = 0; count < 6; count++) {
+      code =code+ makeColorCode[Math.floor(Math.random() * 16)];
+    }
+    return code;
+  }
+</script>
+</html>

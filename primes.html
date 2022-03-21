@@ -8,22 +8,25 @@
 <table>
     <tr>
         <td><label for="favorite">Give me your favorite number</label></td>
-        <td><input type="text" id="favorite"></td>
+        <td><input type="text" id="favorite" maxlength="13"></td>
     </tr>
     <tr>
         <td><button id="search">Search</button></td>
     </tr>
 </table>
-<h3 id="foundYou">You prime factors will be listed here</h3>
+<h3 id="primefactors">You prime factors will be listed here</h3>
 
 </body>
 <script>
 	/**
 	 * Created by Gary James on 4/24/2017.
 	 */
+	nfObject = new Intl.NumberFormat('en-US');
+
 	let name = document.getElementById('name');
 	let favorite = document.getElementById('favorite');
-	let foundYou = document.getElementById('foundYou');
+	let primefactors = document.getElementById('primefactors');
+	document.body.style.backgroundColor = getColorCode();
 
 	document.getElementById('search').addEventListener('click', findPrimes);
 
@@ -39,19 +42,21 @@
      *          (actually 1,000,006,000,009)
      *
      *-------------------------------------------------------------------------------------------------*/
-	let max = 1000003;            //  71751894;        //  we can go as high as 71M squared.
+	let max = 100000007;                       //  we can go as high as 71,751,894 squared.
 	let primes = getPrimes(max);
-
+	primefactors.innerHTML = `&Pi;(${nfObject.format(max)}) is ${nfObject.format(primes.length)}
+                        <br>the Largest is ${nfObject.format(primes[primes.length-1])}`;
 	/*-------------------------------------------------------------------------------------------------
      *  Convenience method to test numbers
      -------------------------------------------------------------------------------------------------*/
 	function findPrimes() {
 		let factors = [];
-		let number = +favorite.value;
+		let number = +favorite.value.replaceAll(",","");
 
 		let prime = findPrimeFactors(number, primes, factors);
 
-        foundYou.innerHTML = `The factors of ${number} are: ${collectTerms(factors)} ${((prime) ? " Boo Ya! This baby is prime" : "")}`;
+		let withCommas = nfObject.format(number);
+        primefactors.innerHTML = `The factors of ${withCommas} are: ${collectTerms(factors)} ${((prime) ? " Boo Ya! This baby is prime" : "")}`;
         document.body.style.backgroundColor = getColorCode();
 	}
 

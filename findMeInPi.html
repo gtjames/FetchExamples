@@ -17,7 +17,7 @@
     </tr>
     <tr>
         <td><label for="bday">What is your Date of Birth</label></td>
-        <td><input type="text" id="bday" placeholder="MMDDYY"></td>
+        <td><input type="number" id="bday" placeholder="MMDDYY"></td>
     </tr>
     <tr>
         <td><button id="search">Search</button></td>
@@ -33,8 +33,10 @@
 	let foundYou = document.getElementById('foundYou');
 
 	window.addEventListener("load", function () {
-		fetch('./Pi-10 Million.txt')
-		// fetch('https://raw.githubusercontent.com/gtjames/csv/master/Pi-1%20Million.txt')
+		document.body.style.backgroundColor = getColorCode();
+
+		// fetch('./Pi-10 Million.txt')
+		fetch('https://raw.githubusercontent.com/gtjames/csv/master/Pi-1%20Million.txt')
 			.then(resp => resp.text())
 			.then(resp => piData = resp)
 	});
@@ -46,11 +48,11 @@
 		let where = piData.search(bday.value);
 
 		if (where < 0) {
-			foundYou.innerText = 'Sorry ' + name.value + '. Pi has never heard of you';
+			foundYou.innerText = `Sorry ${name.value}. Pi has never heard of you`;
 			document.body.style.backgroundColor = 'grey';
 		}
 		else {
-			foundYou.innerHTML = `Your birthday is at the ${where} digit of Pi
+			foundYou.innerHTML = `${name.value}, your birthday is at the ${where} digit of Pi
             ... ${piData.substr(where-8,8)} ( <em><u> ${bday.value} </u></em> ) ${piData.substr(where+bday.value.length, 8)} ...`;
 			document.body.style.backgroundColor = getColorCode();
 		}
