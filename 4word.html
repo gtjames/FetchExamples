@@ -1,61 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Find Me in Pi</title>
-  <style>
-    body {
-      background-color: #00bcd4;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>My Word</title>
+    <style>
+        .e {background-color: green;}
+        .c {background-color: palegoldenrod;}
+        ._ {background-color: gray;}
+        td { font-size: 40px;
+            padding: 5px 10px;
+            font-family: "Courier New",serif
+        }
+    </style>
+
+    <style>
+        :host {
+            height: var(--keyboard-height);
+        }
+        #keyboard {
+            margin: 0 8px;
+            user-select: none;
+        }
+
+        body {
+            background-color: cyan;
+        }
+        .row {
+            display: flex;
+            width: 100%;
+            margin: 0 auto 8px;
+            /* https://stackoverflow.com/questions/46167604/ios-html-disable-double-tap-to-zoom */
+            touch-action: manipulation;
+        }
+
+        button {
+            font-family: inherit;
+            font-weight: bold;
+            border: 0;
+            padding: 0;
+            margin: 0 6px 0 0;
+            height: 58px;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            background-color: var(--key-bg);
+            color: var(--key-text-color);
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.3);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button.fade {
+            transition: background-color 0.1s ease, color 0.1s ease;
+        }
+
+        button:last-of-type {
+            margin: 0;
+        }
+
+        .half {
+            flex: 0.5;
+        }
+
+        .one {
+            flex: 1;
+        }
+
+        .one-and-a-half {
+            flex: 1.5;
+            font-size: 12px;
+        }
+
+        .two {
+            flex: 2;
+        }
+
+        #error {
+            background-color: black;
+            color: red;
+        }
+
+        button[data-state='correct'] {
+            background-color: var(--key-bg-correct);
+            color: var(--key-evaluated-text-color);
+        }
+
+        button[data-state='present'] {
+            background-color: var(--key-bg-present);
+            color: var(--key-evaluated-text-color);
+        }
+
+        button[data-state='absent'] {
+            background-color: var(--key-bg-absent);
+            color: var(--key-evaluated-text-color);
+        }
+
+    </style>
 </head>
 <body>
 <table>
-  <tr>
-    <td><label for="guess">What is your Date of Birth</label></td>
-    <td><input id="guess"></td>
-  </tr>
-  <tr>
-    <td><button id="search">Search</button></td>
-  </tr>
+    <tr>
+        <td><label for="guess">Take a Guess</label></td>
+        <td><input id="guess"></td>
+    </tr>
+    <tr>
+        <td><button id="search">Search</button></td>
+    </tr>
 </table>
-<h3 id="foundYou">Didn't have the time to make this pretty. Too many Pi(e) activities to attend</h3>
+<table id="result">
+
+</table>
+<h3 id="foundYou"></h3>
+<p id="error"></p>
+<div id="keyboard">
+    <div class="row"><button data-key="q">q</button><button data-key="w">w</button><button data-key="e">e</button><button data-key="r">r</button><button data-key="t">t</button><button data-key="y">y</button><button data-key="u">u</button><button data-key="i">i</button><button data-key="o">o</button><button data-key="p">p</button></div>
+    <div class="row"><div class="spacer half"></div><button data-key="a">a</button><button data-key="s">s</button><button data-key="d">d</button><button data-key="f">f</button><button data-key="g">g</button><button data-key="h">h</button><button data-key="j">j</button><button data-key="k">k</button><button data-key="l">l</button><div class="spacer half"></div></div>
+    <div class="row"><button data-key="↵" class="one-and-a-half">enter</button><button data-key="z">z</button><button data-key="x">x</button><button data-key="c">c</button><button data-key="v">v</button><button data-key="b">b</button><button data-key="n">n</button><button data-key="m">m</button><button data-key="←" class="one-and-a-half"><game-icon icon="backspace"></game-icon></button></div>
+</div>
+<ul id="tryThis"></ul>
 </body>
 <script>
-  let fiveLetters, hiddenWord;
+	let fiveLetters, hiddenWord, unused = [], lock = [],
+    close = [
+		{'letters':[]},
+		{'letters':[]},
+		{'letters':[]},
+		{'letters':[]},
+		{'letters':[]}];
 
-  let guess = document.getElementById('guess');
-  let foundYou = document.getElementById('foundYou');
+	lock = ['_','_','_','_','_'];
 
-  window.addEventListener("load", function () {
-    document.body.style.backgroundColor = getColorCode();
+	let result = document.getElementById('result');
+	let guess = document.getElementById('guess');
+	let foundYou = document.getElementById('foundYou');
+	let error = document.getElementById('error');
+	let tryThis = document.getElementById('tryThis');
 
-    fetch('https://raw.githubusercontent.com/gtjames/csv/master/five.txt')
-            .then(resp => resp.text())
-            .then(words => setup(words) )
-  });
+	window.addEventListener("load", function () {
+		// document.body.style.backgroundColor = getColorCode();
 
-  document.getElementById('search').addEventListener('click', search);
+		fetch('https://raw.githubusercontent.com/gtjames/csv/master/Dictionaries/five.txt')
+			.then(resp => resp.text())
+			.then(words => setup(words) )
+	});
 
-  function setup(words) {
-    fiveLetters = words.split('\n');
-    hiddenWord = select();
-  }
-  function select() {
-    let index = Math.random() * fiveLetters.length;
-    return fiveLetters[index];
-  }
+	document.getElementById('search').addEventListener('click', search);
 
-  function search() {
-
-  }
-  function getColorCode() {
-    let makeColorCode = '0123456789ABCDEF';
-    let code = '#';
-    for (let count = 0; count < 6; count++) {
-      code =code+ makeColorCode[Math.floor(Math.random() * 16)];
+	function setup(words) {
+		fiveLetters = words.split('\n');
+		hiddenWord = select();
+		foundYou.innerHTML = `${hiddenWord}<br>`;
     }
-    return code;
-  }
+	function select() {
+		let index = Math.floor(Math.random() * fiveLetters.length);
+		return fiveLetters[index];
+	}
+
+	function search() {
+		let match = ['_','_','_','_','_'];
+		let attempt = guess.value;
+		error.innerText = '';
+		if ( fiveLetters.find(w => w === attempt) !== attempt) {
+			error.innerText = `${attempt}: is not a valid word`;
+			return;
+        }
+
+		for (let g = 0; g < 5; g++) {
+			let found = false;
+			for (let h = 0; h < 5; h++) {
+				if (hiddenWord[h] === attempt[g]) {
+					found = true;
+					if (match[g] === 'e') break;
+					match[g] = (h === g) ? 'e' : 'c';
+					setActive(attempt[g], match[g]);
+					if (match[g] === 'e') lock[g] = attempt[g];
+					if (match[g] === 'c') close[g].letters.push(attempt[g]);
+				}
+			}
+			if (!found) {
+				setActive(attempt[g], '_');
+				unused.push(attempt[g]);
+			}
+		}
+
+		findPossibles(attempt, unused, lock);
+
+		let td ='';
+		for (let h = 0; h < 5; h++) {
+			td += `<td class="${match[h]}">${attempt[h]}</td>`
+		}
+		result.innerHTML += `<tr>${td}</tr>`;
+		// document.body.style.backgroundColor = getColorCode();
+	}
+
+	function findPossibles(attempt, unused, lock) {
+		let possibles = fiveLetters.filter(w => {
+			for (let i = 0; i < 5; i++) {
+				if ((lock[0] !== '_' && lock[0] !== w.charAt(0)) ||
+					(lock[1] !== '_' && lock[1] !== w.charAt(1)) ||
+					(lock[2] !== '_' && lock[2] !== w.charAt(2)) ||
+					(lock[3] !== '_' && lock[3] !== w.charAt(3)) ||
+					(lock[4] !== '_' && lock[4] !== w.charAt(4)))
+					return false;
+			}
+			return true;
+		});
+
+		possibles = possibles.filter(w => {
+			for (let u of unused) {
+				if (w.indexOf(u) >= 0)
+					return false;
+			}
+			return true;
+		});
+
+		possibles = possibles.filter(w => {
+			for (let i = 0; i < 5; i++) {
+				if ((lock[0] !== '_' && lock[0] !== w.charAt(0)) ||
+					(lock[1] !== '_' && lock[1] !== w.charAt(1)) ||
+					(lock[2] !== '_' && lock[2] !== w.charAt(2)) ||
+					(lock[3] !== '_' && lock[3] !== w.charAt(3)) ||
+					(lock[4] !== '_' && lock[4] !== w.charAt(4)))
+					return false;
+			}
+			return true;
+		});
+		possibles = possibles.filter(w => {
+			for (let i = 0; i < 5; i++) {
+				for (let j = 0; j < close[i].letters.length; j++) {
+					if (w.charAt(i) === close[i].letters[j]) return false;
+				}
+			}
+			return true;
+		});
+
+		let text = '';
+		for (let w of possibles) {
+			text += `<li>${w}</li>`;
+        }
+		tryThis.innerHTML = text;
+		foundYou.innerHTML += `Possibles ${possibles.length}<br>`;
+	}
+
+	function getColorCode() {
+		let makeColorCode = '0123456789ABCDEF';
+		let code = '#';
+		for (let count = 0; count < 6; count++) {
+			code =code+ makeColorCode[Math.floor(Math.random() * 16)];
+		}
+		return code;
+	}
+
+	function setActive(letter, status) {
+		// use querySelectorAll to get all of the type li elements
+		const allTypes = document.querySelectorAll("div.row > button");
+		allTypes.forEach((item) => {
+			// check to see if this is the one to make active
+			if (item.dataset.key === letter) {
+				item.classList.add(status);
+			}
+		});
+	}
+
 </script>
 </html>
