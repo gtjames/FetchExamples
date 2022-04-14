@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lambda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
+    <label for="quote">New Quote</label>
+    <input type="text" id="quote">
+    <button id="save">Save Quote</button>
+</div>
+
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>ID</th> <th>Text</th> <th>Delete</th> <th>Update</th>
+        </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+    </table>
+</div>
+</body>
+<script>
+	let rows = document.getElementById("rows");
+
+	window.addEventListener("load", () => getQuoteList());
+
+	let quote = document.getElementById("quote");
+	document.getElementById("save").addEventListener("click", () => createQuote());
+
+	let row = 0;
+	function getQuoteList() {
+		//fetch API for global info
+		fetch("https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev")
+			.then(response => response.json())
+			.then(quotes => {
+				rows.innerHTML = '';        //  clear the page
+				quotes.forEach(q => {
+					row++;                  //  use the row # to let us alternate the colors of the row
+					//  Note the id for the Delete and Update TDs. We need a unique id in order to attach an
+					//  specific event handlers for the Update and Delete requests
+					let tr = `
+                    <tr class="w3-theme-${row % 2 > 0 ?"l2":"l3"}">
+                        <td>${(new Date(+q.id)).toString().substring(4,24)}</td>
+                        <td>${q.quote}</td>
+                        <td id="D${q.id}">Delete</td>
+                        <td id="U${q.id}">Update</td>
+                    </tr>`;
+					rows.innerHTML += tr;
+				});
+				quotes.forEach(q => {
+					let ref = document.getElementById("D"+q.id);                //  get reference to the Delete 'button'
+					ref.addEventListener('click', () => deleteQuote(q.id));     //  add the deleteQuote event listener
+					//  or let's get fancy and do it in one line
+					document.getElementById("U"+q.id).addEventListener('click', () => updateQuote(q.id));
+				});
+			})
+			.catch(err => console.log('Fetch Error :', err) );
+	}
+
+	function createQuote() {
+		rows.innerHTML = '';            //  empty out the list
+		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+			method: 'POST',
+			body: JSON.stringify({ quote: quote.value })
+		})
+			.then(() => getQuoteList())
+			.catch(err => console.log('Fetch Error :', err) );
+	}
+
+	//  To delete a document in the DynamnoDB table
+	//      id is required to identify the document
+	function deleteQuote(id) {
+		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+			method: 'DELETE',
+			body: JSON.stringify({ id: id })
+		})
+			.then(() => getQuoteList())                       //  refresh the list of documents in the table
+			.catch(err => console.log('Fetch Error :', err) );
+	}
+
+	//  To update a document in the DynamoDB table
+    //      id is required to identify the document
+    //      quote (or any other attribute that needs to be changed) and the new value
+	function updateQuote(id) {
+		console.log(id);
+		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+			method: 'PUT',
+			body: JSON.stringify({ id: id, quote: quote.value })
+		})
+			.then(() => getQuoteList())                       //  refresh the list of documents in the table
+			.catch(err => console.log('Fetch Error :', err) );
+	}
+</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Lambda')</script>
+<script src="js/sortColumns.js"></script>
+
+</html>

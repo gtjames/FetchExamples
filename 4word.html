@@ -7,33 +7,33 @@
         .e {background-color: green;}
         .c {background-color: palegoldenrod;}
         ._ {background-color: gray;}
-        td { font-size: 40px;
-            padding: 5px 10px;
+        td {
+            font-size: 40px;
+            padding: 5px 5px;
             font-family: "Courier New",serif
         }
     </style>
 
     <style>
-        :host {
-            height: var(--keyboard-height);
+        body {
+            background-color: lightcyan;
         }
+
         #keyboard {
             margin: 0 8px;
             user-select: none;
         }
 
-        body {
-            background-color: cyan;
-        }
         .row {
             display: flex;
-            width: 100%;
+            width: 90%;
             margin: 0 auto 8px;
             /* https://stackoverflow.com/questions/46167604/ios-html-disable-double-tap-to-zoom */
-            touch-action: manipulation;
+            /*touch-action: manipulation;*/
         }
 
         button {
+            font-size: 35px;
             font-family: inherit;
             font-weight: bold;
             border: 0;
@@ -42,66 +42,24 @@
             height: 58px;
             border-radius: 4px;
             cursor: pointer;
-            user-select: none;
-            background-color: var(--key-bg);
-            color: var(--key-text-color);
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            -webkit-tap-highlight-color: rgba(0,0,0,0.3);
         }
 
-        button:focus {
-            outline: none;
+        .oneLetter {
+            width: 2em;
+            height: 20px;
+            font-size: .5em;
         }
-
-        button.fade {
-            transition: background-color 0.1s ease, color 0.1s ease;
-        }
-
-        button:last-of-type {
-            margin: 0;
-        }
-
-        .half {
-            flex: 0.5;
-        }
-
-        .one {
-            flex: 1;
-        }
+        .half {flex: 0.5;}
 
         .one-and-a-half {
             flex: 1.5;
             font-size: 12px;
         }
-
-        .two {
-            flex: 2;
-        }
-
-        #error {
-            background-color: black;
-            color: red;
-        }
-
-        button[data-state='correct'] {
-            background-color: var(--key-bg-correct);
-            color: var(--key-evaluated-text-color);
-        }
-
-        button[data-state='present'] {
-            background-color: var(--key-bg-present);
-            color: var(--key-evaluated-text-color);
-        }
-
-        button[data-state='absent'] {
-            background-color: var(--key-bg-absent);
-            color: var(--key-evaluated-text-color);
-        }
-
     </style>
 </head>
 <body>
@@ -118,23 +76,32 @@
 
 </table>
 <h3 id="foundYou"></h3>
+<table>
+    <tr>
+        <td><input id="0" class="oneLetter" type="text"></td>
+        <td><input id="1" class="oneLetter" type="text"></td>
+        <td><input id="2" class="oneLetter" type="text"></td>
+        <td><input id="3" class="oneLetter" type="text"></td>
+        <td><input id="4" class="oneLetter" type="text"></td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <button id="eliminate">Search</button>
+        </td>
+    </tr>
+</table>
+
 <p id="error"></p>
 <div id="keyboard">
     <div class="row"><button data-key="q">q</button><button data-key="w">w</button><button data-key="e">e</button><button data-key="r">r</button><button data-key="t">t</button><button data-key="y">y</button><button data-key="u">u</button><button data-key="i">i</button><button data-key="o">o</button><button data-key="p">p</button></div>
     <div class="row"><div class="spacer half"></div><button data-key="a">a</button><button data-key="s">s</button><button data-key="d">d</button><button data-key="f">f</button><button data-key="g">g</button><button data-key="h">h</button><button data-key="j">j</button><button data-key="k">k</button><button data-key="l">l</button><div class="spacer half"></div></div>
-    <div class="row"><button data-key="↵" class="one-and-a-half">enter</button><button data-key="z">z</button><button data-key="x">x</button><button data-key="c">c</button><button data-key="v">v</button><button data-key="b">b</button><button data-key="n">n</button><button data-key="m">m</button><button data-key="←" class="one-and-a-half"><game-icon icon="backspace"></game-icon></button></div>
+    <div class="row"><div class="one-and-a-half"></div><button data-key="z">z</button><button data-key="x">x</button><button data-key="c">c</button><button data-key="v">v</button><button data-key="b">b</button><button data-key="n">n</button><button data-key="m">m</button><div class="one-and-a-half"></div></div>
 </div>
 <ul id="tryThis"></ul>
 </body>
 <script>
-	let fiveLetters, hiddenWord, unused = [], lock = [],
-    close = [
-		{'letters':[]},
-		{'letters':[]},
-		{'letters':[]},
-		{'letters':[]},
-		{'letters':[]}];
-
+	let fiveLetters, hiddenWord, unused = [], lock = [], close = [];
+	let match = ['_','_','_','_','_'];
 	lock = ['_','_','_','_','_'];
 
 	let result = document.getElementById('result');
@@ -152,20 +119,69 @@
 	});
 
 	document.getElementById('search').addEventListener('click', search);
+	document.getElementById('eliminate').addEventListener('click', eliminate);
+
+	function eliminate() {
+		let letter, attempt = '';
+		for (let i = 0; i < 5; i++) {
+			letter = document.getElementById(i+"").value;
+			if ( letter >= 'A' && letter <= 'Z') {
+				lock[i] = letter.toLowerCase();
+				match[i] = 'e';
+				setActive(letter.toLowerCase(), 'e');
+				attempt += letter;
+			}
+			if ( letter >= 'a' && letter <= 'z')    {
+				close.push(letter);
+				if (match[i] !== 'c') match[i] = 'c';
+				attempt += letter;
+				setActive(letter, match[i]);
+			}
+			if (letter[0] === '!') {
+				attempt += letter.charAt(1);
+				setActive(letter.charAt(1), '_');
+				unused.push(letter.charAt(1));
+			}
+		}
+		findPossibles(attempt.toLowerCase(), unused, lock, match);
+
+		let td ='';
+		for (let h = 0; h < 5; h++) {
+			td += `<td class="${match[h]}">${attempt[h]}</td>`
+		}
+		create(match, attempt);
+		result.innerHTML += `<tr>${td}</tr>`;
+
+	}
+
+	function create(match, attempt) {
+		let move = '';
+		for(let i = 0; i < 5; i++) {
+			move += match[i] + attempt[i];
+        }
+		fetch("https://3stehybb7a.execute-api.us-east-2.amazonaws.com/prod", {
+			method: 'POST',
+			body: JSON.stringify({ move: move })
+		})
+			// .then(() => getQuoteList())
+			.catch(err => console.log('Fetch Error :', err) );
+	}
 
 	function setup(words) {
 		fiveLetters = words.split('\n');
 		hiddenWord = select();
 		foundYou.innerHTML = `${hiddenWord}<br>`;
     }
+
 	function select() {
 		let index = Math.floor(Math.random() * fiveLetters.length);
 		return fiveLetters[index];
 	}
 
 	function search() {
-		let match = ['_','_','_','_','_'];
 		let attempt = guess.value;
+		let match = ['_','_','_','_','_'];
+
 		error.innerText = '';
 		if ( fiveLetters.find(w => w === attempt) !== attempt) {
 			error.innerText = `${attempt}: is not a valid word`;
@@ -181,7 +197,7 @@
 					match[g] = (h === g) ? 'e' : 'c';
 					setActive(attempt[g], match[g]);
 					if (match[g] === 'e') lock[g] = attempt[g];
-					if (match[g] === 'c') close[g].letters.push(attempt[g]);
+					if (match[g] === 'c') close.push(attempt[g]);
 				}
 			}
 			if (!found) {
@@ -190,7 +206,7 @@
 			}
 		}
 
-		findPossibles(attempt, unused, lock);
+		findPossibles(attempt, unused, lock, match);
 
 		let td ='';
 		for (let h = 0; h < 5; h++) {
@@ -200,45 +216,34 @@
 		// document.body.style.backgroundColor = getColorCode();
 	}
 
-	function findPossibles(attempt, unused, lock) {
-		let possibles = fiveLetters.filter(w => {
-			for (let i = 0; i < 5; i++) {
-				if ((lock[0] !== '_' && lock[0] !== w.charAt(0)) ||
-					(lock[1] !== '_' && lock[1] !== w.charAt(1)) ||
-					(lock[2] !== '_' && lock[2] !== w.charAt(2)) ||
-					(lock[3] !== '_' && lock[3] !== w.charAt(3)) ||
-					(lock[4] !== '_' && lock[4] !== w.charAt(4)))
-					return false;
+	function findPossibles(attempt, unused, lock, match) {
+
+		let possibles = fiveLetters;
+		//  eliminate all words that contain an unused letter
+		possibles = possibles.filter(w => {
+			for (let un of unused) {
+				if (w.indexOf(un) >= 0)
+					return false;           //  contains an unused letter
 			}
-			return true;
+			return true;                    //  free of all unused letters
 		});
 
+		//  find the words that match position and letter
 		possibles = possibles.filter(w => {
-			for (let u of unused) {
-				if (w.indexOf(u) >= 0)
-					return false;
+			for (let i = 0; i < 5; i++) {
+				if ((match[i] === 'e' && lock[i] !== w.charAt(i)))
+					return false;           //  this word doesn't have a matching letter in a required position
 			}
-			return true;
+			return true;                    //  all required letters are accounted for
 		});
 
+        //  find words that have all of the possible letters
 		possibles = possibles.filter(w => {
-			for (let i = 0; i < 5; i++) {
-				if ((lock[0] !== '_' && lock[0] !== w.charAt(0)) ||
-					(lock[1] !== '_' && lock[1] !== w.charAt(1)) ||
-					(lock[2] !== '_' && lock[2] !== w.charAt(2)) ||
-					(lock[3] !== '_' && lock[3] !== w.charAt(3)) ||
-					(lock[4] !== '_' && lock[4] !== w.charAt(4)))
-					return false;
-			}
-			return true;
-		});
-		possibles = possibles.filter(w => {
-			for (let i = 0; i < 5; i++) {
-				for (let j = 0; j < close[i].letters.length; j++) {
-					if (w.charAt(i) === close[i].letters[j]) return false;
-				}
-			}
-			return true;
+            for (let c of close) {
+                if (w.indexOf(c) === -1)
+					return false;           //  does not contain a close letter
+            }
+			return true;                    //  contains all close letters
 		});
 
 		let text = '';
