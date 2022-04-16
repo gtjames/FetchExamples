@@ -1,7 +1,7 @@
 /.idea/
 .DS_Store
-server.crt
-server.csr
-server.key
-server.key.org
-Pi-10 Million.txt
+./server.crt
+./server.csr
+./server.key
+./server.key.org
+./Pi-10 Million.txt

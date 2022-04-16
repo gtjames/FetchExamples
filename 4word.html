@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>My Word</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
     <style>
         .e {background-color: green;}
         .c {background-color: palegoldenrod;}
@@ -65,16 +68,23 @@
 <body>
 <table>
     <tr>
-        <td><label for="guess">Take a Guess</label></td>
-        <td><input id="guess"></td>
+        <td><label for="userName">Who are you</label></td>
+        <td><input id="userName" value="gary"></td>
+        <td><input id="gameKey" value="gameA"></td>
     </tr>
     <tr>
-        <td><button id="search">Search</button></td>
+        <td><button id="newUser">Search</button></td>
     </tr>
 </table>
-<table id="result">
 
-</table>
+<div class="w3-col m4 l3 disney-card w3-theme-l1">
+    <table>
+        <legend>${userName}</legend>
+        <tbody id="userAttempts"></tbody>
+    </table>
+</div>
+<div id="competition"></div>
+
 <h3 id="foundYou"></h3>
 <table>
     <tr>
@@ -99,180 +109,5 @@
 </div>
 <ul id="tryThis"></ul>
 </body>
-<script>
-	let fiveLetters, hiddenWord, unused = [], lock = [], close = [];
-	let match = ['_','_','_','_','_'];
-	lock = ['_','_','_','_','_'];
-
-	let result = document.getElementById('result');
-	let guess = document.getElementById('guess');
-	let foundYou = document.getElementById('foundYou');
-	let error = document.getElementById('error');
-	let tryThis = document.getElementById('tryThis');
-
-	window.addEventListener("load", function () {
-		// document.body.style.backgroundColor = getColorCode();
-
-		fetch('https://raw.githubusercontent.com/gtjames/csv/master/Dictionaries/five.txt')
-			.then(resp => resp.text())
-			.then(words => setup(words) )
-	});
-
-	document.getElementById('search').addEventListener('click', search);
-	document.getElementById('eliminate').addEventListener('click', eliminate);
-
-	function eliminate() {
-		let letter, attempt = '';
-		for (let i = 0; i < 5; i++) {
-			letter = document.getElementById(i+"").value;
-			if ( letter >= 'A' && letter <= 'Z') {
-				lock[i] = letter.toLowerCase();
-				match[i] = 'e';
-				setActive(letter.toLowerCase(), 'e');
-				attempt += letter;
-			}
-			if ( letter >= 'a' && letter <= 'z')    {
-				close.push(letter);
-				if (match[i] !== 'c') match[i] = 'c';
-				attempt += letter;
-				setActive(letter, match[i]);
-			}
-			if (letter[0] === '!') {
-				attempt += letter.charAt(1);
-				setActive(letter.charAt(1), '_');
-				unused.push(letter.charAt(1));
-			}
-		}
-		findPossibles(attempt.toLowerCase(), unused, lock, match);
-
-		let td ='';
-		for (let h = 0; h < 5; h++) {
-			td += `<td class="${match[h]}">${attempt[h]}</td>`
-		}
-		create(match, attempt);
-		result.innerHTML += `<tr>${td}</tr>`;
-
-	}
-
-	function create(match, attempt) {
-		let move = '';
-		for(let i = 0; i < 5; i++) {
-			move += match[i] + attempt[i];
-        }
-		fetch("https://3stehybb7a.execute-api.us-east-2.amazonaws.com/prod", {
-			method: 'POST',
-			body: JSON.stringify({ move: move })
-		})
-			// .then(() => getQuoteList())
-			.catch(err => console.log('Fetch Error :', err) );
-	}
-
-	function setup(words) {
-		fiveLetters = words.split('\n');
-		hiddenWord = select();
-		foundYou.innerHTML = `${hiddenWord}<br>`;
-    }
-
-	function select() {
-		let index = Math.floor(Math.random() * fiveLetters.length);
-		return fiveLetters[index];
-	}
-
-	function search() {
-		let attempt = guess.value;
-		let match = ['_','_','_','_','_'];
-
-		error.innerText = '';
-		if ( fiveLetters.find(w => w === attempt) !== attempt) {
-			error.innerText = `${attempt}: is not a valid word`;
-			return;
-        }
-
-		for (let g = 0; g < 5; g++) {
-			let found = false;
-			for (let h = 0; h < 5; h++) {
-				if (hiddenWord[h] === attempt[g]) {
-					found = true;
-					if (match[g] === 'e') break;
-					match[g] = (h === g) ? 'e' : 'c';
-					setActive(attempt[g], match[g]);
-					if (match[g] === 'e') lock[g] = attempt[g];
-					if (match[g] === 'c') close.push(attempt[g]);
-				}
-			}
-			if (!found) {
-				setActive(attempt[g], '_');
-				unused.push(attempt[g]);
-			}
-		}
-
-		findPossibles(attempt, unused, lock, match);
-
-		let td ='';
-		for (let h = 0; h < 5; h++) {
-			td += `<td class="${match[h]}">${attempt[h]}</td>`
-		}
-		result.innerHTML += `<tr>${td}</tr>`;
-		// document.body.style.backgroundColor = getColorCode();
-	}
-
-	function findPossibles(attempt, unused, lock, match) {
-
-		let possibles = fiveLetters;
-		//  eliminate all words that contain an unused letter
-		possibles = possibles.filter(w => {
-			for (let un of unused) {
-				if (w.indexOf(un) >= 0)
-					return false;           //  contains an unused letter
-			}
-			return true;                    //  free of all unused letters
-		});
-
-		//  find the words that match position and letter
-		possibles = possibles.filter(w => {
-			for (let i = 0; i < 5; i++) {
-				if ((match[i] === 'e' && lock[i] !== w.charAt(i)))
-					return false;           //  this word doesn't have a matching letter in a required position
-			}
-			return true;                    //  all required letters are accounted for
-		});
-
-        //  find words that have all of the possible letters
-		possibles = possibles.filter(w => {
-            for (let c of close) {
-                if (w.indexOf(c) === -1)
-					return false;           //  does not contain a close letter
-            }
-			return true;                    //  contains all close letters
-		});
-
-		let text = '';
-		for (let w of possibles) {
-			text += `<li>${w}</li>`;
-        }
-		tryThis.innerHTML = text;
-		foundYou.innerHTML += `Possibles ${possibles.length}<br>`;
-	}
-
-	function getColorCode() {
-		let makeColorCode = '0123456789ABCDEF';
-		let code = '#';
-		for (let count = 0; count < 6; count++) {
-			code =code+ makeColorCode[Math.floor(Math.random() * 16)];
-		}
-		return code;
-	}
-
-	function setActive(letter, status) {
-		// use querySelectorAll to get all of the type li elements
-		const allTypes = document.querySelectorAll("div.row > button");
-		allTypes.forEach((item) => {
-			// check to see if this is the one to make active
-			if (item.dataset.key === letter) {
-				item.classList.add(status);
-			}
-		});
-	}
-
-</script>
+<script src="js/qwars.js"></script>
 </html>
