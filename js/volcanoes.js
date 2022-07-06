@@ -73,11 +73,14 @@ window.addEventListener("load", function () {
     let history = volcanoes.filter(v => v.Name === name);
     history.sort((a, b) => a.Year-b.Year );
     let rows = document.getElementById("rows");
+    rows.innerHTML = '';
+    let rowCnt = 0;
     history.forEach((v) => {
-      rows.innerHTML += `<tr><td>${v.Year}</td><td>${v.Deaths}</td></tr>`;
+      rowCnt++;
+      rows.innerHTML += `<tr class="w3-theme-${rowCnt % 2 > 0 ? 'l4' : 'd1'}"><td>${v.Year}</td><td>${v.Deaths}</td></tr>`;
     });
     document.getElementById("volcano").innerText = `${name}: ${history[0].Location}, ${history[0].Country}`;
-    document.getElementById("details").innerHTML = `<p>Elevation: ${history[0].Elevation} ft</p>`;
+    document.getElementById("details").innerHTML = `<p>Elevation: ${history[0].Elevation} ft</p><p>Deaths: ${history.reduce((deathToll,v) => deathToll + v.Deaths,0)}</p>`;
   }
 
   // create simple html markup to display a list

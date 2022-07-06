@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Q-Wars</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/qwars.css">
+
+    <style>
+        .modal-header, h4, .close {
+            background-color: #5cb85c;
+            color:white !important;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .margin {margin-left: 15px;;}
+        .x {background-color: gold; color: black;}
+        .e {background-color: green;}
+        .c {background-color: palegoldenrod; color: black;}
+        ._ {background-color: gray;}
+        .nope {background-color: black; color: red;}
+        .round  { border-radius: 12px;}
+        td {
+            font-size: 40px;
+            padding: 5px 5px;
+            font-family: "Courier New",serif
+        }
+
+        body { background-color: lightcyan; }
+
+        #error { color: red; font-size: 1em; }
+
+        #keyboard, #userAttempts, .keyboard {
+            margin: 0 8px;
+            user-select: none;
+        }
+
+        .row {
+            display: flex;
+            width: 90%;
+            margin: 0 auto 8px;
+        }
+
+        .moves {
+            width: 32rem;
+        }
+
+        button {
+            font-size: 30px;
+            font-family: inherit;
+            font-weight: bold;
+            border: 0;
+            padding: 3px;
+            margin: 4px 6px 0 0;
+            height: 58px;
+            border-radius: 4px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .oneLetter {
+            width: 2em;
+        }
+        .half {flex: 0.5;}
+
+        .one-and-a-half {
+            flex: 1.5;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Settings
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Action</a>
+        <a id="myChallenge" href="#">Create a Challenge</a>
+        <button type="button" class="btn btn-default btn-lg" id="sendChallenge">Create a Challenge</button>
+    </div>
+</div>
+<div class="panel-body"><ol id="updates"></ol></div>
+
+<div id="main">
+    <table>
+        <tr>
+            <td><label for="gameKey">Choose a Game</label></td>
+            <td><select id="gameKey"></select></td>
+        </tr>
+        <tr>
+            <td><button id="playAgain">Play Again?</button></td>
+            <td><button id="newUser">Search</button></td>
+            <td><label  id="reveal" for="selectWidth">Width</label>
+                <select name="selectWidth" id="selectWidth">
+                    <option value="5">Chose a Word Length</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                    <option value="6">Six</option>
+                </select></td>
+            <td id="secretWord"></td>
+        </tr>
+    </table>
+    <hr>
+    <table><tr id="letters"></tr></table>
+    <hr>
+    <div class="card moves">
+        <h4 id="myMoves" class="card-title"></h4>
+        <div class="card-body">
+        <div id="userAttempts" class="keyboard"></div>
+    </div>
+    </div>
+    <div id="error"></div>
+    <div id="competition"></div>
+    <div id="keyboard">
+        <div class="row"><button data-key="Q">Q</button><button data-key="W">W</button><button data-key="E">E</button><button data-key="R">R</button><button data-key="T">T</button><button data-key="Y">Y</button><button data-key="U">U</button><button data-key="I">I</button><button data-key="O">O</button><button data-key="P">P</button></div>
+        <div class="row"><div class="spacer half"></div><button data-key="A">A</button><button data-key="S">S</button><button data-key="D">D</button><button data-key="F">F</button><button data-key="G">G</button><button data-key="H">H</button><button data-key="J">J</button><button data-key="K">K</button><button data-key="L">L</button><div class="spacer half"></div></div>
+        <div class="row"><button data-key="CR">&#8629;</button><button data-key="Z">Z</button><button data-key="X">X</button><button data-key="C">C</button><button data-key="V">V</button><button data-key="B">B</button><button data-key="N">N</button><button data-key="M">M</button><button data-key="BS">Del</button></div>
+    </div>
+    <p id="possibleWords"></p>
+    <ul id="tryThis"></ul>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><span class="glyphicon glyphicon-lock"></span> Who is up for a Challenge?</h4>
+                    <p id="gameError"></p>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="challengeKey"><span class="glyphicon glyphicon-hand-right"></span> Game Name</label>
+                            <input type="text" class="form-control" id="challengeKey" placeholder="Enter Game Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="friends"><span class="glyphicon glyphicon-envelope"></span> Send Invitations</label>
+                            <textarea type="text" class="form-control" id="friends" placeholder="Enter emails"></textarea>
+                        </div>
+                        <button type="submit" id="verifyChallenge" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Create Challenge</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="js/vendor/aws-cognito-sdk.min.js"></script>
+<script src="js/vendor/amazon-cognito-identity.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/cognito-auth.js"></script>
+<script src="js/qwars2.js"></script>
+<script>
+	$(document).ready(() => $("#myChallenge").click(() => $("#myModal").modal()));
+	// $(document).ready(() => $("#sendChallenge").click(() => $("#myModal").modal()));
+</script>
+
+</body>
+</html>

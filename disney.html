@@ -34,7 +34,8 @@
         <br>
         <img id="img" src="" alt="">
         <ul id="ul" class='' id="movies">
-        </ul>    </div>
+        </ul>
+    </div>
 </template>
 
 </body>
@@ -45,6 +46,7 @@
 
 	search.addEventListener('click', searchCharacter);
 	let allCharacters = [];
+
 	if (localStorage.getItem('disneyCharacters') !== null) {
 		allCharacters = JSON.parse(localStorage.getItem('disneyCharacters'));
 		card1.innerHTML = `Found ${allCharacters.length} Characters in LS`;
@@ -87,26 +89,35 @@
 			card2.appendChild(createCard(character, li, row));
 		}
 	}
+
+    /**
+     *      createCard - using a cloned template
+     *          there is a dead chunk of HTML in the <body>
+     *          we will clone it, put our data into the elements of this block of HTML
+     *          then insert that into the page where we want it
+     * @param character
+     * @param li
+     * @param row
+     * @returns {Node}
+     */
 	function createCard(character, li, row) {
+        let cardTemplate = document.getElementById('cardTemplate');
 		const node = cardTemplate.content.cloneNode(true);
-		const div    = node.querySelector('#div')
-		const link   = node.querySelector('#a')
-		const img    = node.querySelector('#img')
-		const ul     = node.querySelector('#ul')
+		const div    = node.querySelector('#div');
+		const link   = node.querySelector('#a');
+		const img    = node.querySelector('#img');
+		const ul     = node.querySelector('#ul');
 
 		div.className += ` w3-theme-d${row}`;
 
-		link.href = character.url;
-		link.innerHTML = character.name;
-
-		img.src = character.imageUrl;
-
-		ul.innerHTML = li;
-		ul.className = `w3-theme-l${row}`;
+		link.href       = character.url;
+		link.innerHTML  = character.name;
+		img.src         = character.imageUrl;
+		ul.innerHTML    = li;
+		ul.className    = `w3-theme-l${row}`;
 
 		return node;
 	}
-
 
 	function getAllCharacters(page) {
 		let url = `https://api.disneyapi.dev/characters?page=${page}`;

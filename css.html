@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .content {
+            width: 80%;
+            height: 500px;
+            border: 1px solid;
+
+        }
+
+        .red {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            transition: 2s;
+
+        }
+
+        .green {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+
+        }
+        .yellow {
+            width: 100px;
+            height: 100px;
+            background-color: gold;
+
+        }
+        .blue {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+
+        }
+
+        .red:hover {
+            background-color:orange;
+            transform: rotate(90deg) scaleY(2.5);
+            transform-origin: bottom left;
+            border-radius: 20px;
+            box-shadow: 10px 10px 5px grey;
+
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="red" ></div>
+    <div class="green" ></div>
+    <div class="yellow" ></div>
+    <div class="blue" ></div>
+</div>
+</body>
+</html>

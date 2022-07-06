@@ -144,7 +144,7 @@ function getNBAGameStats(teamId) {
  *      the next step for this app is to put the years each in their own tab
  */
 function showTeamGameStats(games) {
-    for (let year = 2015; year <= 2020; year++ ) {
+    for (let year = 2015; year <= 2022; year++ ) {
         let gamesForTheYear = games.filter(g => +g.seasonYear === year);
         gamesByYear(gamesForTheYear, 'G' + year);
     }
@@ -152,17 +152,16 @@ function showTeamGameStats(games) {
 
 function gamesByYear(games, tab) {
     let teamTable = document.getElementById(tab + 'Rows');
-    html = ``;
+    let html = ``;
     for (let game of games) {
         row++;
-        html += `<tr class="w3-theme-${row%2>0?'l2':'l3'}">
+        html = `<tr class="w3-theme-${row%2>0?'l2':'l3'}">
 		        <td>${game.arena} </td><td>${game.city}</td><td>${game.gameDuration} </td>
 		        <td>${game.hTeam.fullName}</td><td>${game.hTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.hTeam.teamId})'><img src='${game.hTeam.logo}' alt="" width=100px height=100px></td>
 		        <td>${game.vTeam.fullName}</td><td>${game.vTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.vTeam.teamId})'><img src='${game.vTeam.logo}' alt="" width=100px height=100px></td>
             </tr>`;
+        teamTable.innerHTML += html;
     }
-    teamTable.innerHTML = html;
-
 }
 
 /**

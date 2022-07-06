@@ -213,7 +213,10 @@ function getWeather() {
  */
 function cityToWeather(data, all) {
     let wx = {};
-    wx.daily = data.list.filter((w,i) =>  all || i % 4 === 0).map(d => ({
+    //  there is a checkbox to request all hourly records be displayed
+    //      if not checked then just show every 4 hours
+    wx.daily = data.list.filter((w,i) =>  all || i % 4 === 0)
+        .map(d => ({        //  I am going to cherry-pick the attributes I want to use in the display
         date:           niceDate(d.dt, data.city.timezone) + ' ' + niceTime(d.dt, data.city.timezone),
         min:            KtoF(d.main.temp_min),
         max:            KtoF(d.main.temp_max),
@@ -244,7 +247,7 @@ function cityToWeather(data, all) {
  */
 function latLonToWeather(data) {
     let wx = {};
-    wx.daily = data.daily.map(d => ({
+    wx.daily = data.daily.map(d => ({       //  cherry-picking the attributes I want to use in the display
         date:           niceDate(d.dt,data.timezone_offset),
         min:            KtoF(d.temp.min),
         max:            KtoF(d.temp.max),
