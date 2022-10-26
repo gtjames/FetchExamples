@@ -1,0 +1,13 @@
+{
+  "dt":1655856000,
+  "humidity":63.53,
+  "pressure":1012.21,
+  "temp":{
+    "average":301.36,
+    "average_max":306.75,
+    "average_min":298.03,
+    "record_max":311.71,
+    "record_min":292.3
+  },
+  "wind_speed":4.79
+}

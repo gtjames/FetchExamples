@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Real Estate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="city">Search for City</label>
+    <input type="text" id="city" value="Arlington">
+
+    <label for="sqFtMin">Search for sqFtMin</label>
+    <input type="text" id="sqFtMin">
+
+    <label for="sqFtMax">Search for sqFtMax</label>
+    <input type="text" id="sqFtMax">
+
+    <label for="baths">Minimum # of Baths</label>
+    <input type="text" id="baths">
+
+    <label for="beds">Minumum # of Beds</label>
+    <input type="text" id="beds">
+
+    <label for="priceMin">Search for priceMin</label>
+    <input type="text" id="priceMin">
+
+    <label for="priceMax">Search for priceMax</label>
+    <input type="text" id="priceMax">
+
+    <label for="page">Search for page</label>
+    <input type="text" id="page">
+    <button id="search">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <table>
+        <tr>
+            <th>Price</th>
+            <th>Size</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Baths</th>
+            <th>Bed Rooms</th>
+            <th>Agent</th>
+            <th>Property ID</th>
+            <th>Home</th>
+        </tr>
+        <tbody id="homeList"></tbody>
+    </table>
+</div>
+
+</body>
+<script src="js/menu.js"></script>
+<script src="js/realEstate.js"></script>
+<script>makeMeActive('Real Estate')</script>
+
+</html>
