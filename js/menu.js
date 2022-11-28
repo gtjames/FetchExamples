@@ -8,6 +8,7 @@ let menuOptions = [
     {link: 'covid19.html', text: 'COVID'},
     {link: 'books.html', text: 'Books'},
     {link: 'news.html', text: 'News'},
+    {link: 'shopping.html', text: 'Shopping'},
     {link: 'baseball.html', text: 'Baseball'},
     {link: 'basketball.html', text: 'Basketball'},
     {link: 'stars.html', text: 'Stars'},

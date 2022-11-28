@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Shopping</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="itemSearch">Search for a Title then tab out</label>
+    <input type="text" id="itemSearch" value="mars">
+    <button id="search">Search</button>
+    <p>Columns are sortable</p>
+</div>
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>Image</th>  <th>Price</th>  <th>Description</th>
+        </tr>
+        </thead>
+        <tbody id='list'>   </tbody>
+    </table>
+</div>
+</body>
+<script>
+    let search = document.getElementById('search');
+    search.addEventListener('click', shoppingSearch);
+
+    function shoppingSearch() {
+        let searchText = document.getElementById('itemSearch').value;
+
+        const options = {
+            method: 'GET',      //  this BTW is optional since the default is to do a GET
+            headers: {
+                'X-RapidAPI-Key': '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5',
+                'X-RapidAPI-Host': 'amazon-price1.p.rapidapi.com'
+            }
+        };
+
+        fetch(`https://amazon-price1.p.rapidapi.com/search?keywords=${searchText}&marketplace=US`, options)
+            .then(response => response.json())
+            .then(products => showProducts(products))
+            .catch(err => console.error(err));
+    }
+    function showProducts(products) {
+        let tableBody = document.getElementById('list');
+        //  the map function will take out attributes and merge into
+        //  an array representing a TR element
+        //  the final join will take these strings in the array and create one BIG string
+        //  which we will put into the tableBody
+        tableBody.innerHTML = products.map((b,idx) => buildRow(b, idx) ).join("\n");
+
+        //  Alternate possibilities that do exactly the same thing
+        //  We could also do this with a forEach
+        //  the += will append each new line of text to the tbody on the page
+        // products.forEach((b,idx) => tableBody.innerHTML += buildRow(b, idx));
+
+        // We could also do this with a forEach and a code block
+        // products.forEach((b,idx) => {
+        //     let tr = buildRow(b, idx);
+        //     tableBody.innerHTML += tr;
+        // });
+    }
+
+    //  function buildRow
+    //      All this function does is take our data and create a text string
+    //      that matches the columns needed in our table
+    //      since the three examples above all need to do the same thing it was
+    //      a convenience to put the common work into a function
+    function buildRow (data, index) {
+        return `<tr class="w3-theme-${index%2>0?'l2':'l3'}">
+                    <td><a href='${data.detailPageURL}'><img src='${data.imageUrl}' height='120px'/></a></td>
+                    <td>${data.price}</td>
+                    <td>${data.title}</td>
+                </tr>`;
+    }
+</script>
+<script src="js/menu.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>makeMeActive('Shopping')</script>
+
+</html>
