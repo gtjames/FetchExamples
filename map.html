@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin=""/>
+  <style>
+    #map { height: 640px }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+</body>
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin="">
+</script>
+<script>
+	window.navigator.geolocation.getCurrentPosition(setLocation);
+
+	var map, popup;
+	function setLocation(loc) {
+
+		var map = L.map('map').setView([loc.coords.latitude, loc.coords.longitude], 13);
+		L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: '© OpenStreetMap'
+		}).addTo(map);
+
+		var marker = L.marker([loc.coords.latitude, loc.coords.longitude]).addTo(map);
+
+		var circle = L.circle([loc.coords.latitude + 0.02, loc.coords.longitude + 0.02], {
+			color: 'red',
+			fillColor: '#f03',
+			fillOpacity: 0.5,
+			radius: 100
+		}).addTo(map);
+
+		marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+		circle.bindPopup("I am a circle.");
+
+		popup = L.popup();
+		map.on('click', onMapClick);
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+	}
+</script>
+</html>

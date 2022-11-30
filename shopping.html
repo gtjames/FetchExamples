@@ -79,7 +79,7 @@
     //      a convenience to put the common work into a function
     function buildRow (data, index) {
         return `<tr class="w3-theme-${index%2>0?'l2':'l3'}">
-                    <td><a href='${data.detailPageURL}'><img src='${data.imageUrl}' height='120px'/></a></td>
+                    <td><a href='${data.detailPageURL}'><img src='${data.imageUrl}' alt='' height='120px'/></a></td>
                     <td>${data.price}</td>
                     <td>${data.title}</td>
                 </tr>`;
