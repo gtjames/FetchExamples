@@ -33,6 +33,7 @@
 </div>
 </body>
 <script>
+	let apiURL = 'https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev';
 	let rows = document.getElementById("rows");
 
 	window.addEventListener("load", () => getQuoteList());
@@ -41,9 +42,10 @@
 	document.getElementById("save").addEventListener("click", () => createQuote());
 
 	let row = 0;
+
 	function getQuoteList() {
 		//fetch API for global info
-		fetch("https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev")
+		fetch(apiURL)
 			.then(response => response.json())
 			.then(quotes => {
 				rows.innerHTML = '';        //  clear the page
@@ -72,7 +74,7 @@
 
 	function createQuote() {
 		rows.innerHTML = '';            //  empty out the list
-		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+		fetch(apiURL, {
 			method: 'POST',
 			body: JSON.stringify({ quote: quote.value })
 		})
@@ -83,7 +85,7 @@
 	//  To delete a document in the DynamoDB table
 	//      id is required to identify the document
 	function deleteQuote(id) {
-		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+		fetch(apiURL, {
 			method: 'DELETE',
 			body: JSON.stringify({ id: id })
 		})
@@ -96,7 +98,7 @@
     //      quote (or any other attribute that needs to be changed) and the new value
 	function updateQuote(id) {
 		console.log(id);
-		fetch('https://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev', {
+		fetch(apiURL, {
 			method: 'PUT',
 			body: JSON.stringify({ id: id, quote: quote.value })
 		})
@@ -109,4 +111,3 @@
 <script src="js/sortColumns.js"></script>
 
 </html>
-

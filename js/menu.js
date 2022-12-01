@@ -15,6 +15,7 @@ let menuOptions = [
     {link: 'lambdaQuotes.html', text: 'Lambda'},
     {link: 'realEstate.html', text: 'Real Estate'},
     {link: 'weather.html', text: 'Weather'},
+    {link: 'words.html', text: 'Words'},
     {link: 'art.html', text: 'World Art'},
     {link: 'Volcanoes.html', text: 'Volcanoes'},
     {link: 'disney.html', text: 'Disney'},

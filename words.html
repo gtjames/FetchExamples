@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Words</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="wordSearch">Search for a Title then tab out</label>
+    <input type="text" id="wordSearch" value="mars">
+    <button id="search">Search</button>
+    <p>Columns are sortable</p>
+</div>
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>Definition</th>         <th>Synonyms</th>
+        </tr>
+        </thead>
+        <tbody id='wordList'>   </tbody>
+    </table>
+</div>
+</body>
+<script>
+    let search = document.getElementById('search');
+    search.addEventListener('click', wordSearch);
+
+    function wordSearch() {
+        let searchText = document.getElementById('wordSearch').value;
+        const options = {
+        	method: 'GET',
+	            headers: {
+		            'X-RapidAPI-Key': '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5',
+		            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+	            }
+        };
+
+        fetch(`https://wordsapiv1.p.rapidapi.com/words/${searchText}`, options)
+	        .then(response => response.json())
+	        .then(response => showWords(response))
+	        .catch(err => console.error(err));
+    }
+    function showWords(words) {
+        let tableBody = document.getElementById('wordList');
+        let row = '';
+        words.results.forEach((word,idx) => {
+            if (word.synonyms === undefined)    word.synonyms = [];
+            let synonyms = '<ul>';
+            word.synonyms.forEach(s => synonyms += `<li>${s}</li>`);
+            synonyms += '</ul>';
+            row += `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
+                        <td>${word.definition}</td>
+                        <td>${synonyms}</td>
+                    </tr>`
+                });
+        tableBody.innerHTML = row;
+    }
+</script>
+<script src="js/menu.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>makeMeActive('Words')</script>
+
+</html>
