@@ -105,7 +105,9 @@
 		})
 			.then(response => response.json())
 			.then(languages => {
+                fromLang.innerHTML = `<option value=en>English</option>`;
 				langList(languages.languages, true,  fromLang);
+                toLang.innerHTML = `<option value=nd>Mederlands</option>`;
 				langList(languages.languages, false, toLang);
 			})
 			.catch(err => {console.error(err);});
