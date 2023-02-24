@@ -65,7 +65,7 @@
         //  an array representing a TR element
         //  the final join will take these strings in the array and create one BIG string
         //  which we will put into the tableBody
-        tableBody.innerHTML = bookList.map((b,idx) =>
+        let arHtml = bookList.map((b,idx) =>
             `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
                 <td><img src=${b.image} height='120px' alt=""></td>
                 <td>${b.title}</td>
@@ -73,7 +73,9 @@
                 <td>${b.pageCount}</td>
                 <td>${b.desc}</td>
             </tr>`
-        ).join("\n");
+        );
+        let txt = arHtml.join("\n")
+        tableBody.innerHTML = txt;
     }
 </script>
 <script src="js/menu.js"></script>

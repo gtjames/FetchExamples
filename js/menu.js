@@ -11,6 +11,7 @@ let menuOptions = [
     {link: 'shopping.html', text: 'Shopping'},
     {link: 'baseball.html', text: 'Baseball'},
     {link: 'basketball.html', text: 'Basketball'},
+    {link: 'nytimes.html', text: 'NY Times'},
     {link: 'stars.html', text: 'Stars'},
     {link: 'lambdaQuotes.html', text: 'Lambda'},
     {link: 'realEstate.html', text: 'Real Estate'},

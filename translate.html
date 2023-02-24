@@ -112,8 +112,8 @@
     }
 
 	function langList(list, src, select) {
-		select.innerHTML = list.filter(l => src ? l.support_source: l.support_target)
-			.map(l => `<option value="${l.language_code}">${l.display_name}</option>option>`).join('\n');
+		select.innerHTML += list.filter(l => src ? l.support_source: l.support_target)
+			.map(l => `<option value="${l.language_code}">${l.display_name}</option>`).join('\n');
     }
 
 </script>

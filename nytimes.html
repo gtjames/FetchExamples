@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NY Times</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="news">Search</label>
+    <input type="text", id="news">
+    <button id="search">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+<template id="cardTemplate">
+    <div id="div" class="w3-col m4 l3 disney-card">
+        <a id="a" href="">Headline</a>
+        <br>
+        <img id="img" src="" alt="">
+    </div>
+</template>
+</body>
+<script>
+    let card   = document.getElementById('card');
+    document.getElementById('search').addEventListener('click', doit);
+    let search = document.getElementById('news');
+
+    function doit () {
+        let movie = search.value;
+        let apiURL = `https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${movie}&api-key=33Uz5UagtJwFj0l0OOelQtLxHyzRJNNc`;
+        let html = '';
+        fetch(apiURL)
+            .then(response => response.json())
+            .then(reviews => {
+                //  rows.innerHTML = '';        //  clear the page
+                let row = 0;
+                card.innerHTML = ``;
+                reviews.results.forEach(r => {
+                    card.innerHTML += `
+                <div class="w3-col m4 l3 disney-card w3-theme-d${row}">
+                    <a href="${r.link.url}">${r.display_title}</a>
+                    <br>
+                    <img src="${r.multimedia.src}" alt="${r.link.suggested_link_text}">
+                    <div class='w3-theme-l${row}' id="movies">
+                        ${r.summary_short}
+                    </div>
+                </div>`;
+                })
+            });
+    }
+</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('NY Times')</script>
+</html>

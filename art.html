@@ -39,7 +39,8 @@
   }
 
   function buildCard(art) {
-    for (let item of art.items) {
+    for (let item of art.items) 
+    {
       row++;
       if ( typeof item.dcDescription === 'undefined')
         item.dcDescription = ['undef'];

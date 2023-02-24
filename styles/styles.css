@@ -9,7 +9,7 @@ table, tr, td, th {
     border: 1px solid black;
     border-collapse: collapse;
     margin-top: 5px;
-    padding: 8px;
+    padding: 28px;
     text-align: center;
 }
 
@@ -25,7 +25,7 @@ tr:nth-child(even) { background-color: lightblue; }
 tr:nth-child(odd)  { background-color: lightcyan; }
 
 .ATOZ {background: url("../images/atoz.png") no-repeat right top;}
-.ZTOA {background: url("../images/ztoa.png") no-repeat left bottom;}
+.ZTOA {background: url("../images/ztoa.svg") no-repeat left bottom;}
 
 /* Style the tab */
 .tab {
