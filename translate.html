@@ -107,7 +107,7 @@
 			.then(languages => {
                 fromLang.innerHTML = `<option value=en>English</option>`;
 				langList(languages.languages, true,  fromLang);
-                toLang.innerHTML = `<option value=nd>Mederlands</option>`;
+                toLang.innerHTML = `<option value=nl>Nederlands</option>`;
 				langList(languages.languages, false, toLang);
 			})
 			.catch(err => {console.error(err);});
