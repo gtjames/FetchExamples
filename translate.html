@@ -45,6 +45,7 @@
 	// speech to text
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+    const synth = window.speechSynthesis;
 	const recognition = new SpeechRecognition();
 	recognition.start();
 
@@ -90,6 +91,12 @@
 			.then(json => {
 				let text = json.translations[0].translated[0];
 				translation.innerHTML += `<li>${text}</li>`;
+
+                // const utterThis = new SpeechSynthesisUtterance(text);
+                // voice = {default:false, lang:"it-IT", localService:true, name:"Alice", voiceURI:"Alice"}
+                // utterThis.volume = voice;
+                // synth.speak(utterThis);
+
 				recognition.start();
 			})
 			.catch( error => console.error(error));
