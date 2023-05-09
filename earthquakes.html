@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Earthquakes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .disney-card { height: 400px; }
+    </style>
+
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="newsSearch">Search for News</label>
+    <input type="text" id="newsSearch" value="SpaceX">
+    <select id="lang">
+        <option value="en">English</option>
+        <option value="nl">Nederlands</option>
+    </select>
+    <button id="search">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+</body>
+<script src="js/menu.js"></script>
+<script src="js/earthquakes.js" type="module"></script>
+<script>makeMeActive('Earthquakes')</script>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    function getAnimals () {
+        let animal = 'dog'
+        const url = 'https://animals-by-api-ninjas.p.rapidapi.com/v1/animals/' + animal;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '3ef67f7eeamsh8b4f075f34e3a7dp18e177jsn3a434a265872',
+                'X-RapidAPI-Host': 'animals-by-api-ninjas.p.rapidapi.com',
+                'Content-Type': 'application/json'
+            },
+        };
+        fetch(url, options)
+            .then((response) => {
+                // if (response.ok) {
+                    return response.json();
+                // }
+            })
+            .then(json => renderAnimals(json))
+            .catch((response) => {
+                console.log(response.status);
+            });
+    }
+
+    getAnimals();
+    function renderAnimals(animals) {
+        console.log(animals);
+    }
+</script>
+</html>

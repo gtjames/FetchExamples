@@ -3,23 +3,27 @@ export let lat, lon;
 let message;
 
 //  Make sure your pop ups are turned on at least for this URL
-export function getLocation(msgId) {
-    message = document.getElementById(msgId)
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+export function getLocation(whatsNext) {
+    if(locationRetrieved) {
+        whatsNext(lat, lon);
+    }
+    else if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+            console.log(pos);
+            getPosition(whatsNext, pos)
+        })
     } else {
-        message.innerHTML = "Geolocation is not supported by this browser.";
+        alert("Geolocation is not supported by this browser.");
     }
 }
 
 //  save the current location.
 //  put a message on the screen that the location has been retrieved
-export function showPosition(position) {
+export function getPosition(whatsNext, position) {
+    locationRetrieved = false;
     lat = position.coords.latitude;
     lon = position.coords.longitude;
-    message.innerText = `location retrieved: ${lon.toFixed(3)} ${lat.toFixed(3)} `;
-    locationRetrieved = true;
+    whatsNext(lat, lon);
 }
 
 //  convert degrees into english directions

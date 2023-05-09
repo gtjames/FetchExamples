@@ -34,8 +34,8 @@
   function searchArt() {
     let url = `https://api.europeana.eu/record/v2/search.json?query=${search.value}&wskey=gperglagenti`;
     fetch(url)
-            .then(resp => resp.json())          //  wait for the response and convert it to JSON
-            .then(art => buildCard(art) );
+      .then(resp => resp.json())          //  wait for the response and convert it to JSON
+      .then(art => buildCard(art) );
   }
 
   function buildCard(art) {
