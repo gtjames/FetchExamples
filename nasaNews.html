@@ -28,43 +28,42 @@
             <th></th> <th>Title</th> <th>Source</th><th>Description</th>
         </tr>
         </thead>
-        <tbody id='tbody1'>   </tbody>
-        <tbody id='tbody2'>   </tbody>
-        <tbody id='tbody3'>   </tbody>
+        <tbody id='tbody'>   </tbody>
     </table>
 </div>
 </body>
 <script>
     let searchBtn = document.getElementById('searchBtn');
     searchBtn.addEventListener('click', search);
-/* 
+/*
+    https://api.spaceflightnewsapi.net/v3/articles
+    https://api.spaceflightnewsapi.net/v3/reports
+    https://api.spaceflightnewsapi.net/v3/blogs
     https://ll.thespacedevs.com/2.2.0/event/?search=Dragon&limit=10&offset=10
+
+ :"https://www.nasaspaceflight.com/wp-content/uploads/2023/04/NSF-2023-04-06-14-20-26-372-1170x826.jpg",
+ :"NASASpaceflight",
+ :"https://www.nasaspaceflight.com/2023/04/starship-targeting-h2-april/"
 */
 function search() {
-    let searchText = document.getElementById('searchField').value;
-    buildPage(newsResults, "tbody1", `https://api.spaceflightnewsapi.net/v3/articles?_limit=5&_start=1`)
-    buildPage(newsResults, "tbody2", `https://api.spaceflightnewsapi.net/v3/reports`)
-    buildPage(newsResults, "tbody3", `https://api.spaceflightnewsapi.net/v3/articles`)
-}
-
-function buildPage(renderResults, tbody, api) {
-    fetch(api)
-        .then(resp => resp.json())
-        .then(results => renderResults(results, tbody));
-}
-function newsResults(news, tbody) {
-    let tableBody = document.getElementById(tbody);
-    let arHtml = news.map((b,idx) =>
-        `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
-            <td><a href=${b.url}><img src=${b.imageUrl} height='120px' alt=""></a></td>
-            <td>${b.title}</td>
-            <td>${b.newsSite}</td>
-            <td>${b.summary}</td>
-        </tr>`
-    );
-    let txt = arHtml.join("\n")
-    tableBody.innerHTML = txt;
-}
+        let searchText = document.getElementById('searchField').value;
+        fetch(`https://api.spaceflightnewsapi.net/v3/articles?_limit=5&_start=1`)
+            .then(resp => resp.json())          //  wait for the response and convert it to JSON
+            .then(results => renderPage(results));
+    }
+    function renderPage(news) {
+        let tableBody = document.getElementById('tbody');
+        let arHtml = news.map((b,idx) =>
+            `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
+                <td><a href=${b.url}><img src=${b.imageUrl} height='120px' alt=""></a></td>
+                <td>${b.title}</td>
+                <td>${b.newsSite}</td>
+                <td>${b.summary}</td>
+            </tr>`
+        );
+        let txt = arHtml.join("\n")
+        tableBody.innerHTML = txt;
+    }
 </script>
 <script src="js/menu.js"></script>
 <script src="js/sortColumns.js"></script>

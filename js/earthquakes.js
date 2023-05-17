@@ -1,11 +1,3 @@
-import {getLocation, locationRetrieved, lat, lon} from './utils.js';
-
-let card = document.getElementById('card');
-let term = document.getElementById('newsSearch');
-let lang = document.getElementById('lang');
-document.getElementById('search').addEventListener('click', earthquakesNearMe);
-
-let row = 0;
 getLocation(earthquakesNearMe);
 
 function earthquakesNearMe(long, lat) {
@@ -21,7 +13,7 @@ function earthquakesNearMe(long, lat) {
     try {
         fetch(url, options)
             .then(resp => resp.json())
-            .then(result => render(lat, long, result.data) );
+            .then(result => render(lat, long, result) );
     } catch (error) {
         console.error(error);
     }
@@ -29,22 +21,7 @@ function earthquakesNearMe(long, lat) {
 
 function render(lat, long, result) {
 
-    result.forEach(story => {
-            let storyHTML = buildNewsCard(story);
-            card.innerHTML += storyHTML
-        }); 
 }
-
-function buildNewsCard(story) {
-    row++;
-    return `
-        <div class="w3-col m4 l3 w3-theme-${row%10>5?"l":"d"}${(row%5)+1} disney-card">
-            <a href="${story.url}">${story.title}</a>
-            <br>
-            ${story.date}
-        </div>`;
-}
-
 function recentQuakes(long, lat, radius, render) {
     const url = `https://everyearthquake.p.rapidapi.com/earthquakes?start=1&count=100&type=earthquake&latitude=${lat}&longitude=${long}&radius=${radius}&units=miles&magnitude=3&intensity=1`;
     const options = {
