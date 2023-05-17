@@ -1,3 +1,5 @@
+import {niceDate, niceTime, windDirection} from './utils.js';
+
 /**
  *      Initialization
  *          add listener to the button
@@ -43,7 +45,7 @@ function getWeather() {
                 <div class="grid-item w3-theme-${(color%2)>0 ? 'l2':'d2'}">
                     <h4>Date: ${niceDate(day.dt, 0)} ${niceTime(day.dt, 0)}</h4>
                     <p>Forecast: ${day.weather[0].description} <img src='http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png' alt="" height="70%"></p>
-                    <p>Wind at ${day.wind.speed.toFixed(0)} mph out of the ${windDirection(day.wind.deg)}</p>
+                    <p>Wind at ${day.wind.speed.toFixed(0)} mph out of the ${windDirection(day.wind.deg, false)}</p>
                     <p>Sunrise: ${niceTime(weather.city.sunrise, 0)} / Sunset: ${niceTime(weather.city.sunset, 0)}</p>
                     <p>Temp: ${day.main.temp.toFixed(0)}</p>
                 </div>`;
@@ -52,27 +54,4 @@ function getWeather() {
             weatherList.innerHTML = innerHTML;
             city.value = weather.city.name;
         });
-}
-
-//  Strip out just the HH:MM:SS AM/PM from the date
-function niceTime(dateTime, offset) {
-    let day = new Date((dateTime + offset) * 1000).toLocaleString();
-    let hour = day.indexOf(' ') + 1;
-    let time = day.substring(hour);
-    time = time.substring(0, time.lastIndexOf(':')) + time.substring(time.length-3)
-    return time;
-}
-
-function niceDate(date, offset) {
-    let day = new Date((date + offset) * 1000 );
-    day = day.toLocaleString();
-    return day.substring(0, day.indexOf(','));
-}
-
-function windDirection(degrees) {
-    let direction = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
-
-    degrees = Math.round(degrees + 11.25) % 360;
-    let index = Math.floor(degrees / 22.5);
-    return direction[index];
 }

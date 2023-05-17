@@ -9,7 +9,15 @@ import {getLocation, KtoF, lat, locationRetrieved, lon, niceDate, niceTime, wind
     document.getElementById('getWeather').addEventListener('click', getWeather);
     document.getElementById('getNasa'   ).addEventListener('click', getNasa);
 
-    getLocation('weatherList');
+    getLocation(showPosition);
+
+    //  save the current location.
+    //  put a message on the screen that the location has been retrieved
+function showPosition(lat, long) {
+    let message = document.getElementById('weatherList');
+    message.innerText = `location retrieved: ${long.toFixed(3)} ${lat.toFixed(3)} `;
+}
+
 
 /**
  *      Enter a movie title in the search box and press the button

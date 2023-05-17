@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>First Problems</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    div {
+        background-color: lightcyan;
+        width: 20%;
+        padding: 50px  40px;
+    }
+</style>
+<body>
+
+<div>
+    <label for="color">Select a Color</label>
+    <input type="color" id="color">
+</div> 
+</body>
+<script>
+let colorElement = document.getElementById('color');
+colorElement.addEventListener('change', changeColor);
+
+function changeColor(e) {
+    let color = e.target.value;
+    document.body.style.backgroundColor = color
+}
+
+</script>
+</html>
