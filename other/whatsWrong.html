@@ -15,18 +15,25 @@
 </style>
 <body>
 
-<div>
+<div id="inner">
     <label for="color">Select a Color</label>
     <input type="color" id="color">
 </div> 
 </body>
 <script>
 let colorElement = document.getElementById('color');
+let innerElement = document.getElementById('inner');
 colorElement.addEventListener('change', changeColor);
+
+let color = localStorage.getItem('bgColor');
+document.body.style.backgroundColor = color ?? 0x0F8;
 
 function changeColor(e) {
     let color = e.target.value;
-    document.body.style.backgroundColor = color
+    innerElement.style.backgroundColor = document.body.style.backgroundColor;
+    document.body.style.backgroundColor = color;
+    localStorage.setItem('bgColor', color);
+    console.log(`The element ${e.target.id} now has the color ${color}`)
 }
 
 </script>

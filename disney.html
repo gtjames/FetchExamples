@@ -43,21 +43,32 @@
 	let card1 = document.getElementById('card1');
 	let card2 = document.getElementById('card2');
 	let search = document.getElementById('search');
-
 	search.addEventListener('click', searchCharacter);
 	let allCharacters = [];
 
-	if (localStorage.getItem('disneyCharacters') !== null) {
-		allCharacters = JSON.parse(localStorage.getItem('disneyCharacters'));
-		card1.innerHTML = `Found ${allCharacters.length} Characters in LS`;
+	if (localStorage.getItem('1') !== null) {
+		for (let i = 1; i <= 149; i++) {
+			allCharacters = allCharacters.concat(JSON.parse(localStorage.getItem(i)));
+			card1.innerHTML = `Found ${allCharacters.length} Characters in LS`;
+		}
 	} else {
 		for (let i = 1; i <= 149; i++) {
 			getAllCharacters(i);
 		}
 	}
 
+function getAllCharacters(page) {
+	let url = `http://api.disneyapi.dev/character?page=${page}&pageSize=50`;
+	fetch(url)
+		.then(resp => resp.json())          //  wait for the response and convert it to JSON
+		.then(character => {                    //  with the resulting JSON data do something
+			character.data.forEach(one =>  card1.innerHTML = `Loading Characters: ${allCharacters.length} so far ${one.name}`);
+			localStorage.setItem(page, JSON.stringify(character.data));
+			allCharacters = allCharacters.concat(character.data);
+		});
+	}
+
 	function searchCharacter() {
-		localStorage.setItem('disneyCharacters', JSON.stringify(allCharacters));
 		let name = document.getElementById('characterSearch');
 		if ( name.value.length < 3) {
 			card1.innerHTML = `Name must be 3 or more characters`;
@@ -71,22 +82,23 @@
 		for (let character of matching) {
 			row = ((row+1)%5)+1;
 			let li = "";
-			for (let films of character.films) {
-				li += `<li>${films}</li>`;
-			}
-
+			for (let films of character.films)			li += `<li>F - ${films}</li>`;
+			for (let films of character.tvShows)		li += `<li>TV - ${films}</li>`;
+			for (let films of character.shortFilms)		li += `<li>SF - ${films}</li>`;
+			for (let films of character.videoGames)		li += `<li>VG - ${films}</li>`;
+			
 			if ( typeof character.imageUrl === 'undefined')
-				character.imageUrl = " /rev";
+				character.imageUrl = "https://static.wikia.nocookie.net/disney/images/7/7c/Noimage.png";
 			card1.innerHTML += `
-                <div class="w3-col m4 l3 disney-card w3-theme-d${row}">
-                    <a href="${character.url}">${character.name}</a>
+                <div class="w3-col m4 l3 disney-card w3-theme-d${row}" id=${character._id}>
+                    <a href="${character.sourceUrl}">${character.name}</a>
                     <br>
                     <img src="${character.imageUrl}" alt="">
                     <ul class='w3-theme-l${row}' id="movies">
                         ${li}
                     </ul>
                 </div>`;
-			card2.appendChild(createCard(character, li, row));
+				card2.appendChild(createCard(character, li, row));
 		}
 	}
 
@@ -108,6 +120,7 @@
 		const img    = node.querySelector('#img');
 		const ul     = node.querySelector('#ul');
 
+		div.id 		   = character._id
 		div.className += ` w3-theme-d${row}`;
 
 		link.href       = character.url;
@@ -117,16 +130,6 @@
 		ul.className    = `w3-theme-l${row}`;
 
 		return node;
-	}
-
-	function getAllCharacters(page) {
-		let url = `https://api.disneyapi.dev/characters?page=${page}`;
-		fetch(url)
-			.then(resp => resp.json())          //  wait for the response and convert it to JSON
-			.then(character => {                    //  with the resulting JSON data do something
-				allCharacters = allCharacters.concat(character.data);
-				character.data.forEach(one =>  card1.innerHTML = `Loading Characters: ${allCharacters.length} so far ${one.name}`);
-			});
 	}
 
 </script>

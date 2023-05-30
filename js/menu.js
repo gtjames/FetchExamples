@@ -1,31 +1,31 @@
 //  dynamically create the whole menu bar including the theme drop down
 
 let menuOptions = [
+    {text: 'Home',          link: 'index.html',},
     {text: 'Baseball',      link: 'baseball.html',},
     {text: 'Basketball',    link: 'basketball.html',},
     {text: 'Books',         link: 'books.html',},
+    {text: 'Church Stats',  link: 'churchStats.html',},
     {text: 'COVID',         link: 'covid19.html',},
-    {text: 'Bit Coins OG',  link: 'orig-allCoins.html',},
+    {text: 'Crypto',        link: 'crypto.html',},
     {text: 'Crypto Currency', link: 'allCoins.html',},
-    {text: 'Crypto',        link: 'coins.html',},
     {text: 'Disney',        link: 'disney.html',},
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
-    {text: 'Examples',      link: 'index.html',},
     {text: 'Finance',       link: 'finance.html',},
     {text: 'Lambda',        link: 'lambdaQuotes.html',},
     {text: 'NASA News',     link: 'NASANews.html',},
     {text: 'News',          link: 'news.html',},
     {text: 'NY Times',      link: 'nytimes.html',},
+    {text: 'OG Bit Coins',  link: 'orig-allCoins.html',},
     {text: 'Products',      link: 'productSearch.html',},
     {text: 'Real Estate',   link: 'realEstate.html',},
     {text: 'Shopping',      link: 'shopping.html',},
     {text: 'Stars',         link: 'stars.html',},
-    {text: 'Stats',         link: 'churchStats.html',},
     {text: 'Translate',     link: 'translate.html',},
     {text: 'Volcanoes',     link: 'Volcanoes.html',},
     {text: 'Weather',       link: 'weather.html',},
     {text: 'Words',         link: 'words.html',},
-    {text: 'World Art',     link: 'art.html',},
+    {text: 'World Art',     link: 'worldArt.html',},
 ];
 
 let menu = document.getElementById('menu');

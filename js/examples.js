@@ -155,6 +155,11 @@ function getWeather() {
         return;
     }
 
+    let now = new Date();
+    let date = niceDate(now, 0);
+    let time = niceTime(now, 0);
+    console.log(date);
+    console.log(time);
     //  let's build the API based on the data from the form.
     //      If city is entered use forecast data
     //      otherwise use the onecall API
@@ -194,7 +199,7 @@ function getWeather() {
                 //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
                 innerHTML +=
                     `<div class="grid-item">
-                        <h2>Date: ${day.date}</h2>
+                        <h3>Date: ${day.date}</h3>
                         <h4>Temp: Low ${day.min}&deg; / High: ${day.max}&deg;</h4>
                         <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.icon}@2x.png' alt=""> ${day.description}</p>
                         <p>Chance of rain at ${day.pop}%</p>

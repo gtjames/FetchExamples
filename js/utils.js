@@ -20,7 +20,7 @@ export function getLocation(whatsNext) {
 //  save the current location.
 //  put a message on the screen that the location has been retrieved
 export function getPosition(whatsNext, position) {
-    locationRetrieved = false;
+    locationRetrieved = true;
     lat = position.coords.latitude;
     lon = position.coords.longitude;
     whatsNext(lat, lon);
