@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lyrics</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <h4>Find Atist:</h4>
+    <label for="artist">Song Title:</label>
+    <input type="text" id="artistName" value='Eagles'>
+    <br>
+    <button id="getArtist">Get Artist</button>
+</div>
+<div class="w3-container w3-theme w3-padding-16">
+    <h4>Find Albums:</h4>
+    <label for="songTitle">Song Title:</label>
+    <input type="text" id="songTitle" value='Hotel'>
+    <br>
+    <button id="getSongs">Get Albums</button>
+</div>
+<!-- <div class="w3-container w3-theme w3-padding-16">
+    <h4>Find Albums:</h4>
+    <label for="songTitle">Song Title:</label>
+    <input type="text" id="songTitle" value='Hotel'>
+    <br>
+    <button id="getAlbums">Get Albums</button>
+</div> -->
+
+<div id="albumList" class='grid-container'></div>
+<div id="artistList" class='grid-container'></div>
+
+</body>
+<script src="js/lyrics.js" type="module"></script>
+<script src="js/menu.js" ></script>
+<script>makeMeActive('Lyrics')</script>
+
+</html>

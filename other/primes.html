@@ -27,7 +27,7 @@
 	let name = document.getElementById('name');
 	let favorite = document.getElementById('favorite');
 	let primefactors = document.getElementById('primefactors');
-	document.body.style.backgroundColor = getColorCode();
+	// document.body.style.backgroundColor = getColorCode();
 
 	document.getElementById('search').addEventListener('click', findPrimes);
 
@@ -58,7 +58,7 @@
 
 		let withCommas = nfObject.format(number);
         primefactors.innerHTML = `The factors of ${withCommas} are: ${collectTerms(factors)} ${((prime) ? " Boo Ya! This baby is prime" : "")}`;
-        document.body.style.backgroundColor = getColorCode();
+        // document.body.style.backgroundColor = getColorCode();
 	}
 
 	/*-------------------------------------------------------------------------------------------------
