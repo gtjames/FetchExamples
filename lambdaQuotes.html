@@ -33,7 +33,7 @@
 </div>
 </body>
 <script>
-	let apiURL = ' https://ulzeq46egc.execute-api.us-east-2.amazonaws.com/dev';
+	let apiURL = 'https://ulzeq46egc.execute-api.us-east-2.amazonaws.com/dev/';
 	let rows = document.getElementById("rows");
 
 	window.addEventListener("load", () => getQuoteList());
@@ -45,7 +45,7 @@
 
 	function getQuoteList() {
 		//fetch API for global info
-		fetch(apiURL)
+		fetch(apiURL, {}	)
 			.then(response => response.json())
 			.then(quotes => {
 				rows.innerHTML = '';        //  clear the page

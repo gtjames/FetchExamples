@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>National Parks</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/nationalParks.css">
+</head>
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="park">Search for News</label>
+    <input type="text" id="park" value="acad,dena,Zions">
+    <button id="search">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+<template id="parkTemplate">
+    <div id=parkId class="w3-col m4 l3 card">
+        <a id="url" href="">
+            <h4 id="fullName"></h4>
+        </a>
+        <div id="carousel"></div>
+        <br>
+        <table style='width: 100%;'><tr class="w3-theme-l3">
+          <td style='width: 50%;'><h5 id='webcam'>Webcams</h5></td>
+          <td style='width: 50%;'><h5 id='alert' >Alerts</h5></td>
+        </tr></table>
+        <p id='description'></p>
+    </div>
+</template>
+
+<template id="carouselTemplate">
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+        <!-- images with number and caption SEE imgTemplate-->
+        <div id="images"></div>
+      
+        <!-- Next and previous buttons -->
+        <a id='prev' class="prev" onclick="prevSlides(this)">&#10094;</a>
+        <a id='next' class="next" onclick="nextSlides(this)">&#10095;</a>
+    </div>
+    <br>
+
+    <!-- The dots/circles -->
+    <div id='dots' style="text-align:center"></div>
+</template>
+
+<template id="imageTemplate">
+    <div id='carousel'   class="mySlides fade">
+        <div id='numberText' class="numbertext">1 / 3</div>
+        <img id='image' src="" style="width:100%; height:180px;">
+        <div id='caption' class="text">Caption Text</div>
+    </div>
+</template>
+
+<div id="alerts" class="w3-modal">
+    <div class="w3-modal-content w3-theme-d4" style="max-width:600px">
+      <header class="w3-container  w3-theme-d1">
+        <h3 id="parkName">Park Name</h3>
+      </header>
+      <div class="w3-container w3-theme-d4">
+        <table class='w3-theme'>
+          <thead>
+            <tr class="w3-theme-l1">
+              <th>Title</th><th>Description</th><th>Category/Streaming</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <footer id="details" class="w3-container w3-theme-d1"></footer>
+    </div>
+</div>
+
+</body>
+<script src="js/nationalParks.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('National Parks')</script>
+
+</html>
