@@ -38,7 +38,8 @@ function getMovies() {
     }    
 
     //  add movie to the search API
-    let url = `https://imdb-api.com/en/API/SearchMovie/k_lLeNEBFq/${movieTitle.value}`;
+    
+    let url = `http://www.omdbapi.com/?t=${movieTitle.value}&plot=full&apikey=2c791b47`;
     console.log(url);
 
     //  make the request
