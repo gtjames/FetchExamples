@@ -23,7 +23,7 @@ function getStars() {
             rows.shift();
             rows.pop();
             rows.pop();
-            let thead =  document.getElementById('thead');
+            let thead =  document.getElementById('thead-stars');
             thead.innerHTML = `
             <tr class="w3-theme-d1">
                 <th onclick="callSort(this, 0)">Name</th>
@@ -98,7 +98,7 @@ function getGalaxies() {
             rows.shift();
             rows.pop();
             rows.pop();
-            let thead =  document.getElementById('thead');
+            let thead =  document.getElementById('thead-galaxies');
             thead.innerHTML = `
             <tr class="w3-theme-d2">
                 <th></th>
@@ -114,12 +114,12 @@ function getGalaxies() {
                 let tds = Array.from(tr.children)
                 let src = '';
                 if (tds[1].childElementCount === 1) {
-                    let img = tds[1].children[0];
-                    src = 'https' + img.children[0].src.substring(4)
+                    let img = tds[1].children[0].children[0].children[0];
+                    src = 'https' + img.src.substring(4)
                 }
                 innerHtml += buildGalaxy(src, tds[2].innerText, tds[4].innerText, tds[9].innerText, tds[10].innerText);
             }
-            let table = document.getElementById('stars');
+            let table = document.getElementById('galaxies');
             table.innerHTML = innerHtml;
             document.getElementById('href').href = galaxiesURL;
         })

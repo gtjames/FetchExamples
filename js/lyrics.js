@@ -6,9 +6,8 @@ document.getElementById('getSongs').addEventListener('click', getSongsByTitle);
 document.getElementById('getArtist').addEventListener('click', getArtist);
 
 let albumList = document.getElementById('albumList');
-let atistList = document.getElementById('atistList');
+let artistList = document.getElementById('artistList');
 albumList.addEventListener('click', getSongInfo);
-// atistList.addEventListener('click', getArtist);
 
 const options = {
     method: 'GET',
@@ -89,7 +88,7 @@ function getArtist() {
             <li id=${song.songID}>${song.song}</li>`
         }
         innerHTML += `</ul></div>`;
-        albumList.innerHTML = innerHTML;
+        artistList.innerHTML = innerHTML;
         for (let song of artist.popular) {
             document.getElementById(song.songID).addEventListener('click', searchSong)
         }

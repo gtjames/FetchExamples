@@ -75,7 +75,7 @@ tr.selected { background-color: greenyellow !important; }
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    background-color: #2196F3;
+    /* background-color: #2196F3; */
     padding: 5px;
 }
 

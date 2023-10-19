@@ -26,11 +26,24 @@
     </div>
 </div>
 
-<div class="w3-container w3-theme-l2">
-    <table class="w3-table-all w3-theme w3-hoverable sortable">
-        <thead id='thead'></thead>
-        <tbody id='stars'></tbody>
-    </table>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <button class="accordion">Stars</button>
+    <div class="panel w3-theme-l2">
+        <table class="w3-table-all w3-theme w3-hoverable sortable">
+            <thead id='thead-stars'></thead>
+            <tbody id='stars'></tbody>
+        </table>
+    </div>
+</div>
+<div class="w3-container w3-theme w3-padding-16">
+    <button class="accordion">Galaxies</button>
+    <div class="panel w3-theme-l2">
+        <table class="w3-table-all w3-theme w3-hoverable sortable">
+            <thead id='thead-galaxies'></thead>
+            <tbody id='galaxies'></tbody>
+        </table>
+    </div>
 </div>
 </body>
 
@@ -38,5 +51,6 @@
 <script src="js/menu.js"></script>
 <script src="js/sortColumns.js"></script>
 <script>makeMeActive('Stars')</script>
+<script src="js/utils.js" type="module"></script>
 
 </html>

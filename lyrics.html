@@ -16,33 +16,32 @@
 </div>
 
 <div class="w3-container w3-theme w3-padding-16">
-    <h4>Find Atist:</h4>
-    <label for="artist">Song Title:</label>
-    <input type="text" id="artistName" value='Eagles'>
-    <br>
-    <button id="getArtist">Get Artist</button>
+    <button class="accordion">Artists</button>
+    <div class="panel w3-theme-l2">
+        <h4>Find Artist:</h4>
+        <label for="artist">Artist Name:</label>
+        <input type="text" id="artistName" value='Eagles'>
+        <br>
+        <button id="getArtist">Get Artist</button>
+        <div id="artistList" class='grid-container'></div>
+    </div>
 </div>
 <div class="w3-container w3-theme w3-padding-16">
-    <h4>Find Albums:</h4>
-    <label for="songTitle">Song Title:</label>
-    <input type="text" id="songTitle" value='Hotel'>
-    <br>
-    <button id="getSongs">Get Albums</button>
+    <button class="accordion">Albums</button>
+    <div class="panel w3-theme-l2">
+        <h4>Find Albums:</h4>
+        <label for="songTitle">Album Title:</label>
+        <input type="text" id="songTitle" value='Hotel'>
+        <br>
+        <button id="getSongs">Get Albums</button>
+        <div id="albumList" class='grid-container'></div>
+    </div>
 </div>
-<!-- <div class="w3-container w3-theme w3-padding-16">
-    <h4>Find Albums:</h4>
-    <label for="songTitle">Song Title:</label>
-    <input type="text" id="songTitle" value='Hotel'>
-    <br>
-    <button id="getAlbums">Get Albums</button>
-</div> -->
-
-<div id="albumList" class='grid-container'></div>
-<div id="artistList" class='grid-container'></div>
 
 </body>
 <script src="js/lyrics.js" type="module"></script>
 <script src="js/menu.js" ></script>
 <script>makeMeActive('Lyrics')</script>
+<script src="js/utils.js" type="module"></script>
 
 </html>
