@@ -1,7 +1,7 @@
 let search = document.getElementById('search');
 search.addEventListener('click', wordSearch);
 
-function wordSearch() {
+async function  wordSearch() {
     let word = document.getElementById('wordSearch').value;
 
     fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=3f979797-60ca-48d8-a9e8-10d05fdd77f8`)
@@ -9,6 +9,7 @@ function wordSearch() {
         .then(response => show(response))
         .catch(err => console.error(err));
 }
+
 function show(word) {
     let tableBody = document.getElementById('list');
     tableBody.innerHTML = '';

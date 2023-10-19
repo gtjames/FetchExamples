@@ -23,23 +23,43 @@
 </div>
 
 <div class="w3-container w3-theme-l3">
-    <table class="sortable">
-        <thead id='thead'>
-        <tr class="w3-theme-d4">
-            <th>Country</th>        <th>Continent</th>      <th>Membership</th>
-            <th>Population</th>     <th>% of Pop</th>       <th>Temples</th>
-            <th>Missions</th>       <th>Districts</th>      <th>Stakes</th>
-            <th>Wards</th>          <th>Branches</th>       <th>Congregations</th>
-            <th>Family History Centers</th>
-        </tr>
-        </thead>
-        <tbody id='countries'></tbody>
-    </table>
+
+    <button class="accordion">Congregations</button>
+    <div class="panel">
+        <table class="sortable">
+            <thead id='thead'>
+                <tr class="w3-theme-d4">
+                    <th>Country</th>        <th>Area</th>      <th>Temples: Open</th>
+                    <th>: Under Construction</th>     <th>: Announced</th>       <th>: Total</th>
+                    <th>Missions</th>       <th>Districts</th> <th>Stakes</th>
+                    <th>Wards</th>          <th>Branches</th>  <th>Congregations</th>
+                    <th>Family History Centers</th>
+                </tr>
+            </thead>
+            <tbody id='congregations'></tbody>
+        </table>
+    </div>
+
+    <button class="accordion">Church Growth</button>
+    <div class="panel">
+        <table class="sortable">
+            <thead id='thead'>
+                <tr class="w3-theme-d4">
+                    <th>Country</th>    <th>Areas</th>      <th>Membership</th>
+                    <th>Population</th> <th>% of Pop</th>   <th>2012</th>
+                    <th>2022</th>       <th>Change</th>     <th>Growth %</th>
+                    <th>% of Total Growth</th>
+                </tr>
+            </thead>
+            <tbody id='growth'></tbody>
+        </table>
+    </div>
 </div>
 </body>
 <script src="js/churchStats.js"></script>
 <script src="js/menu.js"></script>
+<script src="js/utils.js" type="module"></script>
 <script src="js/sortColumns.js"></script>
-<script>makeMeActive('Stats')</script>
+<script>makeMeActive('Church Stats')</script>
 
 </html>

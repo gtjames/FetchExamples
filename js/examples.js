@@ -38,8 +38,7 @@ function getMovies() {
     }    
 
     //  add movie to the search API
-    
-    let url = `http://www.omdbapi.com/?t=${movieTitle.value}&plot=full&apikey=2c791b47`;
+    let url = `http://www.omdbapi.com/?s=${movieTitle.value}&apikey=2c791b47`;
     console.log(url);
 
     //  make the request
@@ -59,17 +58,15 @@ function getMovies() {
 
             //  there is a little bit of data with this API not much.
             //  if you want more details click on the movie image
-            for (let movie of movies.results) {
+            for (let movie of movies.Search) {
                 //  let's build a nice card for each movie
                 //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
                 //        movie id will be used for the listener
                 innerHTML +=
                     `<div class="grid-item">
-                        <a href="https://www.imdb.com/title/${movie.id}">
-                            <h4>${movie.title}</h4>
-                        </a>
-                        <h4>Description: ${movie.description}</h4>
-                        <img src='${movie.image}' height="200px" id="${movie.id}" alt="">
+                        <a href="https://www.imdb.com/title/${movie.imdbID}"><h2>${movie.Title}</h2></a>
+                        <h4 id="${movie.imdbID}">Details</h4>
+                        <img src='${movie.Poster}' height="200px" alt="">
                     </div>`;
             }
 
@@ -78,9 +75,9 @@ function getMovies() {
 
             //  we can't add the event listener until now because the elements do not exist until
             //  AFTER the innerHTML takes effect and creates the individual elements for each movie
-            for (let movie of movies.results) {
+            for (let movie of movies.Search) {
                 //  NOW we can add a click event listener for the image which will show us the movie details
-                document.getElementById(movie.id).addEventListener('click', movieDetails);
+                document.getElementById(movie.imdbID).addEventListener('click', movieDetails);
             }
         });
 }
@@ -95,7 +92,7 @@ function movieDetails() {
     let json      = document.getElementById('json').checked;        //  show JSON or not
 
     //  the id of the image is the IMDB ID we want details on
-    let url = `https://imdb-api.com/en/API/Title/k_lLeNEBFq/${this.id}`; //  search for movies with this ID
+    let url = `http://www.omdbapi.com/?i=${this.id}&plot=full&apikey=2c791b47`;  //  search for movies with this ID
     console.log(url);
 
     //  using the movie details API get additional data about the movie
@@ -112,28 +109,19 @@ function movieDetails() {
             //  We will build the HTML to be inserted later.
             //  The variable innerHTML will hold our work in progress
             let innerHTML = "";
-
             //  there is a LOT of data with this API. We will only do something with the array of actors data
             //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
             innerHTML +=
                 `<div class="grid-item">
-                    <h4>Description: ${movie.title}</h4>
-                    <h4>Relesase Date: ${movie.releaseDate}</h4>
-                    <h4>Plot: ${movie.plot}</h4>
-                    <img src='${movie.image}' height="200px" alt="">
-                <ul>`;
-
-            //  show the actor's name, picture, the character they playe and add a link to IMDB for the actor
-            for (let actor of movie.actorList) {
-                innerHTML +=
-                    `<li>
-                        <a href="https://www.imdb.com/name/${actor.id}">
-                            <img src="${actor.image}" height="120px" alt="">
-                        </a>
-                        Name: ${actor.name} as ${actor.asCharacter}
-                    </li>`;
-            }
-            innerHTML += "</ul></div>";
+                    <h1>Description: ${movie.Title}</h1>
+                    <h3>Staring: ${movie.Actors}</h3>
+                    <h3>Director: ${movie.Director}</h3>
+                    <h4>Box Office: ${movie.BoxOffice}</h4>
+                    <h4>Relesase Date: ${movie.Released} Runtime: ${movie.Runtime}</h4>
+                    <h4>Genre: ${movie.Genre}</h4>
+                    <h4>Plot: ${movie.Plot}</h4>
+                    <img src='${movie.Poster}' height="300px" alt="">
+                </div>`;
             //  and finally take the finished URL and stuff it into the web page
             movieList.innerHTML = innerHTML;
         });

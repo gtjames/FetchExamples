@@ -242,7 +242,8 @@ function openTab(target, tabName) {
     //  inactivate (remove the active class) from all tab buttons
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        // tablinks[i].className = tablinks[i].className.replace(" active", "");
+        tablinks[i].classList.remove("active");
     }
 
     //  make the desired tab content visible

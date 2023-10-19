@@ -70,3 +70,16 @@ export function KtoF(temp) {
     temp = temp * 9 / 5 + 32;
     return temp.toFixed(0);
 }
+
+var acc = document.querySelectorAll(".accordion");
+acc.forEach( a => {
+    a.addEventListener("click", (e) => {
+      /* Toggle between adding and removing the "active" class,
+      to highlight the button that controls the panel */
+      e.currentTarget.classList.toggle("active");
+  
+      /* Toggle between hiding and showing the active panel */
+      var panel = e.currentTarget.nextElementSibling;
+      panel.style.display = (panel.style.display === "block") ? "none" : "block";
+    });
+});

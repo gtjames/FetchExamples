@@ -15,18 +15,26 @@ function getChurchStats() {
             // Example:
             let tbody =  doc.getElementsByTagName('tbody');
             //  this retrieves ALL table bodies. We only care about the first one tbody[1]
-            let rows = Array.from(tbody[1].getElementsByTagName('tr'));
-            //            rows.forEach(tr => console.log(tr))
-            rows.shift();       //  remove the header row
-            rows.shift();       //  remove the sorting row
-            let innerHTML = rows.reduce( (accum, tr) => accum + buildStat(Array.from(tr.children)), "");
-
-            let table = document.getElementById('countries');
-            table.innerHTML = innerHTML;
+            dataByCongregations (Array.from(tbody[1].getElementsByTagName('tr')), document.getElementById('congregations') )
+            dataByGrowth        (Array.from(tbody[2].getElementsByTagName('tr')), document.getElementById('growth') )
             document.getElementById('url').href = url;
         })
         .catch(err => console.error(err) );
 }
+
+function dataByCongregations(rows, table) {
+    rows.shift();       //  remove the header row
+    rows.shift();       //  remove the header row
+    let innerHTML = rows.reduce( (accum, tr) => accum + buildStat(Array.from(tr.children)), "");
+    table.innerHTML = innerHTML;
+}
+
+function dataByGrowth(rows, table) {
+    rows.shift();       //  remove the header row
+    let innerHTML = rows.reduce( (accum, tr) => accum + buildStat(Array.from(tr.children)), "");
+    table.innerHTML = innerHTML;    
+}
+
 let rowCnt = 0;         //  this variable lets me set the style of the row
 function buildStat(row) {
     rowCnt++;           //  if the row is odd I use the light2 style dark3 style for even

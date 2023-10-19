@@ -1,8 +1,2 @@
 {
-"liveServer.settings.https": {
-"enable": true, //set it true to enable the feature.
-"cert": "/Users/garyjames/Library/Mobile Documents/com~apple~CloudDocs/WebstormProjects/FetchExamples/server.crt",
-"key":  "/Users/garyjames/Library/Mobile Documents/com~apple~CloudDocs/WebstormProjects/FetchExamples/server.key",
-"passphrase": "anguilla"
-}
 }
