@@ -23,15 +23,6 @@ function getStars() {
             rows.shift();
             rows.pop();
             rows.pop();
-            let thead =  document.getElementById('thead-stars');
-            thead.innerHTML = `
-            <tr class="w3-theme-d1">
-                <th onclick="callSort(this, 0)">Name</th>
-                <th onclick="callSort(this, 1)">Distance</th>
-                <th onclick="callSort(this, 2)">Year Discovered</th>
-                <th onclick="callSort(this, 3)">Description</th>
-            </tr>
-            `;
 
             let innerHtml = '';
             for ( let tr of rows) {
@@ -98,16 +89,6 @@ function getGalaxies() {
             rows.shift();
             rows.pop();
             rows.pop();
-            let thead =  document.getElementById('thead-galaxies');
-            thead.innerHTML = `
-            <tr class="w3-theme-d2">
-                <th></th>
-                <th onclick="callSort(this, 1)">Name</th>
-                <th onclick="callSort(this, 2)">Distance</th>
-                <th onclick="callSort(this, 3)">Description</th>
-                <th onclick="callSort(this, 4)">Diameter</th>
-            </tr>
-            `;
 
             let innerHtml = '';
             for ( let tr of rows) {

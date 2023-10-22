@@ -1,0 +1,59 @@
+  input {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  /* Accordion styles */
+  .tabs {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 4px 4px 4px gray;
+  }
+  
+  .tab {
+    width: 100%;
+    color: white;
+    overflow: hidden;
+  }
+  
+  .tab-label, .tab-close {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background: #2c3e50;
+    font-weight: bold;
+  }
+  
+  .tab-close {
+    justify-content: flex-end;
+    font-size: 0.75em;
+  }
+  
+  .tab-label:hover,  .tab-close:hover {
+      background: #1a252f;
+  }
+  
+  .tab-label::after {
+    content: "\276F";
+    transition: all .35s;
+  }
+  
+  .tab-content {
+    max-height: 0;
+    color: #2c3e50;
+    background: white;
+    transition: all .35s;
+  }
+  
+  input:checked + .tab-label {
+    background: #1a252f;
+  }
+  
+  input:checked + .tab-label::after {
+    transform: rotate(90deg);
+  }
+  
+  input:checked ~ .tab-content {
+    max-height: 100vh;
+    padding: 1em;
+  }

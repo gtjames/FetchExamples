@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css" id="css">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/accordian.css">
 </head>
 
-<body>
+<body class="w3-theme-l1">
 
 <div class="w3-container w3-theme-l1">
     <div id="menu" class="w3-bar"></div>
@@ -26,25 +27,35 @@
     </div>
 </div>
 
+<div class="tab">
+  <input type="checkbox" id="chck1">
+  <label class="tab-label" for="chck1">Galaxies</label>
+  <div class="tab-content w3-theme-l2">
+    <table class="w3-table-all w3-theme w3-hoverable sortable">
+      <thead id='thead-galaxies'>
+        <tr class="w3-theme-d2">
+          <th></th> <th>Name</th> <th>Distance</th> <th>Description</th> <th>Diameter</th>
+        </tr>
+      </thead>
+      <tbody id='galaxies'></tbody>
+    </table>
+  </div>
+</div>
+<div class="tab">
+  <input type="checkbox" id="chck2">
+  <label class="tab-label" for="chck2">Stars</label>
+  <div class="tab-content w3-theme-l2">
+    <table class="w3-table-all w3-theme w3-hoverable sortable">
+      <thead id='thead-stars'>
+        <tr class="w3-theme-d1">
+          <th>Name</th> <th>Distance</th> <th>Year Discovered</th> <th>Description</th>
+        </tr>
+    </thead>
+      <tbody id='stars'></tbody>
+    </table>
+  </div>
+</div>
 
-<div class="w3-container w3-theme w3-padding-16">
-    <button class="accordion">Stars</button>
-    <div class="panel w3-theme-l2">
-        <table class="w3-table-all w3-theme w3-hoverable sortable">
-            <thead id='thead-stars'></thead>
-            <tbody id='stars'></tbody>
-        </table>
-    </div>
-</div>
-<div class="w3-container w3-theme w3-padding-16">
-    <button class="accordion">Galaxies</button>
-    <div class="panel w3-theme-l2">
-        <table class="w3-table-all w3-theme w3-hoverable sortable">
-            <thead id='thead-galaxies'></thead>
-            <tbody id='galaxies'></tbody>
-        </table>
-    </div>
-</div>
 </body>
 
 <script src="js/stars.js"></script>

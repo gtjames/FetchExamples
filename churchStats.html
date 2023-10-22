@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css" >
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/accordian.css">
 </head>
-<body>
+<body class="w3-theme-l1">
 
 <div class="w3-container w3-theme-l1">
     <div id="menu" class="w3-bar"></div>
@@ -24,41 +25,46 @@
 
 <div class="w3-container w3-theme-l3">
 
-    <button class="accordion">Congregations</button>
-    <div class="panel">
-        <table class="sortable">
-            <thead id='thead'>
-                <tr class="w3-theme-d4">
-                    <th>Country</th>        <th>Area</th>      <th>Temples: Open</th>
-                    <th>: Under Construction</th>     <th>: Announced</th>       <th>: Total</th>
-                    <th>Missions</th>       <th>Districts</th> <th>Stakes</th>
-                    <th>Wards</th>          <th>Branches</th>  <th>Congregations</th>
-                    <th>Family History Centers</th>
-                </tr>
-            </thead>
-            <tbody id='congregations'></tbody>
-        </table>
+  <div class="tab">
+    <input type="checkbox" id="chck1">
+    <label class="tab-label" for="chck1">Congregations</label>
+    <div class="tab-content w3-theme-l2">
+      <table class="sortable">
+        <thead id='thead'>
+        <tr class="w3-theme-d4">
+            <th>Country</th>        <th>Area</th>      <th>Temples: Open</th>
+            <th>: Under Construction</th>     <th>: Announced</th>       <th>: Total</th>
+            <th>Missions</th>       <th>Districts</th> <th>Stakes</th>
+            <th>Wards</th>          <th>Branches</th>  <th>Congregations</th>
+            <th>Family History Centers</th>
+          </tr>
+        </thead>
+        <tbody id='congregations'></tbody>
+      </table>
     </div>
+  </div>
 
-    <button class="accordion">Church Growth</button>
-    <div class="panel">
-        <table class="sortable">
-            <thead id='thead'>
-                <tr class="w3-theme-d4">
-                    <th>Country</th>    <th>Areas</th>      <th>Membership</th>
-                    <th>Population</th> <th>% of Pop</th>   <th>2012</th>
-                    <th>2022</th>       <th>Change</th>     <th>Growth %</th>
-                    <th>% of Total Growth</th>
-                </tr>
-            </thead>
-            <tbody id='growth'></tbody>
-        </table>
+  <div class="tab">
+    <input type="checkbox" id="chck2">
+    <label class="tab-label" for="chck2">Church Growth</label>
+    <div class="tab-content w3-theme-l2">
+      <table class="sortable">
+        <thead id='thead'>
+            <tr class="w3-theme-d4">
+                <th>Country</th>    <th>Areas</th>      <th>Membership</th>
+                <th>Population</th> <th>% of Pop</th>   <th>2012</th>
+                <th>2022</th>       <th>Change</th>     <th>Growth %</th>
+                <th>% of Total Growth</th>
+            </tr>
+        </thead>
+        <tbody id='growth'></tbody>
+      </table>
     </div>
+  </div>
 </div>
 </body>
 <script src="js/churchStats.js"></script>
 <script src="js/menu.js"></script>
-<script src="js/utils.js" type="module"></script>
 <script src="js/sortColumns.js"></script>
 <script>makeMeActive('Church Stats')</script>
 

@@ -39,5 +39,5 @@ let rowCnt = 0;         //  this variable lets me set the style of the row
 function buildStat(row) {
     rowCnt++;           //  if the row is odd I use the light2 style dark3 style for even
     let td = row.reduce( (accum, cell) => accum + `<td>${cell.innerText}</td>`, "");
-    return `<tr id='${row[0].innerText}' class="t3-theme-${rowCnt % 2 > 0 ? 'l2' : 'd3'}">${td}</tr>`;
+    return `<tr id='${row[0].innerText}' class="w3-theme-${rowCnt % 2 > 0 ? 'l2' : 'd3'}">${td}</tr>`;
 }
