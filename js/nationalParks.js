@@ -12,7 +12,10 @@
     
         //  https://www.nps.gov/subjects/developer/api-documentation.htm
         fetch(URL)
-            .then(resp => resp.json())          //  wait for the response and convert it to JSON
+            .then(resp => {
+                resp.headers.forEach((value, key) => console.log(`${key} ==> ${value}`));
+                return resp.json();
+            })          //  wait for the response and convert it to JSON
             .then(parks => {
                 card.innerHTML = '';
                 parks.data.forEach(park => {

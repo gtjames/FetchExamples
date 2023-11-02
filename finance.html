@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/accordian.css">
 </head>
 <body class="w3-theme-l1">
 
@@ -21,24 +22,29 @@
     <p>Columns are sortable</p>
 </div>
 <div class="w3-container w3-theme-l3 w3-padding-16">
-    <button class="accordion">Details</button>
-    <div class="panel">
-        <table class='w3-table-all sortable w3-theme'>
-            <thead>
-            <tr class="w3-theme-l4 w3-bordered">
-                <th>Country</th>  <th>Currency</th>  <th>ID</th>
-                <th>Exchange</th>  <th>Name</th>
-            </tr>
-            </thead>
-            <tbody id='list'>   </tbody>
-        </table>
+    <div class="tab">
+        <input type="checkbox" id="chck1">
+        <label class="tab-label" for="chck1">Details</label>
+        <div class="tab-content w3-theme-l2">
+            <table class='w3-table-all sortable w3-theme'>
+                <thead>
+                <tr class="w3-theme-l4 w3-bordered">
+                    <th>Country</th>  <th>Currency</th>  <th>ID</th> <th>Exchange</th>  <th>Name</th>
+                </tr>
+                </thead>
+                <tbody id='list'>   </tbody>
+            </table>
+        </div>
     </div>
-    <button class="accordion">News</button>
-    <div class="panel">
-        <table class='w3-table-all sortable w3-theme'>
-            <thead><tr class="w3-theme-l4 w3-bordered"><th>News</th></tr></thead>
-            <tbody id='list2'>   </tbody>
-        </table>
+    <div class="tab">
+        <input type="checkbox" id="chck2">
+        <label class="tab-label" for="chck2">News</label>
+        <div class="tab-content w3-theme-l2">
+            <table class='w3-table-all sortable w3-theme'>
+                <thead><tr class="w3-theme-l4 w3-bordered"><th>News</th></tr></thead>
+                <tbody id='list2'>   </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>

@@ -1,4 +1,4 @@
-  input {
+input[type="checkbox"], input[type="radio"] {
     position: absolute;
     opacity: 0;
   }
@@ -54,6 +54,6 @@
   }
   
   input:checked ~ .tab-content {
-    max-height: 100vh;
+    max-height: 60%;
     padding: 1em;
   }

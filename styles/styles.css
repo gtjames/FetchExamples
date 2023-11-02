@@ -27,9 +27,6 @@ tr.selected { background-color: greenyellow !important; }
 /* Style the tab */
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #666;
-    color: aqua;
 }
 
 /* Style the buttons inside the tab */
@@ -39,19 +36,18 @@ tr.selected { background-color: greenyellow !important; }
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
     transition: 0.3s;
     font-size: 17px;
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background-color: #888;
+    background-color: #444; 
     color: white;
 }
 .tablinks {
     display: inline-block;
-    width: 11%;
+    width: 10%;
     text-align: center;
 }
 
@@ -65,8 +61,6 @@ tr.selected { background-color: greenyellow !important; }
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid black;
-    border-top: none;
     background-color: #ccc;
 }
 
@@ -74,12 +68,10 @@ tr.selected { background-color: greenyellow !important; }
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    /* background-color: #2196F3; */
     padding: 5px;
 }
 
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 5px;
     text-align: center;

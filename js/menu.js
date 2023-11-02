@@ -33,7 +33,7 @@ let menu = document.getElementById('menu');
 //  add in the navigation links
 for ( {link, text} of menuOptions) {
     menu.innerHTML += `
-        <a id="${text}" href="${link}" class="w3-bar-item w3-button tabs">${text}</a>`;
+        <a id="${text}" href="${link}" class="w3-bar-item w3-button tab">${text}</a>`;
 }
 
 //  add in the CSS style options
@@ -98,7 +98,7 @@ theme.addEventListener('change', () => {
 //  This will change the tab color to dark grey to indicate it is the active tab
 //  first of all it will find any tab with the dark-grey class and remove it from that tab (not needed)
 function makeMeActive(tabName) {
-    let tabs = document.getElementsByClassName('tabs');
+    let tabs = document.getElementsByClassName('tab');
     // for (let tab of tabs) {      //  no need for this since we are reloading the page everytime
     //     tab.className = tab.className.replace(" w3-theme-d5", "");
     // }

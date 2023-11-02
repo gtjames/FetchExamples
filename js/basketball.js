@@ -72,14 +72,8 @@ function getNBATeamRoster(teamId) {
 }
 
 /**
- *     8888888b.                    888
- *     888   Y88b                   888
- *     888    888                   888
- *     888   d88P  .d88b.  .d8888b  888888  .d88b.  888d888
- *     8888888P"  d88""88b 88K      888    d8P  Y8b 888P"
- *     888 T88b   888  888 "Y8888b. 888    88888888 888
- *     888  T88b  Y88..88P      X88 Y88b.  Y8b.     888
- *     888   T88b  "Y88P"   88888P'  "Y888  "Y8888  888
+ * 
+ *      Roster
  *
  *      Player data is added to a <TR> tag
  *          there are a few other fields like weight and height
@@ -112,16 +106,11 @@ function showNBATeamRoster(players) {
 }
 
 /**
+ * 
+ *  GameStats
+ * 
  *      get a list of all games played for a team
  *
- *   .d8888b.                                       .d8888b.  888             888
- *  d88P  Y88b                                     d88P  Y88b 888             888
- *  888    888                                     Y88b.      888             888
- *  888         8888b.  88888b.d88b.   .d88b.       "Y888b.   888888  8888b.  888888 .d8888b
- *  888  88888     "88b 888 "888 "88b d8P  Y8b         "Y88b. 888        "88b 888    88K
- *  888    888 .d888888 888  888  888 88888888           "888 888    .d888888 888    "Y8888b.
- *  Y88b  d88P 888  888 888  888  888 Y8b.         Y88b  d88P Y88b.  888  888 Y88b.       X88
- *   "Y8888P88 "Y888888 888  888  888  "Y8888       "Y8888P"   "Y888 "Y888888  "Y888  88888P'
  *
  */
 function getNBAGameStats(teamId) {
@@ -165,16 +154,11 @@ function gamesByYear(games, tab) {
 }
 
 /**
+ * 
+ *  PlayerStats 
+ * 
  *      get a list of all games played for this player
  *
- *      888888ba  dP                                        .d88888b    dP              dP
- *      88    `8b 88                                        88.    "'   88              88
- *     a88aaaa8P' 88 .d8888b. dP    dP .d8888b. 88d888b.    `Y88888b. d8888P .d8888b. d8888P .d8888b.
- *      88        88 88'  `88 88    88 88ooood8 88'  `88          `8b   88   88'  `88   88   Y8ooooo.
- *      88        88 88.  .88 88.  .88 88.  ... 88          d8'   .8P   88   88.  .88   88         88
- *      dP        dP `88888P8 `8888P88 `88888P' dP           Y88888P    dP   `88888P8   dP   `88888P'
- *                                 .88
- *                             d8888P
  *
  */
 function getNBAPlayerStats(playerId, playerName) {
@@ -202,32 +186,23 @@ function showNBAPlayerStats(playerStats, playerName) {
 
     openTab(document.getElementById('playerBtn'), 'playerTab')
 
-
     let html = ``;
     for (let stats of playerStats) {
-        row++;
         if (stats.points === "") continue;      //  skip games not played
-            html += `<tr class="w3-theme-${row%2>0?'l2':'l3'}">
-			<td>${stats.points}</td>   <td>${stats.min}</td>     <td>${stats.fgm}</td>  <td>${stats.fga}</td>  <td>${stats.fgp}</td>
-			<td>${stats.ftm}</td>      <td>${stats.fta}</td>     <td>${stats.ftp}</td>  <td>${stats.tpm}</td>  <td>${stats.tpa}</td>
+        row++;
+        html += `
+        <tr class="w3-theme-${row%2>0?'l2':'l3'}">
+            <td>${stats.points}</td>   <td>${stats.min}</td>     <td>${stats.fgm}</td>  <td>${stats.fga}</td>  <td>${stats.fgp}</td>
+            <td>${stats.ftm}</td>      <td>${stats.fta}</td>     <td>${stats.ftp}</td>  <td>${stats.tpm}</td>  <td>${stats.tpa}</td>
             <td>${stats.tpp}</td>      <td>${stats.offReb}</td>  <td>${stats.defReb}</td>  <td>${stats.totReb}</td>  <td>${stats.assists}</td>
             <td>${stats.pFouls}</td>   <td>${stats.steals}</td>  <td>${stats.turnovers}</td>  <td>${stats.blocks}</td>  <td>${stats.plusMinus}</td>
         </tr>`;
-
     }
     stats.innerHTML = html;
 }
 
 /**
- *                                           dP              dP
- *                                           88              88
- * .d8888b.  88d888b.  .d8888b.  88d888b.  d8888d  .d8888b.  88d888b.
- * 88'  `88  88'  `88  88ooood8  88'  `88    88    88'  `88  88'  `88
- * 88.  .88  88.  .88  88.  ...  88    88    88    88.  .88  88.  .88
- * `88888P'  88Y888P'  `88888P'  dP    dP    dP    `88888P8  88Y8888'
- *           88
- *           dP
- *
+ *  OpenTab
  *        Disable all tabContent windows and show the select tab panel
  *
  */

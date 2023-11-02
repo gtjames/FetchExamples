@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/accordian.css">
 </head>
 
 <body class="w3-theme-l1">
@@ -18,17 +19,28 @@
     <label for="json">Show JSON</label>
     <input type="checkbox" id="json">
     <br>
-    <fieldset>
-        <legend>Search for Movies:</legend>
-        <label for="movie">Search Movies</label>
-        <input type="text" id="movie" value="Jaws">
-        <button id="getMovies">Get Moves</button>
-        <div id="movieList" class='grid-container'></div>
-    </fieldset>
 
+    <div class="tab">
+      <input type="checkbox" id="chck1">
+      <label class="tab-label" for="chck1">Search for Movies:</label>
+      <div class="tab-content w3-theme-l2">
+        <fieldset>
+          <legend>Search for Movies:</legend>
+            <label for="movie">Search Movies</label>
+            <input type="text" id="movie" value="Jaws">
+            <button id="getMovies">Get Moves</button>
+            <div id="movieList" class='grid-container'></div>
+        </fieldset>
+      </div>
+    </div>
+      
+    <div class="tab">
+      <input type="checkbox" id="chck2">
+      <label class="tab-label" for="chck2">Get the Weather For:</label>
+      <div class="tab-content w3-theme-l2"> 
     <fieldset>
         <legend>Get the Weather Forecast:</legend>
-        <p>Leave all blank to use the Geo Location of the browser</p>
+        <h4>Leave all blank to use the Geo Location of the browser</h4>
         <label for="allDays">Show Full Forecast:</label>
         <input type="checkbox" id="allDays">
         <label for="city">Get the Weather For:</label>
@@ -41,21 +53,29 @@
         <button id="getWeather">Get Weather</button>
         <div id="weatherList" class='grid-container'></div>
     </fieldset>
+      </div>
+    </div>
 
-    <fieldset>
+    <div class="tab">
+      <input type="checkbox" id="chck3">
+      <label class="tab-label" for="chck3">Astronomy Picture of the Day:</label>
+      <div class="tab-content w3-theme-l2">
+          <fieldset>
         <legend>Astronomy Picture of the Day:</legend>
         <label for="queryDate">NASA APOD</label>
         <input type="date" id="queryDate">
         <button id="getNasa">Get APOD for Date</button>
         <div class='grid-container'>
-            <div class="grid-item">
-                <h2 id="date"></h2>
-                <h2 id="title"></h2>
-                <div id=media></div>
-                <p id="explanation"></p>
-            </div>
+          <div class="grid-item">
+            <h2 id="date"></h2>
+            <h2 id="title"></h2>
+            <div id=media></div>
+            <p id="explanation"></p>
+          </div>
         </div>
     </fieldset>
+      </div>
+    </div>
 
     <a href="https://github.com/gtjames/FetchExamples">Link to GitHub repo</a>
 
