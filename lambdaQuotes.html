@@ -34,6 +34,7 @@
 </body>
 <script>
 	let apiURL = 'https://ulzeq46egc.execute-api.us-east-2.amazonaws.com/dev/';
+	apiURL = " https://eq2pr667g6.execute-api.us-west-1.amazonaws.com/dev/";
 	let rows = document.getElementById("rows");
 
 	window.addEventListener("load", () => getQuoteList());
@@ -45,7 +46,7 @@
 
 	function getQuoteList() {
 		//fetch API for global info
-		fetch(apiURL, {}	)
+		fetch(apiURL, {} )
 			.then(response => response.json())
 			.then(quotes => {
 				rows.innerHTML = '';        //  clear the page
@@ -89,8 +90,9 @@
 			method: 'DELETE',
 			body: JSON.stringify({ id: id })
 		})
-			.then(() => getQuoteList())                       //  refresh the list of documents in the table
-			.catch(err => console.log('Fetch Error :', err) );
+		.then(response => response.json())		//	this is totally unnecessary. Just here to see the response object
+		.then((resp) => getQuoteList())                       //  refresh the list of documents in the table
+		.catch(err => console.log('Fetch Error :', err) );
 	}
 
 	//  To update a document in the DynamoDB table

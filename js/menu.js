@@ -13,7 +13,7 @@ let menuOptions = [
     // {text: 'Disney',        link: 'disney.html',},
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
     {text: 'Finance',       link: 'finance.html',},
-    {text: 'Lyrics',        link: 'Lyrics.html',},
+    {text: 'Lyrics',        link: 'lyrics.html',},
     {text: 'Lambda',        link: 'lambdaQuotes.html',},
     {text: 'NASA News',     link: 'NASANews.html',},
     {text: 'National Parks',link: 'nationalParks.html',},
