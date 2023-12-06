@@ -138,12 +138,12 @@ function currentSlide(n, parkId) {
 
 function showAlerts(evt) {
     let code = evt.target.name;
-    let URL = `https://developer.nps.gov/api/v1/alerts?parkCode=${code}&api_key=g56CN1WcTJ7QfTf6FTkDH14cCgeeT0UPFLlXubUr`;
+    let URL = `https://developer.nps.gov/api/v1/alerts?parkCode=${code}&api_key=${key}`;
     callAPI(URL, listAlerts, code);
 }
 function showWebcam(evt) {
     let code = evt.target.name;
-    let URL = `https://developer.nps.gov/api/v1/webcams?parkCode=${code}&api_key=g56CN1WcTJ7QfTf6FTkDH14cCgeeT0UPFLlXubUr`;
+    let URL = `https://developer.nps.gov/api/v1/webcams?parkCode=${code}&api_key=${key}`;
     callAPI(URL, listAlerts, code);
 }
 
