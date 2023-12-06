@@ -10,7 +10,7 @@ let menuOptions = [
     {text: 'Crypto',        link: 'crypto.html',},
     {text: 'Crypto Currency', link: 'allCoins.html',},
     {text: 'Dictionary',    link: 'dictionary.html',},
-    // {text: 'Disney',        link: 'disney.html',},
+    {text: 'Disney',        link: 'disney.html',},
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
     {text: 'Finance',       link: 'finance.html',},
     {text: 'Lyrics',        link: 'lyrics.html',},
