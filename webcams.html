@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Webcams</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .disney-card { height: 400px; }
+    </style>
+
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="category">Search Webcams</label>
+    <select id="category" size="6" multiple>
+        <option value="landscape">landscape</option>
+        <option value="traffic">traffic</option>
+        <option value="meteo">meteo</option>
+        <option value="uncategorized">uncategorized</option>
+        <option value="building">building</option>
+        <option value="indoor">indoor</option>
+        <option value="city">city</option>
+        <option value="water">water</option>
+        <option value="area">area</option>
+        <option value="forest">forest</option>
+        <option value="mountain">mountain</option>
+        <option value="island">island</option>
+        <option value="beach">beach</option>
+        <option value="airport">airport</option>
+        <option value="park">park</option>
+        <option value="harbor">harbor</option>
+        <option value="pool">pool</option>
+        <option value="golf">golf</option>
+        <option value="lake">lake</option>
+        <option value="bay">bay</option>
+        <option value="square">square</option>
+        <option value="coast">coast</option>
+        <option value="sportarea">sportarea</option>
+        <option value="resort">resort</option>
+        <option value="camping">camping</option>
+        <option value="other">other</option>
+        <option value="xmasmarket">xmasmarket</option>
+        <option value="underwater">underwater</option>
+    </select>
+    <select id="country" size="6" multiple>
+        <option value="AI">Anguilla</option>
+        <option value="AQ">Antarctica</option>
+        <option value="AT">Austria</option>
+        <option value="AU">Australia</option>
+        <option value="BE">Belgium</option>
+        <option value="BS">The Bahamas</option>
+        <option value="BZ">Belize</option>
+        <option value="VG">British Virgin Islands</option>
+        <option value="CA">Canada</option>
+        <option value="CK">Cook Islands</option>
+        <option value="CN">China</option>
+        <option value="CU">Cuba</option>
+        <option value="DE">Germany</option>
+        <option value="EG">Egypt</option>
+        <option value="FR">France</option>
+        <option value="GB">United Kingdom</option>
+        <option value="GL">Greenland</option>
+        <option value="GR">Greece</option>
+        <option value="IL">Israel</option>
+        <option value="IS">Iceland</option>
+        <option value="IT">Italy</option>
+        <option value="KE">Kenya</option>
+        <option value="MV">Maldives</option>
+        <option value="MX">Mexico</option>
+        <option value="NL">Netherlands</option>
+        <option value="NO">Norway</option>
+        <option value="NZ">New Zealand</option>
+        <option value="KN">Saint Kitts and Nevis</option>
+        <option value="LC">Saint Lucia</option>
+        <option value="VC">Saint Vincent and the Grenadines</option>
+        <option value="SC">Seychelles</option>
+        <option value="TN">Tunisia</option>
+        <option value="US">United States</option>
+        <option value="VA">Vatican City</option>
+    </select>
+    <button id="search">Search</button>
+    <div id="api"></div>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+</body>
+<script>
+let card     = document.getElementById('card');
+let country  = document.getElementById('country');
+let category = document.getElementById('category');
+let api      = document.getElementById('api');
+document.getElementById('search').addEventListener('click', getWebcams);
+
+let row = 0;
+
+function buildWebcamCard(w) {
+    row++;
+    return `
+        <div id=${w.webcamId} class="w3-col m4 l3 w3-theme-${row%10>5?"l":"d"}${(row%5)+1} disney-card">
+            <a href="${w.player.live}">${w.title}</a>
+            <hr>
+            <a href="${w.player.day}">Today</a>
+            <a href="${w.player.month}">Last Month</a>
+            <a href="${w.player.year}">Last Year</a>
+            <a href="${w.player.lifetime}">All</a>
+            <a href="${w.urls.detail}">Detail</a>
+            <br>
+            <p>${w.categories.reduce((all, c) => all + ", " + c.name, "").substring(2)}</p>
+            <p>{${w.location.latitude}, ${w.location.longitude}}</p>
+            <img src="${w.images.current.preview}" style="width:300px;" alt="">
+        </div>`;
+}
+    // <img src="${w.images.daylight.preview}" alt="">
+
+async function getWebcams() {
+    let countries  = Array.from(country.options ).filter(m => m.selected).map(m => m.value).join(",");
+    let categories = Array.from(category.options).filter(m => m.selected).map(m => m.value).join(",");
+
+    countries  = "countries="  + countries;
+    categories = "categories=" + categories;
+
+    const url = `https://api.windy.com/webcams/api/v3/webcams?${categories}&${countries}&limit=10&offset=0&categoryOperation=or&include=categories,images,location,player,urls`;
+    const options = {
+        method: 'GET',
+        headers: { 'accept': 'application/json', 'x-windy-api-key': 'xI7DeYTaqMlhtyQVNCSERlsST54RxVBv', }
+    };
+
+    try {
+        api.innerText = url;
+        const response = await fetch(url, options);
+        const result = await response.json();
+        let html = result.webcams.map(w => buildWebcamCard(w));
+        card.innerHTML = html.join('\n');
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Webcams')</script>
+
+</html>

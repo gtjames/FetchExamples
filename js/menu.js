@@ -13,8 +13,9 @@ let menuOptions = [
     {text: 'Disney',        link: 'disney.html',},
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
     {text: 'Finance',       link: 'finance.html',},
-    {text: 'Lyrics',        link: 'lyrics.html',},
+    // {text: 'Government Data', link: 'dataGov.html',},
     {text: 'Lambda',        link: 'lambdaQuotes.html',},
+    {text: 'Lyrics',        link: 'lyrics.html',},
     {text: 'NASA News',     link: 'NASANews.html',},
     {text: 'National Parks',link: 'nationalParks.html',},
     {text: 'News',          link: 'news.html',},
@@ -25,6 +26,7 @@ let menuOptions = [
     {text: 'Translate',     link: 'translate.html',},
     {text: 'Volcanoes',     link: 'Volcanoes.html',},
     {text: 'Weather',       link: 'weather.html',},
+    {text: 'Webcams',       link: 'webcams.html',},
     {text: 'Words',         link: 'words.html',},
     {text: 'World Art',     link: 'worldArt.html',},
 ];
