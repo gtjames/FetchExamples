@@ -21,8 +21,8 @@ tr:hover {
 
 tr.selected { background-color: greenyellow !important; }
 
-.ATOZ {background: url("../images/atoz.png") no-repeat right top;}
-.ZTOA {background: url("../images/ztoa.svg") no-repeat left bottom;}
+.ATOZ {background: url("../images/atoz.svg") no-repeat right top;}
+.ZTOA {background: url("../images/ztoa.svg") no-repeat right bottom;}
 
 /* Style the tab */
 .tab {

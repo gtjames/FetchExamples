@@ -23,6 +23,7 @@ let menuOptions = [
     {text: 'Products',      link: 'productSearch.html',},
     {text: 'Shopping',      link: 'shopping.html',},
     {text: 'Stars',         link: 'stars.html',},
+    {text: 'Sky',           link: 'astronomy.html',},
     {text: 'Translate',     link: 'translate.html',},
     {text: 'Volcanoes',     link: 'Volcanoes.html',},
     {text: 'Weather',       link: 'weather.html',},
