@@ -2,14 +2,33 @@ import {getLocation, locationRetrieved, lat, lon} from './utils.js';
 
 document.getElementById('getMoon').addEventListener('click', getMoon);
 document.getElementById('getConstellation').addEventListener('click', getConstellation);
-let sky  = document.getElementById('sky');
-let date = document.getElementById('date');
+let sky    = document.getElementById('sky');
+let date   = document.getElementById('date');
+let latLon = document.getElementById('latLon');
 let constellation = document.getElementById('constellation');
 
 let myLat, myLon;
+var popup;
+
 function myLocation(lat, lon) {
     myLat = lat;
     myLon = lon;
+    latLon.innerText = `Lat: ${myLat}, Lon: ${myLon}`;
+    var map = L.map('map').setView([myLat, myLon], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 14,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    popup = L.popup();
+    map.on('click', onMapClick);
+
+    function onMapClick(e) {
+        myLon = e.latlng.lng;
+        myLat = e.latlng.lat;
+        latLon.innerText = `Lat: ${myLat}, Lon: ${myLon}`;
+        popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(map);
+    }
 }
 getLocation(myLocation);
 
@@ -35,8 +54,34 @@ function getMoon() {
     };
 
     const url = "https://api.astronomyapi.com/api/v2/studio/moon-phase";
+    makeRequest(url, data);
+}
+
+
+function getConstellation() {
+    let when = date.value;
+    var value = constellation.value;
+
+    const data = {
+        style: 'navy',
+        observer: {
+          latitude: myLat,
+          longitude: myLon,
+          date: when,
+        },
+        view: {
+          type: 'constellation',
+          parameters: { constellation: value, },
+        },
+      };
+      
+    const url = 'https://api.astronomyapi.com/api/v2/studio/star-chart';
+    makeRequest(url, data);
+}
+
+function makeRequest(url, data) {
     const authorizationHeader = 'Basic OGExYTlkY2ItODgzNy00NTZjLWI4ZmYtOTc5NjZlZTYyOTE4OmE2YTgyZmYzZDgzNDdmNDQwYmRhYWEzNTA5MzZkM2QwMGVlODUxMmZkMjY4YTdmYjEwNzU0ODA5N2EyZTYxNDhiNWVkYmMzNjYzNWY4YmQzOTlhNjJkMDA2ZDBlM2YyNzg2MzlhZTNlODgyZWQyNmZkZDczYzRmZGVkNzVjMTQ0NzA2ZWMyM2MyMmE3NDkzYWEyYTAzMDE4Y2I0YzBhNzBiMzA3MzJkMDc0ZWY5YTQ0OGE3NjZmZGEzYWE5ODVkYTAyNmU0ZjhmOWUyYzAwM2Y3MTgxMTY0YzIzOTYyODU1';
-        
+            
     fetch(url, {
         method: 'POST',
         headers: {
@@ -53,43 +98,4 @@ function getMoon() {
     .catch(error => {
         console.error('Error:', error);
     });
-}
-
-
-function getConstellation() {
-    let when = date.value;
-    var value = constellation.value;
-
-    const data = {
-        style: 'navy',
-        observer: {
-          latitude: lat,
-          longitude: lon,
-          date: when,
-        },
-        view: {
-          type: 'constellation',
-          parameters: { constellation: value, },
-        },
-      };
-      
-      const url = 'https://api.astronomyapi.com/api/v2/studio/star-chart';
-      const authorizationHeader = 'Basic OGExYTlkY2ItODgzNy00NTZjLWI4ZmYtOTc5NjZlZTYyOTE4OmE2YTgyZmYzZDgzNDdmNDQwYmRhYWEzNTA5MzZkM2QwMGVlODUxMmZkMjY4YTdmYjEwNzU0ODA5N2EyZTYxNDhiNWVkYmMzNjYzNWY4YmQzOTlhNjJkMDA2ZDBlM2YyNzg2MzlhZTNlODgyZWQyNmZkZDczYzRmZGVkNzVjMTQ0NzA2ZWMyM2MyMmE3NDkzYWEyYTAzMDE4Y2I0YzBhNzBiMzA3MzJkMDc0ZWY5YTQ0OGE3NjZmZGEzYWE5ODVkYTAyNmU0ZjhmOWUyYzAwM2Y3MTgxMTY0YzIzOTYyODU1';
-      
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authorizationHeader,
-        },
-        body: JSON.stringify(data),
-      })
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          sky.src = result.data.imageUrl;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });      
 }
