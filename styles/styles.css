@@ -25,9 +25,9 @@ tr.selected { background-color: greenyellow !important; }
 .ZTOA {background: url("../images/ztoa.svg") no-repeat right bottom;}
 
 /* Style the tab */
-.tab {
-    overflow: hidden;
-}
+.tab {overflow: hidden;}
+.Quiz       {background-color:burlywood; color: black;}
+.Assignment {background-color: antiquewhite; color: black}
 
 /* Style the buttons inside the tab */
 .tab button {
@@ -91,8 +91,10 @@ tr.selected { background-color: greenyellow !important; }
 }
 
 .disney-card {
+    padding-left: 12px;
     border-style: solid;
-    border-radius: 30px;
+    border-width: 1px;
+    border-radius: 20px;
     height: 300px;
 }
 

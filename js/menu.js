@@ -6,6 +6,7 @@ let menuOptions = [
     {text: 'Basketball',    link: 'basketball.html',},
     {text: 'Books',         link: 'books.html',},
     {text: 'Church Stats',  link: 'churchStats.html',},
+    {text: 'Canvas',        link: 'canvas.html',},
     {text: 'COVID',         link: 'covid19.html',},
     {text: 'Crypto',        link: 'crypto.html',},
     {text: 'Crypto Currency', link: 'allCoins.html',},
