@@ -58,7 +58,7 @@
 	}
 
 function getAllCharacters(page) {
-	let url = `http://api.disneyapi.dev/character?page=${page}&pageSize=50`;
+	let url = `https://api.disneyapi.dev/character?page=${page}&pageSize=50`;
 	fetch(url)
 		.then(resp => resp.json())          //  wait for the response and convert it to JSON
 		.then(character => {                    //  with the resulting JSON data do something
