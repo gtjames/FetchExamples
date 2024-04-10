@@ -6,7 +6,8 @@
     <title>Cache</title>
     <style>
         table, tr, td { border: 1px solid black; border-collapse: collapse; padding: 4px 18px;}
-        td.outer    { width: 50%;}
+        td.left     { width: 40%;}
+        td.right    { width: 60%;}
         .tag        { background-color: lightgreen; }
         .index      { background-color: paleturquoise; }
         .current    { background-color: aquamarine; }
@@ -18,10 +19,11 @@
     </style>
 </head>
 <body>
-    <label for="tagBits"  ># of Tag Bits</label>          <input id="tagBits"     type="text">
-    <label for="indexBits"># of Index Bits</label>      <input id="indexBits"   type="text">
-    <label for="fetchCnt" ># of Fetches</label>          <input id="fetchCnt"    type="text">
-    <label for="binary"   >Binary or Basketball</label>    <input id="binary"      type="checkbox">
+    <label for="tagBits"  ># of Tag Bits</label>       <input id="tagBits"     type="text">
+    <label for="indexBits"># of Index Bits</label>     <input id="indexBits"   type="text">
+    <label for="fetchCnt" ># of Fetches</label>        <input id="fetchCnt"    type="text">
+    <label for="teams"    >Remove Teams</label>        <input id="teams"       type="text">
+    <label for="binary"   >Binary or Basketball</label><input id="binary"      type="checkbox">
     <button id="reset"    >Reset</button>
     <hr>
     <table>
@@ -30,7 +32,7 @@
         <tr><td>Total Bits</td><td id="totalBits"></td></tr>
         <tr><td>Overhead</td><td id="overhead"></td></tr>
         <tr>
-        <td class="outer top">
+        <td class="left top">
             <label for="PC">Program Counter</label> <input id="PC" type="text">
             <button id="step">Step</button>
             <button id="clear">Clear</button>
@@ -39,11 +41,13 @@
                 <tbody id="cache"></tbody>
             </table>
         </td>
-        <td class="outer top">
-            <table class='sortable'>
-                <thead><tr> <th>PC</th> <th>Address</th> <th>Tag</th> <th>Index</th> <th>Value</th> </tr></thead>
-                <tbody id="mem"></tbody>
-            </table>
+        <td class="right top">
+            <div style="overflow-y: scroll; height:550px;">
+                <table class='sortable'>
+                    <thead><tr> <th>PC</th> <th>Address</th> <th id="sortTag">Tag</th> <th id="sortIndex">Index</th> <th>Value</th> </tr></thead>
+                    <tbody id="mem"></tbody>
+                </table>
+            </div>
         </td>
         </tr>
     </table>
@@ -54,9 +58,9 @@
     let     bodyCache   = document.getElementById("cache");
     let     body        = document.getElementById("mem");
     let     pc          = document.getElementById('PC');
-    let     max         = Math.pow(2,16);
+    let     max         = Math.pow(2,32);
     let     basketball  = getList();
-
+       
     let     fetch, cache, jersey;
     let     step, cacheBlk;
     let     instCnt;
@@ -75,8 +79,22 @@
     document.getElementById("step").addEventListener('click', nextStep);
     document.getElementById("reset").addEventListener('click', reset);
     document.getElementById("clear").addEventListener('click', clearCache);
+    document.getElementById("sortTag").addEventListener('click', sortTag);
+    document.getElementById("sortIndex").addEventListener('click', sortIndex);
     reset();
 
+function sortTag() {
+    fetch.sort((a, b) => {
+        return a.tag.localeCompare(b.tag);
+    });
+    createInstructionTable();
+}
+function sortIndex() {
+    fetch.sort((a, b) => {
+        return +a.index - +b.index;
+    });
+    createInstructionTable();
+}
 function rebuildJersey() {
     // const result = Object.groupBy(basketball, ({ tag }) => tag);
     jersey = {};
@@ -135,6 +153,9 @@ function reset() {
     cacheBlk    = -1;
     pc.value    = 0;
 
+    let list = document.getElementById("teams").value;
+    if(list.length > 0)    basketball  = getList(list);
+
     showCacheData();
     binary      =  document.getElementById("binary").checked;
     tagBits     = +document.getElementById("tagBits").value;
@@ -146,8 +167,8 @@ function reset() {
     //  randomly create the addresses with their tag and index bits
     if (binary) {
         for (let i = 0; i < instCnt; i++) {
-            let adrs = "0000000000000000"+(Math.floor(max*Math.random()).toString(2));
-            adrs = adrs.substr(adrs.length-16);
+            let adrs = "00000000000000000000000000000000"+(Math.floor(max*Math.random()).toString(2));
+            adrs = adrs.substr(adrs.length-32);
             let tag   = adrs.substr(0, tagBits);
             let index = adrs.substr(tagBits, indexBits);
             let value = adrs.substr(tagBits + indexBits);
@@ -165,6 +186,12 @@ function reset() {
             fetch.push({pc: `${i}`, adrs: `${adrs}`, tag: `${tag}`, index: `${index}`, value:`${value}` });
         }
     }
+    createInstructionTable();
+    clearCache();
+    rebuildJersey();
+}
+
+function createInstructionTable() {
     //  create the table for memory addresses to fetch
     body.innerHTML = '';
     for (let i = 0; i < fetch.length; i++) {
@@ -173,8 +200,7 @@ function reset() {
     }
 
     //  create the cache blocks
-    clearCache();
-    rebuildJersey();
+
 }
 
 function nextStep() {
@@ -210,6 +236,7 @@ function nextStep() {
 
     if (block.tag === fetch[step].tag) {
         block.hit = "hit";
+        document.getElementById("tr-"+step).classList.add(block.hit);
     } else {
         document.getElementById(fetch[step].index+".tag").innerText = fetch[step].tag;
         block.tag = fetch[step].tag;

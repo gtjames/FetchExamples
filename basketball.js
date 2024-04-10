@@ -1,8 +1,17 @@
-function getList() {
-    return baseketball;
+function getList(teams) {
+    if (!teams)
+        return roster;
+    else {
+        teams
+        let shortList = roster;
+        for(t of teams) {
+            shortList = shortList.filter(r => r.tag != t);
+        }
+        return shortList
+    }
 }
 
-let baseketball = [
+let roster = [
     { tag: "Dallas Mavericks",  index:	"29",	value: "A.J. Lawson", },
     { tag: "Miami Heat",        index:	"58",	value: "A.J. Lawson", },
     { tag: "Dallas Mavericks",  index:	"9",	value: "Aaron Harrison", },
