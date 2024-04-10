@@ -39,7 +39,7 @@ function showNBATeams(teams) {
         if (team.logo.length === 0) team.logo = '/images/NBA-Logo.jpg';
         html += `<div class="w3-col m4 l2 bball-card" style="border-style: solid">
 				<img src='${team.logo}' alt="" onclick='getGamesAndRoster(${team.teamId})'>
-			    <h6>${team.fullName}</h6>
+			    <h6>${team.fullName} - ${team.teamId}</h6>
         </div>`;
     }
     teamList.innerHTML = html +'</div>';
@@ -67,7 +67,7 @@ function getNBATeamRoster(teamId) {
         }
     })
         .then(response => response.json())
-        .then(roster => showNBATeamRoster(roster.api.players))
+        .then(roster => showNBATeamRoster(roster.api.players, teamId))
         .catch(err => console.error(err));
 }
 
@@ -82,16 +82,17 @@ function getNBATeamRoster(teamId) {
  *          An event is added to the player name. Click on the name to get the players list of games
  */
 let row = 0;
-function showNBATeamRoster(players) {
+function showNBATeamRoster(players, teamId) {
     let teamTable = document.getElementById('rosterRows');
+    document.getElementById('players').innerHTML = `Players - ${teamId}`;
     let html = ``;
     for (let player of players) {
         let playerId;
         if      (player.leagues.standard   !== undefined)    playerId = player.leagues.standard;
         else if (player.leagues.utah       !== undefined)    playerId = player.leagues.utah;
         else if (player.leagues.vegas      !== undefined)    playerId = player.leagues.vegas;
-        else if (player.leagues.sacramento !== undefined)  playerId = player.leagues.sacramento;
-        else                                              playerId = {pos: 'none', jersey: JSON.stringify(player.leagues)};
+        else if (player.leagues.sacramento !== undefined)    playerId = player.leagues.sacramento;
+        else                                                 playerId = {pos: 'none', jersey: JSON.stringify(player.leagues)};
         row++;
         html += `
         <tr class="w3-theme-${row%2===1?'l2':'l3'}">

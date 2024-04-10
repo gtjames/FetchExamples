@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache</title>
+    <style>
+        table, tr, td { border: 1px solid black; border-collapse: collapse; padding: 4px 18px;}
+        td.outer    { width: 50%;}
+        td.index    { background-color: paleturquoise; }
+        .current    { background-color: aquamarine; }
+        .next       { background-color: gold; }
+        .hit        { background-color: greenyellow}
+        .miss       { background-color: palevioletred; }
+        .top        { vertical-align:top}
+    </style>
+</head>
+<body>
+    <label for="tagBits"  ># of Tag Bits</label>          <input id="tagBits"     type="text">
+    <label for="indexBits"># of Index Bits</label>      <input id="indexBits"   type="text">
+    <label for="fetchCnt" ># of Fetches</label>          <input id="fetchCnt"    type="text">
+    <label for="binary"   >Binary or Basketball</label>    <input id="binary"      type="checkbox">
+    <button id="reset"    >Reset</button>
+    <button id="clear"    >Clear</button>
+    <hr>
+    <table>
+        <tr><td>Cache Data Bits per Block</td><td id="bitsPerBlock"></td></tr>
+        <tr><td>Cache Tag Bits per Block</td><td id="bitsPerTag"></td></tr>
+        <tr><td>Total Bits</td><td id="totalBits"></td></tr>
+        <tr><td>Overhead</td><td id="overhead"></td></tr>
+        <tr>
+        <td class="outer top">
+            <label for="PC">Program Counter</label>
+            <input id="PC" type="text">
+            <button id="step">Step</button>
+                <table>
+                <thead><tr> <th>Tag</th> <th>Index</th> <th>Value</th> <th>State</th> </tr></thead>
+                <tbody id="cache"></tbody>
+            </table>
+        </td>
+        <td class="outer top">
+            <table class='sortable'>
+                <thead><tr> <th>PC</th> <th>Address</th> <th>Tag</th> <th>Index</th> <th>Value</th> </tr></thead>
+                <tbody id="mem"></tbody>
+            </table>
+        </td>
+        </tr>
+    </table>
+</body>
+<script src="basketball.js"></script>
+<script src="js/sortColumns.js"></script>
+<script>
+    let     bodyCache   = document.getElementById("cache");
+    let     body        = document.getElementById("mem");
+    let     pc          = document.getElementById('PC');
+    let     max         = Math.pow(2,16);
+    let     basketball  = getList();
+
+    let     fetch, cache;
+    let     step, cacheBlk;
+    let     instCnt;
+    let     numBlocks;
+    let     binary = true;
+    let     indexBits = 3;
+    let     tagBits = 2;
+
+    // const result = Object.groupBy(basketball, ({ tag }) => tag);
+    let jersey = {};
+    for (let b of basketball) {
+        let index = (+b.index+1024).toString(2).substr(11-indexBits);
+
+        if (!jersey[b.tag+" "+index]) {
+            jersey[b.tag +" "+index] = [];
+        }
+        jersey[b.tag+" "+index].push(b.value)
+    }
+
+    document.getElementById("tagBits").value = tagBits;
+    document.getElementById("indexBits").value = indexBits;
+    document.getElementById("fetchCnt").value = 25;
+ 
+    showCacheData();
+    document.getElementById("step").addEventListener('click', nextStep);
+    document.getElementById("reset").addEventListener('click', reset);
+    document.getElementById("clear").addEventListener('click', clearCache);
+    reset();
+
+    function showCacheData() { 
+        let     bitsPerBlock;
+    
+        tagBits   = +document.getElementById("tagBits").value;
+        indexBits = +document.getElementById("indexBits").value;
+
+        bitsPerBlock = Math.pow(2, 32 - indexBits - tagBits) * 8;
+        document.getElementById("bitsPerBlock").innerText = bitsPerBlock;
+        document.getElementById("bitsPerTag").innerText   = tagBits;
+        document.getElementById("totalBits").innerText    = tagBits + bitsPerBlock + 1;
+        document.getElementById("overhead").innerText     = (((tagBits + 1)/bitsPerBlock)*100).toFixed(2) + " %";
+    }
+
+    function clearCache() {
+        cache = [];
+        bodyCache.innerHTML = '';
+        for (let i = 0; i < numBlocks; i++) {
+            let index = "0000000000000000"+Number(i).toString(2);
+            index = index.substr(index.length-indexBits, indexBits);
+            cache.push({blockNum: `${i}`, index:`${index}`, tag:'', value:'', hit:''});
+
+            let inner = `<tr id=cache-${i}><td id=${index}.tag></td><td class="index" id=${index}.index>${index}</td><td id=${index}.value></td><td id=${index}.hit></td></tr>`;
+            bodyCache.innerHTML += inner;
+        }
+
+        if (step >= 0 && step < instCnt) { 
+            let pcRow = document.getElementById("tr-"+(step+1));
+            pcRow.classList.remove('next');
+
+            pcRow = document.getElementById("tr-"+step);
+            pcRow.classList.remove('current');
+        }
+        pc.value    = 0;
+        step        = 0;
+    }
+
+    function reset() {
+        fetch       = [ ];
+        cache       = [ ];
+        step        = -1;
+        cacheBlk    = -1;
+        pc.value    = 0;
+
+        showCacheData();
+        binary      =  document.getElementById("binary").checked;
+        tagBits     = +document.getElementById("tagBits").value;
+        indexBits   = +document.getElementById("indexBits").value;
+        instCnt     = +document.getElementById("fetchCnt").value;
+        
+        numBlocks   = Math.pow(2, indexBits);
+
+    //  randomly create the addresses with their tag and index bits
+    if (binary) {
+        for (let i = 0; i < instCnt; i++) {
+            let adrs = "0000000000000000"+(Math.floor(max*Math.random()).toString(2));
+            adrs = adrs.substr(adrs.length-16);
+            let tag   = adrs.substr(0, tagBits);
+            let index = adrs.substr(tagBits, indexBits);
+            let value = adrs.substr(tagBits + indexBits);
+            let b     = basketball[Math.floor(basketball.length * Math.random())];
+            adrs      = tag + "-" + index + "-" + value;
+            fetch.push({pc: `${i}`, adrs: `${adrs}`, tag: `${tag}`, index: `${index}`, value:`${value}` });
+        }
+    } else {
+        for (let i = 0; i < instCnt; i++) {
+            let b = basketball[Math.floor(basketball.length * Math.random())];
+            let adrs  = b.index;
+            let tag   = b.tag;
+            let index = (+b.index+1024).toString(2).substr(11-indexBits);
+            let value = b.value;
+            fetch.push({pc: `${i}`, adrs: `${adrs}`, tag: `${tag}`, index: `${index}`, value:`${value}` });
+        }
+    }
+    //  create the table for memory addresses to fetch
+    body.innerHTML = '';
+    for (let i = 0; i < fetch.length; i++) {
+        let inner = `<tr id=tr-${i}><td>${i}</td><td>${fetch[i].adrs}</td><td>${fetch[i].tag}</td><td class="index">${fetch[i].index}</td><td>${fetch[i].value}</td></tr>`;
+            body.innerHTML += inner;
+    }
+
+    //  create the cache blocks
+    clearCache();
+}
+
+    function nextStep() {
+        let pcRow;
+        if (step >= 0) {
+            pcRow = document.getElementById("tr-"+(step+1));
+            if(pcRow) pcRow.classList.remove('next');
+
+            pcRow = document.getElementById("tr-"+step);
+            pcRow.classList.remove('current');
+        }
+        step = +pc.value;
+        pc.value = step + 1;
+
+        if (cacheBlk >= 0) {
+            cacheRow = document.getElementById("cache-"+cacheBlk);
+            cacheRow.classList.remove('current');
+        }
+
+        pcRow = document.getElementById("tr-"+step);
+        pcRow.classList.add('current');
+        pcRow = document.getElementById("tr-"+(step+1));
+        if (pcRow) pcRow.classList.add('next');
+
+        let block = cache.filter(c => c.index === fetch[step].index)[0];
+        cacheBlk = block.blockNum;
+
+        cacheRow = document.getElementById(block.index+".tag");
+        cacheRow.classList.remove('hit');
+        cacheRow = document.getElementById("cache-"+cacheBlk);
+        cacheRow.classList.remove('next');
+        cacheRow.classList.add('current');
+
+        let nextCacheRow = cache.filter( c => c.index === fetch[step+1].index)[0];
+        cacheRow = document.getElementById("cache-"+nextCacheRow.blockNum);
+        cacheRow.classList.add('next');
+        if (nextCacheRow.tag === fetch[step+1].tag) {
+            cacheRow = document.getElementById(nextCacheRow.index+".tag");
+            cacheRow.classList.add('hit');
+        }
+
+        if (block.tag === fetch[step].tag) {
+            block.hit = "hit";
+        } else {
+            document.getElementById(fetch[step].index+".tag").innerText = fetch[step].tag;
+            block.tag = fetch[step].tag;
+            block.hit = 'miss';
+        }
+        document.getElementById(fetch[step].index+".value").innerText = ((binary) ? fetch[step].value : " " + 
+        jersey[fetch[step].tag+" "+fetch[step].index]); //  fetch[step].adrs);
+        block.value = fetch[step].value;
+
+        document.getElementById(fetch[step].index+".hit").innerText = block.hit + " " + step;
+        document.getElementById(fetch[step].index+".hit").className = block.hit;
+    }
+</script>
+</html>
