@@ -7,11 +7,12 @@
     <style>
         table, tr, td { border: 1px solid black; border-collapse: collapse; padding: 4px 18px;}
         td.outer    { width: 50%;}
-        td.index    { background-color: paleturquoise; }
+        .tag        { background-color: lightgreen; }
+        .index      { background-color: paleturquoise; }
         .current    { background-color: aquamarine; }
         .next       { background-color: gold; }
         .hit        { background-color: greenyellow}
-        .miss       { background-color: palevioletred; }
+        .miss       { background-color: lightcoral; }
         .found      { background-color: lightskyblue; }
         .top        { vertical-align:top}
     </style>
@@ -56,7 +57,7 @@
     let     max         = Math.pow(2,16);
     let     basketball  = getList();
 
-    let     fetch, cache;
+    let     fetch, cache, jersey;
     let     step, cacheBlk;
     let     instCnt;
     let     numBlocks;
@@ -64,17 +65,7 @@
     let     indexBits = 3;
     let     tagBits = 2;
 
-    // const result = Object.groupBy(basketball, ({ tag }) => tag);
-    let jersey = {};
-    for (let b of basketball) {
-        let index = (+b.index+1024).toString(2).substr(11-indexBits);
-
-        if (!jersey[b.tag+" "+index]) {
-            jersey[b.tag +" "+index] = [];
-        }
-        let value = `<span id=${b.value.replaceAll(" ","-")}>${b.value}</span>`;
-        jersey[b.tag+" "+index].push(value);
-    }
+    rebuildJersey();
 
     document.getElementById("tagBits").value = tagBits;
     document.getElementById("indexBits").value = indexBits;
@@ -86,56 +77,71 @@
     document.getElementById("clear").addEventListener('click', clearCache);
     reset();
 
-    function showCacheData() { 
-        let     bitsPerBlock;
+function rebuildJersey() {
+    // const result = Object.groupBy(basketball, ({ tag }) => tag);
+    jersey = {};
+    for (let b of basketball) {
+        let index = (+b.index+1024).toString(2).substr(11-indexBits);
+
+        if (!jersey[b.tag+" "+index]) {
+            jersey[b.tag +" "+index] = [];
+        }
+        let value = `<span id=${b.value.replaceAll(" ","-")}>${b.value}</span>`;
+        jersey[b.tag+" "+index].push(value);
+    }
+
+}
+
+function showCacheData() { 
+    let     bitsPerBlock;
+
+    tagBits   = +document.getElementById("tagBits").value;
+    indexBits = +document.getElementById("indexBits").value;
+
+    bitsPerBlock = Math.pow(2, 32 - indexBits - tagBits) * 8;
+    document.getElementById("bitsPerBlock").innerText = bitsPerBlock;
+    document.getElementById("bitsPerTag").innerText   = tagBits;
+    document.getElementById("totalBits").innerText    = tagBits + bitsPerBlock + 1;
+    document.getElementById("overhead").innerText     = (((tagBits + 1)/bitsPerBlock)*100).toFixed(2) + " %";
+}
+
+function clearCache() {
+    cache = [];
+    bodyCache.innerHTML = '';
+    for (let i = 0; i < numBlocks; i++) {
+        let index = "0000000000000000"+Number(i).toString(2);
+        index = index.substr(index.length-indexBits, indexBits);
+        cache.push({blockNum: `${i}`, index:`${index}`, tag:'', value:'', hit:''});
+
+        let inner = `<tr id=cache-${i}><td id=${index}.tag></td><td class="index" id=${index}.index>${index}</td><td id=${index}.value></td><td id=${index}.hit></td></tr>`;
+        bodyCache.innerHTML += inner;
+    }
+
+    if (step >= 0 && step < instCnt) { 
+        let pcRow = document.getElementById("tr-"+(step+1));
+        pcRow.classList.remove('next');
+
+        pcRow = document.getElementById("tr-"+step);
+        pcRow.classList.remove('current');
+    }
+    pc.value    = 0;
+    step        = 0;
+}
+
+function reset() {
+    fetch       = [ ];
+    cache       = [ ];
+    step        = -1;
+    cacheBlk    = -1;
+    pc.value    = 0;
+
+    showCacheData();
+    binary      =  document.getElementById("binary").checked;
+    tagBits     = +document.getElementById("tagBits").value;
+    indexBits   = +document.getElementById("indexBits").value;
+    instCnt     = +document.getElementById("fetchCnt").value;
     
-        tagBits   = +document.getElementById("tagBits").value;
-        indexBits = +document.getElementById("indexBits").value;
-
-        bitsPerBlock = Math.pow(2, 32 - indexBits - tagBits) * 8;
-        document.getElementById("bitsPerBlock").innerText = bitsPerBlock;
-        document.getElementById("bitsPerTag").innerText   = tagBits;
-        document.getElementById("totalBits").innerText    = tagBits + bitsPerBlock + 1;
-        document.getElementById("overhead").innerText     = (((tagBits + 1)/bitsPerBlock)*100).toFixed(2) + " %";
-    }
-
-    function clearCache() {
-        cache = [];
-        bodyCache.innerHTML = '';
-        for (let i = 0; i < numBlocks; i++) {
-            let index = "0000000000000000"+Number(i).toString(2);
-            index = index.substr(index.length-indexBits, indexBits);
-            cache.push({blockNum: `${i}`, index:`${index}`, tag:'', value:'', hit:''});
-
-            let inner = `<tr id=cache-${i}><td id=${index}.tag></td><td class="index" id=${index}.index>${index}</td><td id=${index}.value></td><td id=${index}.hit></td></tr>`;
-            bodyCache.innerHTML += inner;
-        }
-
-        if (step >= 0 && step < instCnt) { 
-            let pcRow = document.getElementById("tr-"+(step+1));
-            pcRow.classList.remove('next');
-
-            pcRow = document.getElementById("tr-"+step);
-            pcRow.classList.remove('current');
-        }
-        pc.value    = 0;
-        step        = 0;
-    }
-
-    function reset() {
-        fetch       = [ ];
-        cache       = [ ];
-        step        = -1;
-        cacheBlk    = -1;
-        pc.value    = 0;
-
-        showCacheData();
-        binary      =  document.getElementById("binary").checked;
-        tagBits     = +document.getElementById("tagBits").value;
-        indexBits   = +document.getElementById("indexBits").value;
-        instCnt     = +document.getElementById("fetchCnt").value;
-        
-        numBlocks   = Math.pow(2, indexBits);
+    numBlocks   = Math.pow(2, indexBits);
 
     //  randomly create the addresses with their tag and index bits
     if (binary) {
@@ -146,7 +152,7 @@
             let index = adrs.substr(tagBits, indexBits);
             let value = adrs.substr(tagBits + indexBits);
             let b     = basketball[Math.floor(basketball.length * Math.random())];
-            adrs      = tag + "-" + index + "-" + value;
+            adrs      = `<span class="tag">&ensp;${tag}&ensp;</span><span class="index">&ensp;${index}&ensp;</span>${value}`;
             fetch.push({pc: `${i}`, adrs: `${adrs}`, tag: `${tag}`, index: `${index}`, value:`${value}` });
         }
     } else {
@@ -162,70 +168,71 @@
     //  create the table for memory addresses to fetch
     body.innerHTML = '';
     for (let i = 0; i < fetch.length; i++) {
-        let inner = `<tr id=tr-${i}><td>${i}</td><td>${fetch[i].adrs}</td><td>${fetch[i].tag}</td><td class="index">${fetch[i].index}</td><td>${fetch[i].value}</td></tr>`;
+        let inner = `<tr id=tr-${i}><td>${i}</td><td>${fetch[i].adrs}</td><td class="tag">${fetch[i].tag}</td><td class="index">${fetch[i].index}</td><td>${fetch[i].value}</td></tr>`;
             body.innerHTML += inner;
     }
 
     //  create the cache blocks
     clearCache();
+    rebuildJersey();
 }
 
-    function nextStep() {
-        let pcRow;
-        if (step >= 0) {
-            pcRow = document.getElementById("tr-"+(step+1));
-            if(pcRow) pcRow.classList.remove('next');
-
-            pcRow = document.getElementById("tr-"+step);
-            pcRow.classList.remove('current');
-        }
-        step = +pc.value;
-        pc.value = step + 1;
-
-        if (cacheBlk >= 0) {
-            cacheRow = document.getElementById("cache-"+cacheBlk);
-            cacheRow.classList.remove('current');
-        }
+function nextStep() {
+    let pcRow;
+    if (step >= 0) {
+        pcRow = document.getElementById("tr-"+(step+1));
+        if(pcRow) pcRow.classList.remove('next');
 
         pcRow = document.getElementById("tr-"+step);
-        pcRow.classList.add('current');
-        pcRow = document.getElementById("tr-"+(step+1));
-        if (pcRow) pcRow.classList.add('next');
+        pcRow.classList.remove('current');
+    }
+    step = +pc.value;
+    pc.value = step + 1;
 
-        let block = cache.filter(c => c.index === fetch[step].index)[0];
-        cacheBlk = block.blockNum;
-
-        cacheRow = document.getElementById(block.index+".tag");
-        cacheRow.classList.remove('hit');
+    if (cacheBlk >= 0) {
         cacheRow = document.getElementById("cache-"+cacheBlk);
-        cacheRow.classList.remove('next');
-        cacheRow.classList.add('current');
+        cacheRow.classList.remove('current');
+    }
 
-        if (block.tag === fetch[step].tag) {
-            block.hit = "hit";
-        } else {
-            document.getElementById(fetch[step].index+".tag").innerText = fetch[step].tag;
-            block.tag = fetch[step].tag;
-            block.hit = 'miss';
-        }
+    pcRow = document.getElementById("tr-"+step);
+    pcRow.classList.add('current');
+    pcRow = document.getElementById("tr-"+(step+1));
+    if (pcRow) pcRow.classList.add('next');
 
-        document.getElementById(fetch[step].index+".value").innerHTML = ((binary) ? fetch[step].value : " " + 
-        jersey[fetch[step].tag+" "+fetch[step].index]); //  fetch[step].adrs);
-        block.value = fetch[step].value;
-        if(!binary) document.getElementById(fetch[step].value.replaceAll(" ","-")).className = 'found';
+    let block = cache.filter(c => c.index === fetch[step].index)[0];
+    cacheBlk = block.blockNum;
 
-        document.getElementById(fetch[step].index+".hit").innerText = block.hit + " " + step;
-        document.getElementById(fetch[step].index+".hit").className = block.hit;
+    cacheRow = document.getElementById(block.index+".tag");
+    cacheRow.classList.remove('hit');
+    cacheRow = document.getElementById("cache-"+cacheBlk);
+    cacheRow.classList.remove('next');
+    cacheRow.classList.add('current');
 
-        if (step+1 < instCnt) {
-            let nextCacheRow = cache.filter( c => c.index === fetch[step+1].index)[0];
-            cacheRow = document.getElementById("cache-"+nextCacheRow.blockNum);
-            cacheRow.classList.add('next');
-            if (nextCacheRow.tag === fetch[step+1].tag) {
-                cacheRow = document.getElementById(nextCacheRow.index+".tag");
-                cacheRow.classList.add('hit');
-            }
+    if (block.tag === fetch[step].tag) {
+        block.hit = "hit";
+    } else {
+        document.getElementById(fetch[step].index+".tag").innerText = fetch[step].tag;
+        block.tag = fetch[step].tag;
+        block.hit = 'miss';
+    }
+
+    document.getElementById(fetch[step].index+".value").innerHTML = ((binary) ? fetch[step].value : " " + 
+    jersey[fetch[step].tag+" "+fetch[step].index]); //  fetch[step].adrs);
+    block.value = fetch[step].value;
+    if(!binary) document.getElementById(fetch[step].value.replaceAll(" ","-")).className = 'found';
+
+    document.getElementById(fetch[step].index+".hit").innerText = block.hit + " " + step;
+    document.getElementById(fetch[step].index+".hit").className = block.hit;
+
+    if (step+1 < instCnt) {
+        let nextCacheRow = cache.filter( c => c.index === fetch[step+1].index)[0];
+        cacheRow = document.getElementById("cache-"+nextCacheRow.blockNum);
+        cacheRow.classList.add('next');
+        if (nextCacheRow.tag === fetch[step+1].tag) {
+            cacheRow = document.getElementById(nextCacheRow.index+".tag");
+            cacheRow.classList.add('hit');
         }
     }
+}
 </script>
 </html>
