@@ -16,15 +16,72 @@
         .miss       { background-color: lightcoral; }
         .found      { background-color: lightskyblue; }
         .top        { vertical-align:top}
+
+        .dropdown-check-list {
+  display: inline-block;
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check-list.visible .items {
+  display: block;
+}
     </style>
 </head>
 <body>
     <label for="tagBits"  ># of Tag Bits</label>       <input id="tagBits"     type="text">
     <label for="indexBits"># of Index Bits</label>     <input id="indexBits"   type="text">
     <label for="fetchCnt" ># of Fetches</label>        <input id="fetchCnt"    type="text">
-    <label for="teams"    >Remove Teams</label>        <input id="teams"       type="text">
-    <label for="binary"   >Binary or Basketball</label><input id="binary"      type="checkbox">
+    <!-- <label for="teams"    >Remove Teams</label>        <input id="teams"       type="text"> -->
+    <input type="radio" name="source" checked />       <label for="binary">    Binary</label>
+    <input type="radio" name="source" />               <label for="basketball">Basketball</label>
     <button id="reset"    >Reset</button>
+    <div id="teamsList" class="dropdown-check-list" tabindex="100">
+        <span class="anchor">Exclude Teams</span>
+        <ul id="teams" class="items"></ul>
+      </div>
     <hr>
     <table>
         <tr><td>Cache Data Bits per Block</td><td id="bitsPerBlock"></td></tr>
@@ -68,7 +125,19 @@
     let     binary = true;
     let     indexBits = 3;
     let     tagBits = 2;
+    let     checkList = document.getElementById('teamsList');
+    let     teamSet = getTeams();
+    let     set = document.getElementById("teams")
+    for (t of teamSet){
+        set.innerHTML += `<li><input type="checkbox" value="${t}" />${t}</li>`;
+    }
 
+    checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+    if (checkList.classList.contains('visible'))
+        checkList.classList.remove('visible');
+    else
+        checkList.classList.add('visible');
+    }
     rebuildJersey();
 
     document.getElementById("tagBits").value = tagBits;
@@ -83,18 +152,18 @@
     document.getElementById("sortIndex").addEventListener('click', sortIndex);
     reset();
 
-function sortTag() {
-    fetch.sort((a, b) => {
-        return a.tag.localeCompare(b.tag);
-    });
+function sortTag(e) {
+    let dir = (e.target.classList == "ATOZ") ? 1 : -1
+    fetch.sort((a, b) => a.tag.localeCompare(b.tag) * dir);
     createInstructionTable();
 }
-function sortIndex() {
-    fetch.sort((a, b) => {
-        return +a.index - +b.index;
-    });
+
+function sortIndex(e) {
+    let dir = (e.target.classList == "ATOZ") ? 1 : -1
+    fetch.sort((a, b) => (+a.index - +b.index) * dir);
     createInstructionTable();
 }
+
 function rebuildJersey() {
     // const result = Object.groupBy(basketball, ({ tag }) => tag);
     jersey = {};
@@ -153,11 +222,8 @@ function reset() {
     cacheBlk    = -1;
     pc.value    = 0;
 
-    let list = document.getElementById("teams").value;
-    if(list.length > 0)    basketball  = getList(list);
-
     showCacheData();
-    binary      =  document.getElementById("binary").checked;
+    binary      = document.getElementsByName("source")[0].checked;
     tagBits     = +document.getElementById("tagBits").value;
     indexBits   = +document.getElementById("indexBits").value;
     instCnt     = +document.getElementById("fetchCnt").value;
@@ -177,6 +243,11 @@ function reset() {
             fetch.push({pc: `${i}`, adrs: `${adrs}`, tag: `${tag}`, index: `${index}`, value:`${value}` });
         }
     } else {
+        let teams = document.querySelectorAll('input[type=checkbox]:checked');
+        teams = Array.from(teams);
+        teams = teams.map(t => t.value);
+        basketball  = getList(teams);
+
         for (let i = 0; i < instCnt; i++) {
             let b = basketball[Math.floor(basketball.length * Math.random())];
             let adrs  = b.index;
@@ -198,9 +269,6 @@ function createInstructionTable() {
         let inner = `<tr id=tr-${i}><td>${i}</td><td>${fetch[i].adrs}</td><td class="tag">${fetch[i].tag}</td><td class="index">${fetch[i].index}</td><td>${fetch[i].value}</td></tr>`;
             body.innerHTML += inner;
     }
-
-    //  create the cache blocks
-
 }
 
 function nextStep() {

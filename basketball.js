@@ -2,13 +2,20 @@ function getList(teams) {
     if (!teams)
         return roster;
     else {
-        teams
         let shortList = roster;
         for(t of teams) {
             shortList = shortList.filter(r => r.tag != t);
         }
         return shortList
     }
+
+    // <li><input type="checkbox" />Tomato</li>
+
+}
+
+function getTeams() {
+    let teams = new Set( roster.map(t => t.tag) );
+    return teams
 }
 
 let roster = [
