@@ -122,14 +122,14 @@
     let     step, cacheBlk;
     let     instCnt;
     let     numBlocks;
-    let     binary = true;
+    let     binary = false;
     let     indexBits = 3;
     let     tagBits = 2;
     let     checkList = document.getElementById('teamsList');
     let     teamSet = getTeams();
     let     set = document.getElementById("teams")
     for (t of teamSet){
-        set.innerHTML += `<li><input type="checkbox" value="${t}" />${t}</li>`;
+        set.innerHTML += `<li><input type="checkbox" value="${t}" checked />${t}</li>`;
     }
 
     checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
@@ -173,7 +173,7 @@ function rebuildJersey() {
         if (!jersey[b.tag+" "+index]) {
             jersey[b.tag +" "+index] = [];
         }
-        let value = `<span id=${b.value.replaceAll(" ","-")}>${b.value}</span>`;
+        let value = `<span id=${(index + b.value).replaceAll(" ","-")}>${b.value}</span>`;
         jersey[b.tag+" "+index].push(value);
     }
 
@@ -311,10 +311,15 @@ function nextStep() {
         block.hit = 'miss';
     }
 
-    document.getElementById(fetch[step].index+".value").innerHTML = ((binary) ? fetch[step].value : " " + 
-    jersey[fetch[step].tag+" "+fetch[step].index]); //  fetch[step].adrs);
+    let value = document.getElementById(fetch[step].index+".value");
+    if (binary)
+        value.innerHTML = fetch[step].value;
+    else {
+        if (block.hit == 'miss') 
+            value.innerHTML = jersey[fetch[step].tag+" "+fetch[step].index];
+    }
     block.value = fetch[step].value;
-    if(!binary) document.getElementById(fetch[step].value.replaceAll(" ","-")).className = 'found';
+    if(!binary) document.getElementById((fetch[step].index+fetch[step].value).replaceAll(" ","-")).className = 'found';
 
     document.getElementById(fetch[step].index+".hit").innerText = block.hit + " " + step;
     document.getElementById(fetch[step].index+".hit").className = block.hit;
