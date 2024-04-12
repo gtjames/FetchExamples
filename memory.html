@@ -14,7 +14,7 @@
         .next       { background-color: gold; }
         .hit        { background-color: greenyellow}
         .miss       { background-color: lightcoral; }
-        .found      { background-color: lightskyblue; }
+        .found      { background-color: lightskyblue; border-radius: 10%;  }
         .top        { vertical-align:top}
 
         .dropdown-check-list {
@@ -71,12 +71,11 @@
     </style>
 </head>
 <body>
-    <label for="tagBits"  ># of Tag Bits</label>       <input id="tagBits"     type="text">
-    <label for="indexBits"># of Index Bits</label>     <input id="indexBits"   type="text">
-    <label for="fetchCnt" ># of Fetches</label>        <input id="fetchCnt"    type="text">
-    <!-- <label for="teams"    >Remove Teams</label>        <input id="teams"       type="text"> -->
-    <input type="radio" name="source" checked />       <label for="binary">    Binary</label>
-    <input type="radio" name="source" />               <label for="basketball">Basketball</label>
+    <label for="tagBits"  ># of Tag Bits</label>   <input id="tagBits"     type="text">
+    <label for="indexBits"># of Index Bits</label> <input id="indexBits"   type="text">
+    <label for="fetchCnt" ># of Fetches</label>    <input id="fetchCnt"    type="text">
+    <input type="radio" name="source" />           <label for="binary">    Binary</label>
+    <input type="radio" name="source" checked />   <label for="basketball">Basketball</label>
     <button id="reset"    >Reset</button>
     <div id="teamsList" class="dropdown-check-list" tabindex="100">
         <span class="anchor">Exclude Teams</span>
@@ -128,8 +127,9 @@
     let     checkList = document.getElementById('teamsList');
     let     teamSet = getTeams();
     let     set = document.getElementById("teams")
-    for (t of teamSet){
-        set.innerHTML += `<li><input type="checkbox" value="${t}" checked />${t}</li>`;
+    for (let t of teamSet) {
+        set.innerHTML += `<li><input type="checkbox" value="${t}" />${t}</li>`;
+        // set.innerHTML += `<li><input type="checkbox" value="${t}" ${set.innerHTML.length > 0 ?"checked":""} />${t}</li>`;
     }
 
     checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
@@ -176,7 +176,6 @@ function rebuildJersey() {
         let value = `<span id=${(index + b.value).replaceAll(" ","-")}>${b.value}</span>`;
         jersey[b.tag+" "+index].push(value);
     }
-
 }
 
 function showCacheData() { 
@@ -316,7 +315,7 @@ function nextStep() {
         value.innerHTML = fetch[step].value;
     else {
         if (block.hit == 'miss') 
-            value.innerHTML = jersey[fetch[step].tag+" "+fetch[step].index];
+            value.innerHTML = jersey[fetch[step].tag+" "+fetch[step].index].join(",");
     }
     block.value = fetch[step].value;
     if(!binary) document.getElementById((fetch[step].index+fetch[step].value).replaceAll(" ","-")).className = 'found';
