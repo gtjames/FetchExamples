@@ -8,9 +8,6 @@ function getList(teams) {
         }
         return shortList
     }
-
-    // <li><input type="checkbox" />Tomato</li>
-
 }
 
 function getTeams() {

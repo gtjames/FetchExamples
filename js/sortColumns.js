@@ -4,12 +4,35 @@
 let lastSortCol = null;
 
 //  find the sortable tables and add an event listener for all TH tags
-let sortableTables = document.getElementsByClassName('sortable');
-Array.from(sortableTables)
+let sortableTable = document.getElementsByClassName('sortable');
+Array.from(sortableTable)
     .forEach(tbl => Array.from(tbl.getElementsByTagName('th'))
-        .forEach(hdr => hdr.addEventListener('click', () => callSort(hdr, hdr.cellIndex))));
+        .forEach(hdr => hdr.addEventListener('click', () => sortTable(hdr, hdr.cellIndex))));
 
-function callSort(ele, column) {
+let copyableTable = document.getElementsByClassName('copyable');
+// Array.from(copyableTable)
+//     .forEach(tbl => Array.from(tbl.getElementsByTagName('svg'))
+//         .forEach(img => img.addEventListener('click', () => navigator.clipboard.writeText(tbl.innerText))));
+
+Array.from(copyableTable)
+    .forEach(tbl => Array.from(tbl.getElementsByClassName('bi-copy'))
+        .forEach(img => img.addEventListener('click', () => copyEl(tbl))));
+
+const copyEl = (elToBeCopied) => {
+    let range, sel;
+    
+    range = document.createRange();
+    sel = window.getSelection();
+    // unselect any element in the page
+    sel.removeAllRanges();
+    
+    range.selectNodeContents(elToBeCopied);
+    sel.addRange(range);
+    document.execCommand('copy');
+    sel.removeAllRanges();
+};
+
+function sortTable(ele, column) {
     ele.className = (ele.className === "ZTOA" || ele.className.length === 0) ? "ATOZ" : "ZTOA";
     if (lastSortCol !== null && lastSortCol !== ele)
         lastSortCol.className = "";
