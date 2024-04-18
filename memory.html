@@ -20,7 +20,7 @@
         .Miss       { background-color: lightcoral; }
         .found      { background-color: lightskyblue; border-radius: 10%; }
         .top        { vertical-align:top; }
-        #PC         { width: 60px; }
+        input[type=text]         { width: 60px; }
         .scrolling  { overflow-y: scroll; height:560px; }
 
         .modal      {--bs-modal-width:  575px;}
@@ -88,8 +88,9 @@
     <div id="teamsList" class="dropdown-check-list" tabindex="100">
         <span class="anchor">Exclude Teams</span>
         <ul id="teams" class="items"></ul>
-      </div>
-      <table>
+    </div>
+    <label for="studentID" >Last 4 of ID</label>    <input id="studentID"    type="text">
+    <table>
         <tr><td>Cache Data Bits per Block</td><td id="bitsPerBlock"></td><td>Cache Tag Bits per Block</td><td id="bitsPerTag"></td></tr>
         <tr><td>Total Bits</td><td id="totalBits"></td><td>Overhead</td><td id="overhead"></td></tr>
     </table>
@@ -156,9 +157,11 @@
     let     bodyCache   = document.getElementById("cache");
     let     body        = document.getElementById("mem");
     let     pc          = document.getElementById('PC');
+    let     studentID   = document.getElementById("studentID");
     let     max         = Math.pow(2,32);
     let     basketball  = getList();
-       
+    let     seed        = -1;
+
     let     fetch, cache, mainMemory, mainMemoryA;
     let     step, cacheBlk;
     let     instCnt;
@@ -273,6 +276,8 @@ function reset() {
     cacheBlk    = -1;
     pc.value    = 0;
 
+    seed = (studentID.value.length != 0) ? +studentID.value : -1;
+
     showCacheData();
     binary      = document.getElementsByName("source")[0].checked;
     tagBits     = +document.getElementById("tagBits").value;
@@ -300,7 +305,10 @@ function reset() {
         basketball  = getList(teams);
 
         for (let i = 0; i < instCnt; i++) {
-            let b = basketball[getRandom(basketball.length)];
+            let z = getRandom(basketball.length)
+            console.log(z);
+            let b     = basketball[z];
+    
             let tag   = b.tag;
             let index = (+b.index+1024).toString(2).substr(11-indexBits);
             let adrs  = b.index;
@@ -313,9 +321,6 @@ function reset() {
     rebuildMainMemory();
 }
 
-function getRandom(max) {
-    return Math.floor(Math.random() * max);
-}
 function createInstructionTable() {
     //  create the table for memory addresses to fetch
     body.innerHTML = '';
@@ -410,20 +415,16 @@ function showMainMemory() {
   }
 }
 
-let seed = 42; // Change this to your desired seed value
-
-function seededRandom(seed) {
-  let x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
+function getRandom(max) {
+    if (seed === -1)
+        return Math.floor(Math.random() * max);
+    else
+        return getNextRandom(seed, max);
 }
 
-function getNextRandom(seed) {
-    return seededRandom(( seed == 0 ) ? (new Date()).getMilliseconds() : seed);
-}
-
-for (let i = 0; i < 10; i++) {
-    seed = getNextRandom(seed);
-    console.log(Math.floor(seed * max));
+function getNextRandom(newSeed, max) {
+    seed = Math.abs(Math.floor(Math.sin(seed) * max));
+    return seed;
 }
 </script>
 </html>
