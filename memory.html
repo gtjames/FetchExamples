@@ -11,12 +11,19 @@
         table, tr, td { border: 1px solid black; border-collapse: collapse; padding: 4px 18px;}
         td.left     { width: 50%;}
         td.right    { width: 50%;}
-        td.tag      { background-color: lightgreen;    font-family: Courier New;}
-        td.index    { background-color: paleturquoise; font-family: Courier New;}
-        td.offset   { background-color: lemonchiffon;  font-family: Courier New;}
+        tr.current > td:first-child {  
+            background-image: url('images/rtArrow.png'); 
+            background-size: 20px 20px; 
+            background-repeat: no-repeat; 
+            background-position: center right;
+            padding-left: 40px;
+        }
+        td.tag      { background-color: lightgreen;    font-family: 'Courier New'; }
+        td.index    { background-color: paleturquoise; font-family: 'Courier New'; }
+        td.offset   { background-color: lemonchiffon;  font-family: 'Courier New'; }
         td.Hit      { background-color: greenyellow}
-        .current    { background-color: aquamarine; }
-        .next       { background-color: gold; }
+        tr.current  { background-color: aquamarine; }
+        tr.next     { background-color: gold; }
         .Miss       { background-color: lightcoral; }
         .found      { background-color: lightskyblue; border-radius: 10%; }
         .top        { vertical-align:top; }
