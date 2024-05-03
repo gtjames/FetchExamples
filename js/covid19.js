@@ -15,11 +15,11 @@ function getStats() {
     fetch("https://corona-virus-world-and-india-data.p.rapidapi.com/api", {
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": "AIxP56HptHmshgNo3oo3eXKMlJvXp13w59gjsnNT2jFu4oqvqs",
+                "x-rapidapi-key": keyCOVID,
                 "x-rapidapi-host": "corona-virus-world-and-india-data.p.rapidapi.com"
             }
         })
-        .then(resp => resp.json())              //  wait for the response and convert it to JSON
+        .then(resp => resp.text())              //  wait for the response and convert it to JSON
         .then(covid => {                        //  with the resulting JSON data do something
             console.table(covid.countries_stat);
             

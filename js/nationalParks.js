@@ -3,16 +3,12 @@
 	document.getElementById('search').addEventListener('click', findParks);
     document.getElementById("alerts").addEventListener("click", closeModal);
 
-    let key1 = 'g56CN1WcTJ7QfTf6FTk';
-    let key2 = 'DH14cCgeeT0UPFLlXubUr';
-    let key  = key1 + key2;
-
-	let row = 0;
+    let row = 0;
     let carouselList = [];
 
     function findParks() {
         let list = park.value;
-        let URL = `https://developer.nps.gov/api/v1/parks?parkCode=${list}&api_key=${key}`;
+        let URL = `https://developer.nps.gov/api/v1/parks?parkCode=${list}&api_key=${keyNatlParks}`;
     
         //  https://www.nps.gov/subjects/developer/api-documentation.htm
         fetch(URL)
@@ -138,12 +134,12 @@ function currentSlide(n, parkId) {
 
 function showAlerts(evt) {
     let code = evt.target.name;
-    let URL = `https://developer.nps.gov/api/v1/alerts?parkCode=${code}&api_key=${key}`;
+    let URL = `https://developer.nps.gov/api/v1/alerts?parkCode=${code}&api_key=${keyNatlParks}`;
     callAPI(URL, listAlerts, code);
 }
 function showWebcam(evt) {
     let code = evt.target.name;
-    let URL = `https://developer.nps.gov/api/v1/webcams?parkCode=${code}&api_key=${key}`;
+    let URL = `https://developer.nps.gov/api/v1/webcams?parkCode=${code}&api_key=${keyNatlParks}`;
     callAPI(URL, listAlerts, code);
 }
 

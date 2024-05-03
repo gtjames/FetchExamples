@@ -1,7 +1,5 @@
 //  https://rapidapi.com/api-sports/api/api-baseball
 
-let key = '10f0d3c959mshe5fca1f0098b852p17d5bajsncdeef06aead7';			//  rapid API
-key = '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5';
 function getMLBTeams() {
     let season = document.getElementById('season').value;
     let league = document.getElementById('league').value;
@@ -9,7 +7,7 @@ function getMLBTeams() {
     fetch(`https://api-baseball.p.rapidapi.com/teams?league=${league}&season=${season}`, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": key,
+            "x-rapidapi-key": keyRapidAPI,
             "x-rapidapi-host": "api-baseball.p.rapidapi.com"
         }
     })
@@ -39,7 +37,7 @@ function getStats(id, league, season) {
     fetch(`https://api-baseball.p.rapidapi.com/teams/statistics?league=${league}&season=${season}&team=${id}`, {
         "method": "GET",
             "headers": {
-            "x-rapidapi-key": key,
+            "x-rapidapi-key": keyRapidAPI,
             "x-rapidapi-host": "api-baseball.p.rapidapi.com"
         }
     })

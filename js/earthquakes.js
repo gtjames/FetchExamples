@@ -7,7 +7,7 @@ document.getElementById('search').addEventListener('click', quakesWithinRadius);
 const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5',
+        'X-RapidAPI-Key': keyRapidAPI,
         'X-RapidAPI-Host': 'everyearthquake.p.rapidapi.com'
     }
 };

@@ -26,6 +26,7 @@
     <ul id="translation" class="w3-theme-l3"></ul>
 </div>
 </body>
+<script src="js/allKeys.js"></script>
 <script>
 	let speech      = document.getElementById("speech");
     let translation = document.getElementById("translation");
@@ -81,7 +82,7 @@
 			headers: {
 				"content-type": "application/x-www-form-urlencoded",
 				"x-rapidapi-host": "lecto-translation.p.rapidapi.com",
-				"x-rapidapi-key": "498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5",
+				"x-rapidapi-key": keyRapidAPI,
 			},
 			body: params,
 		};
@@ -107,7 +108,7 @@
 			"method": "GET",
 			"headers": {
 				"x-rapidapi-host": "lecto-translation.p.rapidapi.com",
-				"x-rapidapi-key": "498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5"
+				"x-rapidapi-key": keyRapidAPI
 			}
 		})
 			.then(response => response.json())

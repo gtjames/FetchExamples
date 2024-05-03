@@ -135,7 +135,7 @@ async function getWebcams() {
     const options = {
         method: 'GET',
         headers: {  'accept': 'application/json', 
-                    'x-windy-api-key': 'vAu65qnE3oXk3CtPQbI7YX9JURUOjdfb', }
+                    'x-windy-api-key': keyWebcams, }
     };
 
     try {
@@ -150,6 +150,7 @@ async function getWebcams() {
 }
 
 </script>
+<script src="js/allKeys.js"></script>
 <script src="js/menu.js"></script>
 <script>makeMeActive('Webcams')</script>
 

@@ -34,6 +34,7 @@
 </div>
 
 </body>
+<script src="js/allKeys.js"></script>
 <script>
 	let card = document.getElementById('card');
 	let term = document.getElementById('newsSearch');
@@ -74,9 +75,8 @@
 		 *		topic	breaking-news	Set the article's topic. Topics available are
 		 *		breaking-news, world, nation, business, technology, entertainment, sports, science and health.
 		 */
-		const token = "04ea6452dc4a86b9ee13f2ab289bdc38";
 		const URL = "https://gnews.io/api/v4/search";
-        let req = `${URL}?q=${term.value}&lang=${lang.value}&token=${token}`;
+        let req = `${URL}?q=${term.value}&lang=${lang.value}&token=${keyNews}`;
         console.log(req);
 		fetch(req)
             .then(resp => resp.json())          //  wait for the response and convert it to JSON

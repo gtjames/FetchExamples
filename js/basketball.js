@@ -1,8 +1,6 @@
 //  https://rapidapi.com/api-sports/api/api-nba
 //  https://rapidapi.com/developer/dashboard
 
-let key = '10f0d3c959mshe5fca1f0098b852p17d5bajsncdeef06aead7';			//  rapid API
-
 /**
  *  The 'Get NBA Teams' button was pushed
  *      request the list of teams in the conference selected
@@ -17,7 +15,7 @@ function getNBATeams() {
     fetch(`https://api-nba-v1.p.rapidapi.com/teams/confName/${conference}`, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": key,
+            "x-rapidapi-key": keyBasketball,
             "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
         }
     })
@@ -62,7 +60,7 @@ function getNBATeamRoster(teamId) {
     fetch("https://api-nba-v1.p.rapidapi.com/players/teamId/" + teamId, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": key,
+            "x-rapidapi-key": keyBasketball,
             "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
         }
     })
@@ -118,7 +116,7 @@ function getNBAGameStats(teamId) {
     fetch(`https://api-nba-v1.p.rapidapi.com/games/teamId/${teamId}`, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": key,
+            "x-rapidapi-key": keyBasketball,
             "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
         }
     })
@@ -166,7 +164,7 @@ function getNBAPlayerStats(playerId, playerName) {
     fetch("https://api-nba-v1.p.rapidapi.com/statistics/players/playerId/" + playerId, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": key,
+            "x-rapidapi-key": keyBasketball,
             "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
         }
     })

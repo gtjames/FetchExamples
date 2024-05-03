@@ -1,6 +1,6 @@
 document.getElementById("save").addEventListener('click', findMovies)
-let rows = document.getElementById("rows");
-let card = document.getElementById('card');
+let rows  = document.getElementById("rows");
+let cards = document.getElementById('cards');
 
 document.getElementById("id01").addEventListener("click", closeModal);
 function closeModal() {
@@ -12,7 +12,7 @@ let row = 0;
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5',
+		'X-RapidAPI-Key': keyRapidAPI,
 		'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
 	}
 };
@@ -26,12 +26,13 @@ function requestData(url, func, opt) {
 	});
 }
 function findMovies() {
+	cards.innerText = '';
+	rows.innerText  = '';
 	let card = document.getElementsByName('style')[0].checked;
 	requestData('https://imdb-top-100-movies.p.rapidapi.com/', card ? movieCards : listMovies, options);
 }
 
 function listMovies(movies) {
-	rows.innerHTML = '';        //  clear the page
 	movies.forEach(m => {
 		row++;                  //  use the row # to let us alternate the colors of the row
 		let tr = `
@@ -63,7 +64,7 @@ function movieCards(movies) {
 			</div>
 		</div>`;
 
-		card.innerHTML += movieHTML
+		cards.innerHTML += movieHTML
 	}); 
 }
 
