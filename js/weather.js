@@ -22,7 +22,7 @@ function getWeather() {
     let key = 'a099a51a6362902523bbf6495a0818aa'
     //  let's build the API based on the data from the form. 
     //      If city is entered use forecast data
-    let url =`https://api.openweathermap.org/data/2.5/forecast?appid=${key}&q=${city.value}&units=imperial`;
+    let url =`https://api.openweathermap.org/data/3.0/forecast?appid=${key}&q=${city.value}&units=imperial`;
 
     console.log(url);
     //  this is all there is to it

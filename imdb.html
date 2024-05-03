@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Imdb</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <input type='radio' name='style' checked /><label for='card'>Card</label>
+    <input type='radio' name='style'         /><label for='table'>Table</label>
+    <input type="text" id="quote">
+    <button id="save">Get Top 100</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>ID</th> <th>Text</th> <th>Delete</th> <th>Update</th>
+        </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+    </table>
+</div>
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-theme-d4" style="max-width:600px">
+      <header class="w3-container  w3-theme-d1">
+        <h3 id="title"></h3>
+      </header>
+      <div class="w3-container w3-theme-d4">
+        <table class='w3-theme'> <tbody id="rows"></tbody> </table>
+      </div>
+      <footer id="details" class="w3-container w3-theme-d1"></footer>
+    </div>
+</div>
+</body>
+<script src="js/imdb.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Imdb')</script>
+<script src="js/sortColumns.js"></script>
+
+</html>

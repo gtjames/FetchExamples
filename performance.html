@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Performance</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@docsearch/css@3'>
+  <link  href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet'>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'></script>
+
+  <style>
+    table, td {
+      border-width: 1px;
+      border-style:solid;
+      border-collapse: collapse;
+      margin: 30px;
+      padding: 5px;
+    }
+    td {text-align: end;}
+    .given  { background-color: blanchedalmond;}
+    .error  { border-color: red; }
+    .key    { background-color: lightskyblue; }
+  </style>
+</head>
+<body>
+  <table>
+    <tr>
+      <td class='given'>Given</td>
+      <td># of Cycles</td>
+      <td class='given'># of Instructions</td>
+      <td class='given'>Instruction Type</td>
+      <td class='given'>Instruction CPI</td>
+      <td>Pct of Cycles</td>
+      <td>Type CPI</td>
+    </tr>
+    <tbody id='Instruction'>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class='key'>Totals</td>
+        <td>
+          <input id='TotalCycles'>
+          <input id='TotalCyclesA' type='hidden'>  
+        </td>
+        <td id='TotalInstructions' class='given'></td>
+        <td></td><td></td>
+        <td class='key'>Avg CPI</td>
+        <td>
+          <input id='TotalCPI'>
+          <input id='TotalCPIA' type='hidden'>  
+        </td>
+      </tr>
+      <tr>
+        <td class='key'>Cycles / Sec (GHz)</td>
+        <td>
+          <input id='cps'>
+          <input id='cpsA' type='hidden'>  
+        </td>
+        <td></td>
+        <td class='given'>CPU Time</td>
+        <td id='runTime'></td>
+      </tr>
+      <tr>
+        <td class='key'>Sec / Cycles</td>
+        <td>
+          <input id='spc'>
+          <input id='spcA' type='hidden'>  
+        </td>
+        <td><button id='reset'  class='btn btn-warning'  >Reset </button></td>
+        <td><button id='submit' class='btn btn-success'  >Submit</button></td>
+      </tr>
+      <tr>
+        <td>FP</td>
+        <td>
+          <input id='dec'>
+          <input id='decA' type='hidden'>  
+        </td>
+        <td>
+          <input id='fp'>
+          <input id='fpA' type='hidden'>  
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id='exp'>
+          <input id='expA' type='hidden'>  
+        </td>
+        <td>
+          <input id='frac'>
+          <input id='fracA' type='hidden'>  
+        </td>
+        <td>
+          <input id='binary'>
+          <input id='binary' type='hidden'>  
+        </td>
+        <td>
+          <input id='hex'>
+          <input id='hexA' type='hidden'>  
+        </td>
+      </tr>
+      </tfoot>
+  </table>
+</body>
+<script>
+  let totCycles   = document.getElementById('TotalCycles');
+  let totCyclesA  = document.getElementById('TotalCyclesA');
+  let totInst     = document.getElementById('TotalInstructions');
+
+  let totCPI      = document.getElementById('TotalCPI');
+  let totCPIA     = document.getElementById('TotalCPIA');
+  let runTime     = document.getElementById(`runTime`);
+  let instr       = document.getElementById('Instruction');
+  let cps         = document.getElementById(`cps`);
+  let cpsA        = document.getElementById(`cpsA`);
+  let spc         = document.getElementById(`spc`);
+  let spcA        = document.getElementById(`spcA`);
+  let dec         = document.getElementById(`dec`);
+  let decA        = document.getElementById(`decA`);
+  let frac        = document.getElementById(`frac`);
+  let fracA       = document.getElementById(`fracA`);
+  let exp         = document.getElementById(`exp`);
+  let expA        = document.getElementById(`expA`);
+  let fp          = document.getElementById(`fp`);
+  let fpA         = document.getElementById(`fpA`);
+
+  document.getElementById(`reset`).addEventListener('click', reset);
+  document.getElementById(`submit`).addEventListener('click', submit);
+
+  let types =['Add', 'Multiply', 'Branch', 'Floating Pt'];
+  let totalInstructions;
+  let totalCycles;
+  let typeCPI;
+  let numInstructions;
+  let numCycles;
+  let remainingPct;
+  let totalCPI;
+  let CPUTime;
+
+  reset();
+
+function submit() {
+  for (let i = 0; i < 4; i++) {
+    close(`NumCycles${i}`, true, 0);
+    close(`pctCycles${i}`, true, 0);
+    close(`PartialCPI${i}`, true, 0);
+  }
+  close('TotalCycles', true, 0);
+  close('TotalCPI', true, 0);
+  close('cps',  false, 0.05);
+  close('spc',  false, 0.05);
+  close('fp',   true, 0);
+  close('exp',  true, 0);
+  close('frac', true, 0);
+}
+
+function close(el, exact, pct) {
+  let res;
+
+  let input = document.getElementById(el);
+  if (input === null) return true;
+  input.classList.remove('error');
+
+  let value  = document.getElementById(el).value;
+  let valueA = document.getElementById(el+'A').value;
+
+  value  = value.replaceAll(' ','').replaceAll(',','');
+  value  = +value;
+  valueA = +valueA;
+
+  console.log( el + " " + value + " " + valueA + " " + Math.abs( (value - valueA) / valueA));
+  if ( exact ) {
+    res = value === valueA
+  }
+  else {
+    res = Math.abs( (value - valueA) / valueA) < pct
+  }
+  if (!res) input.classList.add('error');
+
+  return res;
+}
+
+function reset() {
+  totalInstructions = 0;
+  totalCycles = 0;
+  typeCPI = [];
+  numInstructions = [];
+  numCycles = [];
+  remainingPct = 100;
+  totalCPI = 0;
+  CPUTime = ((Math.random() / 1000)+0.0002).toFixed(6);
+  instr.innerHTML = '';
+  
+  for (let i = 0; i < 4; i++) {
+    let pct = (Math.floor(Math.random() * 5) + 4 ) * 5;
+    if (pct > remainingPct) pct = remainingPct;
+    if (i == 3)
+      pct = remainingPct;
+    remainingPct -= pct;  
+  
+    // if (pct === 0)  break
+    numInstructions[i] = (pct) ? Math.floor( Math.random() * 15 + 5) * 50000 : 0;
+    typeCPI[i]         = (pct) ? Math.floor( Math.random() * i * 2) + 1 : 0;
+    numCycles[i]       = typeCPI[i] * numInstructions[i];
+    totalCPI          += pct * typeCPI[i];
+    totalInstructions += numInstructions[i];
+
+    totalCycles       += typeCPI[i] * numInstructions[i];
+    instr.innerHTML += `<tr>
+      <td></td>
+      <td>
+        <input id='NumCycles${i}'  value=${numCycles[i].toLocaleString('en-US')}>
+        <input id='NumCycles${i}A' value=${numCycles[i]} type='hidden'>
+      </td>
+      <td id='NumInstr${i}'  class='given'>${numInstructions[i].toLocaleString('en-US')}</td>
+      <td id='InstrType${i}' class='given'>${types[i]}</td>
+      <td id='InstrCPI${i}'  class='given'>${typeCPI[i]}</td>
+      <td>
+        <input value=${pct} id='pctCycles${i}' >
+        <input value=${pct} id='pctCycles${i}A' type='hidden' >
+        %
+        </td>
+      <td>
+        <input value=${(pct*typeCPI[i]/100).toFixed(2)} id='PartialCPI${i}'>
+        <input value=${(pct*typeCPI[i]/100).toFixed(2)} id='PartialCPI${i}A' type='hidden'>
+      </td>
+    </tr>`;
+  }
+  
+  totCycles.value     = totalCycles.toLocaleString('en-US');
+  totCyclesA.value    = totalCycles;
+  totInst.innerText   = totalInstructions.toLocaleString('en-US');
+  totCPI.value        = (totalCPI/100).toFixed(2);
+  totCPIA.value       = (totalCPI/100).toFixed(2);
+  runTime.innerText   = CPUTime;
+
+  // cps.innerText = (+(totalCycles / CPUTime).toFixed(0)).toLocaleString('en-US');
+  cps.value  = toEngineering(+(totalCycles / CPUTime)/1_000_000_000);
+  cpsA.value = toEngineering(+(totalCycles / CPUTime)/1_000_000_000);
+  spc.value  = toEngineering(CPUTime / totalCycles);
+  spcA.value = toEngineering(CPUTime / totalCycles);
+
+  let dec = getBinRand();
+  let sign = (dec >= 0);
+  dec = Math.abs(dec);
+  let frac;
+
+  let bin = dec.toString(2);
+  if ( bin.indexOf('.') === -1) {
+    //  number has no fraction
+    exp = bin.length - 1;
+    frac = bin.substring(1)
+  } else if ( bin.indexOf('.') < bin.indexOf(1)) {
+    //  number is < 0
+    exp = (bin.indexOf('1')-1) * -1;
+    frac = bin.substring(bin.indexOf('1')+1);
+  } else {
+    //  number is > 0
+    exp = bin.indexOf('.') - 1;
+    bin = bin.replace('.','');
+    frac = bin.substring(1);
+  }
+  exp += 127;
+  document.getElementById('dec'  ).value = (sign?'':'-') + dec;
+  document.getElementById('decA' ).value = (sign?'':'-') + dec;
+  document.getElementById('fp'   ).value = dec.toString(2);
+  document.getElementById('fpA'  ).value = dec.toString(2);
+  document.getElementById('frac' ).value = frac;
+  document.getElementById('fracA').value = frac;
+  document.getElementById('exp'  ).value = exp.toString(2);
+  document.getElementById('expA' ).value = exp.toString(2);
+  let binary = (sign?0:1) + exp.toString(2) + (frac + '0'.repeat(23)).substring(0,23);
+  document.getElementById('binary').value = binary;
+  document.getElementById('hex').value = bin2hex(binary).toUpperCase();
+  
+}
+function bin2hex(b) {
+    return b.match(/.{4}/g).reduce(function(acc, i) {
+        return acc + parseInt(i, 2).toString(16);
+    }, '')
+}
+function getBinRand() {
+  let number = 0;
+  while (number ===  0) {
+    for (let i = -6; i <= 9; i++) {
+      number += Math.random() < 0.33 ? Math.pow(2, i) : 0;
+    }
+  }
+  return number * (Math.random() < 0.1 ? -1 : 1);
+}
+
+function toEngineering(num) {
+  if      (num > 1)                 return num.toFixed(2);
+  else if (num * 1000 > 1)          return (num*1000).toFixed(2);
+  else if (num * 1000000 > 1)       return (num*1000000).toFixed(2)+'e-3';
+  else if (num * 1000000000 > 1)    return (num*1000000000).toFixed(2)+'e-6';
+  else if (num * 1000000000000 > 1) return (num*1000000000000).toFixed(2)+'e-9';
+}
+</script>
+</html>

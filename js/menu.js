@@ -14,6 +14,7 @@ let menuOptions = [
     {text: 'Disney',        link: 'disney.html',},
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
     {text: 'Finance',       link: 'finance.html',},
+    {text: 'Imdb',          link: 'imdb.html',},
     // {text: 'Government Data', link: 'dataGov.html',},
     {text: 'Lambda',        link: 'lambdaQuotes.html',},
     {text: 'Lyrics',        link: 'lyrics.html',},

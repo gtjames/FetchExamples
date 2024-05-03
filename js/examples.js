@@ -152,7 +152,7 @@ function getWeather() {
     //  let's build the API based on the data from the form.
     //      If city is entered use forecast data
     //      otherwise use the onecall API
-    let url =`https://api.openweathermap.org/data/2.5/`;
+    let url =`https://api.openweathermap.org/data/3.0/`;
     if (cityEntered > 0) {
         url += `forecast?q=${city.value}`;
     } else if (latitude.value.length > 0 && longitude.value.length > 0) {
