@@ -1,6 +1,14 @@
 //  https://rapidapi.com/api-sports/api/api-nba
 //  https://rapidapi.com/developer/dashboard
 
+let options = {
+    "method": "GET",
+    "headers": {
+        "x-rapidapi-key": keyRapidAPI,
+        "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
+    }
+};
+
 /**
  *  The 'Get NBA Teams' button was pushed
  *      request the list of teams in the conference selected
@@ -12,13 +20,7 @@ function getNBATeams() {
     //  the user has entered a conference into the entry field -- east, west, utah, sacromento
     let conference = document.getElementById('conference').value;
 
-    fetch(`https://api-nba-v1.p.rapidapi.com/teams/confName/${conference}`, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": keyBasketball,
-            "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
-        }
-    })
+    fetch(`https://api-nba-v1.p.rapidapi.com/teams/confName/${conference}`, options)
         .then(response => response.json())
         .then(teams => showNBATeams(teams.api.teams))       //  this function will list all teams in the conference
         .catch(err => console.error(err));
@@ -57,13 +59,7 @@ function getGamesAndRoster(teamId) {
  *      API request to get the team roster
  */
 function getNBATeamRoster(teamId) {
-    fetch("https://api-nba-v1.p.rapidapi.com/players/teamId/" + teamId, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": keyBasketball,
-            "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
-        }
-    })
+    fetch("https://api-nba-v1.p.rapidapi.com/players/teamId/" + teamId, options)
         .then(response => response.json())
         .then(roster => showNBATeamRoster(roster.api.players, teamId))
         .catch(err => console.error(err));
@@ -113,13 +109,7 @@ function showNBATeamRoster(players, teamId) {
  *
  */
 function getNBAGameStats(teamId) {
-    fetch(`https://api-nba-v1.p.rapidapi.com/games/teamId/${teamId}`, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": keyBasketball,
-            "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
-        }
-    })
+    fetch(`https://api-nba-v1.p.rapidapi.com/games/teamId/${teamId}`, options)
         .then(response => response.json()) //  wait for the response and convert it to JSON
         .then(stats => showTeamGameStats(stats.api.games))
         .catch(err => console.error(err));
@@ -161,13 +151,7 @@ function gamesByYear(games, tab) {
  *
  */
 function getNBAPlayerStats(playerId, playerName) {
-    fetch("https://api-nba-v1.p.rapidapi.com/statistics/players/playerId/" + playerId, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": keyBasketball,
-            "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
-        }
-    })
+    fetch("https://api-nba-v1.p.rapidapi.com/statistics/players/playerId/" + playerId, options)
         .then(response => response.json()) //  wait for the response and convert it to JSON
         .then(playerStats => showNBAPlayerStats(playerStats.api.statistics, playerName))
         .catch(err => console.error(err));

@@ -15,7 +15,7 @@ function getStats() {
     fetch("https://corona-virus-world-and-india-data.p.rapidapi.com/api", {
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": keyCOVID,
+                "x-rapidapi-key": keyRapidAPI,
                 "x-rapidapi-host": "corona-virus-world-and-india-data.p.rapidapi.com"
             }
         })

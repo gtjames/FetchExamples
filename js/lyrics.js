@@ -65,7 +65,6 @@ function getSongsByTitle() {
  * 
 */
 function getArtist() {
-    let albumList = document.querySelector('#albumList');
     let artist = document.querySelector('#artistName').value;
     console.log(`getArtist ${artist}`);
     const url = `https://geniuslyrics-api.p.rapidapi.com/search_artist?artist=${artist}`;
@@ -103,11 +102,11 @@ function searchSong(evt) {
     const url = `https://geniuslyrics-api.p.rapidapi.com/search_songs?song=${evt.target.id}`;
     console.log(`searchSong ${evt.target.id}`);
 
-fetch(url, options)
-.then(resp => resp.json())          //  wait for the response and convert it to JSON
-.then(albums => {     
-    console.log(albums)
-});             //  with the resulting JSON data do something
+    fetch(url, options)
+    .then(resp => resp.json())          //  wait for the response and convert it to JSON
+    .then(albums => {     
+        console.log(albums)
+    });             //  with the resulting JSON data do something
 }
 
 function getSongInfo(evt) {

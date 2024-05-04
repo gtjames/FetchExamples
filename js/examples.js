@@ -92,7 +92,7 @@ function movieDetails() {
     let json      = document.getElementById('json').checked;        //  show JSON or not
 
     //  the id of the image is the IMDB ID we want details on
-    let url = `http://www.omdbapi.com/?i=${this.id}&plot=full&apikey=2c791b47`;  //  search for movies with this ID
+    let url = `http://www.omdbapi.com/?i=${this.id}&plot=full&apikey=${keyOmdb}`;  //  search for movies with this ID
     console.log(url);
 
     //  using the movie details API get additional data about the movie
@@ -160,7 +160,7 @@ function getWeather() {
     } else {
         url += `onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly`;
     }
-    url += `&appid=a099a51a6362902523bbf6495a0818aa`;
+    url += `&appid=${keyOpenWX}`;
 
     console.log(url);
     //  this is all there is to it
@@ -276,7 +276,7 @@ function latLonToWeather(data) {
  *          Here we see again the basic pattern of creating a request URL which returns JSON data
 */
 function getNasa() {
-    let url = 'https://api.nasa.gov/planetary/apod?api_key=Aw0TZ7aE7e6WJnh4t7plOXEk1xdbCg45NMqfUX42';
+    let url = `https://api.nasa.gov/planetary/apod?api_key=${keyNASA}`;
 
     let queryDate = document.getElementById('queryDate');           //  Date of the Picture to show
     let date      = document.getElementById('date');                //  Date of the Picture
