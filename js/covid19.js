@@ -21,6 +21,8 @@ function getStats() {
         })
         .then(resp => resp.text())              //  wait for the response and convert it to JSON
         .then(covid => {                        //  with the resulting JSON data do something
+            let table = document.getElementById('countries');
+            table.innerText = covid;
             console.table(covid.countries_stat);
             
             //  put a break point here to look at the data coming from the COVID API
@@ -33,7 +35,6 @@ function getStats() {
             }
 
             //  get a reference to our tbody in our page
-            let table = document.getElementById('countries');
             table.innerHTML = innerHtml;        //  push in our created HTML text
 
         }).catch(err => {   console.error(err);     });

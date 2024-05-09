@@ -8,6 +8,10 @@ import {getLocation, KtoF, lat, locationRetrieved, lon, niceDate, niceTime, wind
     document.getElementById('getMovies' ).addEventListener('click', getMovies);
     document.getElementById('getWeather').addEventListener('click', getWeather);
     document.getElementById('getNasa'   ).addEventListener('click', getNasa);
+    let weatherList = document.getElementById('weatherList');               //  all weather reports go here
+    let city        = document.getElementById('city');                      //  city
+    let latitude    = document.getElementById('lat');                       //  Latitude
+    let longitude   = document.getElementById('lon');                       //  Longitude
 
     getLocation(showPosition);
 
@@ -131,13 +135,7 @@ function movieDetails() {
  *          Get the current weather forecast either of the city or the Lat Long location
  */
 function getWeather() {
-    let weatherList = document.getElementById('weatherList');               //  all weather reports go here
-    let city        = document.getElementById('city');                      //  city
     let cityEntered = document.getElementById('city').value.length > 0;     //  was the City entered?
-    let latitude    = document.getElementById('lat');                       //  Latitude
-    let longitude   = document.getElementById('lon');                       //  Longitude
-    let allDays     = document.getElementById('allDays').checked;           //  show all days of the forecast
-    let json        = document.getElementById('json').checked;              //  show JSON or not
 
     if (!locationRetrieved) {
         weatherList.innerText = "Be patient, location not yet retrieved";
@@ -152,15 +150,28 @@ function getWeather() {
     //  let's build the API based on the data from the form.
     //      If city is entered use forecast data
     //      otherwise use the onecall API
-    let url =`https://api.openweathermap.org/data/3.0/`;
     if (cityEntered > 0) {
-        url += `forecast?q=${city.value}`;
+        getCityThenWeather(city.value)
     } else if (latitude.value.length > 0 && longitude.value.length > 0) {
-        url += `onecall?lat=${latitude.value}&lon=${longitude.value}&exclude=minutely,hourly`;
+        url += ``;
+        weatherReport(longitude.value, latitude.value);
     } else {
-        url += `onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly`;
+        weatherReport(lon, lat);
     }
-    url += `&appid=${keyOpenWX}`;
+}
+
+function getCityThenWeather(city) {
+    let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${keyOpenWX}&q=${city}`;
+    fetch(url)
+        .then(response => response.json())  //  wait for the response and convert it to JSON
+        .then(city => {                  //  with the resulting JSON data do something
+            weatherReport(city[0].lon, city[0].lat)
+        });
+}
+
+function weatherReport(lon, lat){
+    let url =`https://api.openweathermap.org/data/3.0/onecall?appid=${keyOpenWX}`;
+    url += `&lat=${lat}&lon=${lon}&exclude=minutely,hourly`
 
     console.log(url);
     //  this is all there is to it
@@ -168,14 +179,17 @@ function getWeather() {
     fetch(url)
         .then(response => response.json())  //  wait for the response and convert it to JSON
         .then(weather => {                  //  with the resulting JSON data do something
-
+            let allDays     = document.getElementById('allDays').checked;           //  show all days of the forecast
+            let json        = document.getElementById('json').checked;              //  show JSON or not
+        
             if (json) {                     //  if JSON is checked show only the JSON data
                 document.body.innerText = JSON.stringify(weather);
                 return;
             }
 
             //  If the city was entered extract weather based on that API else use the LatLon API result format
-            let wx =  (cityEntered) ? cityToWeather(weather, allDays) : latLonToWeather(weather);
+            //   (cityEntered) ? cityToWeather(weather, allDays) :
+            let wx = latLonToWeather(weather);
 
             //  extract the interesting data from the JSON object and show it to the user
             //  We will build the HTML to be inserted later.
@@ -190,7 +204,7 @@ function getWeather() {
                     `<div class="grid-item">
                         <h3>Date: ${day.date}</h3>
                         <h4>Temp: Low ${day.min}&deg; / High: ${day.max}&deg;</h4>
-                        <p>Forecast: <img src='http://openweathermap.org/img/wn/${day.icon}@2x.png' alt=""> ${day.description}</p>
+                        <p>Forecast: <img src='https://openweathermap.org/img/wn/${day.icon}@2x.png' alt=""> ${day.description}</p>
                         <p>Chance of rain at ${day.pop}%</p>
                         <p>Wind at ${day.wind_speed} mph out of the ${day.windDirection}</p>
                         <p>Sunrise: ${day.sunrise} / Sunset: ${day.sunset}</p>
@@ -202,8 +216,8 @@ function getWeather() {
             latitude.value = wx.lat;
             longitude.value = wx.lon;
         });
-}
 
+}
 /**
  *      Depending on the API used the data returned by Open Weather is in a different format
  *          one format is used for requesting weather by city another of requesting by Longitude and Latitude

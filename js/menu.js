@@ -69,8 +69,10 @@ menu.innerHTML += `
         <option value='w3schools'>w3schools</option>
     </select>
     `;
+    menu.innerHTML += `<label for="key">Key</label><input type="text" id="key">`;
+    let key = document.getElementById('key');
 
-//  get the ref to the CSS link for the theme
+    //  get the ref to the CSS link for the theme
 let css = document.getElementById('css');
 
 //  get the ref to the theme drop down list
@@ -110,3 +112,5 @@ function makeMeActive(tabName) {
     activeTab = tabName;
     document.getElementById(tabName).className += " w3-theme-d5";
 }
+
+function getKey() { return key.value; }

@@ -1,0 +1,66 @@
+table, tr, td, th { border: 1px solid black; border-collapse: collapse; padding: 4px 8px;}
+td.left     { width: 45%;}
+td.right    { width: 45%;}
+tr.current > td:first-child {  
+    background-image: url('../images/rtArrow.png'); 
+    background-size: 20px 20px; 
+    background-repeat: no-repeat; 
+    background-position: center right;
+    padding-left: 40px;
+}
+
+td.step     { background-color: lightgreen;    width: .3em;}
+td.tag      { background-color: lightgreen;    width: 20%; font-size: 0.8em; padding: 4px; }
+td.index    { background-color: paleturquoise; width: 10%;                   font-family: 'Courier New'; }
+td.offset   { background-color: lemonchiffon;  width: 40%; font-size: 0.8em; font-family: 'Courier New'; }
+td.Hit      { background-color: greenyellow;   width: 15%; font-size: 0.8em;}
+tr.current  { background-color: aquamarine; }
+tr.next     { background-color: gold; }
+.Miss       { background-color: lightcoral;  font-size: 0.8em;}
+.found      { background-color: lightskyblue; border-radius: 10%; }
+.top        { vertical-align:top; }
+input[type=text]         { width: 60px; }
+.scrolling  { overflow-y: scroll; height:560px; }
+.modal      {--bs-modal-width:  575px;}
+
+.dropdown-check-list { display: inline-block; }
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: '';
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.dropdown-check-list ul.items li        { list-style: none; }
+.dropdown-check-list.visible .anchor    { color: #0094ff; }
+.dropdown-check-list.visible .items     { display: block;   }

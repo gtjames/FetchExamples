@@ -1,5 +1,5 @@
 export let locationRetrieved = false;
-export let lat, lon;
+export let lat, lon, seed = -1;
 let message;
 //https://maps.churchofjesuschrist.org/wards/226491
 //  Make sure your pop ups are turned on at least for this URL
@@ -83,3 +83,16 @@ acc.forEach( a => {
       panel.style.display = (panel.style.display === "block") ? "none" : "block";
     });
 });
+
+export function getSeed() { return seed; }
+export function setSeed(newSeed) { seed = newSeed; return seed; }
+export function getRandom(max) {
+    if (seed === -1)
+        return Math.floor(Math.random() * max);
+    else
+        return setSeed( getNextRandom(max));
+}
+
+export function getNextRandom(max) {
+    return Math.floor(Math.abs((Math.sin(seed) * Math.cos(seed)) * 2 * max));
+}

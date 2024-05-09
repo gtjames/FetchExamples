@@ -1,16 +1,16 @@
-function getList(teams) {
+export function getList(teams) {
     if (!teams)
         return roster;
     else {
         let shortList = roster;
-        for(t of teams) {
+        for(let t of teams) {
             shortList = shortList.filter(r => r.tag != t);
         }
         return shortList
     }
 }
 
-function getTeams() {
+export function getTeams() {
     let teams = new Set( roster.map(t => t.tag) );
     return teams
 }
