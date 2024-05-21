@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Performance</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@docsearch/css@3'>
+  <link  href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet'>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'></script>
+
+  <style>
+    table, td, th {
+      border-width: 1px;
+      border-style:solid;
+      border-collapse: collapse;
+      margin: 3px;
+      padding: 3px;
+    }
+    td, th      { text-align: center; }
+    table      {margin: 10px;}
+    .given  { background-color: lightblue;}
+    .solve  { background-color: cornflowerblue;}
+    .key    { background-color: lightskyblue; }
+    .instr  { background-color: lightcyan; }
+    .lenErr { border-color: blueviolet; border-width: 4px; }
+    .error  { border-color: red;        border-width: 4px;}
+
+    td { background-color: lightgrey;}
+    input       { background-color: lightgoldenrodyellow; margin: 2px; padding: 2px; text-align: right;}
+    input.small { width: 100px; }
+    input.medium{ width: 140px; }
+    input.big   { width: 240px; }
+    th.C1       { width: 14%; }
+    th.C2       { width: 10%; }
+    th.C3       { width: 16%; }
+
+  </style>
+</head>
+<body>
+  <table style="width: 98%; table-layout: fixed;">
+    <thead>
+      <tr>
+        <th class='C1 given'>Instruction Type</th>
+        <th class='C3 given'># of Instructions</th>
+        <th class='C2 given'>Instruction CPI</th>
+        <th class='C1 solve'># of Cycles</th>
+        <th class='C2 solve'>Pct of Inst Types</th>
+        <th class='C2 solve'>CPI by Type</th>
+      </tr>
+    </thead>
+    <tbody id='Instruction'></tbody>
+      <tr>
+        <td class='key'>Totals</td>
+        <td id='TotalInstructions' class='given'></td>
+        <td id='TotalCPI'></td>
+        <td>
+          <input id='TotalCycles' class="medium">
+          <input id='TotalCyclesA' type='hidden'>  
+        </td>
+        <td class='key'>Weighted CPI</td>
+        <td>
+          <input id='WeightedCPI' class="small">
+          <input id='WeightedCPIA' type='hidden'>  
+        </td>
+      </tr>
+      <tr>
+        <td class='key'>Cycles / Sec (GHz)</td>
+        <td>
+          <input id='cps' class="medium">
+          <input id='cpsA' type='hidden'>  
+        </td>
+        <td class='key'>CPU Time</td>
+        <td id='runTime'></td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td class='key'>Sec / Cycles (ns)</td>
+        <td>
+          <input id='spc' class='medium'>
+          <input id='spcA' type='hidden'>  
+        </td>
+        <td>
+            <button id='reset'  class='btn btn-primary'  >Reset </button>
+            <input type='checkbox' id='revealOn' checked/>
+        </td>
+        <td><button id='submit' class='btn btn-success'  >Submit</button></td>
+        <td><button id='reveal' class='btn btn-danger'  >Reveal</button></td>
+        <td></td>
+      </tr>
+      <tr><td colspan="6">Compare Processors Performance</td></tr>
+      <tr>
+        <td id="findPerformance">Find CPU Time</td>
+        <th>CPU X</th>
+        <th>CPU Y</th>
+      </tr>
+      <tfoot id="compare"></tfoot>
+  </table>
+</body>
+<template id="performanceTemplate0">
+  <tr>
+    <th>Cycles</th>
+    <td id="cyclesX"></td>
+    <td id="cyclesY"></td>
+  </tr>
+  <tr>
+    <th>Rate (GHz)</th>
+    <td id="rateX"></td>
+    <td id="rateY"></td>
+  </tr>
+  <tr>
+    <th>CPU Time</th>
+    <td>
+      <input  id="timeX"  class="medium">
+      <input  id="timeXA" type='hidden'>  
+    </td>
+    <td>
+      <input  id="timeY"  class="medium">
+      <input  id="timeYA" type='hidden'>  
+    </td>
+    </tr>
+</template>
+<template id="performanceTemplate1">
+    <tr>
+      <th>Cycles</th>
+      <td id="cyclesX"></td>
+      <td id="cyclesY"></td>
+    </tr>
+    <tr>
+      <th>Rate (GHz)</th>
+      <td>
+        <input  id="rateX"  class="medium">
+        <input  id="rateXA" type='hidden'>  
+      </td>
+      <td>
+        <input  id="rateY"  class="medium">
+        <input  id="rateYA" type='hidden'>  
+      </td>
+    </tr>
+    <tr>
+        <th>CPU Time</th>
+        <td  id="timeX" >
+        <td  id="timeY" >
+    </tr>
+  </template>
+  <template id="performanceTemplate2">
+    <tr>
+      <th>Cycles</th>
+      <td>
+        <input  id="cyclesX"  class="medium">
+        <input  id="cyclesXA" type='hidden'>  
+      </td>
+      <td>
+        <input  id="cyclesY"  class="medium">
+        <input  id="cyclesYA" type='hidden'>  
+      </td>
+    </tr>
+    <tr>
+      <th>Rate (GHz)</th>
+      <td id="rateX"></td>
+      <td id="rateY"></td>
+    </tr>
+    <tr>
+        <th>CPU Time</th>
+        <td  id="timeX" >
+        <td  id="timeY" >
+    </tr>
+  </template>
+    
+<script src="js/AsmUtils.js"></script>
+<script>
+  let totCycles   = document.getElementById('TotalCycles');
+  let totCyclesA  = document.getElementById('TotalCyclesA');
+  let totInst     = document.getElementById('TotalInstructions');
+
+  let totCPI      = document.getElementById('TotalCPI');
+  let wtdCPI      = document.getElementById('WeightedCPI');
+  let wtdCPIA     = document.getElementById('WeightedCPIA');
+  let runTime     = document.getElementById(`runTime`);
+  let instr       = document.getElementById('Instruction');
+  let cps         = document.getElementById(`cps`);
+  let cpsA        = document.getElementById(`cpsA`);
+  let spc         = document.getElementById(`spc`);
+  let spcA        = document.getElementById(`spcA`);
+  let perfPanel   = document.getElementById('findPerformance');
+  
+  document.getElementById(`reset`).addEventListener('click', reset);
+  document.getElementById(`submit`).addEventListener('click', submit);
+  document.getElementById(`reveal`).addEventListener('click', reveal);
+  document.getElementById('findPerformance').addEventListener('click', nextPerformance);
+
+  let types =['Add', 'Multiply', 'Branch', 'Floating Pt'];
+  let totalInstructions;
+  let totalCycles;
+  let typeCPI;
+  let numInstructions;
+  let numCycles;
+  let remainingPct;
+  let WeightedCPI;
+  let CPUTime;
+  let performancePanel = -1;
+
+  reset();
+
+function submit() {
+    for (let i = 0; i < 4; i++) {
+        close(`NumCycles${i}`,  true, 0, true);
+        close(`pctCycles${i}`,  true, 0, true);
+        close(`PartialCPI${i}`, true, 0, true);
+    }
+    close('TotalCycles',  true,  0,     true );
+    close('WeightedCPI',  true,  0,     true );
+    close('cps',          false, 0.05,  true );
+    close('spc',          false, 0.05,  true );
+    close('fp',           true,  0,     false);
+    close('exp',          true,  0,     false);
+    close('expDec',       true,  0,     false);
+
+    close('timeX',        true,  0.05,  true);
+    close('timeY',        true,  0.05,  true);
+    close('cyclesX',      true,  0.05,  true);
+    close('cyclesY',      true,  0.05,  true);
+    close('rateX',        true,  0.05,  true);
+    close('rateY',        true,  0.05,  true);
+  }
+
+function reset() {
+    totalInstructions;
+    totalCycles = 0;
+    WeightedCPI = 0;
+    remainingPct = 100;
+    typeCPI = [];
+    numInstructions = [];
+    numCycles = [];
+    pctOfCycles = [];
+    CPUTime = ((Math.random() / 1000)+0.0002).toFixed(6);
+    instr.innerHTML = '';
+  
+    totalCycles       = 0;
+    totalInstructions = Math.floor( Math.random() * 100) * 21000_0;
+    for (let i = 0; i < 4; i++) {
+        let pct = (Math.floor(Math.random() * 5) + 4 ) * 5;
+        if (pct > remainingPct) pct = remainingPct;
+        if (i == 3)
+        pct = remainingPct;
+        remainingPct -= pct;
+        pctOfCycles[i] = pct;
+
+        typeCPI[i]         = (pct) ? Math.floor( Math.random() * i * 2.5) + 1 : 0;
+        numInstructions[i] = (typeCPI[i] != 0) ? totalInstructions * pctOfCycles[i] / 100 : 0;
+        numCycles[i]       = numInstructions[i] * typeCPI[i];
+
+        WeightedCPI          += pctOfCycles[i] * typeCPI[i];
+        totalCycles       += numCycles[i];
+    }
+
+    for (let i = 0; i < 4; i++) {
+        //  ${numCycles[i].toLocaleString('en-US')}
+        instr.innerHTML += `<tr>
+            <td id='InstrType${i}' class='instr'>${types[i]}</td>
+            <td id='NumInstr${i}'  class='given'>${numInstructions[i].toLocaleString('en-US')}</td>
+            <td id='InstrCPI${i}'  class='given'>${typeCPI[i]}</td>
+            <td>
+            <input id='NumCycles${i}'  value='' class='medium'>
+            <input id='NumCycles${i}A' value=${numCycles[i].toLocaleString('en-US')} type='hidden'>
+            </td>
+            <td>
+            <input value=''                id='pctCycles${i}'  class='small'>
+            <input value=${pctOfCycles[i]} id='pctCycles${i}A' type='hidden' >
+            %
+            </td>
+            <td>
+            <input value='' id='PartialCPI${i}' class='small'>
+            <input value=${(pctOfCycles[i]*typeCPI[i]/100).toFixed(2)} id='PartialCPI${i}A' type='hidden'>
+            </td>
+        </tr>`;
+    }
+  
+    totCPI.innerText    = '';
+    totCycles.value     = ''; // totalCycles.toLocaleString('en-US');
+    totCyclesA.value    = totalCycles.toLocaleString('en-US');
+    totInst.innerText   = totalInstructions.toLocaleString('en-US');
+    wtdCPI.value        = ''; //  (WeightedCPI/100).toFixed(2);
+    wtdCPIA.value       = (WeightedCPI/100).toFixed(2);
+    runTime.innerText   = CPUTime;
+    removeErrors(totCycles);
+    removeErrors(wtdCPI);
+    removeErrors(cps);
+    removeErrors(spc);
+    // cps.innerText = (+(totalCycles / CPUTime).toFixed(0)).toLocaleString('en-US');
+    cps.value  = '';
+    cpsA.value = toEngineering(+(totalCycles / CPUTime)/1_000_000_000);
+    spc.value  = '';
+    spcA.value = toEngineering((CPUTime / totalCycles)*1_000_000_000);
+
+    nextPerformance();
+
+    removeErrors(timeX);
+    removeErrors(timeY);
+
+    if (revealOn.checked)   reveal();
+}
+
+function nextPerformance() {
+    performancePanel = (performancePanel+1)%3
+
+    let compare     = document.getElementById('compare');
+    let performance = document.getElementById('performanceTemplate' + performancePanel);
+    const pNode     = performance.content.cloneNode(true);
+
+    let cyclesX   = pNode.querySelector('#cyclesX');
+    let cyclesY   = pNode.querySelector('#cyclesY');
+    let rateX     = pNode.querySelector('#rateX');
+    let rateY     = pNode.querySelector('#rateY');
+    let timeX     = pNode.querySelector(`#timeX`);
+    let timeY     = pNode.querySelector(`#timeY`);
+
+    let cyclesXA  = pNode.querySelector('#cyclesXA');
+    let cyclesYA  = pNode.querySelector('#cyclesYA');
+    let rateXA    = pNode.querySelector('#rateXA');
+    let rateYA    = pNode.querySelector('#rateYA');
+    let timeXA    = pNode.querySelector(`#timeXA`);
+    let timeYA    = pNode.querySelector(`#timeYA`);
+
+    let Xcycles     = Math.floor( Math.random() * 100) * 21000_0;
+    let Ycycles = Math.floor( Math.random() * 100) * 21000_0;
+    let Xtime   = ((Math.random() / 1000)+0.0002);
+    let Ytime   = ((Math.random() / 1000)+0.0002);
+    let runTimeA  = toEngineering((Xcycles / Xtime)/1_000_000_000);
+    let runTimeB    = toEngineering((Ycycles / Ytime)/1_000_000_000);
+
+
+    switch (performancePanel) {
+        case    0:
+            perfPanel.innerText = "Find Run Time";
+            cyclesX.innerText  = Xcycles.toLocaleString('en-US');
+            cyclesY.innerText  = Ycycles.toLocaleString('en-US');
+            timeXA.value       = Xtime.toFixed(6);
+            timeYA.value       = Ytime.toFixed(6);
+            rateX.innerText    = toEngineering((Xcycles / Xtime)/1_000_000_000);
+            rateY.innerText    = toEngineering((Ycycles / Ytime)/1_000_000_000);
+            timeX.value        = '';
+            timeY.value        = '';
+            break;
+        case    1:
+            perfPanel.innerText = "Find CPU Rate";
+            cyclesX.innerText   = Xcycles.toLocaleString('en-US');
+            cyclesY.innerText   = Ycycles.toLocaleString('en-US');
+            timeX.innerText     = Xtime.toFixed(6);
+            timeY.innerText     = Ytime.toFixed(6);
+            rateXA.value        = toEngineering((Xcycles / Xtime)/1_000_000_000);
+            rateYA.value        = toEngineering((Ycycles / Ytime)/1_000_000_000);
+            rateX.value         = '';
+            rateY.value         = '';
+            break;
+        case    2:
+            perfPanel.innerText = "Find Cycles";
+            cyclesXA.value      = Xcycles.toLocaleString('en-US');
+            cyclesYA.value      = Ycycles.toLocaleString('en-US');
+            timeX.innerText     = Xtime.toFixed(6);
+            timeY.innerText     = Ytime.toFixed(6);
+            rateX.innerText     = toEngineering((Xcycles / Xtime)/1_000_000_000);
+            rateY.innerText     = toEngineering((Ycycles / Ytime)/1_000_000_000);
+            cyclesX.value       = '';
+            cyclesY.value       = '';
+            break;
+    }    
+    
+    compare.innerHTML = "";
+    compare.appendChild( pNode );
+}
+
+</script>
+</html>
