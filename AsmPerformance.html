@@ -24,6 +24,7 @@
     .instr  { background-color: lightcyan; }
     .lenErr { border-color: blueviolet; border-width: 4px; }
     .error  { border-color: red;        border-width: 4px;}
+    .perf   { background-color: lightyellow; height: 50px;}
 
     td { background-color: lightgrey;}
     input       { background-color: lightgoldenrodyellow; margin: 2px; padding: 2px; text-align: right;}
@@ -89,83 +90,143 @@
       </tr>
       <tr><td colspan="6">Compare Processors Performance</td></tr>
       <tr>
-        <td id="findPerformance">Find CPU Time</td>
+        <td>
+            <button id="findPerformance" class='btn btn-info'>Find CPU Time</button>
+            <input type='checkbox' id='cpi1' checked/>
+        </td>
         <th>CPU X</th>
         <th>CPU Y</th>
+        <th>Equation</th>
       </tr>
       <tfoot id="compare"></tfoot>
   </table>
 </body>
-<template id="performanceTemplate2">
-  <tr>
+<template id="performanceTemplate0">
+    <tr class="perf">
+        <th>CPU Time</th>
+        <td  id="timeX" >
+        <td  id="timeY" >
+        <td></td>
+    </tr>
+    <tr class="perf">
+        <th>Rate (GHz)</th>
+        <td id="rateX"></td>
+        <td id="rateY"></td>
+        <td></td>
+    </tr>
+    <tr class="perf">
+        <th>Clock Time (s/c)</th>
+        <td id="clockX"></td>
+        <td id="clockY"></td>
+        <td> Cycles = CPU Time / Clock Time </td>
+    </tr>
+    <tr class="perf">
+        <th>Instructions</th>
+        <td>
+            <input  id="instrX"  class="medium">
+            <input  id="instrXA" type='hidden'>  
+        </td>
+        <td>
+            <input  id="instrY"  class="medium">
+            <input  id="instrYA" type='hidden'>  
+        </td>
+        <td> Cycles = CPU Time x Rate</td>
+    </tr>
+    <tr class="perf">
+    <th>CPI</th>
+    <td>
+        <input  id="cpiX"  class="medium">
+        <input  id="cpiXA" type='hidden'>  
+    </td>
+    <td>
+        <input  id="cpiY"  class="medium">
+        <input  id="cpiYA" type='hidden'>  
+    </td>
+    <td> Cycles = CPU Time x Rate</td>
+</tr>
+<tr class="perf">
     <th>Cycles</th>
-    <td id="cyclesX"></td>
-    <td id="cyclesY"></td>
-  </tr>
-  <tr>
-    <th>Rate (GHz)</th>
-    <td id="rateX"></td>
-    <td id="rateY"></td>
-  </tr>
-  <tr>
-    <th>CPU Time</th>
-    <td>
-      <input  id="timeX"  class="medium">
-      <input  id="timeXA" type='hidden'>  
-    </td>
-    <td>
-      <input  id="timeY"  class="medium">
-      <input  id="timeYA" type='hidden'>  
-    </td>
+        <td>
+            <input  id="cyclesX"  class="medium">
+            <input  id="cyclesXA" type='hidden'>  
+        </td>
+        <td>
+            <input  id="cyclesY"  class="medium">
+            <input  id="cyclesYA" type='hidden'>  
+        </td>
+        <td> Cycles = CPU Time x Rate</td>
     </tr>
 </template>
 <template id="performanceTemplate1">
-    <tr>
+    <tr class="perf">
       <th>Cycles</th>
       <td id="cyclesX"></td>
       <td id="cyclesY"></td>
+      <td></td>
     </tr>
-    <tr>
-      <th>Rate (GHz)</th>
+    <tr class="perf">
+      <th>CPU Time</th>
       <td>
-        <input  id="rateX"  class="medium">
-        <input  id="rateXA" type='hidden'>  
+        <input  id="timeX"  class="medium">
+        <input  id="timeXA" type='hidden'>  
       </td>
       <td>
-        <input  id="rateY"  class="medium">
-        <input  id="rateYA" type='hidden'>  
+        <input  id="timeY"  class="medium">
+        <input  id="timeYA" type='hidden'>  
       </td>
+         <td> CPU Time = Cycles / Rate </td>
+      </tr>
+      <tr class="perf">
+        <th>Rate (GHz)</th>
+        <td id="rateX"></td>
+        <td id="rateY"></td>
+        <td></td>
+      </tr>
+      <tr class="perf">
+        <th>Clock Time (s/c)</th>
+        <td id="clockX"></td>
+        <td id="clockY"></td>
+        <td> CPU Time = Cycles x Clock Time </td>
     </tr>
-    <tr>
+</template>
+<template id="performanceTemplate2">
+    <tr class="perf">
+        <th>Cycles</th>
+        <td id="cyclesX"></td>
+        <td id="cyclesY"></td>
+        <td></td>
+    </tr>
+    <tr class="perf">
         <th>CPU Time</th>
         <td  id="timeX" >
         <td  id="timeY" >
-    </tr>
-  </template>
-  <template id="performanceTemplate0">
-    <tr>
-      <th>Cycles</th>
-      <td>
-        <input  id="cyclesX"  class="medium">
-        <input  id="cyclesXA" type='hidden'>  
-      </td>
-      <td>
-        <input  id="cyclesY"  class="medium">
-        <input  id="cyclesYA" type='hidden'>  
-      </td>
-    </tr>
-    <tr>
-      <th>Rate (GHz)</th>
-      <td id="rateX"></td>
-      <td id="rateY"></td>
-    </tr>
-    <tr>
-        <th>CPU Time</th>
-        <td  id="timeX" >
-        <td  id="timeY" >
-    </tr>
-  </template>
-    
+        <td></td>
+        </tr>
+    <tr class="perf">
+        <th>Rate (GHz)</th>
+        <td>
+            <input  id="rateX"  class="medium">
+            <input  id="rateXA" type='hidden'>  
+        </td>
+        <td>
+            <input  id="rateY"  class="medium">
+            <input  id="rateYA" type='hidden'>  
+        </td>
+            <td> Rate = Cycles / CPU Time </td>
+        </tr>
+        <tr class="perf">
+            <th>Clock Time (s/c)</th>
+            <td>
+                <input  id="clockX"  class="medium">
+                <input  id="clockXA" type='hidden'>  
+            </td>
+            <td>
+                <input  id="clockY"  class="medium">
+                <input  id="clockYA" type='hidden'>  
+            </td>
+            <td> Clock = CPU Time / Cycles </td>
+        </tr>
+    </template>
 <script src="js/AsmUtils.js"></script>
 <script>
   let totCycles   = document.getElementById('TotalCycles');
@@ -197,7 +258,7 @@
   let remainingPct;
   let WeightedCPI;
   let CPUTime;
-  let performancePanel = -1;
+  let performancePanel = 0;
 
   reset();
 
@@ -215,13 +276,17 @@ function submit() {
     close('exp',          true,  0,     false);
     close('expDec',       true,  0,     false);
 
-    close('timeX',        true,  0.05,  true);
-    close('timeY',        true,  0.05,  true);
-    close('cyclesX',      true,  0.05,  true);
-    close('cyclesY',      true,  0.05,  true);
-    close('rateX',        true,  0.05,  true);
-    close('rateY',        true,  0.05,  true);
-  }
+    close('timeX',        false, 0.05,  true);
+    close('timeY',        false, 0.05,  true);
+    close('cyclesX',      false, 0.05,  true);
+    close('cyclesY',      false, 0.05,  true);
+    close('rateX',        false, 0.05,  true);
+    close('rateY',        false, 0.05,  true);
+    close('instrX',       false, 0.05,  true);
+    close('instrY',       false, 0.05,  true);
+    close('cpiX',         true,  0,     true);
+    close('cpiY',         true,  0,     true);
+}
 
 function reset() {
     totalInstructions;
@@ -249,7 +314,7 @@ function reset() {
         numInstructions[i] = (typeCPI[i] != 0) ? totalInstructions * pctOfCycles[i] / 100 : 0;
         numCycles[i]       = numInstructions[i] * typeCPI[i];
 
-        WeightedCPI          += pctOfCycles[i] * typeCPI[i];
+        WeightedCPI       += pctOfCycles[i] * typeCPI[i];
         totalCycles       += numCycles[i];
     }
 
@@ -292,56 +357,97 @@ function reset() {
     spc.value  = '';
     spcA.value = toEngineering((CPUTime / totalCycles)*1_000_000_000);
 
-    nextPerformance();
-
-    removeErrors(timeX);
-    removeErrors(timeY);
-
+    performance(performancePanel);
     if (revealOn.checked)   reveal();
 }
 
 function nextPerformance() {
-    performancePanel = (performancePanel+1)%3
+    performancePanel = (performancePanel+1)%3;
+    performance(performancePanel);
+    if (revealOn.checked)   reveal();
+}
+
+function performance(panel) {
 
     let compare     = document.getElementById('compare');
-    let performance = document.getElementById('performanceTemplate' + performancePanel);
+    let performance = document.getElementById('performanceTemplate' + panel);
     const pNode     = performance.content.cloneNode(true);
 
+    let instrX    = pNode.querySelector('#instrX');
+    let instrY    = pNode.querySelector('#instrY');
+    let cpiX      = pNode.querySelector('#cpiX');
+    let cpiY      = pNode.querySelector('#cpiY');
     let cyclesX   = pNode.querySelector('#cyclesX');
     let cyclesY   = pNode.querySelector('#cyclesY');
     let rateX     = pNode.querySelector('#rateX');
     let rateY     = pNode.querySelector('#rateY');
     let timeX     = pNode.querySelector(`#timeX`);
     let timeY     = pNode.querySelector(`#timeY`);
+    let clockX    = pNode.querySelector(`#clockX`);
+    let clockY    = pNode.querySelector(`#clockY`);
 
+    let instrXA   = pNode.querySelector('#instrXA');
+    let instrYA   = pNode.querySelector('#instrYA');
+    let cpiXA     = pNode.querySelector('#cpiXA');
+    let cpiYA     = pNode.querySelector('#cpiYA');
     let cyclesXA  = pNode.querySelector('#cyclesXA');
     let cyclesYA  = pNode.querySelector('#cyclesYA');
     let rateXA    = pNode.querySelector('#rateXA');
     let rateYA    = pNode.querySelector('#rateYA');
     let timeXA    = pNode.querySelector(`#timeXA`);
     let timeYA    = pNode.querySelector(`#timeYA`);
+    let clockXA   = pNode.querySelector(`#clockXA`);
+    let clockYA   = pNode.querySelector(`#clockYA`);
 
-    let Xcycles     = Math.floor( Math.random() * 100) * 21000_0;
-    let Ycycles = Math.floor( Math.random() * 100) * 21000_0;
-    let Xtime   = ((Math.random() / 1000)+0.0002);
-    let Ytime   = ((Math.random() / 1000)+0.0002);
-    let runTimeA  = toEngineering((Xcycles / Xtime)/1_000_000_000);
+    let Xinstr      = Math.floor( Math.random() * 100) * 210_000;
+    let Yinstr      = Math.floor( Math.random() * 100) * 210_000;
+    let Xcpi        = Math.floor( Math.random() * 6) / 2 + 1;
+    let Ycpi        = Math.floor( Math.random() * 6) / 2 + 1;
+    if (cpi1.checked)
+        Xcpi = Ycpi = 1;
+    let Xcycles     = Xinstr * Xcpi;
+    let Ycycles     = Yinstr * Ycpi;
+    let Xtime       = ((Math.random() / 1000)+0.0002);
+    let Ytime       = ((Math.random() / 1000)+0.0002);
+    let runTimeA    = toEngineering((Xcycles / Xtime)/1_000_000_000);
     let runTimeB    = toEngineering((Ycycles / Ytime)/1_000_000_000);
 
-
-    switch (performancePanel) {
+    switch (panel) {
         case    0:
+            perfPanel.innerText = "Find Cycles";
+            cyclesXA.value      = Xcycles.toLocaleString('en-US');
+            cyclesYA.value      = Ycycles.toLocaleString('en-US');
+            instrXA.value       = Xinstr.toLocaleString('en-US');
+            instrYA.value       = Xinstr.toLocaleString('en-US');
+            cpiXA.value         = Xcpi;
+            cpiYA.value         = Ycpi;
+            cyclesX.value       = '';
+            cyclesY.value       = '';
+            instrX.value        = '';
+            instrY.value        = '';
+            cpiX.value          = '';
+            cpiY.value          = '';
+            timeX.innerText     = Xtime.toFixed(6);
+            timeY.innerText     = Ytime.toFixed(6);
+            rateX.innerText     = toEngineering((Xcycles / Xtime)/1_000_000_000);
+            rateY.innerText     = toEngineering((Ycycles / Ytime)/1_000_000_000);
+            clockX.innerText    = toEngineering((Xtime  / Xcycles));
+            clockY.innerText    = toEngineering((Ytime  / Ycycles));
+            break;
+        case    1:
             perfPanel.innerText = "Find Run Time";
             cyclesX.innerText  = Xcycles.toLocaleString('en-US');
             cyclesY.innerText  = Ycycles.toLocaleString('en-US');
             timeXA.value       = Xtime.toFixed(6);
             timeYA.value       = Ytime.toFixed(6);
-            rateX.innerText    = toEngineering((Xcycles / Xtime)/1_000_000_000);
-            rateY.innerText    = toEngineering((Ycycles / Ytime)/1_000_000_000);
             timeX.value        = '';
             timeY.value        = '';
+            rateX.innerText    = toEngineering((Xcycles / Xtime)/1_000_000_000);
+            rateY.innerText    = toEngineering((Ycycles / Ytime)/1_000_000_000);
+            clockX.innerText    = toEngineering((Xtime  / Xcycles));
+            clockY.innerText    = toEngineering((Ytime  / Ycycles));
             break;
-        case    1:
+        case    2:
             perfPanel.innerText = "Find CPU Rate";
             cyclesX.innerText   = Xcycles.toLocaleString('en-US');
             cyclesY.innerText   = Ycycles.toLocaleString('en-US');
@@ -349,22 +455,18 @@ function nextPerformance() {
             timeY.innerText     = Ytime.toFixed(6);
             rateXA.value        = toEngineering((Xcycles / Xtime)/1_000_000_000);
             rateYA.value        = toEngineering((Ycycles / Ytime)/1_000_000_000);
+            clockXA.value       = toEngineering((Xtime  / Xcycles));
+            clockYA.value       = toEngineering((Ytime  / Ycycles));
+            clockX.value        = '';
+            clockY.value        = '';
             rateX.value         = '';
             rateY.value         = '';
             break;
-        case    2:
-            perfPanel.innerText = "Find Cycles";
-            cyclesXA.value      = Xcycles.toLocaleString('en-US');
-            cyclesYA.value      = Ycycles.toLocaleString('en-US');
-            timeX.innerText     = Xtime.toFixed(6);
-            timeY.innerText     = Ytime.toFixed(6);
-            rateX.innerText     = toEngineering((Xcycles / Xtime)/1_000_000_000);
-            rateY.innerText     = toEngineering((Ycycles / Ytime)/1_000_000_000);
-            cyclesX.value       = '';
-            cyclesY.value       = '';
-            break;
     }    
     
+    removeErrors(timeX);
+    removeErrors(timeY);
+
     compare.innerHTML = "";
     compare.appendChild( pNode );
 }

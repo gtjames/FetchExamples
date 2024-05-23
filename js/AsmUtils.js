@@ -19,10 +19,11 @@ function getBinRand() {
 
 function toEngineering(num) {
   if      (num > 1)                 return num.toFixed(2);
-  else if (num * 1000 > 1)          return (num*1000).toFixed(2);
-  else if (num * 1000000 > 1)       return (num*1000000).toFixed(2)+'e-3';
-  else if (num * 1000000000 > 1)    return (num*1000000000).toFixed(2)+'e-6';
-  else if (num * 1000000000000 > 1) return (num*1000000000000).toFixed(2)+'e-9';
+  else if (num * 1000 > 1)          return (num*1000).toFixed(2)+' ms';
+  else if (num * 1000000 > 1)       return (num*1000000).toFixed(2)+' μs';
+  else if (num * 1000000000 > 1)    return (num*1000000000).toFixed(2)+' ns';
+  else if (num * 1000000000000 > 1) return (num*1000000000000).toFixed(2)+' ps';
+  else return num;
 }
 
 function decToBin(decNum) {
@@ -57,12 +58,15 @@ function close(el, exact, pct, isNum) {
   
     let input = document.getElementById(el);
     if (input === null) return true;
+    if (input.tagName != "INPUT") return true;
     input.classList.remove('error');
     input.classList.remove('lenErr');
   
     let value  = input.value;
     let valueA = document.getElementById(el+'A').value;
   
+    if(valueA === null) return true;
+
     if (el === 'hex') {
       lenError = value.length != 8;
       value = value + '0'.repeat(8  - value.length);

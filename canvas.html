@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Canvas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .disney-card { height: 400px; }
+        option:hover { background-color: lime; }
+        option { background-color: blueviolet; }
+    </style>
+
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="course">Course Details</label>
+    <select id="course"></select>
+    <button id="search">Search</button>
+    <button id="setUntilDate">Set Until Date</button>
+    <select id="studentSel">    </select>
+    <select id="asgnQuizzes"></select>
+    <input  id="extend" type="number">
+    <button id="extendUntilDate">Extend Until Date</button>
+    <button id="extendUntilDates">Extend All Until Dates</button>
+    <button id="test">Test</button>
+</div>
+
+<div class="w3-row w3-theme-l3">
+    <section id="card"></section>
+</div>
+
+<div id="id01" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-theme-l5" style="max-width:300px">
+        <header class="w3-container w3-theme-l3">
+            <h4 id="until">New Until Date</h4>
+        </header>
+        <div class="w3-container w3-theme-l1">
+            <input id="untilDate" type="datetime-local">
+        </div>
+        <footer class="w3-container w3-theme-l3">
+            <button id="close" type="button" class="w3-right close btn btn-secondary" data-dismiss="modal" aria-label="Close">Set Date</button>
+          </footer>
+    </div>
+</div>
+
+<div id="error" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-theme-l5" style="max-width:300px">
+        <header class="w3-container w3-theme-l3">
+            <h4>Error</h4>
+        </header>
+        <div class="w3-container w3-theme-l1">
+            <p id="errMessage"></p>
+        </div>
+        <footer class="w3-container w3-theme-l3">
+            <button id="closeErr" type="button" class="w3-right close btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+          </footer>
+    </div>
+</div>
+
+</body>
+<script src='js/allKeys.js'></script>
+<script>
+	let studentSel  = document.getElementById('studentSel');
+	let asgnQuizzes = document.getElementById('asgnQuizzes');
+    let extend      = document.getElementById("extend");
+	let card        = document.getElementById('card');
+	let courseList  = document.getElementById('course');
+	let errMessage  = document.getElementById('errMessage');
+    
+    courseList                                  .addEventListener('change', setCourse);
+	document.getElementById('test')             .addEventListener('click',  test);
+	document.getElementById('search')           .addEventListener('click',  listModules);
+    document.getElementById("close")            .addEventListener("click",  closeModal);
+    document.getElementById("closeErr")         .addEventListener("click",  closeError);
+    document.getElementById("setUntilDate")     .addEventListener('click',  setUntilDate);
+    document.getElementById("extendUntilDate")  .addEventListener('click',  extendUntilDate);
+    document.getElementById("extendUntilDates") .addEventListener('click',  extendUntilDates);
+
+    for (c of courses) {
+        courseList.innerHTML += `<option value=${c.course} data-edu=${c.institution} data-token=${keys[c.institution]}>${c.name}</option>`;
+    }
+
+    let untilDate = (new Date()).toISOString().slice(0,16);
+    document.getElementById('untilDate').value = untilDate;
+
+    let row = 0;
+    let course = "8630";
+    let edu    = "byui";
+    let header = {
+        "Content-Type"  : "application/json",
+        "Authorization" : `Bearer ${keyCanvas}`,
+        "Referrer-Policy": "unsafe-url",
+        "Accept": "*/*",
+    };
+    let postOptions = { method: "POST", headers: header };
+    let putOptions  = { method: "PUT",  headers: header };
+    let getOptions  = { method: "GET",  headers: header };
+
+function setCourse(e) {
+    course = e.target.selectedOptions[0].value;
+    keyCanvas  = e.target.selectedOptions[0].dataset.token;
+    edu    = e.target.selectedOptions[0].dataset.edu;
+    header.Authorization = `Bearer ${keyCanvas}`;
+
+    postOptions = { method: "POST", headers: header };
+    putOptions  = { method: "PUT",  headers: header };
+    getOptions  = { method: "GET",  headers: header };
+}
+
+function closeModal() {
+    document.getElementById('id01').style.display='none';
+    untilDate = document.getElementById('untilDate').value;
+    
+    let list = asgnQuizzes.querySelectorAll("option");
+    list = Array.from(list);
+    list = list.sort((a,b) => a.text.localeCompare(b.text));
+    asgnQuizzes.innerHTML = '';
+    list.forEach(o => asgnQuizzes.appendChild(o));
+    asgnQuizzes.selectedIndex = 0;
+}
+
+function setUntilDate() {
+    document.getElementById('id01').style.display='block';
+}
+
+function openError(msg) {
+    document.getElementById('error').style.display='block';
+    errMessage.innerText = msg;
+}
+
+function closeError() {
+    document.getElementById('error').style.display='none';
+}
+function listModules() {
+		/**
+curl -H 'Authorization: Bearer 10706~1r7OxhF6t3ksuV4w8HVWN6e4LYwcYuXaqLl3pC0cH9TKcll6NEYDxYOi6thAm1Z2'  https://${edu}.instructure.com/api/v1/courses/274380/modules
+        */
+    asgnQuizzes.innerHTML = '';
+    studentSel.innerHTML = '';
+    
+    const url = `https://${edu}.instructure.com/api/v1/courses/${course}/modules`;
+    console.log(url);
+    fetch(url, getOptions)
+    .then(resp => resp.json())
+    .then(modules => {
+        card.innerHTML = '';
+        modules.forEach(mod => {
+            row++;
+            card.innerHTML += `
+                <div id=${mod.id} data-url="${mod.items_url}" class="w3-col m3 l3 w3-theme-d${(row%2)*3+1} disney-card">
+                    <h4>${mod.name}</h4>
+                    <hr>
+                    <div style="overflow-y: scroll; height:290px;"><ul id=item${mod.id}></ul></div>
+                </div>`;
+        });
+        let cards = document.getElementsByClassName('disney-card');
+        Array.from(cards).forEach(item => getItems(item));
+        listStudents();
+    })
+    .catch(error => openError(error));
+}
+
+function getItems(target) {
+    let url = target.dataset.url;
+    console.log(url);
+    fetch(url, getOptions)
+    .then(resp => resp.json())
+    .then(items => {
+        let itemsList = document.getElementById(`item${target.id}`);
+        if (itemsList !== null) {
+            itemsList.innerHTML = '';
+            // let cb = ;
+            items.forEach(item => {
+                let data = `data-id=${item.content_id} class=${item.type}`;
+                let cb = `${(item.type[0] == 'A' || item.type[0] == 'Q') ? `<input type="checkbox" id=cb-${item.content_id} ${data}>` : ''} `;
+                itemsList.innerHTML += `<li  id=li-${item.content_id} ${data} class=${item.type} data-url=${item.url}>${cb}<span id=title-${item.content_id} ${data}>${item.title}</span><div id=dates-${item.content_id} ${data}></div></li>`
+            })
+            let li = itemsList.querySelectorAll('li.Assignment, li.Quiz');
+            let options = Array.from(li).map(item => {
+                item.addEventListener('click', showDates);
+                return option = `<option class=${item.className} value=${item.id}>${item.innerText}</option>`;
+            });
+            asgnQuizzes.innerHTML += options.join('\n');
+        }
+    })
+    .catch(error => openError(error));
+}
+
+function showDates(e) {
+    let id = e.target.dataset.id;
+    let dates = document.getElementById(`dates-${id}`);
+    let li    = document.getElementById(`li-${id}`);
+
+    if (dates.innerHTML.length > 0) {
+        dates.innerHTML = '';
+        return;
+    }
+    if (li === undefined) return;    
+    let url = `${li.dataset.url}`;
+
+    console.log(url);
+    fetch(url, getOptions)
+    .then(resp => resp.json())
+    .then(item => {
+        dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
+        dates.addEventListener('click', updateLockAt);
+    })
+    .catch(error => openError(error));
+}
+
+function updateLockAt(e) {
+    e.stopPropagation();
+
+    let id = e.target.dataset.id;
+    let dates = document.getElementById(`dates-${id}`);
+    let li    = document.getElementById(`li-${id}`);
+    let type = li.classList[0].toLowerCase();
+
+    let arg = type + (type[0] === 'q' ? 'ze' : '') + 's';
+    let url = `https://${edu}.instructure.com/api/v1/courses/${course}/${arg}/${id}?${type}[lock_at]=${untilDate}:00-06:00`;
+    console.log(url);
+    fetch(url, putOptions)
+    .then(resp => resp.json())
+    .then(item => {
+        if (item.status === undefined)
+            dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
+        else
+            dates.innerText = item.errors[0].message;
+    })
+    .catch(error => openError(error));
+}
+
+function listStudents() {
+    let studentNames = document.getElementById('students');
+    let url = `https://${edu}.instructure.com/api/v1/courses/${course}/students`;
+    console.log(url);
+    fetch(url, getOptions)
+    .then(resp => resp.json())
+    .then(students => {
+        let map  = students.map( s => `<option data-sort="${s.name}" value=${s.id}>${s.name}</option>` );
+        let sorted = map.sort((a,b) => a.localeCompare(b)).join('\n');
+        studentSel.innerHTML = sorted;
+    })
+    .catch(error => openError(error));
+}
+
+function extendUntilDate() {
+	let studentId = studentSel.options[studentSel.selectedIndex].value;
+	let quizId    = asgnQuizzes.options[asgnQuizzes.selectedIndex].value;
+    let type      = asgnQuizzes.options[asgnQuizzes.selectedIndex].className;
+    let extendNum = document.getElementById("extend").value;
+    let url, body;
+    if (type[0] === 'A') {
+        url  = `/api/v1/courses/${course}/assignments/${quizId}/extensions`;
+        body = JSON.stringify( { "assignment_extensions": [ {"user_id": studentId, "extra_attempts": extendNum} ] });
+    } else {
+        url  = `/api/v1/courses/${course}/quizzes/${quizId}/extensions`;
+        body = JSON.stringify( { "quiz_extensions":       [ {"user_id": studentId, "extra_time": extendNum}, ] });
+        // end_at: "2023-11-24T06:59:00Z"  extra_attempts: null
+    }
+    url = `https://${edu}.instructure.com${url}`;
+    postOptions.body = body;
+    console.log(url);
+    fetch(url, postOptions)
+    .then(resp => resp.json())
+    .then(msg => console.log(msg))
+    .catch(error => openError(error));
+}
+
+function extendUntilDates() {
+    let assign  = document.querySelectorAll('input.Assignment:checked')
+    Array.from(assign).forEach(a => {
+        let id = a.id.substring(3);
+        let url = `https://${edu}.instructure.com/api/v1/courses/${course}/assignments/${id}?assignment[lock_at]=${untilDate}:00-07:00`;
+        updateUntilDate(id, url);
+    });
+
+    let quizzes = document.querySelectorAll('input.Quiz:checked')
+    Array.from(quizzes).forEach(a => {
+        let id = a.id.substring(3);
+        let url = `https://${edu}.instructure.com/api/v1/courses/${course}/quizzes/${id}?quiz[lock_at]=${untilDate}:00-07:00`;
+        updateUntilDate(id, url);
+    });
+}
+
+function updateUntilDate(id, url) {
+    console.log(url);
+    fetch(url, putOptions)
+    .then(resp => resp.json())
+    .then(item => {
+        let dates = document.getElementById(`dates-${id}`);
+        let cb    = document.getElementById(`cb-${id}`);
+        cb.checked = false;
+        dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
+        console.log(item);
+    })
+    .catch(error => openError(error));
+}
+
+function test() {
+    let url = `https://${edu}.instructure.com/api/v1/courses/${course}/students`;
+    console.log(url);
+
+    let header = {
+        "Content-Type"  : "application/json",
+        "Authorization" : `Bearer ${keyCanvas}`,
+        "Accept": "*/*",
+    };
+
+    let body = JSON.stringify( { "url": url, "assignment_extensions": [ {"user_id": "studentId", "extra_attempts": "extendNum"} ] });
+    let options = { method: "GET", headers: header}//, body: body };
+
+    console.log('https://localhost:3000/proxy?edu=byui&course=8630');
+    fetch('https://localhost:3000/proxy?edu=byui&course=8630', options)
+    .then(resp => resp.json())
+    .then(students => {
+        console.log(stringify(students));
+        let map  = students.map( s => `<option data-sort="${s.name}" value=${s.id}>${s.name}</option>` );
+        let sorted = map.sort((a,b) => a.localeCompare(b)).join('\n');
+        studentSel.innerHTML = sorted;
+
+    })
+    .catch(error => console.error('There was an error!', error));
+}
+
+</script>
+<script src="js/allKeys.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Canvas')</script>
+
+</html>
+
