@@ -18,12 +18,16 @@ function getBinRand() {
 }
 
 function toEngineering(num) {
-  if      (num > 1)                 return num.toFixed(2);
-  else if (num * 1000 > 1)          return (num*1000).toFixed(2)+' ms';
-  else if (num * 1000000 > 1)       return (num*1000000).toFixed(2)+' μs';
-  else if (num * 1000000000 > 1)    return (num*1000000000).toFixed(2)+' ns';
-  else if (num * 1000000000000 > 1) return (num*1000000000000).toFixed(2)+' ps';
-  else return num;
+  if      (num >= 1_000_000_000_000)  return [(num/1_000_000_000_000).toFixed(2), 'THz'];
+  else if (num >= 1_000_000_000)      return [(num/1_000_000_000).toFixed(2),     'GHz'];
+  else if (num >= 1_000_000)          return [(num/1_000_000).toFixed(2),         'MHz'];
+  else if (num >= 1_000)              return [(num/1_000).toFixed(2),             'KHz'];
+  else if (num < 0.000000001)      return [(num*1_000_000_000_000).toFixed(2), 'ps'];
+  else if (num < 0.000001)         return [(num*1_000_000_000).toFixed(2),     'ns'];
+  else if (num < 0.001)            return [(num*1_000_000).toFixed(2),         'μs'];
+  else if (num < 1)               return [(num*1_000).toFixed(2),             'ms'];
+  else if (num >= 0)                  return [(num).toFixed(2),         ''];
+  else return [num, '<>'];
 }
 
 function decToBin(decNum) {
@@ -62,8 +66,8 @@ function close(el, exact, pct, isNum) {
     input.classList.remove('error');
     input.classList.remove('lenErr');
   
-    let value  = input.value;
-    let valueA = document.getElementById(el+'A').value;
+    let value  = input.value.toUpperCase();
+    let valueA = input.dataset.answer.toUpperCase()
   
     if(valueA === null) return true;
 
@@ -95,14 +99,21 @@ function close(el, exact, pct, isNum) {
   }
   
   function reveal () {
-    let inputs = document.querySelectorAll('input[type="hidden"]');
-    inputs.forEach(i => {
-      try {
-      document.getElementById(i.id.substring(0,i.id.length-1)).value = i.value;
-    }
-    catch (e) { console.log(e); }
-    });
-    totCPI.innerText    = totalCycles / totalInstructions;
+    // let inputs = document.querySelectorAll('input[type="hidden"]');
+    let inputs = document.querySelectorAll('[data-answer]')
+    inputs.forEach(i => i.value = i.dataset.answer);
+  }
+
+  function clear () {
+    // let inputs = document.querySelectorAll('input[type="hidden"]');
+    let inputs = document.querySelectorAll('[data-answer]')
+    inputs.forEach(i => i.value = '');
+  }
+
+  function removeAllErrors () {
+    // let inputs = document.querySelectorAll('input[type="hidden"]');
+    let inputs = document.querySelectorAll('[data-answer]')
+    inputs.forEach(i => removeErrors(i));
   }
 
 function removeErrors(el) {
