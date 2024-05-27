@@ -107,18 +107,18 @@ function reset() {
 
     for (let i = 0; i < 4; i++) {
         instr.innerHTML += `<tr class='flex'>
-            <td id='InstrType${i}' class='instr' data-answer='${types[i]}'>${types[i]}</td>
-            <td id='NumInstr${i}'  class='given' data-answer='${numInstructions[i].toLocaleString('en-US')}'>${numInstructions[i].toLocaleString('en-US')}</td>
-            <td> <input id='pctCycles${i}'  class='small' data-answer=${pctOfCycles[i]}>% </td>
-            <td id='InstrCPI${i}'  class='given' data-answer='${typeCPI[i]}'>${typeCPI[i]}</td>
+            <td id='InstrType${i}'          class='instr'  data-answer='${types[i]}'>${types[i]}</td>
+            <td id='NumInstr${i}'           class='given'  data-answer='${numInstructions[i].toLocaleString('en-US')}'>${numInstructions[i].toLocaleString('en-US')}</td>
+            <td> <input id='pctCycles${i}'  class='small'  data-answer=${pctOfCycles[i]}>% </td>
+            <td id='InstrCPI${i}'           class='given'  data-answer='${typeCPI[i]}'>${typeCPI[i]}</td>
             <td> <input id='NumCycles${i}'  class='medium' data-answer=${numCycles[i].toLocaleString('en-US')}> </td>
-            <td> <input id='PartialCPI${i}' class='small' data-answer=${(pctOfCycles[i]*typeCPI[i]/100).toFixed(2)}> </td>
+            <td> <input id='PartialCPI${i}' class='small'  data-answer=${(pctOfCycles[i]*typeCPI[i]/100).toFixed(2)}> </td>
         </tr>`;
     }
   
-    totCycles.dataset.answer    = totalCycles.toLocaleString('en-US');
     totInst.innerText           = totalInstructions.toLocaleString('en-US');
     totInst.dataset.answer      = totalInstructions.toLocaleString('en-US');
+    totCycles.dataset.answer    = totalCycles.toLocaleString('en-US');
     wtdCPI.dataset.answer       = (WeightedCPI/100).toFixed(2);
     runTime.innerText           = CPUTime;
     runTime.dataset.answer      = CPUTime;
@@ -143,8 +143,7 @@ function performance(panel) {
     let performance = document.getElementById('performanceTemplate' + panel);
     const pNode     = performance.content.cloneNode(true);
 
-    let instrX      = document.querySelector('#instrX');
-    let instrY      = document.querySelector('#instrY');
+    let instrXY     = document.querySelector('#instrXY');
     let cpiX        = pNode.querySelector('#cpiX');
     let cpiY        = pNode.querySelector('#cpiY');
     let cyclesX     = pNode.querySelector('#cyclesX');
@@ -171,8 +170,7 @@ function performance(panel) {
     let Xtime       = getRandom(0.001)+0.0002;
     let Ytime       = getRandom(0.001)+0.0002;
 
-    instrX.innerText = instrX.dataset.answer = XYinstr.toLocaleString('en-US');
-    instrY.innerText = instrY.dataset.answer = XYinstr.toLocaleString('en-US');
+    instrXY.innerText = instrXY.dataset.answer = XYinstr.toLocaleString('en-US');
 
     switch (panel) {
         case    0:
@@ -268,7 +266,7 @@ function restore (e) {
         ref.dataset.answer = r.answer;
         if (ref.tagName === "INPUT") {
             ref.value = r.value;
-        }
+        } 
         if (ref.tagName === "TD") {
             ref.innerText = r.answer;
         }
