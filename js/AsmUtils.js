@@ -23,11 +23,11 @@ export function toEngineering(num) {
   else if (num >= 1_000_000_000)      return [(num/1_000_000_000).toFixed(2),     'GHz'];
   else if (num >= 1_000_000)          return [(num/1_000_000).toFixed(2),         'MHz'];
   else if (num >= 1_000)              return [(num/1_000).toFixed(2),             'KHz'];
-  else if (num < 0.000000001)      return [(num*1_000_000_000_000).toFixed(2), 'ps'];
-  else if (num < 0.000001)         return [(num*1_000_000_000).toFixed(2),     'ns'];
-  else if (num < 0.001)            return [(num*1_000_000).toFixed(2),         'μs'];
-  else if (num < 1)               return [(num*1_000).toFixed(2),             'ms'];
-  else if (num >= 0)                  return [(num).toFixed(2),         ''];
+  else if (num < 0.000000001)         return [(num*1_000_000_000_000).toFixed(2), 'ps'];
+  else if (num < 0.000001)            return [(num*1_000_000_000).toFixed(2),     'ns'];
+  else if (num < 0.001)               return [(num*1_000_000).toFixed(2),         'μs'];
+  else if (num < 1)                   return [(num*1_000).toFixed(2),             'ms'];
+  else if (num >= 0)                  return [(num).toFixed(2),                   ''];
   else return [num, '<>'];
 }
 

@@ -139,7 +139,6 @@ function nextPerformance() {
 }
 
 function performance(panel) {
-
     let compare     = document.getElementById('compare');
     let performance = document.getElementById('performanceTemplate' + panel);
     const pNode     = performance.content.cloneNode(true);
