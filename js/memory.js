@@ -1,4 +1,4 @@
-import {getRandom, setSeed} from './utils.js';
+import {getRandomInt, setSeed} from './utils.js';
 import {getList, getTeams} from './memoryData.js';
 
     let     max         = Math.pow(2,32);
@@ -147,12 +147,12 @@ function reset() {
     //  randomly create the addresses with their tag and index bits
     if (binary) {
         for (let i = 0; i < instCnt; i++) {
-            let adrs = '00000000000000000000000000000000'+getRandom(max).toString(2);
+            let adrs = '00000000000000000000000000000000'+getRandomInt(max).toString(2);
             adrs = adrs.substring(adrs.length-32);
             let tag   = adrs.substring(0, tagBits);
             let index = adrs.substring(tagBits, tagBits + indexBits);
             let value = adrs.substring(tagBits + indexBits);
-            let b     = basketball[getRandom(basketball.length)];
+            let b     = basketball[getRandomInt(basketball.length)];
             adrs      = `<span class='offset'>${value}</span>`;         //  <span class='tag'>&ensp;${tag}&ensp;</span><span class='index'>&ensp;${index}&ensp;</span>
             fetch.push({pc: `${i}`, tag: `${tag}`, index: `${index}`, adrs: `${adrs}`, value:`${b.value}` });
         }
@@ -163,7 +163,7 @@ function reset() {
         basketball  = getList(teams);
 
         for (let i = 0; i < instCnt; i++) {
-            let rand = getRandom(basketball.length);
+            let rand = getRandomInt(basketball.length);
             let b     = basketball[rand];
             let tag   = b.tag;
             let index = (+b.index+1024).toString(2).substr(11-indexBits);

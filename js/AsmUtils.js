@@ -4,20 +4,6 @@ export function bin2hex(b) {
     }, '').toUpperCase();
 }
 
-export function getBinRand() {
-    let number = 0;
-    let start = -6, end = 9;
-    let x = Math.random();
-    if (x < .1)        start = 0;
-    else if (x > 0.9)  end = -1;
-    while (number ===  0) {
-        for (let i = start; i <= end; i++) {
-            number += Math.random() < 0.33 ? Math.pow(2, i) : 0;
-        }
-    }
-    return number * (Math.random() < 0.1 ? -1 : 1);
-}
-
 export function toEngineering(num) {
   if      (num >= 1_000_000_000_000)  return [(num/1_000_000_000_000).toFixed(2), 'THz'];
   else if (num >= 1_000_000_000)      return [(num/1_000_000_000).toFixed(2),     'GHz'];
@@ -58,7 +44,7 @@ export function decToBin(decNum) {
   };
 }
 
-export function close(el, exact, pct, isNum) {
+export function close(el, exact, pct, isNum, pad) {
     let res, lenError = false;
   
     let input = document.getElementById(el);
@@ -72,14 +58,11 @@ export function close(el, exact, pct, isNum) {
   
     if(valueA === null) return true;
 
-    if (el === 'hex') {
-      lenError = value.length != 8;
-      value = value + '0'.repeat(8  - value.length);
+    if (pad > 0) {
+      lenError = value.length != pad;
+      value = value + '0'.repeat(pad  - value.length);
     }
-    if (el === 'binary') {
-      lenError = value.length != 32;
-      value = value + '0'.repeat(32 - value.length);
-    }
+
     value  = value.replaceAll(' ','').replaceAll(',','');
     valueA = valueA.replaceAll(' ','').replaceAll(',','');
     if (isNum) {
@@ -121,5 +104,5 @@ export   function removeAllErrors () {
 
 export function removeErrors(el) {
     el.classList.remove('error');
-    el.classList.remove('lenError');
+    el.classList.remove('lenErr');
 }

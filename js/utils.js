@@ -106,3 +106,17 @@ export function getNextRandom() {
     console.log(rnd);
     return setSeed( rnd );
 }
+
+export function getBinRand() {
+    let number = 0;
+    let start = -6, end = 9;
+    let x = getRandom(1);
+    if (x < .1)        start = 0;
+    else if (x > 0.9)  end = -1;
+    while (number ===  0) {
+        for (let i = start; i <= end; i++) {
+            number += getRandom(1) < 0.33 ? Math.pow(2, i) : 0;
+        }
+    }
+    return number * (getRandom(1) < 0.1 ? -1 : 1);
+}
