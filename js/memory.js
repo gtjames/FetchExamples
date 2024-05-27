@@ -133,8 +133,8 @@ function reset() {
     cacheBlk    = -1;
     pc.value    = 0;
 
-    setSeed( (studentID.value.length != 0) ? +studentID.value : -1 );
-    // stepBtn.disabled = studentID.value.length > 0;
+    let id = studentID.value;
+    setSeed( (id.length > 0) ? "."+id : -1 );
 
     showCacheData();
     binary      = document.getElementsByName('source')[0].checked;
