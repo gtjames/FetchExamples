@@ -1,6 +1,8 @@
+import {random} from './random.js';
+
 export let locationRetrieved = false;
-export let lat, lon, seed = -1;
-let message;
+export let lat, lon, _seed = -1;
+
 //https://maps.churchofjesuschrist.org/wards/226491
 //  Make sure your pop ups are turned on at least for this URL
 export function getLocation(whatsNext) {
@@ -84,15 +86,23 @@ acc.forEach( a => {
     });
 });
 
-export function getSeed() { return seed; }
-export function setSeed(newSeed) { seed = newSeed; return seed; }
+export function getSeed() { return _seed; }
+export function setSeed(baseSeed) { _seed = baseSeed; return _seed; }
+
+export function getRandomInt(max) {
+    return Math.floor(getRandom(max));
+}
 export function getRandom(max) {
-    if (seed === -1)
-        return Math.floor(Math.random() * max);
+    if (_seed === -1)
+        return Math.random() * max;
     else
-        return setSeed( getNextRandom(max));
+        return getNextRandom() * max;
 }
 
-export function getNextRandom(max) {
-    return Math.floor(Math.abs((Math.sin(seed) * Math.cos(seed)) * 2 * max));
+export function getNextRandom() {
+    let start = Math.floor(_seed*200000);
+    let rnd = random.substring(start, start + 6);
+    rnd = +("."+rnd);
+    console.log(rnd);
+    return setSeed( rnd );
 }

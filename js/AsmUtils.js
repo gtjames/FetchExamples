@@ -1,9 +1,10 @@
-function bin2hex(b) {
+export function bin2hex(b) {
     return b.match(/.{4}/g).reduce((acc, i) => {
         return acc + parseInt(i, 2).toString(16);
     }, '').toUpperCase();
 }
-function getBinRand() {
+
+export function getBinRand() {
     let number = 0;
     let start = -6, end = 9;
     let x = Math.random();
@@ -17,7 +18,7 @@ function getBinRand() {
     return number * (Math.random() < 0.1 ? -1 : 1);
 }
 
-function toEngineering(num) {
+export function toEngineering(num) {
   if      (num >= 1_000_000_000_000)  return [(num/1_000_000_000_000).toFixed(2), 'THz'];
   else if (num >= 1_000_000_000)      return [(num/1_000_000_000).toFixed(2),     'GHz'];
   else if (num >= 1_000_000)          return [(num/1_000_000).toFixed(2),         'MHz'];
@@ -30,7 +31,7 @@ function toEngineering(num) {
   else return [num, '<>'];
 }
 
-function decToBin(decNum) {
+export function decToBin(decNum) {
   let buffer = new ArrayBuffer(4);
   let floatView = new Float32Array(buffer);
   floatView[0] = decNum;
@@ -57,7 +58,7 @@ function decToBin(decNum) {
   };
 }
 
-function close(el, exact, pct, isNum) {
+export function close(el, exact, pct, isNum) {
     let res, lenError = false;
   
     let input = document.getElementById(el);
@@ -98,25 +99,27 @@ function close(el, exact, pct, isNum) {
     return res;
   }
   
-  function reveal () {
-    // let inputs = document.querySelectorAll('input[type="hidden"]');
-    let inputs = document.querySelectorAll('[data-answer]')
-    inputs.forEach(i => i.value = i.dataset.answer);
+export   function reveal () {
+    let inputs = document.querySelectorAll('[data-answer]');
+    inputs.forEach(i => {
+      if (i.tagName === "INPUT")  i.value = i.dataset.answer;
+      if (i.tagName === "TD")     i.innerText = i.dataset.answer;
+      if (i.id === "cpiX")     
+        i.value = i.dataset.answer;
+    })
   }
 
-  function clear () {
-    // let inputs = document.querySelectorAll('input[type="hidden"]');
-    let inputs = document.querySelectorAll('[data-answer]')
+export   function clear () {
+    let inputs = document.querySelectorAll('[data-answer]');
     inputs.forEach(i => i.value = '');
   }
 
-  function removeAllErrors () {
-    // let inputs = document.querySelectorAll('input[type="hidden"]');
-    let inputs = document.querySelectorAll('[data-answer]')
+export   function removeAllErrors () {
+    let inputs = document.querySelectorAll('[data-answer]');
     inputs.forEach(i => removeErrors(i));
   }
 
-function removeErrors(el) {
+export function removeErrors(el) {
     el.classList.remove('error');
     el.classList.remove('lenError');
 }
