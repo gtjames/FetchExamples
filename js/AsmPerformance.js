@@ -16,6 +16,7 @@ import {getRandomInt, getRandom, setSeed} from './utils.js';
   let revealBtn   = document.getElementById('reveal');
   let cpi1        = document.getElementById('cpi1');
   let studentID   = document.getElementById('studentID');
+  let trials      = document.getElementById('trials');
 
   
     document.getElementById('reset'  ).addEventListener('click', reset);
@@ -258,8 +259,8 @@ function deleteView (e) {
 }
 
 function restore (e) {
-    let id = +e.target.id;
-    let res          = JSON.parse(localStorage.getItem('res'));
+    let id  = +e.target.id;
+    let res = JSON.parse(localStorage.getItem('res'));
     clear();
     performancePanel = res[id].performancePanel
     performance(performancePanel);
@@ -273,7 +274,6 @@ function restore (e) {
             ref.innerText = r.answer;
         }
     });
-    let trials = document.getElementById('trials');
 }
 
 function restoreList () {
@@ -281,8 +281,8 @@ function restoreList () {
     trials.innerHTML = '';
 
     res.forEach((r,index) => {
-        trials.innerHTML += `<tr> <td>${index}</td><td id=${index} class='delete'>Delete</td><td id=${index} class='restore'>Restore</td> </tr>`;
-        // r.forEach((x, i) => trials.innerHTML += `
+        trials.innerHTML += `<tr> <td>${index}</td> <td>${r.attrs[24].answer}</td> <td>${r.attrs[26].answer}</td><td id=${index} class='delete'>Delete</td><td id=${index} class='restore'>Restore</td> </tr>`;
+        // r.attrs.forEach((x, i) => trials.innerHTML += `
         //     <tr id=${index}>
         //         <td class='tag'>${index} ${i}</td>
         //         <td class='tag'>${x.id}</td>
