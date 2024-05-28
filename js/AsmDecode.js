@@ -3,7 +3,11 @@ import { setSeed } from './utils.js';
 
 let studentID   = document.getElementById('studentID');
 let revealBtn   = document.getElementById('reveal');
+let Operator      = document.getElementById('Operator');
 let OpCode      = document.getElementById('OpCode');
+let R1      = document.getElementById('R1');
+let R2      = document.getElementById('R2');
+let Rd      = document.getElementById('Rd');
 
 document.getElementById('step').addEventListener('click', nextStep);
 document.getElementById('reset').addEventListener('click', reset);
@@ -21,7 +25,7 @@ reset();
 function showOpcodes () {
     refRows.innerHTML = '';
     code.forEach(c => {
-        refRows.innerHTML += `<tr><td>${c.Mnemonic}</td><td>${c.Format}</td><td>${c.Width}</td><td>${c.Binary}</td></tr>`;
+        refRows.innerHTML += `<tr><td>${c.Mnemonic}</td><td>${c.Format}</td><td>${c.Width}</td><td>${c.OpCode}</td></tr>`;
     });
 }
 
@@ -58,7 +62,38 @@ function nextStep() {
     let input = document.querySelector(`#tr-${step}`);
     let instruction = input.dataset.index;
     instruction = getInstruction(+instruction);
-    OpCode.value = instruction.Mnemonic;
+    Operator.value = instruction.Mnemonic;
+    let binary = instruction.Binary;
+    
+    let loc = code.filter(c => {
+        // console.log (c.OpCode + " - " + binary.substring(0, c.Width) + " - " + (c.OpCode === binary.substring(0, c.Width)))
+        return c.OpCode === binary.substring(0, c.Width)
+    })[0];
+    console.log(loc.OpCode + "--" + loc.Format)
+    OpCode.value = loc.OpCode;
+    if ( loc.Format === "R") {      //  10  5   6   5   5
+        R1.value = binary.substring(11, 16);
+        R2.value = binary.substring(22, 27);
+        Rd.value = binary.substring(27, 32);
+    }
+    if ( loc.Format === "D") {
+        R1.value = binary.substring(11, 20);
+        R2.value = binary.substring(22, 27);
+        Rd.value = binary.substring(27, 32);
+
+    }
+    if ( loc.Format === "I") {
+        R1.value = binary.substring(10, 22);
+        R2.value = binary.substring(22, 27);
+        Rd.value = binary.substring(27, 32);
+
+    }
+    if ( loc.Format === "IM") {}
+    if ( loc.Format === "CB") {
+        R1.value = binary.substring(8, 27);
+        Rd.value = binary.substring(27, 32);
+
+    }
     let parts = instruction.Instruction.split(/[\s,\[\]]+/)
     pcRow = document.getElementById('tr-'+(step+1));
     if (pcRow) pcRow.classList.add('next');
