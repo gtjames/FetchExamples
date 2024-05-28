@@ -1,5 +1,5 @@
 import {getRandomInt, setSeed} from './utils.js';
-import {getList, getTeams} from './memoryData.js';
+import {getList, getTeams} from './AsmMemoryData.js';
 
     let     max         = Math.pow(2,32);
     let     basketball  = getList();
@@ -19,8 +19,6 @@ import {getList, getTeams} from './memoryData.js';
     let     body        = document.getElementById('mem');
     let     pc          = document.getElementById('PC');
     let     studentID   = document.getElementById('studentID');
-    let     stepBtn     = document.getElementById('step');
-
 
     document.getElementById('step').addEventListener('click', nextStep);
     document.getElementById('reset').addEventListener('click', reset);
@@ -232,7 +230,7 @@ function nextStep() {
         block.tag = fetch[step].tag;
         block.hit = 'Miss';
     }
-``
+
     let value = document.getElementById(fetch[step].index+'.value');
     let adrsOnly = document.getElementById('adrsOnly').checked;
     if (block.hit == 'Miss') {

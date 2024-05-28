@@ -144,6 +144,8 @@ function performance(panel) {
     const pNode     = performance.content.cloneNode(true);
 
     let instrXY     = document.querySelector('#instrXY');
+    let cpuX        = document.querySelector('#cpuX');
+    let cpuY        = document.querySelector('#cpuY');
     let cpiX        = pNode.querySelector('#cpiX');
     let cpiY        = pNode.querySelector('#cpiY');
     let cyclesX     = pNode.querySelector('#cyclesX');
@@ -207,6 +209,22 @@ function performance(panel) {
             [clockX.dataset.answer, clockXUnits.dataset.answer] = toEngineering(Xtime  / Xcycles);
             [clockY.dataset.answer, clockYUnits.dataset.answer] = toEngineering(Ytime  / Ycycles)
             break;
+    }
+    fastOrSlow();
+    function fastOrSlow() {
+        cpuX.classList = cpiX.classList = timeX.classList = rateX.classList = clockX.classList = '';
+        cpuY.classList = cpiY.classList = timeY.classList = rateY.classList = clockY.classList = '';
+        cpiX.classList.add  (Xcpi < Ycpi     ? 'fast' : Xcpi == Ycpi ? 'x' : 'slow');
+        cpiY.classList.add  (Ycpi < Xcpi     ? 'fast' : Ycpi == Xcpi ? 'x' : 'slow');
+        timeX.classList.add ((Xtime < Ytime) ? 'fast' : 'slow');
+        timeY.classList.add ((Ytime < Xtime) ? 'fast' : 'slow');   
+        rateX.classList.add ((Xcycles / Xtime > Ycycles / Ytime) ? 'fast':'slow');   
+        rateY.classList.add ((Xcycles / Xtime < Ycycles / Ytime) ? 'fast':'slow');   
+        clockX.classList.add((Xcycles / Xtime > Ycycles / Ytime) ? 'fast':'slow');   
+        clockY.classList.add((Xcycles / Xtime < Ycycles / Ytime) ? 'fast':'slow');   
+
+        cpuX.classList.add ((Xtime < Ytime) ? 'fast' : 'slow');
+        cpuY.classList.add ((Ytime < Xtime) ? 'fast' : 'slow');   
     }
 
     compare.innerHTML = "";

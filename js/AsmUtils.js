@@ -85,10 +85,9 @@ export function close(el, exact, pct, isNum, pad) {
 export   function reveal () {
     let inputs = document.querySelectorAll('[data-answer]');
     inputs.forEach(i => {
-      if (i.tagName === "INPUT")  i.value = i.dataset.answer;
+      if (i.tagName === "INPUT")  i.value     = i.dataset.answer;
       if (i.tagName === "TD")     i.innerText = i.dataset.answer;
-      if (i.id === "cpiX")     
-        i.value = i.dataset.answer;
+      // if (i.id === "cpiX")        i.value = i.dataset.answer;
     })
   }
 
@@ -105,4 +104,6 @@ export   function removeAllErrors () {
 export function removeErrors(el) {
     el.classList.remove('error');
     el.classList.remove('lenErr');
+    el.classList.remove('faster');
+    el.classList.remove('fastest');
 }

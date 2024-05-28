@@ -26,6 +26,7 @@
     .lenErr { border-color: blueviolet; border-width: 4px; }
     .error  { border-color: red;        border-width: 4px;}
     .perf   { background-color: lightyellow; height: 50px;}
+    .fast   { background-color: lightgreen;}
 
     td { background-color: lightgrey;}
     input       { background-color: lightgoldenrodyellow; margin: 2px; padding: 2px; text-align: right;}
@@ -95,8 +96,8 @@
             <label for="cpi1">CPI=1</label>
             <input type='checkbox' id='cpi1'/>
         </td>
-        <th class="instr">CPU X</th>
-        <th class="instr">CPU Y</th>
+        <th id="cpuX" class="instr">CPU X</th>
+        <th id="cpuY" class="instr">CPU Y</th>
         <th colspan="3" class="instr">Equation</th>
       </tr>
       <tr class="perf"> <th>Instructions</th>   <td id="instrXY"  class="instr" colspan="2"> </td> <td colspan="3"> </td> </tr>
