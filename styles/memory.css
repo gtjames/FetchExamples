@@ -1,6 +1,6 @@
 table, tr, td, th { border: 1px solid black; border-collapse: collapse; padding: 4px 8px;}
-td.left     { width: 45%;}
-td.right    { width: 45%;}
+td.left     { width: 35%;}
+td.right    { width: 55%;}
 tr.current > td:first-child {  
     background-image: url('../images/rtArrow.png'); 
     background-size: 20px 20px; 
@@ -15,14 +15,17 @@ td.index    { background-color: paleturquoise; width: 10%;                   fon
 td.offset   { background-color: lemonchiffon;  width: 40%; font-size: 0.8em; font-family: 'Courier New'; }
 td.Hit      { background-color: greenyellow;   width: 15%; font-size: 0.8em;}
 tr.current  { background-color: aquamarine; }
+tr.currDecode     { background-color: lightcyan; }
 tr.next     { background-color: gold; }
+tr.nextDecode     { background-color: lightgoldenrodyellow; }
 .Miss       { background-color: lightcoral;  font-size: 0.8em;}
 .found      { background-color: lightskyblue; border-radius: 10%; }
 .top        { vertical-align:top; }
 input[type=text]         { width: 60px; }
-.scrolling  { overflow-y: scroll; height:560px; }
+.scrolling  { overflow-y: scroll; height:760px; }
 .modal      {--bs-modal-width:  575px;}
-
+.closed     {height: 0px;}
+.opened     {height: 40px;}
 .dropdown-check-list { display: inline-block; }
 
 .dropdown-check-list .anchor {

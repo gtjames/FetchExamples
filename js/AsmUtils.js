@@ -87,7 +87,6 @@ export   function reveal () {
     inputs.forEach(i => {
       if (i.tagName === "INPUT")  i.value     = i.dataset.answer;
       if (i.tagName === "TD")     i.innerText = i.dataset.answer;
-      // if (i.id === "cpiX")        i.value = i.dataset.answer;
     })
   }
 
