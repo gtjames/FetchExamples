@@ -46,7 +46,7 @@ function showInstructions() {
     step = -1;
     if (op) op.className = "";
     let pcRow = document.getElementById('tr-0');
-    pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
+    // pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
     pcRow = document.getElementById('ADD');
     pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
 }
