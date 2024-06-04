@@ -9,7 +9,7 @@
     function findParks() {
         let list = park.value;
         let URL = `https://developer.nps.gov/api/v1/parks?parkCode=${list}&api_key=${keyNatlParks}`;
-    
+        console.log(URL);
         //  https://www.nps.gov/subjects/developer/api-documentation.htm
         fetch(URL)
             .then(resp => {

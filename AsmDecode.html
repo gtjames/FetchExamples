@@ -32,17 +32,17 @@
         <td class='right top'>
             <button id='step' class='btn btn-warning'>Step</button>
             <button id='clear' class='btn btn-success'>Clear</button>
-            <button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button>
+            <!-- <button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button> -->
             <button id='reset'  class='btn btn-primary'  >Reset </button>
-            <button id='reveal' class='btn btn-danger'  >Reveal</button>
+            <!-- <button id='reveal' class='btn btn-danger'  >Reveal</button> -->
             <input type='radio' name='source' />           <label for='bin2Text'>Bin 2 Text</label>
             <input type='radio' name='source' checked />   <label for='text2Bin'>Text 2 Bin</label>
             <label for='studentID' >Last 4 of ID</label>
             <input id='studentID'    type='text'>
             <div class='scrolling'>
-                <table class='sortable copyable'>
+                <table class='sortable copyable full'>
                     <thead>
-                        <tr> <td>Instruction
+                        <tr class="full"> <td>Instruction
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-copy' viewBox='0 0 16 16'>
                                 <path fill-rule='evenodd' d='M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z'/>
                             </svg>
