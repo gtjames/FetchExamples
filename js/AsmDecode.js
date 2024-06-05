@@ -1,4 +1,4 @@
-import {code, getInstruction, getInstructions} from './AsmData.js';
+import {code, getInstruction, getInstructions, CB} from './AsmData.js';
 import { setSeed } from './utils.js';
 
 let studentID   = document.getElementById('studentID');
@@ -13,7 +13,6 @@ let instructionRows = document.getElementById("instructions")
 let refRows = document.getElementById("refRows")
 let step = 0;
 let application = [];
-let binary2Text;
 let op;
 
 
@@ -32,33 +31,36 @@ function reset () {
     setSeed( (id.length > 0) ? "."+id : -1 );
     if (op) op.className = "";
 
-    application = getInstructions(20);
+    let count = document.getElementById("search").value;
+    count = (count.length > 0) ? count : 20;
+    application = getInstructions(count);
     showInstructions();
 }
 
 function showInstructions() {
     instructionRows.innerHTML = "";
     application.forEach((c, index) => {
-        instructionRows.innerHTML += `<tr id='tr-${index}' data-index='${c.index}'> <td id='instr-${index}' >${c.Instruction}</td><td id='binary-${index}' >${c.Hex}</td><td colspan="3" class='binary'>${c.Binary}</td> </tr>`+
+        instructionRows.innerHTML += `<tr id='tr-${index}' data-index='${c.index}'> <td id='instr-${index}' >${c.Instruction}</td><td id='hex-${index}' >${c.Hex}</td><td colspan="3" id='binary-${index}' class='binary'>${c.Binary}</td> </tr>`+
                                     `<tr id='bin2Op-${index}'  class='closed'></tr>` +
                                     `<tr id='op2Bin-${index}'  class='closed'></tr>`;
     });
     step = -1;
     if (op) op.className = "";
     let pcRow = document.getElementById('tr-0');
-    // pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
+    pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
     pcRow = document.getElementById('ADD');
     pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
 }
 
 function nextStep() {
     let pcRow;
-    binary2Text = document.getElementsByName('source')[0].checked;
 
     if (step >= 0) {
         pcRow = document.getElementById('tr-'+step);
         pcRow.classList.remove('current');
         pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
+        document.getElementById('binary-'+step).classList.remove('bin2Op-currDecode');
+        document.getElementById('instr-' +step).classList.remove('op2Bin-currDecode');
     }
 
     step++;
@@ -66,15 +68,15 @@ function nextStep() {
     pcRow = document.getElementById('tr-'+step);
 
     pcRow.classList.add('current');
+    document.getElementById('binary-'+step).classList.add('bin2Op-currDecode');
+    document.getElementById('instr-' +step).classList.add('op2Bin-currDecode');
+
     let input = document.querySelector(`#tr-${step}`);
     let instruction = input.dataset.index;
     instruction = getInstruction(+instruction);
     
-    if (binary2Text) {
         bin2Text(instruction);
-    } else {
         text2Bin(instruction)
-    }
 }
 
 function openInstruction(type, operator) {
@@ -85,13 +87,13 @@ function openInstruction(type, operator) {
 
     instr = document.getElementById(type+step);
     instr.classList = '';
-    instr.classList.add('currDecode');
+    instr.classList.add(type+'currDecode');
     instr.classList.add('opened');
 
     if (op) op.className = "";
     op = document.getElementById(operator);
     if (op) {
-        op.className = "currDecode";
+        op.className = type+"currDecode";
         op.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
     }
     return  instr;
@@ -131,39 +133,39 @@ function text2Bin (instruction) {
 
     switch ( format )  {
     case    "R" :
-        op2Bin.innerHTML =  `<td>${locText.Mnemonic} ${locText.OpCode} </td>` +
+        op2Bin.innerHTML =  `<td>${format} ${locText.Mnemonic} ${locText.OpCode} </td>` +
                             `<td>R1:     ${trim(tokens[3], 5)}</td>` +                  //  ${parts[3]}
                             `<td>shAmt:  ${trim(tokens[4], 6)}</td>` +                  //  ${parts[4]}
                             `<td>R2:     ${trim(tokens[2], 5)}</td>` +                  //  ${parts[2]}
                             `<td>Rd:     ${trim(tokens[1], 5)}</td>`;                   //  ${parts[1]}
         break;
     case    "B" :
-        op2Bin.innerHTML =  `<td>${parts[0]} ${locText.OpCode} </td>` +
-                            `<td colspan="4">Rd: ${trim(tokens[1],21)}</td>`;           //  ${parts[1]}
+        op2Bin.innerHTML =  `<td>${format} ${parts[0]} ${locText.OpCode} </td>` +
+                            `<td colspan="4">Adrs: ${trim(tokens[1],19)}</td>`;         //  ${parts[1]} s/b 21 but we shift off 2 bits
         break;
     case    "D" :
-        op2Bin.innerHTML =  `<td>       ${parts[0]} ${locText.OpCode} </td>` +
-                            `<td>Adrs:  ${trim(tokens[3],19)}</td>` +                   //  ${parts[3]}
-                            `<td>op:    ${parts[0].substring(4,6)}</td>` +
-                            `<td>Rd:    ${trim(tokens[2],5)}</td>` +                    //  ${parts[2]}
-                            `<td>R2:    ${trim(tokens[1],5)}</td>`;                     //  ${parts[1]}
+        op2Bin.innerHTML =  `<td>${format} ${parts[0]} ${locText.OpCode} </td>` +
+                            `<td>Adrs:  ${trim(tokens[3],9)}</td>` +                    //  ${parts[3]}
+                            `<td>Op2:   ${parts[0].substring(4,2)}</td>` +
+                            `<td>Rn:    ${trim(tokens[2],5)}</td>` +                    //  ${parts[2]}
+                            `<td>Rt:    ${trim(tokens[1],5)}</td>`;                     //  ${parts[1]}
         break;
     case    "I" :
-        op2Bin.innerHTML =  `<td>${parts[0]} ${locText.OpCode} </td>` +
+        op2Bin.innerHTML =  `<td>${format} ${parts[0]} ${locText.OpCode} </td>` +
                             `<td colspan="2">Adrs:   ${trim(tokens[3],12)}</td>` +     //  ${parts[3]
                             `<td>R2:     ${trim(tokens[2], 5)}</td>` +                  //  ${parts[2]}
                             `<td>Rd:     ${trim(tokens[1], 5)}</td>`;                   //  ${parts[1]}
         break;
     case    "IM" :
-        op2Bin.innerHTML =  `<td>${parts[0]} ${locText.OpCode} </td>` +
+        op2Bin.innerHTML =  `<td>${format} ${parts[0]} ${locText.OpCode} </td>` +
                             `<td>Rn:    ${trim(tokens[3],5)}  </td>` +                  //  ${parts[3]}
                             `<td colspan="2">Immed: ${trim(tokens[2],12)} </td>` +      //  ${parts[4]}
                             `<td>Rd:    ${trim(tokens[1],5)}  </td>`;                   //  ${parts[1]}
         break;
     case    "CB" :
-        op2Bin.innerHTML =  `<td>${parts[0]} ${locText.OpCode} </td>` +
-                            `<td colspan="3">Label: ${trim(tokens[2],19)}</td>` +       //  ${parts[2]}
-                            `<td>Rd: ${trim(tokens[1],19)}</td>`;                       //  ${parts[1]}
+        op2Bin.innerHTML =  `<td>${format} ${parts[0]} ${locText.OpCode} </td>` +
+                            `<td colspan="3">Adrs: ${trim(tokens[parts[0][0] == 'C' ? 2:1],21).substring(0,19)}</td>` +       //  ${parts[2]}  s/b 19 but we shift off 2 bits
+                            `<td>Op: ${parts[0][0] == 'C' ? trim(tokens[1],5) : CB[parts[0]]}</td>`;                       //  ${parts[1]}
         break;
     }
 }
@@ -183,38 +185,39 @@ function bin2Text(instruction) {
         bin2Op.innerHTML = binary;
         return;
     }
-    switch ( locBin.Format )  {
+    let format = locBin.Format ;
+    switch ( format )  {
     case    "R" :
-        bin2Op.innerHTML =  `<td>${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}</td>` +
+        bin2Op.innerHTML =  `<td>${format} ${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}x</td>` +
                             `<td>R1:     ${binary.substring(locBin.Width, 16)}</td>` +
-                            `<td>shAmt:  ${binary.substring(15, 22)}</td>` +
+                            `<td>shAmt:  ${binary.substring(16, 22)}</td>` +
                             `<td>R2:     ${binary.substring(22, 27)}</td>` +
                             `<td>Rd:     ${binary.substring(27, 32)}</td>`;
         break;
     case    "B" :
-        bin2Op.innerHTML =  `<td>${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}</td>` +
-                            `<td colspan="4">Addrs: ${binary.substring(6, 32)}</td>`;
+        bin2Op.innerHTML =  `<td>${format} ${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}x</td>` +
+                            `<td colspan="4">Adrs: ${binary.substring(6, 32)}</td>`;
         break;
     case    "D" :
-        bin2Op.innerHTML =  `<td>${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}</td>` +
-                            `<td>Imm: ${binary.substring(locBin.Width, 20)}</td>` +
-                            `<td>Op2: ${binary.substring(20, 22)}</td>` +
-                            `<td>Rn:  ${binary.substring(22, 27)}</td>` +
-                            `<td>Rt:  ${binary.substring(27, 32)}</td>`;
+        bin2Op.innerHTML =  `<td>${format} ${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}x</td>` +
+                            `<td>Adrs: ${binary.substring(locBin.Width, 20)}</td>` +
+                            `<td>Op2:  ${binary.substring(20, 22)}</td>` +
+                            `<td>Rn:   ${binary.substring(22, 27)}</td>` +
+                            `<td>Rt:   ${binary.substring(27, 32)}</td>`;
         break;
     case    "I" :
-        bin2Op.innerHTML = `<td>${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}</td>` +
+        bin2Op.innerHTML = `<td>${format} ${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}x</td>` +
                             `<td colspan="2">Adrs: ${binary.substring(locBin.Width, locBin.Width+12)}</td>` +
                             `<td>Rn:   ${binary.substring(22, 27)}</td>` +
                             `<td>Rt:   ${binary.substring(27, 32)}</td>`;
         break;
     case    "IM" :
-        bin2Op.innerHTML =  `<td>${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}</td>` +
+        bin2Op.innerHTML =  `<td>${format} ${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}x</td>` +
                             `<td colspan="3">Adrs: ${binary.substring(9, 27)}</td>` +
                             `<td>Rd: ${binary.substring(27, 32)}</td>`;
         break;
         case    "CB" :
-            bin2Op.innerHTML =  `<td>${locBin.Mnemonic} ${binary.substring(0, locBin.Width)}</td>` +
+            bin2Op.innerHTML =  `<td>${format} b.${CB[binary.substring(27, 32)]} ${binary.substring(0, locBin.Width)}x</td>` +
                                 `<td colspan="3">Adrs: ${binary.substring(locBin.Width, 27)}</td>` +
                                 `<td>Op: ${binary.substring(27, 32)}</td>`;
         break;
@@ -235,12 +238,9 @@ function token2Bin(token) {
     }
     number = token.replace(/#/, "").replace("0x","");
 
-    if (token.length === 0)
-        number = "0";
-    else if (token.localeCompare("sp") === 0)
-        number = "28";
-    else if (token.localeCompare("xzr") === 0)
-        number = "31";
+    if (token.length === 0)                         number = "0";
+    else if (token.localeCompare("sp")  === 0)      number = "28";
+    else if (token.localeCompare("xzr") === 0)      number = "31";
     else if (hex)
         number = parseInt(token.replace(/[^0-9A-F-]/gi, ""), 16).toString(10);
     else

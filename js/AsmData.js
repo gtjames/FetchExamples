@@ -80,12 +80,21 @@ export let code = [
 
 export function getInstructions(count) {
     let application = [];
-    // count = instructions.length;
-    for (let i = 0; i < count; i++) {
-        let rnd = getRandomInt(instructions.length);
-        // let rnd = i;
-        instructions[rnd].index = rnd
-        application.push(instructions[rnd]);
+
+    if (+count > 0) {
+        // count = instructions.length;
+        for (let i = 0; i < count; i++) {
+            let rnd = getRandomInt(instructions.length);
+            // let rnd = i;
+            instructions[rnd].index = rnd
+            application.push(instructions[rnd]);
+        }
+    } else {
+        application = instructions.filter((i, index) => {
+            if (i.Instruction.indexOf(count) >= 0)
+                i.index = index;
+            return i.Instruction.indexOf(count) >= 0;
+    });
     }
     return application;
 }
@@ -94,7 +103,7 @@ export function getInstruction(index) {
     return instructions[index];
 }
 
-export let instructions = [
+let instructions = [
 {Hex: '0xD28003E4',    Binary: '11010010100000000000001111100100',      Instruction: 'MOV      X4,        31              '},    
 {Hex: '0xD28003E4',    Binary: '11010010100000000000001111100100',      Instruction: 'MOV      X4,        31              '},    
 {Hex: '0xAA1F03EB',    Binary: '10101010000111110000001111101011',      Instruction: 'ORR      X11,       X31,       X31  '},    
@@ -298,7 +307,6 @@ export let instructions = [
 {Hex: '0x5400006C',    Binary: '01010100000000000000000001101100',      Instruction: 'B.GT     0xc'     },
 {Hex: '0xCB01002A',    Binary: '11001011000000010000000000101010',      Instruction: 'SUB      x10,    x1,  x1'},
 {Hex: '0xCB01002B',    Binary: '11001011000000010000000000101011',      Instruction: 'SUB      x11,    x1,  x1'},
-{Hex: '0x9E220166',    Binary: '10011110001000100000000101100110',      Instruction: 'SCVTF    s6,     x11	   '},
 {Hex: '0x1E2638C1',    Binary: '00011110001001100011100011000001',      Instruction: 'FSUB     s1,     s6,  s6'},
 {Hex: '0xBC400008',    Binary: '10111100010000000000000000001000',      Instruction: 'LDUR     s8,     [x0,  #0]'},
 {Hex: '0x1E2828C6',    Binary: '00011110001010000010100011000110',      Instruction: 'FADD     s6,     s6,  s8'},
@@ -306,7 +314,6 @@ export let instructions = [
 {Hex: '0x91001000',    Binary: '10010001000000000001000000000000',      Instruction: 'ADD      x0,     x0,  #4'},
 {Hex: '0xCB0A002C',    Binary: '11001011000010100000000000101100',      Instruction: 'SUB      x12,    x1,  x10'},
 {Hex: '0xB5FFFF6C',    Binary: '10110101111111111111111101101100',      Instruction: 'CBNZ     x12,    -5'     },
-{Hex: '0x9E220025',    Binary: '10011110001000100000000000100101',      Instruction: 'SCVTF    s5,     x1'     },
 {Hex: '0x1E2518C1',    Binary: '00011110001001010001100011000001',      Instruction: 'FDIV     s1,     s6,  s5'},
 {Hex: '0xD61F03C0',    Binary: '11010110000111110000001111000000',      Instruction: 'BR       x30'    },
 {Hex: '0xCB01002A',    Binary: '11001011000000010000000000101010',      Instruction: 'SUB      x10,   x1,   x1'},
@@ -329,39 +336,23 @@ export let instructions = [
 {Hex: '0x97FFFFEA',    Binary: '10010111111111111111111111101010',      Instruction: 'BL       0x124C' },
 ];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export let CB = {
+    "00000":  "EQ",      "B.EQ":  "00000", //  	Equal	Z set (zero)
+    "00001":  "NE",      "B.NE":  "00001", //  	Not Equal	Z clear (not zero)
+    "00010":  "CS",      "B.CS":  "00010", //  /HS	Carry Set / Unsigned Higher or Same	C set (carry)
+    "00011":  "CC",      "B.CC":  "00011", //  /LO	Carry Clear / Unsigned Lower	C clear (no carry)
+    "00100":  "MI",      "B.MI":  "00100", //  	Minus / Negative	N set (negative)
+    "00101":  "PL",      "B.PL":  "00101", //  	Plus / Positive or Zero	N clear (positive or zero)
+    "00110":  "VS",      "B.VS":  "00110", //  	Overflow	V set (overflow)
+    "00111":  "VC",      "B.VC":  "00111", //  	No Overflow	V clear (no overflow)
+    "01000":  "HI",      "B.HI":  "01000", //  	Unsigned Higher	C set and Z clear
+    "01001":  "LS",      "B.LS":  "01001", //  	Unsigned Lower or Same	C clear or Z set
+    "01010":  "GE",      "B.GE":  "01010", //  	Signed Greater or Equal	N equals V
+    "01011":  "LT",      "B.LT":  "01011", //  	Signed Less Than	N not equal to V
+    "01100":  "GT",      "B.GT":  "01100", //  	Signed Greater Than	Z clear and N equals V
+    "01101":  "LE",      "B.LE":  "01101", //  	Signed Less Than or Equal	Z set or N not equal to V
+    "01110":  "AL",      "B.AL":  "01110", //  	Always	Always execute (unconditional)
+    "01111":  "NV",      "B.NV":  "01111", //  	Never	Never execute (generally not used)
+    "XXXXX":  "CBNZ",    "CBNZ":  "00000", //  	CBNZ
+    "XXXXX":  "CBZ",     "CBZ":   "00001", //  	CBZ
+}
