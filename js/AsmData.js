@@ -78,31 +78,6 @@ export let code = [
 {Mnemonic:  'UMULH',    Format:'R',     Width:11,     OpCode:'10011011110',   Shamt:  '',         Start:  '4DE',      End: '',    },
 ];
 
-export function getInstructions(count) {
-    let application = [];
-
-    if (+count > 0) {
-        // count = instructions.length;
-        for (let i = 0; i < count; i++) {
-            let rnd = getRandomInt(instructions.length);
-            // let rnd = i;
-            instructions[rnd].index = rnd
-            application.push(instructions[rnd]);
-        }
-    } else {
-        application = instructions.filter((i, index) => {
-            if (i.Instruction.indexOf(count) >= 0)
-                i.index = index;
-            return i.Instruction.indexOf(count) >= 0;
-    });
-    }
-    return application;
-}
-
-export function getInstruction(index) {
-    return instructions[index];
-}
-
 let instructions = [
 {Hex: '0xD28003E4',    Binary: '11010010100000000000001111100100',      Instruction: 'MOV      X4,        31              '},    
 {Hex: '0xD28003E4',    Binary: '11010010100000000000001111100100',      Instruction: 'MOV      X4,        31              '},    
@@ -133,7 +108,7 @@ let instructions = [
 {Hex: '0xF84003E1',    Binary: '11111000010000000000001111100001',      Instruction: 'LDUR     x1,        [sp,        0]       '},    
 {Hex: '0x910043FF',    Binary: '10010001000000000100001111111111',      Instruction: 'ADDI     sp,        sp,         0x10     '},    
 {Hex: '0xF84003E1',    Binary: '11111000010000000000001111100001',      Instruction: 'LDUR     x1,        [sp,        0]       '},    
-{Hex: '0xD65F03C0',    Binary: '11010110010111110000001111000000',      Instruction: 'BR                                '},    
+{Hex: '0xD65F03C0',    Binary: '11010110000111110000001111000000',      Instruction: 'BR                                '},    
 {Hex: '0xD100C3FF',    Binary: '11010001000000001100001111111111',      Instruction: 'SUBI     sp,        sp,         0x30     '},    
 {Hex: '0xF80003E1',    Binary: '11111000000000000000001111100001',      Instruction: 'STUR     x1,        [sp,        0]       '},    
 {Hex: '0xBC0103E1',    Binary: '10111100000000010000001111100001',      Instruction: 'STURS    s1,        [sp,        0x10]    '},    
@@ -215,12 +190,10 @@ let instructions = [
 {Hex: '0xD61F0040',    Binary: '11010110000111110000000001000000',      Instruction: 'BR       x2'               },    
 {Hex: '0x910003FD',    Binary: '10010001000000000000001111111101',      Instruction: 'MOV      x29,       sp'  },    
 {Hex: '0xF8000BF3',    Binary: '11111000000000000000101111110011',      Instruction: 'STUR     x19,       [sp,        0x10]'  },    
-{Hex: '0x35000140',    Binary: '00110101000000000000000101000000',      Instruction: 'CBNZ     w0,        0x28'   },    
 {Hex: '0x97FFFFE0',    Binary: '10010111111111111111111111100000',      Instruction: 'BL       -0x80'      },    
 {Hex: '0xF844BC00',    Binary: '11111000010001001011110000000000',      Instruction: 'LDUR     x0,        [x0,        0x978]'  },    
 {Hex: '0xB4000080',    Binary: '10110100000000000000000010000000',      Instruction: 'CBZ      x0,        0x10'   },    
 {Hex: '0x9127C000',    Binary: '10010001001001111100000000000000',      Instruction: 'ADD      x0,        x0,         0x9f0'},    
-{Hex: '0x52800020',    Binary: '01010010100000000000000000100000',      Instruction: 'MOV      w0,        1'         },    
 {Hex: '0xF8400BF3',    Binary: '11111000010000000000101111110011',      Instruction: 'LDUR     x19,       [sp,        0x10]'  },    
 {Hex: '0xF844C000',    Binary: '11111000010001001100000000000000',      Instruction: 'LDUR     x0,        [x0,        0x980]'  },    
 {Hex: '0xB4000140',    Binary: '10110100000000000000000101000000',      Instruction: 'CBZ      x0,        0x28'   },    
@@ -230,7 +203,6 @@ let instructions = [
 {Hex: '0x17FFFFD5',    Binary: '00010111111111111111111111010101',      Instruction: 'B        -0xac'      },    
 {Hex: '0x17FFFFD4',    Binary: '00010111111111111111111111010100',      Instruction: 'B        -0xb0'      },    
 {Hex: '0x100007C1',    Binary: '00010000000000000000011111000001',      Instruction: 'ADR      x1,        0xf8'   },    
-{Hex: '0x528002C0',    Binary: '01010010100000000000001011000000',      Instruction: 'MOV      w0,        0x16'},    
 {Hex: '0x58000760',    Binary: '01011000000000000000011101100000',      Instruction: 'LDUR     x0,        [sp,        236]'},    
 {Hex: '0xF8400401',    Binary: '11111000010000000000010000000001',      Instruction: 'LDUR     x1,        [x0,        8]'  },    
 {Hex: '0x927CEC20',    Binary: '10010010011111001110110000100000',      Instruction: 'ANDI     x0,        x1,         -0x10'   },    
@@ -239,7 +211,6 @@ let instructions = [
 {Hex: '0x910003FD',    Binary: '10010001000000000000001111111101',      Instruction: 'MOV      x29,       sp'  },    
 {Hex: '0x940009B7',    Binary: '10010100000000000000100110110111',      Instruction: 'BL       0x26dc'    },    
 {Hex: '0x580006A0',    Binary: '01011000000000000000011010100000',      Instruction: 'LDUR     x0,        [sp,        212]'},    
-{Hex: '0x52800001',    Binary: '01010010100000000000000000000001',      Instruction: 'MOV      w1,        0'   },    
 {Hex: '0x580006A2',    Binary: '01011000000000000000011010100010',      Instruction: 'LDUR     x2,        [sp,        212]'},    
 {Hex: '0xCB000042',    Binary: '11001011000000000000000001000010',      Instruction: 'SUB      x2,        x2,         x0'},    
 {Hex: '0x94000A07',    Binary: '10010100000000000000101000000111',      Instruction: 'BL       0x281c'    },    
@@ -248,28 +219,18 @@ let instructions = [
 {Hex: '0x940009BA',    Binary: '10010100000000000000100110111010',      Instruction: 'BL       0x26e8'    },    
 {Hex: '0x940009DF',    Binary: '10010100000000000000100111011111',      Instruction: 'BL       0x277c'    },    
 {Hex: '0x10000681',    Binary: '00010000000000000000011010000001',      Instruction: 'ADR      x1,        0xd0'   },    
-{Hex: '0x528002A0',    Binary: '01010010100000000000001010100000',      Instruction: 'MOV      w0,        0x15'},    
 {Hex: '0x58000628',    Binary: '01011000000000000000011000101000',      Instruction: 'LDUR     x8,        [sp,        196]'},    
 {Hex: '0xD2800000',    Binary: '11010010100000000000000000000000',      Instruction: 'MOV      x0,        0'   },    
 {Hex: '0x910003E1',    Binary: '10010001000000000000001111100001',      Instruction: 'MOV      x1,        sp'   },    
 {Hex: '0x58000582',    Binary: '01011000000000000000010110000010',      Instruction: 'LDUR     x2,        [sp,        176]'},    
 {Hex: '0xF81F8C20',    Binary: '11111000000111111000110000100000',      Instruction: 'STUR     x0,        [x1,        -8]'},    
-{Hex: '0x34000243',    Binary: '00110100000000000000001001000011',      Instruction: 'CBZ      w3,        0x48'   },    
-{Hex: '0x7100807F',    Binary: '01110001000000001000000001111111',      Instruction: 'CMP      w3,        0x20'},    
 {Hex: '0x54FFFFA0',    Binary: '01010100111111111111111110100000',      Instruction: 'B.EQ     -0xc'       },    
-{Hex: '0x52800404',    Binary: '01010010100000000000010000000100',      Instruction: 'MOV      w4,        0x20'},    
-{Hex: '0x71008869',    Binary: '01110001000000001000100001101001',      Instruction: 'SUBS     w9,        w3,         0x22' },    
 {Hex: '0xD1000508',    Binary: '11010001000000000000010100001000',      Instruction: 'SUB      x8,        x8,         1'},    
 {Hex: '0xF81F8C28',    Binary: '11111000000111111000110000101000',      Instruction: 'STUR     x8,        [x1,        -8]'},    
 {Hex: '0x91000400',    Binary: '10010001000000000000010000000000',      Instruction: 'ADD      x0,        x0,         1'},    
-{Hex: '0x340000C3',    Binary: '00110100000000000000000011000011',      Instruction: 'CBZ      w3,        0x18'   },    
-{Hex: '0x6B03009F',    Binary: '01101011000000110000000010011111',      Instruction: 'CMP      w4,        w3'   },    
 {Hex: '0x54FFFFA1',    Binary: '01010100111111111111111110100001',      Instruction: 'B.NE     -0xc'       },    
-{Hex: '0x52800004',    Binary: '01010010100000000000000000000100',      Instruction: 'MOV      w4,        0'   },    
-{Hex: '0x381FF104',    Binary: '00111000000111111111000100000100',      Instruction: 'STURB    w4,        [x8,        -1]' },    
 {Hex: '0x17FFFFEE',    Binary: '00010111111111111111111111101110',      Instruction: 'B        -0x48'      },    
 {Hex: '0x91000023',    Binary: '10010001000000000000000000100011',      Instruction: 'ADD      x3,        x1,         0'},    
-{Hex: '0x8B204C24',    Binary: '10001011001000000100110000100100',      Instruction: 'ADD      x4,        x1,         w0'},    
 {Hex: '0xEB03009F',    Binary: '11101011000000110000000010011111',      Instruction: 'CMP      x4,        x3'   },    
 {Hex: '0xF85F8085',    Binary: '11111000010111111000000010000101',      Instruction: 'LDUR     x5,        [x4,        -8]' },    
 {Hex: '0xF8400066',    Binary: '11111000010000000000000001100110',      Instruction: 'LDUR     x6,        [x3,        0]'  },    
@@ -355,4 +316,29 @@ export let CB = {
     "01111":  "NV",      "B.NV":  "01111", //  	Never	Never execute (generally not used)
     "XXXXX":  "CBNZ",    "CBNZ":  "00000", //  	CBNZ
     "XXXXX":  "CBZ",     "CBZ":   "00001", //  	CBZ
+}
+
+export function getInstructions(count) {
+    let application = [];
+
+    if (+count > 0) {
+        // count = instructions.length;
+        for (let i = 0; i < count; i++) {
+            let rnd = getRandomInt(instructions.length);
+            // let rnd = i;
+            instructions[rnd].index = rnd
+            application.push(instructions[rnd]);
+        }
+    } else {
+        application = instructions.filter((i, index) => {
+            if (i.Instruction.indexOf(count) >= 0)
+                i.index = index;
+            return i.Instruction.indexOf(count) >= 0;
+    });
+    }
+    return application;
+}
+
+export function getInstruction(index) {
+    return instructions[index];
 }

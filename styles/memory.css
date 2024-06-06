@@ -25,12 +25,19 @@ tr.nextDecode     { background-color: lightgoldenrodyellow; }
 .Miss       { background-color: lightcoral;  font-size: 0.8em;}
 .found      { background-color: lightskyblue; border-radius: 10%; }
 .top        { vertical-align:top; }
+.lenErr { border-color: blueviolet; border-width: 4px; }
+.error  { border-color: red;        border-width: 4px;}
 input[type=text]         { width: 60px; }
 .scrolling  { overflow-y: scroll; height:760px; }
-.modal      {--bs-modal-width:  575px;}
+.modal      {--bs-modal-width:  775px;}
 tr.closed   {height: 0px;     display: none;}
 .opened     {height: 40px;}
 .dropdown-check-list { display: inline-block; }
+input.vsmall{ width: 50px; }
+input.small { width: 100px; }
+input.medium{ width: 140px; }
+input.big   { width: 240px; }
+
 /*  */
 .accordion {
   background-color: #eee;

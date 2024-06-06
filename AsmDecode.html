@@ -30,9 +30,10 @@
             </div>
         </td>
         <td class='right top'>
-            <button id='step' class='btn btn-warning'>Step</button>
-            <button id='clear' class='btn btn-success'>Clear</button>
-            <button id='reset'  class='btn btn-primary'  >Reset </button>
+            <button id='step'       class='btn btn-warning'>Step</button>
+            <button id='clear'      class='btn btn-success'>Clear</button>
+            <button id='reset'      class='btn btn-primary'  >Reset </button>
+            <button id='decoder'    class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#decodeHex' type='button' >Decoder</button>
             <label for='studentID' >Last 4 of ID</label>
             <input id='studentID'    type='text'>
             <label for='search' >Search</label>
@@ -51,22 +52,31 @@
         </td>
         </tr>
     </table>
-    <div class='modal' id='mainMemory' tabindex='1'>
+    <div class='modal' id='decodeHex' tabindex='1'>
       <div class='modal-dialog modal-dialog-scrollable'>
           <div class='modal-content bg-info-subtle'>
               <div class='modal-header bg-info-subtle'>
-              <h1 class='modal-title fs-5' id='modalTitle'>Contents of Application Memory</h1>
+              <h1 class='modal-title fs-5' id='modalTitle'>Test Your knowledge</h1>
               <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
           </div>
           <div class='modal-body bg-secondary-subtle pt-0'>
             <table class='table sortable copyable table-hover table-striped'>
               <thead class='table-secondary'>
-                <tr><th>
+                <tr>        
+                    <td><button id='submit' class='btn btn-success' >Submit</button></td>
+                    <td><button id='reveal' class='btn btn-danger'  >Reveal</button></td>
+                    <td><button id='more'   class='btn btn-warning' >More</button></td>
+                    <td><label for='testID' >Test ID</label>
+                        <input id='testID'    type='text'>
+                    </td>
+                </tr>
+                <tr><th>Hex Value
                     <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-copy' viewBox='0 0 16 16'>
                         <path fill-rule='evenodd' d='M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z'/>
                     </svg>
-                Tag</th><th>Index</th><th>Contents</th></tr></thead>
-              <tbody id='memoryBlocks'></tbody>
+                </th>
+                <th>Operation</th> <th>Operand 1</th> <th>Operand 2</th> <th>Operand 3</th><th>Operand 4</th></tr></thead>
+                <tbody id='test'></tbody>
             </table>
           </div>
         </div>
