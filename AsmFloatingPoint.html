@@ -27,7 +27,7 @@
 
     td { background-color: lightgrey;}
     input       { background-color: lightgoldenrodyellow; margin: 2px; padding: 2px; text-align: right;}
-    input.small { width: 100px; }
+    input.small { width: 80px; }
     input.medium{ width: 240px; }
     input.big   { width: 340px; }
     th.C1       { width: 14%; }
@@ -51,24 +51,27 @@
       <tr>
         <td>FP</td>
         <td> <input id='dec' class='medium'> </td>
-        <td> <input id='fp' class='big'> </td>
+        <td></td>
        <td><input id='studentID'    type='text'></td>
 
       </tr>
       <tr>
-        <th class="solve">Exponent</th>
+        <th class="solve">Sign -- Exponent</th>
         <th class="solve">Significant</th>
         <th class="solve">FP Binary (32 bits)</th>
         <th class="solve">Hexadecimal</th>
       </tr>
       <tr>
         <td>
-            <input id='expDec' class='small'>
-            <input id='exp' class='small'>
+          Sign  <input id='binSign' class='small'>
+          Dec   <input id='expDec'  class='small'>
+          Bin   <input id='expBin'  class='small'>
         </td>
-        <td> <input id='frac' class='medium'> </td>
-        <td class='big'> <input id='binary' class='big'> </td>
-        <td> <input id='hex' class='small'> </td>
+        <td>              
+          Frac  <input id='frac' class='medium'>
+        </td>
+        <td class='big'>  <input id='binary' class='big'> </td>
+        <td>              <input id='hex' class='small'> </td>
       </tr>
       </tfoot>
   </table>
