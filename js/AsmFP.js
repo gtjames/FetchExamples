@@ -2,10 +2,10 @@ import {reveal, close, clear, removeAllErrors, decToBin, bin2hex} from './AsmUti
 import {getBinRand, setSeed} from './utils.js';
     
 let dec         = document.getElementById('dec'  );
-let fp          = document.getElementById('fp'   );
 let frac        = document.getElementById('frac' );
-let exp         = document.getElementById('exp'  );
+let expBin      = document.getElementById('expBin');
 let expDec      = document.getElementById('expDec');
+let binSign     = document.getElementById('binSign');
 let binary      = document.getElementById('binary' );
 let hex         = document.getElementById('hex' );
 let revealOn    = document.getElementById('revealOn');
@@ -20,8 +20,8 @@ revealBtn.parentElement.addEventListener('dblclick', () => revealBtn.disabled = 
 reset();
 
 export function submit() {
-    close('fp',           true,  0,     false, 0);
-    close('exp',          true,  0,     false, 0);
+    close('binSign',      true,  0,     false, 0);
+    close('expBin',       true,  0,     false, 0);
     close('expDec',       true,  0,     false, 0);
 
     close('frac',         true,  0,     false, 23);
@@ -39,10 +39,10 @@ function reset() {
     let binData = decToBin(fltPt);
     dec.value   = fltPt;
 
-    fp.dataset.answer      = binData.binary
     frac.dataset.answer    = binData.binFraction;
+    expBin.dataset.answer  = binData.binExponent;
     expDec.dataset.answer  = binData.exponent;
-    exp.dataset.answer     = binData.binExponent;
+    binSign.dataset.answer = binData.binSign;
     binary.dataset.answer  = binData.binary;
     hex.dataset.answer     = bin2hex(binData.binary);
     
