@@ -2,6 +2,7 @@
 
 let menuOptions = [
     {text: 'Home',          link: 'index.html',},
+    {text: 'Assembler',     link: 'AsmIndex.html',},
     {text: 'Baseball',      link: 'baseball.html',},
     {text: 'Basketball',    link: 'basketball.html',},
     {text: 'Books',         link: 'books.html',},
