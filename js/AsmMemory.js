@@ -198,7 +198,9 @@ function nextStep() {
 
         pcRow = document.getElementById('tr-'+step);
         pcRow.classList.remove('current');
-        pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
+        let scrollOn = document.getElementById('scrollOn').checked;
+        if (scrollOn)
+            pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
     }
     step = +pc.value;
     pc.value = step + 1;

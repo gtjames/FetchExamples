@@ -8,8 +8,13 @@
     <link  href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'></script>
     <link rel='stylesheet' href='styles/memory.css'>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" > -->
 </head>
-<body>
+<body class="w3-theme-l1">
+    <div class="w3-container w3-theme-l1">
+        <div id="menu" class="w3-bar"></div>
+    </div>
     <label for='tagBits'  ># of Tag Bits</label>   <input id='tagBits'     type='text'>
     <label for='indexBits'># of Index Bits</label> <input id='indexBits'   type='text'>
     <label for='fetchCnt' ># of Fetches</label>    <input id='fetchCnt'    type='text'>
@@ -33,7 +38,8 @@
             <button id='step' class='btn btn-warning'>Step</button>
             <button id='clear' class='btn btn-success'>Clear</button>
             <button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button>
-            <input type='checkbox' id='adrsOnly' name='scales' checked/> <label for='adrsOnly'>Address Only</label>
+            <input type='checkbox' id='adrsOnly' checked/> <label for='adrsOnly'>Address Only</label>
+            <input type='checkbox' id='scrollOn' checked/> <label for='scrollOn'>Scroll On</label>
             <div class='scrolling'>
                 <table class='sortable copyable' style="width: 100%; table-layout: fixed;">
                 <thead>
@@ -90,6 +96,6 @@
 
 <script src='js/AsmMemory.js' type="module"></script>
 <script src='js/sortColumns.js'></script>
-<script>
-</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Assembler')</script>
 </html>
