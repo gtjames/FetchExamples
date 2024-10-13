@@ -51,7 +51,15 @@ function showNBATeams(teams) {
  */
 function getGamesAndRoster(teamId) {
     getNBATeamRoster(teamId);
-    // getNBAGameStats(teamId);
+    getNBAGameStats(teamId, "2015");
+    getNBAGameStats(teamId, "2016");
+    getNBAGameStats(teamId, "2017");
+    getNBAGameStats(teamId, "2018");
+    getNBAGameStats(teamId, "2019");
+    getNBAGameStats(teamId, "2020");
+    getNBAGameStats(teamId, "2021");
+    getNBAGameStats(teamId, "2022");
+    getNBAGameStats(teamId, "2023");
     openTab(document.getElementById('rosterBtn'), 'rosterTab')
 }
 
@@ -108,10 +116,10 @@ function showNBATeamRoster(players, teamId) {
  *
  *
  */
-function getNBAGameStats(teamId) {
-    fetch(`https://api-nba-v1.p.rapidapi.com/games/teamId/${teamId}`, options)
+function getNBAGameStats(teamId, season) {
+    fetch(`https://api-nba-v1.p.rapidapi.com/games?team=${teamId}&season=${season}`, options)
         .then(response => response.json()) //  wait for the response and convert it to JSON
-        .then(stats => showTeamGameStats(stats.api.games))
+        .then(stats => showTeamGameStats(stats.response, season))
         .catch(err => console.error(err));
 }
 
@@ -121,22 +129,22 @@ function getNBAGameStats(teamId) {
  *
  *      the next step for this app is to put the years each in their own tab
  */
-function showTeamGameStats(games) {
-    for (let year = 2015; year <= 2023; year++ ) {
-        let gamesForTheYear = games.filter(g => +g.seasonYear === year);
-        gamesByYear(gamesForTheYear, 'G' + year);
-    }
+function showTeamGameStats(games, season) {
+        gamesByYear(games, 'G' + season);
 }
 
 function gamesByYear(games, tab) {
     let teamTable = document.getElementById(tab + 'Rows');
+    console.log(tab);
+    console.log(teamTable);
+    if (teamTable == null) return;
     let html = ``;
     for (let game of games) {
         row++;
         html = `<tr class="w3-theme-${row%2>0?'l2':'l3'}">
-		        <td>${game.arena} </td><td>${game.city}</td><td>${game.gameDuration} </td>
-		        <td>${game.hTeam.fullName}</td><td>${game.hTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.hTeam.teamId})'><img src='${game.hTeam.logo}' alt="" width=100px height=100px></td>
-		        <td>${game.vTeam.fullName}</td><td>${game.vTeam.score.points}</td><td  onclick='getGamesAndRoster(${game.vTeam.teamId})'><img src='${game.vTeam.logo}' alt="" width=100px height=100px></td>
+		        <td>${game.arena.name} </td><td>${game.arena.city}</td>
+		        <td onclick='getGamesAndRoster(${game.teams.home.teamId})'><img src='${game.teams.home.logo}' alt="" width=100px height=100px>${game.teams.home.name}</td><td>${game.scores.home.points}</td>
+		        <td onclick='getGamesAndRoster(${game.teams.visitors.teamId})'><img src='${game.teams.visitors.logo}' alt="" width=100px height=100px>${game.teams.visitors.name}</td><td>${game.scores.visitors.points}</td>
             </tr>`;
         teamTable.innerHTML += html;
     }
@@ -151,9 +159,9 @@ function gamesByYear(games, tab) {
  *
  */
 function getNBAPlayerStats(playerId, playerName) {
-    fetch(`https://api-nba-v1.p.rapidapi.com/players/playerId/statistics?id=${playerId}`, options)
+    fetch(`https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerId}&season=2023`, options)
         .then(response => response.json()) //  wait for the response and convert it to JSON
-        .then(playerStats => showNBAPlayerStats(playerStats.api.statistics, playerName))
+        .then(playerStats => showNBAPlayerStats(playerStats.response, playerName))
         .catch(err => console.error(err));
 }
 
