@@ -31,7 +31,7 @@
     <input  id="extend" type="number">
     <button id="extendUntilDate">Extend Until Date</button>
     <button id="extendUntilDates">Extend All Until Dates</button>
-    <button id="test">Test</button>
+    <button id="groupsInCourse">Groups In Course</button>
 </div>
 
 <div class="w3-row w3-theme-l3">
@@ -77,7 +77,7 @@
 	let errMessage  = document.getElementById('errMessage');
     
     courseList                                  .addEventListener('change', setCourse);
-	document.getElementById('test')             .addEventListener('click',  test);
+    document.getElementById('groupsInCourse')   .addEventListener('click',  listAllGroupsForCourse);
 	document.getElementById('search')           .addEventListener('click',  listModules);
     document.getElementById("close")            .addEventListener("click",  closeModal);
     document.getElementById("closeErr")         .addEventListener("click",  closeError);
@@ -306,32 +306,61 @@ function updateUntilDate(id, url) {
     .catch(error => openError(error));
 }
 
-function test() {
-    let url = `https://${edu}.instructure.com/api/v1/courses/${course}/students`;
-    console.log(url);
+// Helper function to set headers for fetch
+const headers = {
+    "Authorization": `Bearer ${keyCanvas}`,
+    "Content-Type": "application/json"
+};
 
-    let header = {
-        "Content-Type"  : "application/json",
-        "Authorization" : `Bearer ${keyCanvas}`,
-        "Accept": "*/*",
-    };
-
-    let body = JSON.stringify( { "url": url, "assignment_extensions": [ {"user_id": "studentId", "extra_attempts": "extendNum"} ] });
-    let options = { method: "GET", headers: header}//, body: body };
-
-    console.log('https://localhost:3000/proxy?edu=byui&course=8630');
-    fetch('https://localhost:3000/proxy?edu=byui&course=8630', options)
-    .then(resp => resp.json())
-    .then(students => {
-        console.log(stringify(students));
-        let map  = students.map( s => `<option data-sort="${s.name}" value=${s.id}>${s.name}</option>` );
-        let sorted = map.sort((a,b) => a.localeCompare(b)).join('\n');
-        studentSel.innerHTML = sorted;
-
-    })
-    .catch(error => console.error('There was an error!', error));
+// Step 1: Get all group categories for the course
+async function getGroupCategories() {
+    const response = await fetch(`https://${edu}.instructure.com/api/v1/courses/${course}/group_categories`, { headers: headers });
+    return response.json();
 }
 
+// Step 2: Get groups within each group category
+async function getGroupsInCategory(groupCategoryId) {
+    const response = await fetch(`https://${edu}.instructure.com/api/v1/group_categories/${groupCategoryId}/groups?per_page=20`, { headers: headers });
+   return response.json();
+}
+
+// Step 2: Get members of a specific group
+async function getGroupMembers(groupId) {
+    const response = await fetch(`https://${edu}.instructure.com/api/v1/groups/${groupId}/users`, { headers: headers });
+    return response.json();
+}
+
+// Step 2: Get student info
+async function getStudent(studentId) {
+    const response = await fetch(`https://${edu}.instructure.com//api/v1/users/${studentId}/profile`, { headers: headers });
+    return response.json();
+}
+
+// Step 3: Combine and display all groups for the course
+async function listAllGroupsForCourse() {
+    try {
+        const groups = await getGroupCategories();
+        
+        card.innerHTML = "";
+        for (const grp of groups) {
+            card.innerHTML += `<h2>Group: ${grp.name} ${grp.id}`;            
+            const teams = await getGroupsInCategory(grp.id);
+            
+            for (const team of teams) {
+                if ( team.members_count == 0)  continue;
+                card.innerHTML += `<h4>Team: ${team.name} ${team.id} ${team.members_count}</h4>`;
+                const members = await getGroupMembers(team.id);
+            
+                for (const mbr of members) {
+                    const s = await getStudent(mbr.id);
+                    card.innerHTML += `<br> - ${s.sortable_name} ${s.primary_email} ${s.time_zone}`;
+                };
+            };
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
+}
 
 </script>
 <script src="js/allKeys.js"></script>
@@ -339,4 +368,5 @@ function test() {
 <script>makeMeActive('Canvas')</script>
 
 </html>
+
 

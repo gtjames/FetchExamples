@@ -21,6 +21,7 @@ let menuOptions = [
     {text: 'Lyrics',        link: 'lyrics.html',},
     {text: 'NASA News',     link: 'NASANews.html',},
     {text: 'National Parks',link: 'nationalParks.html',},
+    {text: 'Netflix',       link: 'netflix.html',},
     {text: 'News',          link: 'news.html',},
     {text: 'OG Bit Coins',  link: 'orig-allCoins.html',},
     {text: 'Products',      link: 'productSearch.html',},

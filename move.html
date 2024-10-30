@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+div {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+}
+div.move {
+  background-color: red;
+  position: relative;
+  animation-name: move;
+  animation-duration: .1s;
+  animation-direction: reverse;  
+  animation-iteration-count: 10;
+}
+
+@keyframes move {
+  0%   {left:0px; }
+  25%  {left:4px;}
+  50%  {left:0px; }
+  75%  {left:-4px;}
+  100% {left:0px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Animate the Shopping Cart</h1>
+
+<div id='test'></div>
+
+</body>
+<script>
+let el = document.getElementById('test');
+el.addEventListener('click',        () => el.classList.toggle('move'));
+el.addEventListener("animationend", () => el.classList.toggle('move'));
+</script>
+
+</html>
+
+

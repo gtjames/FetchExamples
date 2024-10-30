@@ -1,0 +1,16 @@
+const url = 'https://theaudiodb.p.rapidapi.com/searchalbum.php?s=eagles';
+const options = {
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5',
+		'x-rapidapi-host': 'theaudiodb.p.rapidapi.com'
+	}
+};
+
+try {
+	const response = await fetch(url, options);
+	const result = await response.text();
+	console.log(result);
+} catch (error) {
+	console.error(error);
+}

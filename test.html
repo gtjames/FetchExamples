@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Shopping</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="w3-theme-l1">
+    <form id="formElem">
+        <input type="text" name="name" value="John">
+        <input type="text" name="surname" value="Smith">
+        <input type="text" name="middle" value="Timothy">
+        <input type="text" name="title" value="Mr">
+        <input type="text" id="address" value="1015 Oak Hill Park">
+        <input type="submit">
+    </form>
+      
+    <script src="js/allKeys.js"></script>
+    <script>
+        formElem.onsubmit = async (e) => {
+          e.preventDefault();
+            let x = new FormData(formElem);
+            let arrayOfData = Array.from(x).entries();
+            for (let el of  arrayOfData) {
+              console.log(el[0] + ": " + el[1])
+            }
+          let response = await fetch('/article/formdata/post/user', {
+            method: 'POST',
+            body: new FormData(formElem)
+          });
+      
+          let result = await response.json();
+      
+          alert(result.message);
+        };
+
+    // testFetch();
+    async function testFetch() {
+      try {
+          const response = await fetch("test.js");
+          const result = await response.text();
+          console.log(result);
+      } catch (error) {
+          console.error(error);
+      }    
+
+      try {
+          const response = await fetch("other\findMeInPi.html");
+          const result = await response.text();
+          console.log(result);
+      } catch (error) {
+          console.error(error);
+      }    
+    }
+testMe();
+  async function  testMe() {
+    // https://wordsapiv1.p.rapidapi.com/words/?partofspeech=noun&syllables=3&limit=100&page=1&frequencymin=4&frequencymax=8
+    const url = 'https://wordsapiv1.p.rapidapi.com/words/example';
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': keyRapidAPI,
+        'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+      </script>
+      </body>
+</html>

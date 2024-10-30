@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>News</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .disney-card { height: 400px; }
+    </style>
+
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="term">Search for News</label>
+    <input type="text" id="term" value="Stranger Things">
+    <button id="search">Search</button>
+</div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+</body>
+<script src="js/allKeys.js"></script>
+<script>
+	let card = document.getElementById('card');
+	let term = document.getElementById('term');
+	document.getElementById('search').addEventListener('click', getShows);
+
+	let row = 0;
+
+    function buildNewsCard(story) {
+        row++;
+        return `
+            <div class="w3-col m4 l3 w3-theme-${row%10>5?"l":"d"}${(row%5)+1} disney-card">
+                <a href="${story.url}">${story.title}</a>
+                <br>
+                <img src="${story.image}" alt="">
+                ${story.content}
+            </div>`;
+    }
+
+    function getShows() {
+        const url = `https://netflix-data.p.rapidapi.com/search/?query=${term.value}&offset=0&limit_titles=50&limit_suggestions=20`;
+        const options = {
+        	method: 'GET',
+	        headers: {
+		        'x-rapidapi-key': keyRapidAPI,
+		        'x-rapidapi-host': 'netflix-data.p.rapidapi.com'
+	        }
+        };
+
+    try {
+        fetch(url, options)
+        .then(response => response.json())
+        .then(json => {
+            document.body.innerText = JSON.stringify(json);
+        } );
+    } catch (error) {
+        console.error(error);
+    }
+}
+</script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Netflix')</script>
+
+</html>
+
+titles: Array (50)
+availability: Object
+    availabilityDate: "November 6"
+    availabilityStartTime: 1446796800000
+    isPlayable: true
+    unplayableCause: null
+
+
+episodeCount: 12
+inRemindMeList: false
+jawSummary: Object
+    availability: Object
+        availabilityDate: "November 6"
+        availabilityStartTime: 1446796800000
+    isPlayable: true
+    unplayableCause: null
+backgroundImage: Object
+    extension: "webp"
+    focalPoint: "{\"x\":0.3531,\"y\":0.362}"
+    height: 477
+    imageKey: "StoryArt|f2b552f0-c477-11e5-8891-22000b9de9fb|en"
+    size: 480
+    url: "https://occ-0-3933-116.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABc2bBn_-okpxQ3S7ZKvmVI-Ns8014LQYAPdTBgbi7lFrKoFcuYFH6L7ZVUbaX…"
+
+videoId: 80046348
+width: 848
+broadcaster: Object
+    broadcasterName: null
+cast: Array (8)
+    id: 20043974
+    name: "Michael Sinterniklaas"
+contextualSynopsis: Object
+    evidenceKey: "synopsis|80046348-DEFAULT-Narrative--en|en|_UPD_"
+    text: "The whole huggable gang is back, bringing tales of caring and sharing to a new generation. And now the Care Bear Cousins are here to joi…"
+copyright: null
+creators: [] (0)
+currentContextualSynopsis: Object
+evidenceKey: "web_synopsis|80051144_INFORMATIVE|en"
+text: "When Harmony doesn't show up for a picnic, Share has fun with someone else instead. But then a jealous Harmony tries to get back at he…"
+directors: [] (0)
+episodeCount: 12
+episodeTitle: "Care Bears & Cousins"
+genres: Array (2)
+    id: 27346
+    name: "Kids' TV"
+id: 80046348
+isOriginal: true
+liveEvent: {}
+logoImage: {videoId: 80046348, url: "https://occ-0-3933-116.1.nflxso.net/dnm/api/v6/tx1…2He26e4I0D4LEGEEAvO2ApaLqyKoHijG7qpSUE.webp?r=172", type: "LOGO_BRANDED_HORIZONTAL", width: 625, height: 250, …}
+maturity: {rating: Object}
+numSeasonsLabel: "2 Seasons"
+releaseYear: 2016
+requestId: "842954e6-f98f-489c-b18b-c8339a08706b-3002764"
+seasonAbbr: "S2"
+seasonCount: 2
+supplementalMessageIcon: "REGULAR"
+synopsis: "The whole huggable gang is back, bringing tales of caring and sharing to a new generation. And now the Care Bear Cousins are here to joi…"
+synopsisRegular: "The whole huggable gang is back, bringing tales of caring and sharing to a new generation. And now the Care Bear Cousins are here to joi…"
+tags: [{id: 100046, name: "Imaginative"}] (1)
+title: "Care Bears & Cousins"
+titleMaturity: {level: 10}
+trackIds: {videoId: 80046348, trackId_jaw: 14277281, trackId_jawEpisode: 14277283, trackId_jawTrailer: 14277282, trackId: 14277281}
+trailerSummary: {length: 0}
+writers: [] (0)
+queue: {available: true, inQueue: false}
+summary: {type: "show", unifiedEntityId: "Video:80046348", id: 80046348, isOriginal: true, liveEvent: {hasLiveEvent: false}}
+    1 {availability: Object, inRemindMeList: false, queue: {available: true, inQueue: false}, summary: Object, episodeCount: 34, …}
+availabilityDate: "May 19"
+\episodeCount: 7
+
