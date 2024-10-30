@@ -94,7 +94,7 @@
 
     let row = 0;
     let course = "295338";
-    let edu    = "byui";
+    let edu    = "https://byui.instructure.com/api/v1/";
     let header = {
         "Content-Type"  : "application/json",
         "Authorization" : `Bearer ${keyCanvas}`,
@@ -106,9 +106,9 @@
     let getOptions  = { method: "GET",  headers: header };
 
 function setCourse(e) {
-    course = e.target.selectedOptions[0].value;
-    keyCanvas  = e.target.selectedOptions[0].dataset.token;
-    edu    = e.target.selectedOptions[0].dataset.edu;
+    course      = e.target.selectedOptions[0].value;
+    keyCanvas   = e.target.selectedOptions[0].dataset.token;
+    edu         = "https://"+e.target.selectedOptions[0].dataset.edu+".instructure.com/api/v1/";
     header.Authorization = `Bearer ${keyCanvas}`;
 
     postOptions = { method: "POST", headers: header };
@@ -147,7 +147,7 @@ curl -H 'Authorization: Bearer 10706~1r7OxhF6t3ksuV4w8HVWN6e4LYwcYuXaqLl3pC0cH9T
     asgnQuizzes.innerHTML = '';
     studentSel.innerHTML = '';
     
-    const url = `https://${edu}.instructure.com/api/v1/courses/${course}/modules`;
+    const url = `${edu}courses/${course}/modules`;
     console.log(url);
     fetch(url, getOptions)
     .then(resp => resp.json())
@@ -226,7 +226,7 @@ function updateLockAt(e) {
     let type = li.classList[0].toLowerCase();
 
     let arg = type + (type[0] === 'q' ? 'ze' : '') + 's';
-    let url = `https://${edu}.instructure.com/api/v1/courses/${course}/${arg}/${id}?${type}[lock_at]=${untilDate}:00-06:00`;
+    let url = `${edu}/courses/${course}/${arg}/${id}?${type}[lock_at]=${untilDate}:00-06:00`;
     console.log(url);
     fetch(url, putOptions)
     .then(resp => resp.json())
@@ -241,7 +241,7 @@ function updateLockAt(e) {
 
 function listStudents() {
     let studentNames = document.getElementById('students');
-    let url = `https://${edu}.instructure.com/api/v1/courses/${course}/students`;
+    let url = `${edu}/courses/${course}/students`;
     console.log(url);
     fetch(url, getOptions)
     .then(resp => resp.json())
@@ -260,14 +260,14 @@ function extendUntilDate() {
     let extendNum = document.getElementById("extend").value;
     let url, body;
     if (type[0] === 'A') {
-        url  = `/api/v1/courses/${course}/assignments/${quizId}/extensions`;
+        url  = `/${course}/assignments/${quizId}/extensions`;
         body = JSON.stringify( { "assignment_extensions": [ {"user_id": studentId, "extra_attempts": extendNum} ] });
     } else {
-        url  = `/api/v1/courses/${course}/quizzes/${quizId}/extensions`;
+        url  = `/${course}/quizzes/${quizId}/extensions`;
         body = JSON.stringify( { "quiz_extensions":       [ {"user_id": studentId, "extra_time": extendNum}, ] });
         // end_at: "2023-11-24T06:59:00Z"  extra_attempts: null
     }
-    url = `https://${edu}.instructure.com${url}`;
+    url = `${edu}${url}`;
     postOptions.body = body;
     console.log(url);
     fetch(url, postOptions)
@@ -280,14 +280,14 @@ function extendUntilDates() {
     let assign  = document.querySelectorAll('input.Assignment:checked')
     Array.from(assign).forEach(a => {
         let id = a.id.substring(3);
-        let url = `https://${edu}.instructure.com/api/v1/courses/${course}/assignments/${id}?assignment[lock_at]=${untilDate}:00-07:00`;
+        let url = `${edu}/courses/${course}/assignments/${id}?assignment[lock_at]=${untilDate}:00-07:00`;
         updateUntilDate(id, url);
     });
 
     let quizzes = document.querySelectorAll('input.Quiz:checked')
     Array.from(quizzes).forEach(a => {
         let id = a.id.substring(3);
-        let url = `https://${edu}.instructure.com/api/v1/courses/${course}/quizzes/${id}?quiz[lock_at]=${untilDate}:00-07:00`;
+        let url = `${edu}/courses/${course}/quizzes/${id}?quiz[lock_at]=${untilDate}:00-07:00`;
         updateUntilDate(id, url);
     });
 }
@@ -314,25 +314,25 @@ const headers = {
 
 // Step 1: Get all group categories for the course
 async function getGroupCategories() {
-    const response = await fetch(`https://${edu}.instructure.com/api/v1/courses/${course}/group_categories`, { headers: headers });
+    const response = await fetch(`${edu}/courses/${course}/group_categories`, { headers: headers });
     return response.json();
 }
 
 // Step 2: Get groups within each group category
 async function getGroupsInCategory(groupCategoryId) {
-    const response = await fetch(`https://${edu}.instructure.com/api/v1/group_categories/${groupCategoryId}/groups?per_page=20`, { headers: headers });
+    const response = await fetch(`${edu}/group_categories/${groupCategoryId}/groups?per_page=20`, { headers: headers });
    return response.json();
 }
 
 // Step 2: Get members of a specific group
 async function getGroupMembers(groupId) {
-    const response = await fetch(`https://${edu}.instructure.com/api/v1/groups/${groupId}/users`, { headers: headers });
+    const response = await fetch(`${edu}/groups/${groupId}/users`, { headers: headers });
     return response.json();
 }
 
 // Step 2: Get student info
 async function getStudent(studentId) {
-    const response = await fetch(`https://${edu}.instructure.com//api/v1/users/${studentId}/profile`, { headers: headers });
+    const response = await fetch(`${edu}users/${studentId}/profile`, { headers: headers });
     return response.json();
 }
 
