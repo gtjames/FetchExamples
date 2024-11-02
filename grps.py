@@ -3,8 +3,11 @@ import sys
 
 # Canvas API details
 BASE_URL = "https://byui.instructure.com/api/v1"
-API_KEY = "10706~XHLecHtLFD62TmkYUVKwZRW4mcHcFuKrwJzQMavzhwfDkfh8QKzPw7HnMwB9LHyR"
-COURSE_ID = sys.argv[1]
+# Open the file in read mode
+with open('key.txt', 'r') as file:
+    # Read the contents of the file
+    API_KEY = file.read()
+    API_KEY = API_KEY.rstrip("\r\n")
 
 headers = {
     "Authorization": f"Bearer {API_KEY}"
@@ -47,7 +50,15 @@ def list_team_members(courseId):
             members = get_group_members(group['id'])
             for member in members:
                 st = getStudent(member['id'])
-                print(f"\t- {st['sortable_name']} (ID: {st['id']}) {st['primary_email']} {st['time_zone']}")
+                # Split by comma to get lastName and the rest of the name
+                lastName, rest = st['sortable_name'].split(", ")
+                # Split the rest by space to get firstName and ignore middle names
+                firstName = rest.split(" ")[0]
+                print(f"\t- {lastName.ljust(15)}, {firstName.ljust(10)[:10]} - {st['time_zone'].ljust(15)[:15]} {st['primary_email']}")
 
 # Run the function
-list_team_members(COURSE_ID)
+courseId = "320100"
+if len(sys.argv) > 1:
+    courseId = sys.argv[1]
+
+list_team_members(courseId)
