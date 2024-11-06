@@ -35,6 +35,7 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+    let theKey = keys.keyRapidAPI;
     let search = document.getElementById('search');
     search.addEventListener('click', bookSearch);
 
@@ -43,7 +44,7 @@ function bookSearch() {
     const options = {
     	method: 'GET',
 	    headers: {
-		    'X-RapidAPI-Key': keyRapidAPI,
+		    'X-RapidAPI-Key': theKey,
 		    'X-RapidAPI-Host': 'real-time-product-search.p.rapidapi.com'
         }
     };
@@ -72,7 +73,7 @@ product_title:
         //  an array representing a TR element
         //  the final join will take these strings in the array and create one BIG string
         //  which we will put into the tableBody
-        let arHtml = products.data.map((p,idx) => 
+        let arHtml = products.data.products.map((p,idx) => 
             `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
                 <td><a href=${p.product_page_url}><img src=${p.product_photos[0]} height='120px' width='80px' alt=""></a>${p.offer.price}</td>
                 <td>${p.product_description}</td>

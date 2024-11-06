@@ -97,6 +97,7 @@
 
 </body>
 <script>
+    let theKey = keys.keyWebcams;
 let card     = document.getElementById('card');
 let country  = document.getElementById('country');
 let category = document.getElementById('category');
@@ -135,7 +136,7 @@ async function getWebcams() {
     const options = {
         method: 'GET',
         headers: {  'accept': 'application/json', 
-                    'x-windy-api-key': keyWebcams, }
+                    'x-windy-api-key': theKey, }
     };
 
     try {

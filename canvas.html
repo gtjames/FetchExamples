@@ -69,6 +69,7 @@
 </body>
 <script src='js/allKeys.js'></script>
 <script>
+    let theKey = keys.keyCanvas;
 	let studentSel  = document.getElementById('studentSel');
 	let asgnQuizzes = document.getElementById('asgnQuizzes');
     let extend      = document.getElementById("extend");
@@ -85,7 +86,7 @@
     document.getElementById("extendUntilDate")  .addEventListener('click',  extendUntilDate);
     document.getElementById("extendUntilDates") .addEventListener('click',  extendUntilDates);
 
-    for (c of courses) {
+    for (c of keys.courses) {
         courseList.innerHTML += `<option value=${c.course} data-edu=${c.institution} data-token=${keys[c.institution]}>${c.name}</option>`;
     }
 
@@ -95,25 +96,26 @@
     let row = 0;
     let course = "295338";
     let edu    = "https://byui.instructure.com/api/v1/";
-    let header = {
-        "Content-Type"  : "application/json",
-        "Authorization" : `Bearer ${keyCanvas}`,
-        "Referrer-Policy": "unsafe-url",
-        "Accept": "*/*",
+    let headers = {
+        // "Content-Type"  : "application/json",
+        "Authorization" : `Bearer ${theKey}`,
+        // "Referrer-Policy": "unsafe-url",
+        // "Accept": "*/*",
     };
-    let postOptions = { method: "POST", headers: header };
-    let putOptions  = { method: "PUT",  headers: header };
-    let getOptions  = { method: "GET",  headers: header };
+
+    let postOptions = { method: "POST", headers: headers };
+    let putOptions  = { method: "PUT",  headers: headers };
+    let getOptions  = { method: "GET",  headers: headers };
 
 function setCourse(e) {
     course      = e.target.selectedOptions[0].value;
     keyCanvas   = e.target.selectedOptions[0].dataset.token;
     edu         = "https://"+e.target.selectedOptions[0].dataset.edu+".instructure.com/api/v1/";
-    header.Authorization = `Bearer ${keyCanvas}`;
+    headers.Authorization = `Bearer ${keyCanvas}`;
 
-    postOptions = { method: "POST", headers: header };
-    putOptions  = { method: "PUT",  headers: header };
-    getOptions  = { method: "GET",  headers: header };
+    postOptions = { method: "POST", headers: headers };
+    putOptions  = { method: "PUT",  headers: headers };
+    getOptions  = { method: "GET",  headers: headers };
 }
 
 function closeModal() {
@@ -306,12 +308,6 @@ function updateUntilDate(id, url) {
     .catch(error => openError(error));
 }
 
-// Helper function to set headers for fetch
-const headers = {
-    "Authorization": `Bearer ${keyCanvas}`,
-    "Content-Type": "application/json"
-};
-
 // Step 1: Get all group categories for the course
 async function getGroupCategories() {
     const response = await fetch(`${edu}/courses/${course}/group_categories`, { headers: headers });
@@ -363,7 +359,6 @@ async function listAllGroupsForCourse() {
 }
 
 </script>
-<script src="js/allKeys.js"></script>
 <script src="js/menu.js"></script>
 <script>makeMeActive('Canvas')</script>
 

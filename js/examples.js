@@ -42,7 +42,7 @@ function getMovies() {
     }    
 
     //  add movie to the search API
-    let url = `http://www.omdbapi.com/?s=${movieTitle.value}&apikey=${keyOmdb}`;
+    let url = `http://www.omdbapi.com/?s=${movieTitle.value}&apikey=${keys.keyOmdb}`;
     console.log(url);
 
     //  make the request
@@ -96,7 +96,7 @@ function movieDetails() {
     let json      = document.getElementById('json').checked;        //  show JSON or not
 
     //  the id of the image is the IMDB ID we want details on
-    let url = `http://www.omdbapi.com/?i=${this.id}&plot=full&apikey=${keyOmdb}`;  //  search for movies with this ID
+    let url = `http://www.omdbapi.com/?i=${this.id}&plot=full&apikey=${keys.keyOmdb}`;  //  search for movies with this ID
     console.log(url);
 
     //  using the movie details API get additional data about the movie
@@ -161,7 +161,7 @@ function getWeather() {
 }
 
 function getCityThenWeather(city) {
-    let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${keyOpenWX}&q=${city}`;
+    let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${keys.keyOpenWX}&q=${city}`;
     fetch(url)
         .then(response => response.json())  //  wait for the response and convert it to JSON
         .then(city => {                  //  with the resulting JSON data do something
@@ -170,7 +170,7 @@ function getCityThenWeather(city) {
 }
 
 function weatherReport(lon, lat){
-    let url =`https://api.openweathermap.org/data/3.0/onecall?appid=${keyOpenWX}`;
+    let url =`https://api.openweathermap.org/data/3.0/onecall?appid=${keys.keyOpenWX}`;
     url += `&lat=${lat}&lon=${lon}&exclude=minutely,hourly`
 
     console.log(url);
@@ -290,7 +290,7 @@ function latLonToWeather(data) {
  *          Here we see again the basic pattern of creating a request URL which returns JSON data
 */
 function getNasa() {
-    let url = `https://api.nasa.gov/planetary/apod?api_key=${keyNASA}`;
+    let url = `https://api.nasa.gov/planetary/apod?api_key=${keys.keyNASA}`;
 
     let queryDate = document.getElementById('queryDate');           //  Date of the Picture to show
     let date      = document.getElementById('date');                //  Date of the Picture

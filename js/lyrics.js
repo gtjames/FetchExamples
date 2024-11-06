@@ -2,6 +2,7 @@
  *      Initialization
  *          add listener to the button
  */
+let theKey = keys.keyRapidAPI;
 document.getElementById('getSongs').addEventListener('click', getSongsByTitle);
 document.getElementById('getArtist').addEventListener('click', getArtist);
 
@@ -12,7 +13,7 @@ albumList.addEventListener('click', getSongInfo);
 const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': keyRapidAPI,
+        'X-RapidAPI-Key': theKey,
         'X-RapidAPI-Host': 'geniuslyrics-api.p.rapidapi.com'
     }
 };

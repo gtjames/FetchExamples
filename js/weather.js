@@ -4,6 +4,8 @@ import {niceDate, niceTime, windDirection, KtoF} from './utils.js';
  *      Initialization
  *          add listener to the button
  */
+
+let theKey = keys.keyOpenWX;
 document.getElementById('getWeather').addEventListener('click', getCityThenWeather);
 let weatherList = document.getElementById('weatherList');        //  all weather reports go here
 let city        = document.getElementById('city');               //  City input field
@@ -17,7 +19,7 @@ function getCityThenWeather() {
         return;
     }
 
-    let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${keyOpenWX}&q=${city.value}`;
+    let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${theKey}&q=${city.value}`;
 
     fetch(url)
         .then(response => response.json())  //  wait for the response and convert it to JSON
@@ -33,7 +35,7 @@ function getCityThenWeather() {
 function getWeather(lon, lat) {
     //  let's build the API based on the data from the form. 
     //      If city is entered use forecast data
-    let url =`https://api.openweathermap.org/data/3.0/onecall?appid=${keyOpenWX}`;
+    let url =`https://api.openweathermap.org/data/3.0/onecall?appid=${theKey}`;
     url += `&lat=${lat}&lon=${lon}&exclude=minutely,hourly`
 
     console.log(url);

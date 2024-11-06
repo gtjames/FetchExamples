@@ -36,18 +36,9 @@
     <section id="teamList"></section>
 </div>
 
-<div class="w3-container tab w3-theme-l1">
+<div class="w3-container tab w3-theme-l1" id="btnBar">
     <button id="rosterBtn" class="tablinks" onClick="openTab(event.currentTarget, 'rosterTab')">Players</button>
     <button id="playerBtn" class="tablinks" onClick="openTab(event.currentTarget, 'playerTab')">Player Stats</button>
-    <button id="G2015Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2015Tab')">2015</button>
-    <button id="G2016Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2016Tab')">2016</button>
-    <button id="G2017Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2017Tab')">2017</button>
-    <button id="G2018Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2018Tab')">2018</button>
-    <button id="G2019Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2019Tab')">2019</button>
-    <button id="G2020Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2020Tab')">2020</button>
-    <button id="G2021Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2021Tab')">2021</button>
-    <button id="G2022Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2022Tab')">2022</button>
-    <button id="G2023Btn"  class="tablinks" onClick="openTab(event.currentTarget, 'G2023Tab')">2023</button>
 </div>
 
 <div id="rosterTab" class="tabcontent w3-theme-d1">
@@ -75,123 +66,7 @@
         <tbody id="playerRows"></tbody>
     </table>
 </div>
-<div id="G2015Tab" class="tabcontent w3-theme-d2">
-    <h3>2015 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2015Rows"></tbody>
-    </table>
-</div>
-<div id="G2016Tab" class="tabcontent w3-theme-l2">
-    <h3>2016 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2016Rows"></tbody>
-    </table>
-</div>
-<div id="G2017Tab" class="tabcontent w3-theme-d3">
-    <h3>2017 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2017Rows"></tbody>
-    </table>
-</div>
-<div id="G2018Tab" class="tabcontent w3-theme-l3">
-    <h3>2018 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2018Rows"></tbody>
-    </table>
-</div>
-<div id="G2019Tab" class="tabcontent w3-theme-d4">
-    <h3>2019 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2019Rows"></tbody>
-    </table>
-</div>
-<div id="G2020Tab" class="tabcontent w3-theme-l4">
-    <h3>2020 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2020Rows"></tbody>
-    </table>
-</div>
-<div id="G2021Tab" class="tabcontent w3-theme-l4">
-    <h3>2021 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2021Rows"></tbody>
-    </table>
-</div>
-<div id="G2022Tab" class="tabcontent w3-theme-l4">
-    <h3>2022 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2022Rows"></tbody>
-    </table>
-</div>
-<div id="G2023Tab" class="tabcontent w3-theme-l4">
-    <h3>2023 Games</h3>
-    <table class="w3-row sortable">
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>arena</th>      <th>city</th>
-            <th>Home Team</th>  <th>Points</th>
-            <th>Visitors</th>   <th>Points</th>
-        </tr>
-        </thead>
-        <tbody id="G2023Rows"></tbody>
-    </table>
-</div>
+<div id="yrTabs"></div>
 </body>
 <script src='js/allKeys.js'></script>
 <script src='js/basketball.js'></script>

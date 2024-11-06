@@ -1,10 +1,11 @@
+let theKey = keys.keyDictionary;
 let search = document.getElementById('search');
 search.addEventListener('click', wordSearch);
 
 async function  wordSearch() {
     let word = document.getElementById('wordSearch').value;
 
-    fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${keyDictionary}`)
+    fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${theKey}`)
         .then(response => response.json())
         .then(response => show(response))
         .catch(err => console.error(err));

@@ -1,3 +1,4 @@
+let theKey = keys.keyRapidAPI;
 let country = document.getElementById('country');
 country.addEventListener('blur', selectCountry);
 
@@ -15,7 +16,7 @@ function getStats() {
     fetch("https://corona-virus-world-and-india-data.p.rapidapi.com/api", {
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": keyRapidAPI,
+                "x-rapidapi-key": theKey,
                 "x-rapidapi-host": "corona-virus-world-and-india-data.p.rapidapi.com"
             }
         })

@@ -1,5 +1,6 @@
 import {niceDate, niceTime} from './utils.js';
 
+let theKey = keys.keyRapidAPI;
 let search = document.getElementById('search');
     search.addEventListener('click', shoppingSearch);
 
@@ -9,7 +10,7 @@ let search = document.getElementById('search');
         const options = {
 	        method: 'GET',
 	        headers: {
-		        'X-RapidAPI-Key': keyRapidAPI,
+		        'X-RapidAPI-Key': theKey,
 		        'X-RapidAPI-Host': 'bloomberg-market-and-financial-news.p.rapidapi.com'
 	        }
         };

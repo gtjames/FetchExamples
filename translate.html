@@ -28,6 +28,7 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+	let theKey = keys.keyRapidAPI;
 	let speech      = document.getElementById("speech");
     let translation = document.getElementById("translation");
     let translate   = document.getElementById("translate");
@@ -82,7 +83,7 @@
 			headers: {
 				"content-type": "application/x-www-form-urlencoded",
 				"x-rapidapi-host": "lecto-translation.p.rapidapi.com",
-				"x-rapidapi-key": keyRapidAPI,
+				"x-rapidapi-key": theKey,
 			},
 			body: params,
 		};
@@ -108,7 +109,7 @@
 			"method": "GET",
 			"headers": {
 				"x-rapidapi-host": "lecto-translation.p.rapidapi.com",
-				"x-rapidapi-key": keyRapidAPI
+				"x-rapidapi-key": theKey
 			}
 		})
 			.then(response => response.json())

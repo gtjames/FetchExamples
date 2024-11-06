@@ -1,3 +1,4 @@
+let theKey = keys.keyRapidAPI;
 document.getElementById("save").addEventListener('click', findMovies)
 let rows  = document.getElementById("rows");
 let cards = document.getElementById('cards');
@@ -12,7 +13,7 @@ let row = 0;
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': keyRapidAPI,
+		'X-RapidAPI-Key': theKey,
 		'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
 	}
 };

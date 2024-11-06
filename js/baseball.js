@@ -1,4 +1,5 @@
 //  https://rapidapi.com/api-sports/api/api-baseball
+let theKey = keys.keyRapidAPI;
 
 function getMLBTeams() {
     let season = document.getElementById('season').value;
@@ -7,7 +8,7 @@ function getMLBTeams() {
     fetch(`https://api-baseball.p.rapidapi.com/teams?league=${league}&season=${season}`, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": keyRapidAPI,
+            "x-rapidapi-key": theKey,
             "x-rapidapi-host": "api-baseball.p.rapidapi.com"
         }
     })
@@ -37,7 +38,7 @@ function getStats(id, league, season) {
     fetch(`https://api-baseball.p.rapidapi.com/teams/statistics?league=${league}&season=${season}&team=${id}`, {
         "method": "GET",
             "headers": {
-            "x-rapidapi-key": keyRapidAPI,
+            "x-rapidapi-key": theKey,
             "x-rapidapi-host": "api-baseball.p.rapidapi.com"
         }
     })

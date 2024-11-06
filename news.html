@@ -25,6 +25,26 @@
     <select id="lang">
         <option value="en">English</option>
         <option value="nl">Nederlands</option>
+        <option value="ar">Arabic</option>
+        <option value="zh">Chinese</option>
+        <option calue="fr">French</option>
+        <option calue="de">German</option>
+        <option calue="el">Greek</option>
+        <option calue="he">Hebrew</option>
+        <option calue="hi">Hindi</option>
+        <option calue="it">Italian</option>
+        <option calue="ja">Japanese</option>
+        <option calue="ml">Malayalam</option>
+        <option calue="mr">Marathi</option>
+        <option calue="no">Norwegian</option>
+        <option calue="pt">Portuguese</option>
+        <option calue="ro">Romanian</option>
+        <option calue="ru">Russian</option>
+        <option calue="es">Spanish</option>
+        <option calue="sv">Swedish</option>
+        <option calue="ta">Tamil</option>
+        <option calue="te">Telugu</option>
+        <option calue="uk">Ukrainian</option>
     </select>
     <button id="search">Search</button>
 </div>
@@ -36,6 +56,7 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+    let theKey = keys.keyNews;
 	let card = document.getElementById('card');
 	let term = document.getElementById('newsSearch');
 	let lang = document.getElementById('lang');
@@ -76,7 +97,7 @@
 		 *		breaking-news, world, nation, business, technology, entertainment, sports, science and health.
 		 */
 		const URL = "https://gnews.io/api/v4/search";
-        let req = `${URL}?q=${term.value}&lang=${lang.value}&token=${keyNews}`;
+        let req = `${URL}?q=${term.value}&lang=${lang.value}&token=${theKey}`;
         console.log(req);
 		fetch(req)
             .then(resp => resp.json())          //  wait for the response and convert it to JSON

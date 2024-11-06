@@ -34,6 +34,7 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+    let theKey = keys.keyRapidAPI;
     let search = document.getElementById('search');
     search.addEventListener('click', wordSearch);
 
@@ -42,7 +43,7 @@
         const options = {
         	method: 'GET',
 	            headers: {
-		            'X-RapidAPI-Key': keyRapidAPI,
+		            'X-RapidAPI-Key': theKey,
 		            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
 	            }
         };

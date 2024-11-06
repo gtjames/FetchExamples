@@ -1,5 +1,6 @@
 import {getLocation, locationRetrieved, lat, lon} from './utils.js';
 
+let theKey = keys.keyRapidAPI;
 let card = document.getElementById('card');
 let term = document.getElementById('quakeSearch');
 document.getElementById('search').addEventListener('click', quakesWithinRadius);
@@ -7,7 +8,7 @@ document.getElementById('search').addEventListener('click', quakesWithinRadius);
 const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': keyRapidAPI,
+        'X-RapidAPI-Key': theKey,
         'X-RapidAPI-Host': 'everyearthquake.p.rapidapi.com'
     }
 };

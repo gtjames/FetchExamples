@@ -1,13 +1,33 @@
 //  https://rapidapi.com/api-sports/api/api-nba
 //  https://rapidapi.com/developer/dashboard
-
+let theKey = keys.keyRapidAPI;
 let options = {
     "method": "GET",
     "headers": {
-        "x-rapidapi-key": keyRapidAPI,
+        "x-rapidapi-key": theKey,
         "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
     }
 };
+buildScreen();
+function buildScreen() {
+    let btnBar = document.querySelector("#btnBar");
+    let yrTabs = document.querySelector("#yrTabs");
+    for (yr = 2015; yr <= 2024; yr++) {
+        btnBar.innerHTML += `<button id="G${yr}Btn"  class="tablinks" onClick="getNBAGameStats(event.currentTarget, '${yr}')">${yr}</button>`;
+        yrTabs.innerHTML += `
+        <div id="G${yr}Tab" class="tabcontent w3-theme-d2">
+            <h3>${yr} Games</h3>
+            <table class="w3-row sortable">
+                <thead>
+                <tr class="w3-theme-l4 w3-bordered">
+                    <th>arena</th>      <th>city</th>   <th>Home Team</th>  <th>Points</th>  <th>Visitors</th>   <th>Points</th>
+                </tr>
+                </thead>
+                <tbody id="G${yr}Rows"></tbody>
+            </table>
+        </div>`;
+    }
+}
 
 /**
  *  The 'Get NBA Teams' button was pushed
@@ -51,15 +71,7 @@ function showNBATeams(teams) {
  */
 function getGamesAndRoster(teamId) {
     getNBATeamRoster(teamId);
-    getNBAGameStats(teamId, "2015");
-    getNBAGameStats(teamId, "2016");
-    getNBAGameStats(teamId, "2017");
-    getNBAGameStats(teamId, "2018");
-    getNBAGameStats(teamId, "2019");
-    getNBAGameStats(teamId, "2020");
-    getNBAGameStats(teamId, "2021");
-    getNBAGameStats(teamId, "2022");
-    getNBAGameStats(teamId, "2023");
+    localStorage.setItem('curTeam', teamId);
     openTab(document.getElementById('rosterBtn'), 'rosterTab')
 }
 
@@ -98,7 +110,7 @@ function showNBATeamRoster(players, teamId) {
         row++;
         html += `
         <tr class="w3-theme-${row%2===1?'l2':'l3'}">
-			<td onclick="getNBAPlayerStats(${player.id}, '${player.firstname} ${player.lastname}')"><a>${playerId.jersey} - ${player.firstname} ${player.lastname}<a/></td>
+			<td onclick="getNBAPlayerStats(event, ${player.id}, '${player.firstname} ${player.lastname}')"><a>${playerId.jersey} - ${player.firstname} ${player.lastname}<a/></td>
             <td>${player.college} Pro: ${player.nba.start}</td>
             <td>${player.birth.date} - ${player.birth.country}</td>
             <td>${player.height.feets}' ${player.height.inches}" - ${player.weight.pounds} lbs</td>
@@ -116,12 +128,16 @@ function showNBATeamRoster(players, teamId) {
  *
  *
  */
-function getNBAGameStats(teamId, season) {
+function getNBAGameStats(target, season) {
+    let teamId = localStorage.getItem('curTeam');
     fetch(`https://api-nba-v1.p.rapidapi.com/games?team=${teamId}&season=${season}`, options)
         .then(response => response.json()) //  wait for the response and convert it to JSON
-        .then(stats => showTeamGameStats(stats.response, season))
+        .then(stats => {
+            showTeamGameStats(stats.response, season);
+            openTab(target, 'G'+season+'Tab');
+        })
         .catch(err => console.error(err));
-}
+    }
 
 /**
  *      Show game stats
@@ -134,8 +150,9 @@ function showTeamGameStats(games, season) {
 }
 
 function gamesByYear(games, tab) {
-    let teamTable = document.getElementById(tab + 'Rows');
+    try {
     console.log(tab);
+    let teamTable = document.getElementById(tab + 'Rows');
     console.log(teamTable);
     if (teamTable == null) return;
     let html = ``;
@@ -148,6 +165,9 @@ function gamesByYear(games, tab) {
             </tr>`;
         teamTable.innerHTML += html;
     }
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
 }
 
 /**
@@ -158,7 +178,7 @@ function gamesByYear(games, tab) {
  *
  *
  */
-function getNBAPlayerStats(playerId, playerName) {
+function getNBAPlayerStats(e, playerId, playerName) {
     fetch(`https://api-nba-v1.p.rapidapi.com/players/statistics?id=${playerId}&season=2023`, options)
         .then(response => response.json()) //  wait for the response and convert it to JSON
         .then(playerStats => showNBAPlayerStats(playerStats.response, playerName))

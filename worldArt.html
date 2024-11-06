@@ -28,12 +28,13 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+  let theKey = keys.keyWorldArt;
   let card = document.getElementById('card');
   let search = document.getElementById('search');
   document.getElementById('doSearch').addEventListener('click', searchArt);
   let row = 0;
   function searchArt() {
-    let url = `https://api.europeana.eu/record/v2/search.json?query=${search.value}&wskey=${keyWorldArt}`;
+    let url = `https://api.europeana.eu/record/v2/search.json?query=${search.value}&wskey=${theKey}`;
     fetch(url)
       .then(resp => resp.json())          //  wait for the response and convert it to JSON
       .then(art => buildCard(art) );
