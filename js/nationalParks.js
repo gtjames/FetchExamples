@@ -172,3 +172,4 @@ function listAlerts(code, list) {
     document.getElementById("parkName").innerText = code;
     document.getElementById("details").innerHTML = `<p>later</p>`;
 }
+function setKey() { theKey = getKey(); }

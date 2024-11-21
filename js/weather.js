@@ -19,7 +19,9 @@ function getCityThenWeather() {
         return;
     }
 
-    let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${theKey}&q=${city.value}`;
+    //      ,{state code},{country code}
+    let url = `http://api.openweathermap.org/geo/1.0/direct?q=${city.value}&limit=5&appid=${theKey}`
+    // let url = `https://api.openweathermap.org/geo/1.0/direct?appid=${theKey}&q=${city.value}`;
 
     fetch(url)
         .then(response => response.json())  //  wait for the response and convert it to JSON
@@ -71,3 +73,4 @@ function getWeather(lon, lat) {
             weatherList.innerHTML = innerHTML;
         });
 }
+function setKey() { theKey = getKey(); }

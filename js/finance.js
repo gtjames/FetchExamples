@@ -69,3 +69,4 @@ title: "Raimondo: This CHIPS Bill Is Essential for America"
     <br>${niceDate(data.date, 0)} ${niceTime(data.date, 0)}</td>
     </tr>`;
 }
+function setKey() { theKey = getKey(); }

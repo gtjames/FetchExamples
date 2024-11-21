@@ -16,6 +16,7 @@ let menuOptions = [
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
     {text: 'Finance',       link: 'finance.html',},
     {text: 'Imdb',          link: 'imdb.html',},
+    {text: 'Jobs',          link: 'jobs.html',},
     {text: 'Lambda',        link: 'lambdaQuotes.html',},
     {text: 'Lyrics',        link: 'lyrics.html',},
     {text: 'NASA News',     link: 'NASANews.html',},
@@ -69,7 +70,7 @@ menu.innerHTML += `
         <option value='w3schools'>w3schools</option>
     </select>
     `;
-    menu.innerHTML += `<label for="key">Key</label><input type="text" id="key">`;
+    menu.innerHTML += `<label for="key">Key</label><input type="text" id="key" onblur='setKey()'>`;
     let key = document.getElementById('key');
 
     //  get the ref to the CSS link for the theme

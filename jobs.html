@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Books</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="bookSearch">Search for a Book Title</label>
+    <input type="text" id="bookSearch" value="mars">
+    <button id="search">Search</button>
+    <p>Columns are sortable</p>
+</div>
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>Book Cover</th>         <th>Title</th>  <th>Author</th>
+            <th>Page Count</th>         <th>Synopsis</th><th>Category</th>
+        </tr>
+        </thead>
+        <tbody id='bookList'>   </tbody>
+    </table>
+</div>
+</body>
+<div id="jobDetail" class="w3-modal">
+    <div class="w3-modal-content w3-theme-d4" style="max-width:600px">
+      <header class="w3-container  w3-theme-d1">
+        <h3 id="title"></h3>
+      </header>
+      <div id="qualifications"  class="w3-container w3-theme-d4"> </div>
+      <div id="responsibilities"    class="w3-container w3-theme-d3"> </div>
+      <div id="benefits"        class="w3-container w3-theme-d2"> </div>
+      <footer id="details" class="w3-container w3-theme-d1"></footer>
+    </div>
+</div>
+
+<script src="js/allKeys.js"></script>
+<script src="js/jobs.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Jobs')</script>
+<script src="js/sortColumns.js"></script>
+</html>

@@ -329,3 +329,4 @@ function getNasa() {
             title.innerText = apod.title;
         });
 }
+function setKey() { theKey = getKey(); }

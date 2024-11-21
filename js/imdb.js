@@ -94,3 +94,4 @@ function movieDetails(movie) {
 	<tr><td>Writer</td><td>${movie.Writer}</td></tr>
 `;
 }
+function setKey() { theKey = getKey(); }

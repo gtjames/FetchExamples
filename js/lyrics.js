@@ -168,3 +168,4 @@ getSongsByAlbum(albEvent)
 getSongInfo(songEvent)
 // Song 393811
 // Album   11879
+function setKey() { theKey = getKey(); }

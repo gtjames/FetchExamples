@@ -67,3 +67,4 @@ function showStats(teamStats) {
 // td>${goals.for.average.home}</td><td>${goals.against.average.home}</td><
 // td>${goals.for.average.away}</td><td>${goals.against.average.away}</td><
 // td>${goals.for.average.all} </td><td>${goals.against.average.all} </td><
+function setKey() { theKey = getKey(); }

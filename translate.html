@@ -126,6 +126,7 @@
 		select.innerHTML += list.filter(l => src ? l.support_source: l.support_target)
 			.map(l => `<option value="${l.language_code}">${l.display_name}</option>`).join('\n');
     }
+	function setKey() { theKey = getKey(); }
 
 </script>
 <script src="js/menu.js"></script>

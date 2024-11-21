@@ -60,3 +60,4 @@ function buildRow(country) {
     <td>${country.tests_per_1m_population}</td>
 </tr>`;
 }
+function setKey() { theKey = getKey(); }

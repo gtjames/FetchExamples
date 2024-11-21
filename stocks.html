@@ -32,6 +32,7 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+    let theKey = keyRapidAPI;
 	let card = document.getElementById('card');
 	let term = document.getElementById('newsSearch');
 	document.getElementById('search').addEventListener('click', getNews);
@@ -57,7 +58,7 @@
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': keyRapidAPI,
+                'X-RapidAPI-Key': theKey,
                 'X-RapidAPI-Host': 'real-time-quotes1.p.rapidapi.com'
             }
         };
@@ -70,6 +71,8 @@
             console.error(error);
         }    
     }
+    function setKey() { theKey = getKey(); }
+
 </script>
 <script src="js/menu.js"></script>
 <script>makeMeActive('News')</script>

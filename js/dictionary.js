@@ -86,3 +86,4 @@ function show(word) {
         }
     }
 }
+function setKey() { theKey = getKey(); }

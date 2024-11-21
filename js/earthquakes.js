@@ -64,3 +64,4 @@ function buildCard(story) {
             ${story.date}
         </div>`;
 }
+function setKey() { theKey = getKey(); }
