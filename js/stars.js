@@ -103,7 +103,7 @@ function getGalaxies() {
         })
         .catch(err => {
             console.error(tr);
-            console.error(tdsZ);
+            console.error(tds);
             console.error(err); 
         });
 }
