@@ -27,10 +27,6 @@ function getStars() {
             let innerHtml = '';
             for ( let tr of rows) {
                 let tds = Array.from(tr.children)
-                // var rowOffset= tds[0].rowSpan-1;
-                // if ( parentOffset > 0) {
-                //     parentOffset--;
-                // }
 
                 let col1Span = (tds[0].colSpan === 2) ? -1 : 0;
                 let desc = tds.length-1;
@@ -96,7 +92,7 @@ function getGalaxies() {
                 let src = '';
                 if (tds[1].childElementCount === 1) {
                     let img = tds[1].children[0].children[0].children[0];
-                    src = 'https' + img.src.substring(4)
+                    src = 'https' + img.firstChild.src.substring(4)
                 }
                 innerHtml += buildGalaxy(src, tds[2].innerText, tds[4].innerText, tds[9].innerText, tds[10].innerText);
             }
