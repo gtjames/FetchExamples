@@ -87,25 +87,21 @@ function getGalaxies() {
             rows.pop();
 
             let innerHtml = '';
-            for ( let tr of rows) {
+            for (let tr of rows) {
                 let tds = Array.from(tr.children)
                 let src = '';
                 if (tds[1].childElementCount === 1) {
                     let img = tds[1].children[0].children[0].children[0];
-                    if (img.firstChild.src)
-                        src = 'https' + img.firstChild.src.substring(4)
+                    if (img && img.src )
+                        src = 'https' + img.src.substring(4)
                 }
-                innerHtml += buildGalaxy(src, tds[2].innerText, tds[4].innerText, tds[9].innerText, tds[10].innerText);
+                innerHtml += buildGalaxy(src, tds[2].innerText, tds[4].innerText, tds[9].innerText, tds[10]?tds[10].innerText:'');
             }
             let table = document.getElementById('galaxies');
             table.innerHTML = innerHtml;
             document.getElementById('href').href = galaxiesURL;
         })
-        .catch(err => {
-            console.error(tr);
-            console.error(tds);
-            console.error(err); 
-        });
+        .catch(err => console.error(err));
 }
 
 function buildGalaxy(img, name, dist, year, desc) {
