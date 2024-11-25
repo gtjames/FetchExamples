@@ -6,7 +6,7 @@ let cards = document.getElementById('cards');
 document.getElementById("id01").addEventListener("click", closeModal);
 function closeModal() {
     document.getElementById('id01').style.display='none';
-  }
+}
 
 let row = 0;
 

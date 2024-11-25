@@ -2,7 +2,7 @@
 
     let search = document.getElementById('search');
     search.addEventListener('click', jobSearch);
-    let tableBody = document.getElementById('bookList');
+    let tableBody = document.getElementById('resultList');
 
     const options = {
 	method: 'GET',
@@ -12,13 +12,13 @@
 	    }
     };
 
-    document.getElementById("jobDetail").addEventListener("click", closeModal);
+    document.getElementById("details").addEventListener("click", closeModal);
     function closeModal() {
-        document.getElementById('jobDetail').style.display='none';
+        document.getElementById('details').style.display='none';
     }
 
 function jobSearch() {
-    let searchText = document.getElementById('bookSearch').value;
+    let searchText = document.getElementById('searchTerm').value;
     fetch(`https://jsearch.p.rapidapi.com/search?query=${searchText}&page=1&num_pages=1&country=us&date_posted=all`, options)
         .then(resp => resp.json())          //  wait for the response and convert it to JSON
         .then(jobs => showJobs(jobs));
@@ -40,13 +40,13 @@ function showJobs(jobs) {
     let jobDetail = document.getElementsByClassName('drillDown');
     Array.from(jobDetail)
         .forEach((jd,idx) => jd.addEventListener('click', () => 
-        jobDetails(JSON.stringify(jobs.data[idx]))));
+            jobDetails(jobs.data[idx])));
 }
 
-function jobDetails(data) {
-    let job = JSON.parse(data);
+function jobDetails(job) {
+    // let job = JSON.parse(data);
 
-    document.getElementById('jobDetail').style.display='block';
+    document.getElementById('details').style.display='block';
     let qual = document.querySelector('#qualifications');
     let bene = document.querySelector('#benefits');
     let resp = document.querySelector('#responsibilities');

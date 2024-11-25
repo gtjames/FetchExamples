@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Books</title>
+    <title>Jobs</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -16,8 +16,8 @@
 </div>
 
 <div class="w3-container w3-theme w3-padding-16">
-    <label for="bookSearch">Search for a Book Title</label>
-    <input type="text" id="bookSearch" value="mars">
+    <label for="searchTerm">Search for a Job</label>
+    <input type="text" id="searchTerm" value="mars">
     <button id="search">Search</button>
     <p>Columns are sortable</p>
 </div>
@@ -29,11 +29,11 @@
             <th>Page Count</th>         <th>Synopsis</th><th>Category</th>
         </tr>
         </thead>
-        <tbody id='bookList'>   </tbody>
+        <tbody id='resultList'>   </tbody>
     </table>
 </div>
 </body>
-<div id="jobDetail" class="w3-modal">
+<div id="details" class="w3-modal">
     <div class="w3-modal-content w3-theme-d4" style="max-width:600px">
       <header class="w3-container  w3-theme-d1">
         <h3 id="title"></h3>

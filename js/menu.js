@@ -19,7 +19,7 @@ let menuOptions = [
     {text: 'Jobs',          link: 'jobs.html',},
     {text: 'Lambda',        link: 'lambdaQuotes.html',},
     {text: 'Lyrics',        link: 'lyrics.html',},
-    {text: 'NASA News',     link: 'NASANews.html',},
+    {text: 'NASA News',     link: 'nasaNews.html',},
     {text: 'National Parks',link: 'nationalParks.html',},
     {text: 'News',          link: 'news.html',},
     {text: 'OG Bit Coins',  link: 'orig-allCoins.html',},
