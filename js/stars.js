@@ -92,7 +92,8 @@ function getGalaxies() {
                 let src = '';
                 if (tds[1].childElementCount === 1) {
                     let img = tds[1].children[0].children[0].children[0];
-                    src = 'https' + img.firstChild.src.substring(4)
+                    if (img.firstChild.src)
+                        src = 'https' + img.firstChild.src.substring(4)
                 }
                 innerHtml += buildGalaxy(src, tds[2].innerText, tds[4].innerText, tds[9].innerText, tds[10].innerText);
             }
