@@ -101,7 +101,11 @@ function getGalaxies() {
             table.innerHTML = innerHtml;
             document.getElementById('href').href = galaxiesURL;
         })
-        .catch(err => console.error(err) );
+        .catch(err => {
+            console.error(tr);
+            console.error(tdsZ);
+            console.error(err); 
+        });
 }
 
 function buildGalaxy(img, name, dist, year, desc) {
