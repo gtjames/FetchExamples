@@ -24,6 +24,7 @@ let menuOptions = [
     {text: 'News',          link: 'news.html',},
     {text: 'OG Bit Coins',  link: 'orig-allCoins.html',},
     {text: 'Products',      link: 'productSearch.html',},
+    {text: 'Property',      link: 'property.html',},
     {text: 'Shopping',      link: 'shopping.html',},
     {text: 'Stars',         link: 'stars.html',},
     {text: 'Sky',           link: 'astronomy.html',},
