@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Jobs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="w3-theme-l1">
+
+    <div class="w3-container w3-theme-l1">
+        <div id="menu" class="w3-bar"></div>
+    </div>
+
+    <div class="w3-container w3-theme w3-padding-16">
+        <button id="search">Search</button>
+    </div>
+
+    <div id='resultList' class="w3-container w3-theme-l3 w3-padding-16">    </div>
+</body>
+
+<div id="details" class="w3-modal">
+    <div class="w3-modal-content w3-theme-l3" style="max-width:750px">
+      <header class="w3-container  w3-theme-l1">
+        <h3 id="date"></h3>
+        <p id="league"></p>
+      </header>
+        <table>
+            <tr><td>home</td><td>away </td><td>date </td>
+                <td>1st</td><td>2nd</td><td>3rd </td><td>Penalites </td><td>Over Time </td><td>Final</tr>
+            <tbody id="tblBody"> </tbody>
+        </table>    
+    </div>
+    <footer id="details" class="w3-container w3-theme-d1"></footer>
+    </div>
+</div>
+
+<script src="js/allKeys.js"></script>
+<script src="js/hockey.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Hockey')</script>
+</html>
