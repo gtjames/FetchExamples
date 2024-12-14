@@ -26,7 +26,7 @@
 
     let row = 0;
     let course = "295338";
-    let edu    = "https://byui.instructure.com/api/v1/";
+    let edu    = "https://byui.instructure.com/api/v1";
     let headers = { "Authorization" : `Bearer ${theKey}`, };
 
     let postOptions = { method: "POST", headers: headers };
@@ -36,7 +36,7 @@
 function setCourse(e) {
     course      = e.target.selectedOptions[0].value;
     keyCanvas   = e.target.selectedOptions[0].dataset.token;
-    edu         = "https://"+e.target.selectedOptions[0].dataset.edu+".instructure.com/api/v1/";
+    edu         = "https://"+e.target.selectedOptions[0].dataset.edu+".instructure.com/api/v1";
     headers.Authorization = `Bearer ${keyCanvas}`;
 
     postOptions = { method: "POST", headers: headers };
@@ -65,62 +65,53 @@ function openError(msg) {
 
 function closeError() { document.getElementById('error').style.display='none'; }
 
-function listModules() {
+async function listModules() {
 		/**
 curl -H 'Authorization: Bearer 10706~1r7OxhF6t3ksuV4w8HVWN6e4LYwcYuXaqLl3pC0cH9TKcll6NEYDxYOi6thAm1Z2'  https://${edu}.instructure.com/api/v1/courses/274380/modules
         */
     asgnQuizzes.innerHTML = '';
     studentSel.innerHTML = '';
     
-    const url = `${edu}courses/${course}/modules`;
-    console.log(url);
-    fetch(url, getOptions)
-    .then(resp => resp.json())
-    .then(modules => {
-        card.innerHTML = '';
-        modules.forEach(mod => {
-            row++;
-            card.innerHTML += `
-                <div id=${mod.id} data-url="${mod.items_url}" class="w3-col m3 l3 w3-theme-d${(row%2)*3+1} disney-card">
-                    <h4>${mod.name}</h4>
-                    <hr>
-                    <div style="overflow-y: scroll; height:290px;"><ul id=item${mod.id}></ul></div>
-                </div>`;
+    modules = await getFetch(`${edu}/courses/${course}/modules`);
+    card.innerHTML = '';
+    modules.forEach(mod => {
+        row++;
+        card.innerHTML += `
+            <div id=${mod.id} data-url="${mod.items_url}" class="w3-col m3 l3 w3-theme-d${(row%2)*3+1} disney-card">
+                <h4>${mod.name}</h4>
+                <hr>
+                <div style="overflow-y: scroll; height:290px;"><ul id=item${mod.id}></ul></div>
+            </div>`;
+    });
+    let cards = document.getElementsByClassName('disney-card');
+    Array.from(cards).forEach(item => getItems(item));
+
+    const students = await fetchStudents();
+    let map  = students.map( s => `<option data-sort="${s.name}" value=${s.id}>${s.name}</option>` );
+    studentSel.innerHTML = map.join('\n');
+}
+
+async function getItems(target) {
+    items = await getFetch(target.dataset.url, getOptions)
+    let itemsList = document.getElementById(`item${target.id}`);
+    if (itemsList !== null) {
+        itemsList.innerHTML = '';
+        // let cb = ;
+        items.forEach(item => {
+            let data = `data-id=${item.content_id} class=${item.type}`;
+            let cb = `${(item.type[0] == 'A' || item.type[0] == 'Q') ? `<input type="checkbox" id=cb-${item.content_id} ${data}>` : ''} `;
+            itemsList.innerHTML += `<li  id=li-${item.content_id} ${data} class=${item.type} data-url=${item.url}>${cb}<span id=title-${item.content_id} ${data}>${item.title}</span><div id=dates-${item.content_id} ${data}></div></li>`
+        })
+        let li = itemsList.querySelectorAll('li.Assignment, li.Quiz');
+        let options = Array.from(li).map(item => {
+            item.addEventListener('click', showDates);
+            return option = `<option class=${item.className} value=${item.id}>${item.innerText}</option>`;
         });
-        let cards = document.getElementsByClassName('disney-card');
-        Array.from(cards).forEach(item => getItems(item));
-        listStudents();
-    })
-    .catch(error => openError(error));
+        asgnQuizzes.innerHTML += options.join('\n');
+    }
 }
 
-function getItems(target) {
-    let url = target.dataset.url;
-    console.log(url);
-    fetch(url, getOptions)
-    .then(resp => resp.json())
-    .then(items => {
-        let itemsList = document.getElementById(`item${target.id}`);
-        if (itemsList !== null) {
-            itemsList.innerHTML = '';
-            // let cb = ;
-            items.forEach(item => {
-                let data = `data-id=${item.content_id} class=${item.type}`;
-                let cb = `${(item.type[0] == 'A' || item.type[0] == 'Q') ? `<input type="checkbox" id=cb-${item.content_id} ${data}>` : ''} `;
-                itemsList.innerHTML += `<li  id=li-${item.content_id} ${data} class=${item.type} data-url=${item.url}>${cb}<span id=title-${item.content_id} ${data}>${item.title}</span><div id=dates-${item.content_id} ${data}></div></li>`
-            })
-            let li = itemsList.querySelectorAll('li.Assignment, li.Quiz');
-            let options = Array.from(li).map(item => {
-                item.addEventListener('click', showDates);
-                return option = `<option class=${item.className} value=${item.id}>${item.innerText}</option>`;
-            });
-            asgnQuizzes.innerHTML += options.join('\n');
-        }
-    })
-    .catch(error => openError(error));
-}
-
-function showDates(e) {
+async function showDates(e) {
     let id = e.target.dataset.id;
     let dates = document.getElementById(`dates-${id}`);
     let li    = document.getElementById(`li-${id}`);
@@ -133,16 +124,12 @@ function showDates(e) {
     let url = `${li.dataset.url}`;
 
     console.log(url);
-    fetch(url, getOptions)
-    .then(resp => resp.json())
-    .then(item => {
-        dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
-        dates.addEventListener('click', updateLockAt);
-    })
-    .catch(error => openError(error));
+    item = await getFetch(url, getOptions)
+    dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
+    dates.addEventListener('click', updateLockAt);
 }
 
-function updateLockAt(e) {
+async function updateLockAt(e) {
     e.stopPropagation();
 
     let id = e.target.dataset.id;
@@ -152,33 +139,14 @@ function updateLockAt(e) {
 
     let arg = type + (type[0] === 'q' ? 'ze' : '') + 's';
     let url = `${edu}/courses/${course}/${arg}/${id}?${type}[lock_at]=${untilDate}:00-06:00`;
-    console.log(url);
-    fetch(url, putOptions)
-    .then(resp => resp.json())
-    .then(item => {
-        if (item.status === undefined)
-            dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
-        else
-            dates.innerText = item.errors[0].message;
-    })
-    .catch(error => openError(error));
+    item = await getFetch(url, putOptions)
+    if (item.status === undefined)
+        dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
+    else
+        dates.innerText = item.errors[0].message;
 }
 
-function listStudents() {
-    let studentNames = document.getElementById('students');
-    let url = `${edu}/courses/${course}/students`;
-    console.log(url);
-    fetch(url, getOptions)
-    .then(resp => resp.json())
-    .then(students => {
-        let map  = students.map( s => `<option data-sort="${s.name}" value=${s.id}>${s.name}</option>` );
-        let sorted = map.sort((a,b) => a.localeCompare(b)).join('\n');
-        studentSel.innerHTML = sorted;
-    })
-    .catch(error => openError(error));
-}
-
-function extendUntilDate() {
+async function extendUntilDate() {
 	let studentId = studentSel.options[studentSel.selectedIndex].value;
 	let quizId    = asgnQuizzes.options[asgnQuizzes.selectedIndex].value;
     let type      = asgnQuizzes.options[asgnQuizzes.selectedIndex].className;
@@ -194,11 +162,8 @@ function extendUntilDate() {
     }
     url = `${edu}${url}`;
     postOptions.body = body;
-    console.log(url);
-    fetch(url, postOptions)
-    .then(resp => resp.json())
-    .then(msg => console.log(msg))
-    .catch(error => openError(error));
+    msg = await getFetch(url, postOptions)
+    console.log(msg);
 }
 
 function extendUntilDates() {
@@ -217,44 +182,43 @@ function extendUntilDates() {
     });
 }
 
-function updateUntilDate(id, url) {
-    console.log(url);
-    fetch(url, putOptions)
-    .then(resp => resp.json())
-    .then(item => {
-        let dates = document.getElementById(`dates-${id}`);
-        let cb    = document.getElementById(`cb-${id}`);
-        cb.checked = false;
-        dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
-        console.log(item);
-    })
-    .catch(error => openError(error));
+async function updateUntilDate(id, url) {
+    item = await getFetch(url, putOptions)
+    let dates = document.getElementById(`dates-${id}`);
+    let cb    = document.getElementById(`cb-${id}`);
+    cb.checked = false;
+    dates.innerHTML = `Due: ${item.due_at}<br>Until: ${item.lock_at}`;
+    console.log(item);
 }
 
 // Step 1: Get all group categories for the course
 async function getGroupCategories() {
-    const response = await fetch(`${edu}/courses/${course}/group_categories`, { headers: headers });
-    return response.json();
+    return await getFetch(`${edu}/courses/${course}/group_categories`);
 }
 
 // Step 2: Get groups within each group category
 async function getGroupsInCategory(groupCategoryId) {
-    const response = await fetch(`${edu}/group_categories/${groupCategoryId}/groups?per_page=20`, { headers: headers });
-   return response.json();
+    return await getFetch(`${edu}/group_categories/${groupCategoryId}/groups?per_page=20`);
 }
 
 // Step 2: Get members of a specific group
 async function getGroupMembers(groupId) {
-    const response = await fetch(`${edu}/groups/${groupId}/users`, { headers: headers });
-    return response.json();
+    return await getFetch(`${edu}/groups/${groupId}/users`);
 }
 
 // Step 2: Get student info
 async function getStudent(studentId) {
-    const response = await fetch(`${edu}users/${studentId}/profile`, { headers: headers });
-    return response.json();
+    return await getFetch(`${edu}/users/${studentId}/profile`);
 }
 
+async function fetchStudents() {
+    return await getFetch(`${edu}/courses/${course}/users?enrollment_type[]=student&per_page=100`);
+}
+  
+async function fetchAssignments() {
+    return await getFetch(`${edu}/courses/${course}/assignments`);
+}
+  
 // Step 3: Combine and display all groups for the course
 async function listAllGroupsForCourse() {
     try {
@@ -284,13 +248,16 @@ async function listAllGroupsForCourse() {
 async function getIncomplete() {
   const resultsDiv = document.getElementById("card");
   resultsDiv.innerHTML = "<p>Loading...</p>";
-
+    let tmp, tmp2;
+    let data;
   try {
-    const students = await fetchStudents(course);
-    const assignments = await fetchAssignments(course);
+    const students    = await fetchStudents();
+    const assignments = await fetchAssignments();
 
-    const data = await Promise.all(
+    data = await Promise.all(
       students.map(async (student) => {
+        stud = student;
+        // await new Promise(r => setTimeout(r, 100));
         const incompleteAssignments = await getIncompleteAssignments( course, student.id, assignments );
         return {
           studentName: student.name,
@@ -298,43 +265,18 @@ async function getIncomplete() {
         };
       })
     );
-
-    displayResults(data, resultsDiv);
   } catch (error) {
+    console.log(`${course}, ${stud}`);
     resultsDiv.innerHTML = `<p>Error: ${error.message}</p>`;
   }
-}
 
-async function fetchStudents(courseId) {
-  const url = `${edu}/courses/${course}/users?enrollment_type[]=student&per_page=100`;
-  const response = await fetch(url, getOptions);
-  if (!response.ok) {
-    return {};
-    // throw new Error("Failed to fetch students.");
-  }
-  return response.json();
-}
-
-async function fetchAssignments(course) {
-  let url = `${edu}/courses/${course}/assignments`;
-  const response = await fetch(url, getOptions);
-  if (!response.ok) {
-    return {};
-    // throw new Error("Failed to fetch assignments.");
-  }
-  return response.json();
+  displayResults(data, resultsDiv);
 }
 
 async function getIncompleteAssignments(course, studentId, assignments) {
   const results = [];
   for (const assignment of assignments) {
-    let url = `${edu}/courses/${course}/assignments/${assignment.id}/submissions/${studentId}`;
-    const response = await fetch(url, getOptions);
-    if (!response.ok) {
-        return results;
-    //   throw new Error("Failed to fetch submission status.");
-    }
-    const submission = await response.json();
+    const submission = await getFetch(`${edu}/courses/${course}/assignments/${assignment.id}/submissions/${studentId}`);
     if (!submission.submitted_at) {
       results.push(assignment.name);
     }
@@ -347,21 +289,29 @@ function displayResults(data, container) {
   let count = +missed.value;
   data.forEach(({ studentName, incompleteAssignments },idx) => {
     const studentDiv = document.createElement("div");
-    if ( (count < 0 && incompleteAssignments.length <  Math.abs(count))
-      || (count >=0 && incompleteAssignments.length >= count) ) {
-        studentDiv.innerHTML = `<h3>${idx} ${studentName}</h3>`;
-        const list = document.createElement("ul");
-        incompleteAssignments.forEach((assignment) => {
-            const item = document.createElement("li");
-            item.textContent = assignment;
-            list.appendChild(item);
-        });
-        studentDiv.appendChild(list);
-    } else {
-        // studentDiv.innerHTML += "<p>All assignments completed!</p>";
+    if (incompleteAssignments.length != 0) {
+        if ( (count < 0 && incompleteAssignments.length <  Math.abs(count))
+        || (count >=0 && incompleteAssignments.length >= count) ) {
+            studentDiv.innerHTML = `<h3>${idx} ${studentName}</h3>`;
+            const list = document.createElement("ul");
+            incompleteAssignments.forEach((assignment) => {
+                const item = document.createElement("li");
+                item.textContent = assignment;
+                list.appendChild(item);
+            });
+            studentDiv.appendChild(list);
+        } else {
+            // studentDiv.innerHTML += "<p>All assignments completed!</p>";
+        }
     }
     container.appendChild(studentDiv);
   });
+}
+
+async function getFetch(url, options = { headers: headers }) {
+    // console.log(url);    
+    const response = await fetch(url, options );
+    return response.json();
 }
 
 function setKey() { theKey = getKey(); }

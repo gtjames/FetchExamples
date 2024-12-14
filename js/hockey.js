@@ -43,10 +43,9 @@ function show(data) {
         </div>`
         tableBody.innerHTML += arHtml;
     });
-    let jobDetail = document.getElementsByClassName('drillDown');
-    Array.from(jobDetail)
-        .forEach((jd) => jd.addEventListener('click', (e) => 
-            details()));
+    let listOfTeams = document.getElementsByClassName('drillDown');
+    Array.from(listOfTeams)
+        .forEach((team) => team.addEventListener('click', (e) => details()));
 }
 
 function details(event) {
