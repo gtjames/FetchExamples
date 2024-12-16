@@ -86,7 +86,7 @@ curl -H 'Authorization: Bearer 10706~1r7OxhF6t3ksuV4w8HVWN6e4LYwcYuXaqLl3pC0cH9T
     let cards = document.getElementsByClassName('disney-card');
     Array.from(cards).forEach(item => getItems(item));
 
-    const students = await fetchStudents();
+    const students = await getStudents();
     let map  = students.map( s => `<option data-sort="${s.name}" value=${s.id}>${s.name}</option>` );
     studentSel.innerHTML = map.join('\n');
 }
@@ -191,34 +191,6 @@ async function updateUntilDate(id, url) {
     console.log(item);
 }
 
-// Step 1: Get all group categories for the course
-async function getGroupCategories() {
-    return await getFetch(`${edu}/courses/${course}/group_categories`);
-}
-
-// Step 2: Get groups within each group category
-async function getGroupsInCategory(groupCategoryId) {
-    return await getFetch(`${edu}/group_categories/${groupCategoryId}/groups?per_page=20`);
-}
-
-// Step 2: Get members of a specific group
-async function getGroupMembers(groupId) {
-    return await getFetch(`${edu}/groups/${groupId}/users`);
-}
-
-// Step 2: Get student info
-async function getStudent(studentId) {
-    return await getFetch(`${edu}/users/${studentId}/profile`);
-}
-
-async function fetchStudents() {
-    return await getFetch(`${edu}/courses/${course}/users?enrollment_type[]=student&per_page=100`);
-}
-  
-async function fetchAssignments() {
-    return await getFetch(`${edu}/courses/${course}/assignments`);
-}
-  
 // Step 3: Combine and display all groups for the course
 async function listAllGroupsForCourse() {
     try {
@@ -244,33 +216,25 @@ async function listAllGroupsForCourse() {
         console.error("Error:", error.message);
     }
 }
-
 async function getIncomplete() {
-  const resultsDiv = document.getElementById("card");
-  resultsDiv.innerHTML = "<p>Loading...</p>";
-    let tmp, tmp2;
-    let data;
-  try {
-    const students    = await fetchStudents();
-    const assignments = await fetchAssignments();
+    const resultsDiv = document.getElementById("card");
+    resultsDiv.innerHTML = "<p>Loading...</p>";
 
-    data = await Promise.all(
-      students.map(async (student) => {
-        stud = student;
-        // await new Promise(r => setTimeout(r, 100));
-        const incompleteAssignments = await getIncompleteAssignments( course, student.id, assignments );
-        return {
-          studentName: student.name,
-          incompleteAssignments,
-        };
-      })
-    );
-  } catch (error) {
-    console.log(`${course}, ${stud}`);
-    resultsDiv.innerHTML = `<p>Error: ${error.message}</p>`;
-  }
+    const students     = await getStudents();
+    const assignments  = await getAssignments();
+    const studentAssignments = 
+        Object.fromEntries( students.map(student => [ student.id, { name: student.name, unsubmitted: [] } ]) );
 
-  displayResults(data, resultsDiv);
+    for (let assignment of assignments) {
+        let incompletes = await getSubmissionByStatus( course, assignment['id'], 'unsubmitted' );
+        for (let submission of incompletes) {
+            let studentId = submission['user_id']
+            if (studentAssignments[studentId] != undefined) {
+                studentAssignments[studentId]["unsubmitted"].push(assignment['name'])
+            }
+        }
+    }
+    displayIncomplete(studentAssignments, resultsDiv);
 }
 
 async function getIncompleteAssignments(course, studentId, assignments) {
@@ -284,34 +248,71 @@ async function getIncompleteAssignments(course, studentId, assignments) {
   return results;
 }
 
-function displayResults(data, container) {
+async function getSubmissionByStatus(course, assignmentId, state) {
+    let submissions = [];
+
+    const submission = await getFetch(`${edu}/courses/${course}/assignments/${assignmentId}/submissions?per_page=100`, headers=headers);
+    submissions = submission.filter(s => s.workflow_state == state);
+    return submissions;
+}  
+
+function displayIncomplete(data, container) {
   container.innerHTML = "";
+  let idx = 0;
   let count = +missed.value;
-  data.forEach(({ studentName, incompleteAssignments },idx) => {
-    const studentDiv = document.createElement("div");
-    if (incompleteAssignments.length != 0) {
-        if ( (count < 0 && incompleteAssignments.length <  Math.abs(count))
-        || (count >=0 && incompleteAssignments.length >= count) ) {
-            studentDiv.innerHTML = `<h3>${idx} ${studentName}</h3>`;
-            const list = document.createElement("ul");
-            incompleteAssignments.forEach((assignment) => {
-                const item = document.createElement("li");
-                item.textContent = assignment;
-                list.appendChild(item);
-            });
-            studentDiv.appendChild(list);
-        } else {
-            // studentDiv.innerHTML += "<p>All assignments completed!</p>";
+    for (var key in data) {
+        const {name, unsubmitted} = data[key];
+        const studentDiv = document.createElement("div");
+        if (unsubmitted.length != 0) {
+            if ( (count < 0 && unsubmitted.length <  Math.abs(count))
+            || (count >=0 && unsubmitted.length >= count) ) {
+                studentDiv.innerHTML = `<h3>${idx++} ${name}</h3>`;
+                const list = document.createElement("ul");
+                unsubmitted.forEach((assignment) => {
+                    const item = document.createElement("li");
+                    item.textContent = assignment;
+                    list.appendChild(item);
+                });
+                studentDiv.appendChild(list);
+            } else {
+                // studentDiv.innerHTML += "<p>All assignments completed!</p>";
+            }
         }
+        container.appendChild(studentDiv);
     }
-    container.appendChild(studentDiv);
-  });
 }
 
 async function getFetch(url, options = { headers: headers }) {
-    // console.log(url);    
     const response = await fetch(url, options );
     return response.json();
+}
+
+// Get all group categories for the course
+async function getGroupCategories() {
+    return await getFetch(`${edu}/courses/${course}/group_categories`);
+}
+
+// Get groups within each group category
+async function getGroupsInCategory(groupCategoryId) {
+    return await getFetch(`${edu}/group_categories/${groupCategoryId}/groups?per_page=20`);
+}
+
+// Get members of a specific group
+async function getGroupMembers(groupId) {
+    return await getFetch(`${edu}/groups/${groupId}/users`);
+}
+
+// Get student info
+async function getStudent(studentId) {
+    return await getFetch(`${edu}/users/${studentId}/profile`);
+}
+
+async function getStudents() {
+    return await getFetch(`${edu}/courses/${course}/users?enrollment_type[]=student&per_page=100`);
+}
+  
+async function getAssignments() {
+    return await getFetch(`${edu}/courses/${course}/assignments?per_page=100`);
 }
 
 function setKey() { theKey = getKey(); }
