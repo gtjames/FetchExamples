@@ -59,7 +59,6 @@ function details(event) {
         if (!open)
             document.getElementById('details').style.display='block';
         open = true;
-        document.getElementById('count').innerText = `${id} ${test}`;
         document.getElementById('league').innerHTML =
         `<img src=${teams[0].league.logo} style="width:60px; height:60px;">`;
 
@@ -67,10 +66,13 @@ function details(event) {
         let row = 0;
         gameBody.innerHTML = '';
         teams.map(g => {
-            games += `
+            // onmouseenter=details(${g.homeTeam.id})
+            // onmouseenter=details(${g.awayTeam.id})
+            document.getElementById('count').innerText = `${id} ${g.homeTeam.name}`;
+                games += `
                 <tr  class="w3-theme-${++row%2===1?'l2':'l3'}" >
-                <td><img src=${g.homeTeam.logo} onclick=details(${g.homeTeam.id}) style="width:60px; height:60px;"></td>
-                <td><img src=${g.awayTeam.logo} onclick=details(${g.awayTeam.id}) style="width:60px; height:60px;"></td>
+                <td><img src=${g.homeTeam.logo} style="width:60px; height:60px;"></td>
+                <td><img src=${g.awayTeam.logo} style="width:60px; height:60px;"></td>
                 <td>${g.date.substring(0,10)}</td>
                 <td>${g.state.score.firstPeriod}</td>
                 <td>${g.state.score.secondPeriod}</td>
