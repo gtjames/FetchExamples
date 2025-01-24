@@ -18,6 +18,7 @@ let menuOptions = [
     {text: 'Jobs',          link: 'jobs.html',},
     {text: 'Lambda',        link: 'lambda.html',},
     {text: 'Lyrics',        link: 'lyrics.html',},
+    {text: 'Movies',        link: 'movies.html',},
     {text: 'NASA News',     link: 'nasaNews.html',},
     {text: 'National Parks',link: 'nationalParks.html',},
     {text: 'News',          link: 'news.html',},

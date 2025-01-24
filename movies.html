@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Movies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <label for="bookSearch">Search for a Movie Title</label>
+    <input type="text" id="searchTerm" value="mars">
+    <button id="search">Search</button>
+    <p>Columns are sortable</p>
+</div>
+<div class="w3-container w3-theme-l3 w3-padding-16">
+    <table class='w3-table-all sortable w3-theme'>
+        <thead>
+        <tr class="w3-theme-l4 w3-bordered">
+            <th>Book Cover</th>         <th>Title</th>  <th>Author</th>
+            <th>Page Count</th>         <th>Synopsis</th><th>Category</th>
+        </tr>
+        </thead>
+        <tbody id='moviesList'>   </tbody>
+    </table>
+</div>
+</body>
+
+<script src='js/allKeys.js'></script>
+<script src="js/movies.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Movies')</script>
+<script src="js/sortColumns.js"></script>
+
+</html>
