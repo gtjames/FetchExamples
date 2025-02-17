@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Recipes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        .recipe-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .ingredients, .instructions {
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .step {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f1f1f1;
+            border-left: 4px solid #ff6347;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+<body class="w3-theme-l1">
+
+    <div class="w3-container w3-theme-l1">
+        <div id="menu" class="w3-bar"></div>
+    </div>
+
+    <div class="w3-container w3-theme w3-padding-16">
+        <button id="search">Search</button>
+        <label for="recipeSearch">Search for a Recipe</label>
+        <input type="text" id="searchTerm" value="chocolate">
+        <button id="next">Next</button>
+        <button id="prev">Prev</button>
+        </div>
+
+    <div id='resultList' class="w3-container w3-theme-l3 w3-padding-16">    </div>
+</body>
+
+<div id="details" class="w3-modal">
+    <div class="w3-modal-content w3-theme-l3" style="max-width:750px">
+        <header class="w3-container  w3-theme-l1">
+            <h4 id="recipeName">Recipe Name</h4>
+        </header>
+        <div class="recipe-container">
+            <h2>Ingredients</h2>
+            <ol id="ingredients" class="ingredients"> </ol>
+
+            <h2>Instructions</h2>
+            <div id="instructions" class="instructions">    </div>
+
+            <h2>Summary</h2>
+            <div id="summary" class="instructions">    </div>
+        </div>
+        <footer class="w3-container w3-theme-d1">
+            <div id="cr"></div>
+            <a id="source">Source</a>
+            <a id="spoon">Spoonacular</a>
+        </footer>
+    </div>
+</div>
+
+<script src="js/allKeys.js"></script>
+<script src="js/recipes.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Recipes')</script>
+</html>

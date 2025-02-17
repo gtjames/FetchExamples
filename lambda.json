@@ -1,0 +1,45 @@
+{
+    "version": "2.0",
+    "routeKey": "GET /items/search",
+    "rawPath": "/items/search",
+    "rawQueryString": "speaker=time",
+    "headers": {
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-US,en;q=0.9",
+        "content-length": "0",
+        "host": "4e4alkz5p2.execute-api.us-east-1.amazonaws.com",
+        "priority": "u=3, i",
+        "referer": "http://127.0.0.1:5503/",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "cross-site",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1.1 Safari/605.1.15",
+        "x-amzn-trace-id": "Root=1-67489b9a-6c5d203066d218ed6a042495",
+        "x-forwarded-for": "75.32.204.5",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "queryStringParameters": {
+        "speaker": "time"
+    },
+    "requestContext": {
+        "accountId": "818051267286",
+        "apiId": "4e4alkz5p2",
+        "domainName": "4e4alkz5p2.execute-api.us-east-1.amazonaws.com",
+        "domainPrefix": "4e4alkz5p2",
+        "http": {
+            "method": "GET",
+            "path": "/items/search",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "75.32.204.5",
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1.1 Safari/605.1.15"
+        },
+        "requestId": "B91AJgLaIAMEbXw=",
+        "routeKey": "GET /items/search",
+        "stage": "$default",
+        "time": "28/Nov/2024:16:34:34 +0000",
+        "timeEpoch": 1732811674176
+    },
+    "isBase64Encoded": false
+}

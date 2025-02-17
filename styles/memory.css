@@ -11,6 +11,15 @@ tr.current > td:first-child {
     background-position: center right;
 }
 
+td.op   { background-color: green;    width: 15%; font-size: 1.4em; font-family: 'Roboto';  }
+td.op2  { background-color: lightgreen;    width: 5%; font-size: 1.4em; font-family: 'Roboto';  }
+td.shamt{ background-color: lightslategray; width: 10%;    font-size: 1.4em; font-family: 'Roboto';  }
+td.rm   { background-color: lightseagreen; width: 10%;    font-size: 1.4em; font-family: 'Roboto';  }
+td.rn   { background-color: darkturquoise;  width: 10%; font-size: 1.4em; font-family: 'Roboto';  }
+td.rd   { background-color: darkorange;  width: 10%; font-size: 1.4em; font-family: 'Roboto';  }
+td.off  { background-color: skyblue;   width: 40%; font-size: 1.4em; font-family: 'Roboto';  }
+td.inst { background-color: lemonchiffon;   width: 40%; font-size: 1.4em; font-family: 'Roboto';  }
+
 td.step     { background-color: lightgreen;    width: .3em;}
 td.tag      { background-color: lightgreen;    width: 20%; font-size: 1.0em; padding: 4px; }
 td.index    { background-color: paleturquoise; width: 10%;                   font-family: 'Courier New'; }
@@ -29,7 +38,7 @@ tr.nextDecode     { background-color: lightgoldenrodyellow; }
 .error  { border-color: red;        border-width: 4px;}
 input[type=text]         { width: 60px; }
 .scrolling  { overflow-y: scroll; height:760px; }
-.modal      {--bs-modal-width:  800px;}
+.modal      {--bs-modal-width:  1200px;}
 tr.closed   {height: 0px;     display: none;}
 .opened     {height: 40px;}
 .dropdown-check-list { display: inline-block; }
@@ -37,6 +46,7 @@ input.vsmall{ width: 50px; }
 input.small { width: 100px; }
 input.medium{ width: 140px; }
 input.big   { width: 240px; }
+input.vbig  { width: 400px; }
 
 /*  */
 .accordion {

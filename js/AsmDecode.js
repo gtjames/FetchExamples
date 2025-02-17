@@ -1,18 +1,27 @@
 import { code, getInstruction, getInstructions, CB} from './AsmData.js';
-import { reveal, close } from './AsmUtils.js';
+import { reveal, close, bin2hex } from './AsmUtils.js';
 import { setSeed } from './utils.js';
 
 let studentID   = document.getElementById('studentID');
 let testID      = document.getElementById('testID');
 let moreBtn     = document.getElementById('more');
-let revealBtn     = document.getElementById('reveal');
+let revealBtn   = document.getElementById('reveal');
+let col_0 = document.getElementById('col_0');
+let col_1 = document.getElementById('col_1');
+let col_2 = document.getElementById('col_2');
+let col_3 = document.getElementById('col_3');
+let col_4 = document.getElementById('col_4');
+let col_5 = document.getElementById('col_5');
 
 document.getElementById('step').addEventListener('click', nextStep);
 document.getElementById('reset').addEventListener('click', reset);
 document.getElementById('clear').addEventListener('click', showInstructions);
-document.getElementById('decoder').addEventListener('click', decoder);
+document.getElementById('hex2Asm').addEventListener('click', hex2Asm);
+document.getElementById('asm2Bin').addEventListener('click', asm2Bin);
 document.getElementById(`submit`).addEventListener('click', submit);
-moreBtn.addEventListener('click', decoder);
+document.getElementById(`listCodes`).addEventListener('click', listOpcodes);
+
+moreBtn.addEventListener('click', moreExamples);
 revealBtn.addEventListener('click', reveal);
 revealBtn.parentElement.addEventListener('dblclick', () => revealBtn.disabled = false);
 
@@ -48,8 +57,8 @@ function showInstructions() {
     instructionRows.innerHTML = "";
     application.forEach((c, index) => {
         instructionRows.innerHTML += `<tr id='tr-${index}' data-index='${c.index}'> <td id='instr-${index}' >${c.Instruction}</td><td id='hex-${index}' >${c.Hex}</td><td colspan="3" id='binary-${index}' class='binary'>${c.Binary}</td> </tr>`+
-                                    `<tr id='bin2Op-${index}'  class='closed'></tr>` +
-                                    `<tr id='op2Bin-${index}'  class='closed'></tr>`;
+        `<tr id='bin2Op-${index}'  class='closed'></tr>` +
+        `<tr id='op2Bin-${index}'  class='closed'></tr>`;
     });
     step = -1;
     if (op) op.className = "";
@@ -243,6 +252,7 @@ function token2Bin(token) {
     number = token.replace(/#/, "").replace("0x","");
 
     if (token.length === 0)                         number = "0";
+    else if (token.localeCompare("lr")  === 0)      number = "30";
     else if (token.localeCompare("sp")  === 0)      number = "28";
     else if (token.localeCompare("xzr") === 0)      number = "31";
     else if (hex)
@@ -251,81 +261,362 @@ function token2Bin(token) {
         number = token.replace(/[^0-9-]/gi, "");
     number = "0".repeat(21) + (+number).toString(2);
     number = number.substring(number.length-21, number.length);
-    console.log(token, number);
+    // console.log(token, number);
     return number;
 }
 
-function decoder() {  
+let oldContent = "";
+let mode = "";
+
+function moreExamples() {
+    oldContent = "";
+    if(mode === "hex2Asm")
+        hex2Asm();
+    else
+        asm2Bin();
+}
+
+function asm2Bin() {  
+    mode = "asm2Bin";
+    document.getElementById("label").innerText = "Assembler to Hex";
+
     let id = testID.value;
     setSeed( (id.length > 0) ? "."+id : -1 );
     revealBtn.disabled = (id.length > 0);
 
     let test = document.getElementById('test');
     let instructions = getInstructions(5);
-    test.innerHTML = "";
-    
+    test.innerHTML = `<tr><td colspan="5">` + 
+    `Line 2: Enter the Binary for the instruction<br>` +
+    `Line 3: Rearange the binary for the order the bits are in the instruction<br>` +
+    `Line 4: Create the 32-bit instruction and the Hex representation</td></tr>`;
+
+    let header;
+
     instructions.forEach((i,index) => { 
         let binary = i.Binary;
         let parts = i.Instruction.split(/[\s,\[\],;]+/);
+        if(!parts[3]) parts[3] = "";
         let locBin = code.filter(c => c.OpCode === binary.substring(0, c.Width))[0];
-        let innerHTML = `<td class="bin2Op-currDecode">${locBin.Format}</td>`;
+        let line1 = "";
+        let line2 = "";
+
+        if (!locBin) return;
+        switch ( locBin.Format )  {
+        case    "R" :
+            header =
+            `<td>   Format: ${locBin.Format}</td>` +
+            `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+            `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+            `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+            `<td class="rm">   <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`      +
+            `<td class="shamt"><input data-answer='${parts[4]}' id='op${index}4' type='text'></td>`;
+            line1 += `<tr>` +
+                `<td class="op">    <input id='bin${index}0'  class="medium" type='text' data-answer='${binary.substring(0, locBin.Width)}'></td>` +
+                `<td class="rd">    <input id='bin${index}4'  class="medium" type='text' data-answer='${binary.substring(27, 32)}'        ></td>` +
+                `<td class="rn">    <input id='bin${index}3'  class="medium" type='text' data-answer='${binary.substring(22, 27)}'        ></td>` +
+                `<td class="rm">    <input id='bin${index}1'  class="medium" type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+5)}'></td>` +
+                `<td class="shamt"> <input id='bin${index}2'  class="medium" type='text' data-answer='${binary.substring(16, 22)}'        ></td>` +
+                `</tr>`;
+            line2 +=  `<tr>` +
+                `<td class="op">    <input id='instr${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'></td>` +
+                `<td class="rm">    <input id='instr${index}1'  class="medium"   type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+5)}'></td>` +
+                `<td class="shamt"> <input id='instr${index}2'  class="medium"   type='text' data-answer='${binary.substring(16, 22)}'        ></td>` +
+                `<td class="rn">    <input id='instr${index}3'  class="medium"   type='text' data-answer='${binary.substring(22, 27)}'        ></td>` +
+                `<td class="rd">    <input id='instr${index}4'  class="medium"   type='text' data-answer='${binary.substring(27, 32)}'        ></td>` +
+                `</tr>`;
+            break;
+        case    "I" :
+            header =
+            `<td>   Format: ${locBin.Format}</td>` +
+            `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+            `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+            `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+            `<td class="off">   <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`;
+
+            line1 += `<tr>` +
+                `<td class="op">  <input id='bin${index}0'  class="medium" type='text' data-answer='${binary.substring(0, locBin.Width)}'              ></td>` +
+                `<td class="rd">  <input id='bin${index}3'                 type='text' data-answer='${binary.substring(27, 32)}'                       ></td>` +
+                `<td class="rn">  <input id='bin${index}2'                 type='text' data-answer='${binary.substring(22, 27)}'                       ></td>` +
+                `<td class="off"> <input id='bin${index}1'  class="big"    type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+12)}'></td>` +
+                `</tr>`;
+            line2 +=  `<tr>` +
+                `<td class="op"> <input id='instr${index}0'  class="medium" type='text' data-answer='${binary.substring(0, locBin.Width)}'              ></td>` +
+                `<td class="off"><input id='instr${index}1'  class="big"    type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+12)}'></td>` +
+                `<td class="rn"> <input id='instr${index}2'                 type='text' data-answer='${binary.substring(22, 27)}'                       ></td>` +
+                `<td class="rd"> <input id='instr${index}3'                 type='text' data-answer='${binary.substring(27, 32)}'                       ></td>` +
+                `</tr>`;
+            break;
+        case    "D" :
+            header =
+            `<td>   Format: ${locBin.Format}</td>` +
+            `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+            `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+            `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+            `<td class="roffm">   <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`      +
+            `<td class="op2"><input data-answer='${parts[4]}' id='op${index}4' type='text'></td>`;
+
+            line1 +=  `<tr>` +
+                `<td class="op"> <input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'  ></td>` +
+                `<td class="rd"> <input id='bin${index}4'  class="small"    type='text' data-answer='${binary.substring(27, 32)}'           ></td>` +
+                `<td class="rn"> <input id='bin${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'           ></td>` +
+                `<td class="off"><input id='bin${index}1'  class="big"      type='text' data-answer='${binary.substring(locBin.Width, 20)}' ></td>` +
+                `<td class="op2"><input id='bin${index}2'                   type='text' data-answer='${binary.substring(20, 22)}'           ></td>` +
+                `</tr>`;
+            line2 +=  `<tr>` +
+                `<td class="op"> <input id='instr${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'  ></td>` +
+                `<td class="off"><input id='instr${index}1'  class="big"      type='text' data-answer='${binary.substring(locBin.Width, 20)}'></td>` +
+                `<td class="op2"><input id='instr${index}2'                   type='text' data-answer='${binary.substring(20, 22)}'           ></td>` +
+                `<td class="rn"> <input id='instr${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'           ></td>` +
+                `<td class="rd"> <input id='instr${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'           ></td>` +
+                `</tr>`;
+            break;
+        case    "B" :
+            header =
+            `<td>   Format: ${locBin.Format}</td>` +
+            `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+            `<td class="off">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>`;
+        line1 += `<tr>` +
+                `<td class="op">             <input id='bin${index}0' class="medium"    type='text' data-answer='${binary.substring(0, locBin.Width)}' ></td>` +
+                `<td class="off" colspan="3"><input id='bin${index}1' class="vbig"      type='text' data-answer='${binary.substring(locBin.Width, 32)}'></td>` +
+                `</tr>`;
+            break;
+        case    "IM" :
+            header =
+            `<td>   Format: ${locBin.Format}</td>` +
+            `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+            `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+            `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+            `<td class="rm">   <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`      +
+            `<td class="shamt"><input data-answer='${parts[4]}' id='op${index}4' type='text'></td>`;
+        line1 += `<tr>` +
+                `<td class="op"> <input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}' ></td>` +
+                `<td class="off"><input id='bin${index}1'  class="big"      type='text' data-answer='${binary.substring(9, 27)}'           ></td>` +
+                `<td class="rd"> <input id='bin${index}2'                    type='text' data-answer='${binary.substring(27, 32)}'          ></td>` +
+                `</tr>`;
+            break;
+        case    "CB" :
+            header =
+            `<td>   Format: ${locBin.Format}</td>` +
+            `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+            `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+            `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+            `<td class="rm">   <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`      +
+            `<td class="shamt"><input data-answer='${parts[4]}' id='op${index}4' type='text'></td>`;
+        line1 += `<tr>` +
+            `<td class="op"> <input id='bin${index}0'  class="medium"   type='text'     data-answer='${binary.substring(0, locBin.Width)}'     ></td>` +
+            `<td class="off"><input id='bin${index}1'  class="big"      type='text'     data-answer='${binary.substring(locBin.Width, 27)}'    ></td>` +
+            `<td class="rd"> <input id='bin${index}2'                   type='text'     data-answer='${binary.substring(27, 32)}'              ></td>` +
+            `</tr>`;
+            line2 +=  `<tr>` +
+            `<td class="op"> <input id='instr${index}0'  class="medium"   type='text'     data-answer='${binary.substring(0, locBin.Width)}'     ></td>` +
+            `<td class="off"><input id='instr${index}1'  class="big"      type='text'     data-answer='${binary.substring(locBin.Width, 27)}'    ></td>` +
+            `<td class="rd"> <input id='instr${index}2'                   type='text'     data-answer='${binary.substring(27, 32)}'              ></td>` +
+            `<td class="op"> <input id='instr${index}3'                   type='text'     data-answer='${CB[binary.substring(27, 32)]}'          ></td>` +
+            `</tr>`;
+            break;
+    }
+    test.innerHTML += `<tr id='test-${index}' data-Binary='${i.Binary}' data-Instruction='${i.Instruction}' data-Format='${locBin.Format}' data-index='${i.index}'>` +
+    `${header}</tr>` +
+    `${line1}` +
+    `${line2}` +
+    `<tr><td colspan="2" class="inst"><input id='op${index}5'  class="vbig"   type='text'     data-answer='${binary}'></td>` +
+        `<td colspan="2" class="inst"><input id='op${index}6'  class="big"    type='text'     data-answer='${bin2hex(binary)}'></td></tr>`;
+    });
+}
+
+function hex2Asm() { 
+    mode = "hex2Asm";
+    document.getElementById("label").innerText = "Hex to Assembler";
+
+    let id = testID.value;
+    setSeed( (id.length > 0) ? "."+id : -1 );
+    revealBtn.disabled = (id.length > 0);
+
+    let test = document.getElementById('test');
+    let instructions = getInstructions(5);
+    test.innerHTML = `<tr><td colspan="5">` + 
+    `Line 2: Enter the parts of the Assembly instruction<br>` + 
+    `Line 3: Enter the binary value for the instruction parts<br>` +
+    `Line 4: Rearange the binary to be in the order of the bits in the instruction` +`</td></tr>`;
+    let header;
+    instructions.forEach((i,index) => { 
+        let binary = i.Binary;
+        let parts = i.Instruction.split(/[\s,\[\],;]+/);
+        if(!parts[3]) parts[3] = "";
+        let locBin = code.filter(c => c.OpCode === binary.substring(0, c.Width))[0];
+        if(!locBin) return;
+        let line1, line2 = `<tr><td class="bin2Op-currDecode">${i.Binary}</td>`;
+        try {
+        line1 = `<tr><td class="op2Bin-currDecode">${i.Hex}</td>`;
+        }
+        catch (e) {
+        console.log(e);
+        }
         if (!locBin) return;
         switch ( locBin.Format )  {
             case    "R" :
-                innerHTML += 
-                    `<td><input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'</td>` +
-                    `<td><input id='bin${index}1'                   type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+5)}'</td>` +
-                    `<td><input id='bin${index}2'                   type='text' data-answer='${binary.substring(16, 22)}'        </td>` +
-                    `<td><input id='bin${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'        </td>` +
-                    `<td><input id='bin${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'        </td>`;
+                header =
+                `<td>   Format: ${locBin.Format}</td>` +
+                `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+                `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+                `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+                `<td class="rm">   <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`      +
+                `<td class="shamt"><input data-answer='${parts[4]}' id='op${index}4' type='text'></td>`;
+                line1 += 
+                    `<td class="op">   <input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'</td>` +
+                    `<td class="rd">   <input id='bin${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'        </td>` +
+                    `<td class="rn">   <input id='bin${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'        </td>` +
+                    `<td class="rm">   <input id='bin${index}1'                   type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+5)}'</td>` +
+                    `<td class="shamt"><input id='bin${index}2'                   type='text' data-answer='${binary.substring(16, 22)}'        </td>` +
+                    '</tr>';
+                line2 += 
+                    `<td class="op">   <input id='instr${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'</td>` +
+                    `<td class="rm">   <input id='instr${index}1'                   type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+5)}'</td>` +
+                    `<td class="shamt"><input id='instr${index}2'                   type='text' data-answer='${binary.substring(16, 22)}'        </td>` +
+                    `<td class="rn">   <input id='instr${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'        </td>` +
+                    `<td class="rd">   <input id='instr${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'        </td>` +
+                    '</tr>';
                 break;
             case    "I" :
-                innerHTML +=
-                    `<td><input id='bin${index}0'  class="medium" type='text' data-answer='${binary.substring(0, locBin.Width)}'              ></td>` +
-                    `<td><input id='bin${index}1'  class="big"    type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+12)}'></td>` +
-                    `<td><input id='bin${index}2'                 type='text' data-answer='${binary.substring(22, 27)}'                       ></td>` +
-                    `<td><input id='bin${index}3'                 type='text' data-answer='${binary.substring(27, 32)}'                       ></td>`;
+                header =         
+                `<td>   Format: ${locBin.Format}</td>` +
+                `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+                `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+                `<td class="rn">   <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+                `<td class="off">  <input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`;
+                line1 +=
+                    `<td class="op"> <input id='bin${index}0'  class="medium" type='text' data-answer='${binary.substring(0, locBin.Width)}'              ></td>` +
+                    `<td class="rd"> <input id='bin${index}3'                 type='text' data-answer='${binary.substring(27, 32)}'                       ></td>` +
+                    `<td class="rn"> <input id='bin${index}2'                 type='text' data-answer='${binary.substring(22, 27)}'                       ></td>` +
+                    `<td class="off"><input id='bin${index}1'  class="big"    type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+12)}'></td>` +
+                    '</tr>';
+                line2 +=
+                    `<td class="op">   <input id='instr${index}0'  class="medium" type='text' data-answer='${binary.substring(0, locBin.Width)}'              ></td>` +
+                    `<td class="off">  <input id='instr${index}1'  class="big"    type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+12)}'></td>` +
+                    `<td class="rn">   <input id='instr${index}2'                 type='text' data-answer='${binary.substring(22, 27)}'                       ></td>` +
+                    `<td class="rd">   <input id='instr${index}3'                 type='text' data-answer='${binary.substring(27, 32)}'                       ></td>` +
+                    '</tr>';
                 break;
             case    "D" :
-                innerHTML += 
-                    `<td><input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'  ></td>` +
-                    `<td><input id='bin${index}1'  class="big"      type='text' data-answer='${binary.substring(locBin.Width, 20)}' ></td>` +
-                    `<td><input id='bin${index}2'                   type='text' data-answer='${binary.substring(20, 22)}'           ></td>` +
-                    `<td><input id='bin${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'           ></td>` +
-                    `<td><input id='bin${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'           ></td>`;
+                header =         
+                `<td>   Format: ${locBin.Format}</td>` +
+                `<td class="op"> <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+                `<td class="rd"> <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+                `<td class="rn"> <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>` +
+                `<td class="off"><input data-answer='${parts[3]}' id='op${index}3' type='text'></td>`      +
+                `<td class="op2"><input data-answer='${parts[4]}' id='op${index}4' type='text'></td>`;
+                line1 +=
+                    `<td class="op">   <input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'  ></td>` +
+                    `<td class="rd">   <input id='bin${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'           ></td>` +
+                    `<td class="rn">   <input id='bin${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'           ></td>` +
+                    `<td class="off">  <input id='bin${index}1'  class="big"      type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+9)}' ></td>` +
+                    `<td class="op2">  <input id='bin${index}2'                   type='text' data-answer='${binary.substring(20, 22)}'           ></td>` +
+                    '</tr>';
+                line2 +=
+                    `<td class="op"> <input id='instr${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}'  ></td>` +
+                    `<td class="off"><input id='instr${index}1'  class="big"      type='text' data-answer='${binary.substring(locBin.Width, locBin.Width+9)}' ></td>` +
+                    `<td class="op2"><input id='instr${index}2'                   type='text' data-answer='${binary.substring(20, 22)}'           ></td>` +
+                    `<td class="rn"> <input id='instr${index}3'                   type='text' data-answer='${binary.substring(22, 27)}'           ></td>` +
+                    `<td class="rd"> <input id='instr${index}4'                   type='text' data-answer='${binary.substring(27, 32)}'           ></td>` +
+                    '</tr>';
                 break;
             case    "B" :
-                innerHTML += 
-                    `<td><input id='bin${index}0' class="medium"    type='text' data-answer='${binary.substring(0, locBin.Width)}'></td>` +
-                `<td><input id='bin${index}1' class="big"           type='text' data-answer='${binary.substring(6, 32)}'          ></td>`;
+                header =         
+                `<td>Format: ${locBin.Format}</td>` +
+                `<td class="op"> <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>`;
+                `<td class="off"><input data-answer='${parts[1]}' id='op${index}1' type='text'></td>`;
+                line1 +=
+                    `<td class="op"> <input id='bin${index}0' class="medium"    type='text' data-answer='${binary.substring(0, locBin.Width)}'></td>` +
+                    `<td class="off"><input id='bin${index}1' class="big"       type='text' data-answer='${binary.substring(6, 32)}'          ></td>` +
+                    '</tr>';
+                line2 +=
+                    `<td class="op"> <input id='instr${index}0' class="medium"    type='text' data-answer='${binary.substring(0, locBin.Width)}'></td>` +
+                    `<td class="off"><input id='instr${index}1' class="big"       type='text' data-answer='${binary.substring(6, 32)}'          ></td>` +
+                    '</tr>';
                 break;
             case    "IM" :
-                innerHTML += 
-                    `<td><input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}' ></td>` +
-                    `<td><input id='bin${index}1'  class="big"      type='text' data-answer='${binary.substring(9, 27)}'           ></td>` +
-                    `<td><input id='bin${index}2'  type='text'                  data-answer='${binary.substring(27, 32)}'          ></td>`;
+                header =         
+                `<td>   Format: ${locBin.Format}</td>` +
+                `<td class="op">   <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
+                `<td class="rd">   <input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
+                `<td class="off">  <input data-answer='${parts[2]}' id='op${index}2' type='text'></td>`;
+                line1 +=
+                    `<td class="op"> <input id='bin${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}' ></td>` +
+                    `<td class="rd"> <input id='bin${index}2'  type='text'                  data-answer='${binary.substring(27, 32)}'          ></td>` +
+                    `<td class="off"><input id='bin${index}1'  class="big"      type='text' data-answer='${binary.substring(9, 27)}'           ></td>` +
+                    '</tr>';
+                line2 +=
+                    `<td class="op"> <input id='instr${index}0'  class="medium"   type='text' data-answer='${binary.substring(0, locBin.Width)}' ></td>` +
+                    `<td class="off"><input id='instr${index}1'  class="big"      type='text' data-answer='${binary.substring(9, 27)}'           ></td>` +
+                    `<td class="rd"> <input id='instr${index}2'  type='text'                  data-answer='${binary.substring(27, 32)}'          ></td>` +
+                    '</tr>';
                 break;
-                case    "CB" :
-                innerHTML += 
-                    `<td><input id='bin${index}0'  class="medium"   type='text'     data-answer='${binary.substring(0, locBin.Width)}'     ></td>` +
-                    `<td><input id='bin${index}1'  class="big"      type='text'     data-answer='${binary.substring(locBin.Width, 27)}'    ></td>` +
-                    `<td><input id='bin${index}2'                   type='text'     data-answer='${binary.substring(27, 32)}'              ></td>`;
+            case    "CB" :
+                header =         
+                `<td>   Format: ${locBin.Format}</td>` +
+                `<td class="op"> <input data-answer='${parts[0]}' id='op${index}0' type='text'></td>`      +
+                `<td class="off"><input data-answer='${parts[1]}' id='op${index}1' type='text'></td>`      +
+                `<td class="op2"><input data-answer='${parts[2]}' id='op${index}2' type='text'></td>`;
+                line1 +=
+                    `<td class="op"> <input id='bin${index}0'  class="medium"   type='text'     data-answer='${binary.substring(0, locBin.Width)}'     ></td>` +
+                    `<td class="off"><input id='bin${index}1'  class="big"      type='text'     data-answer='${binary.substring(locBin.Width, 27)}'    ></td>` +
+                    `<td class="op2"><input id='bin${index}2'                   type='text'     data-answer='${binary.substring(27, 32)}'              ></td>` +
+                    '</tr>';
+                line2 +=
+                    `<td class="op"> <input id='instr${index}0'  class="medium"   type='text'     data-answer='${binary.substring(0, locBin.Width)}'     ></td>` +
+                    `<td class="off"><input id='instr${index}1'  class="big"      type='text'     data-answer='${binary.substring(locBin.Width, 27)}'    ></td>` +
+                    `<td class="op2"><input id='instr${index}2'                   type='text'     data-answer='${binary.substring(27, 32)}'              ></td>` +
+                    '</tr>';
                 break;
-            }
+        }
+        test.innerHTML += `<tr id='test-${index}' data-Binary='${i.Binary}' data-Instruction='${i.Instruction}'  data-Format='${locBin.Format}' data-index='${i.index}'>` +
+        `${header}</tr>` +
+        `${line1}${line2}`
+    });
+}
 
-        test.innerHTML += `<tr id='test-${index}' data-Binary='${i.Binary}' data-Instruction='${i.Instruction}' data-index='${i.index}'>` +
-        `<td class="op2Bin-currDecode">${i.Hex}</td>` +
-        `<td><input data-answer='${parts[0]}' id='op${index}0' type='text'></td>` +
-        `<td><input data-answer='${parts[1]}' id='op${index}1' type='text'></td>` +
-        `<td><input data-answer='${parts[2]}' id='op${index}2' type='text'></td>`      +
-        `<td><input data-answer='${parts[3]}' id='op${index}3' type='text'></td></tr>` +
-        `<tr>${innerHTML}</tr>`});
+function listOpcodes() {
+    let test = document.getElementById('test');
+    if (oldContent.length == 0) {
+        oldContent = test.innerHTML;
+        test.innerHTML = getOpcodes()
+         col_0.innerText = " Mnemonic";
+         col_1.innerText = " Format";
+         col_2.innerText = " Width";
+         col_3.innerText = " Binary";
+         col_4.innerText = "";
+         col_5.innerText = "";
+     }
+    else {
+        test.innerHTML = oldContent;
+        col_0.innerText = "Hex Value";
+        col_1.innerText = "Operation";
+        col_2.innerText = "Operand 1";
+        col_3.innerText = "Operand 2";
+        col_4.innerText = "Operand 3";
+        col_5.innerText = "Operand 4";
+        oldContent = "";
+    }
+}
+
+function getOpcodes() {
+    let newContent = "";    
+    code.forEach(i => { 
+        newContent += `<tr>` +
+        `<td><div>${i.Mnemonic}</div</td>` +
+        `<td><div>${i.Format}</div</td>` +
+        `<td><div>${i.Width}</div</td>`      +
+        `<td><div>${i.OpCode}</div</td></tr>`;
+    });
+    return newContent;
 }
 
 function submit() {
-    for (let r = 0; r < 5; r++)
-        for (let c = 0; c < 5; c++) {
-            close(`op${r}${c}`,  true,  0, false, 0 );
-            close(`bin${r}${c}`,  true,  0, true, 0 );
+    for (let r = 0; r <= 5; r++)
+        for (let c = 0; c <= 6; c++) {
+            close(`op${r}${c}`,     true,  0, false, 0 );
+            close(`bin${r}${c}`,    true,  0, true,  0 );
+            close(`instr${r}${c}`,  true,  0, true,  0 );
         }
 }

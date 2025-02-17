@@ -60,6 +60,7 @@ function sort_table_rows(ele, column_number, sortOrder) {
     }
     function stripNoise(a) {
         a = a.cells.item(column_number);
+        if (!a) return "";
         a = (a.innerText || a.textContent);
         a = a.replace(/\$/g,'').replace(/%/g,'').replace(/^\s+/, "").replace(/\s+$/, "").replace(/,/g,'');
         return a;
