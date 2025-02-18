@@ -214,7 +214,7 @@ let instructions = [
 {Hex: '0xF80003E2',    Binary: '11111000000000000000001111100010',      Instruction: 'STUR      x2,        [sp,     0]        '},
 {Hex: '0xF80003E3',    Binary: '11111000000000000000001111100011',      Instruction: 'STUR      x3,        [sp,     0]        '},
 {Hex: '0xF80003F3',    Binary: '11111000000000000000001111110011',      Instruction: 'STUR      x19,       [sp,     0]        '},
-{Hex: '0xF8000BF3',    Binary: '11111000000000000000101111110011',      Instruction: 'STUR      x19,       [sp,     0x10]     '},
+{Hex: '0xF8000BF3',    Binary: '11111000000000000000101111110011',      Instruction: 'STUR      x19,       [sp,     0]        '},
 {Hex: '0xF8008149',    Binary: '11111000000000001000000101001001',      Instruction: 'STUR      x9,        [x10,    8]        '},
 {Hex: '0xF8008465',    Binary: '11111000000000001000010001100101',      Instruction: 'STUR      x5,        [x3,     8]        '},
 {Hex: '0xF80103F4',    Binary: '11111000000000010000001111110100',      Instruction: 'STUR      x20,       [sp,     0x10]     '},
@@ -241,10 +241,10 @@ let instructions = [
 {Hex: '0xF84203F5',    Binary: '11111000010000100000001111110101',      Instruction: 'LDUR      x21,       [sp,     0x20]     '},
 {Hex: '0xF84303F6',    Binary: '11111000010000110000001111110110',      Instruction: 'LDUR      x22,       [sp,     0x30]     '},
 {Hex: '0xF84403FE',    Binary: '11111000010001000000001111111110',      Instruction: 'LDUR      x30,       [sp,     0x40]     '},
-{Hex: '0xF844B421',    Binary: '11111000010001001011010000100001',      Instruction: 'LDUR      x1,        [x1,     0x968]    '}, 
-{Hex: '0xF844B842',    Binary: '11111000010001001011100001000010',      Instruction: 'LDUR      x2,        [x2,     0x970]    '}, 
-{Hex: '0xF844BC00',    Binary: '11111000010001001011110000000000',      Instruction: 'LDUR      x0,        [x0,     0x978]    '}, 
-{Hex: '0xF844C000',    Binary: '11111000010001001100000000000000',      Instruction: 'LDUR      x0,        [x0,     0x980]    '}, 
+{Hex: '0xF844B421',    Binary: '11111000010001001011010000100001',      Instruction: 'LDUR      x1,        [x1,     0x75]    '}, 
+{Hex: '0xF844B842',    Binary: '11111000010001001011100001000010',      Instruction: 'LDUR      x2,        [x2,     0x75]    '}, 
+{Hex: '0xF844BC00',    Binary: '11111000010001001011110000000000',      Instruction: 'LDUR      x0,        [x0,     0x75]    '}, 
+{Hex: '0xF844C000',    Binary: '11111000010001001100000000000000',      Instruction: 'LDUR      x0,        [x0,     0x76]    '}, 
 {Hex: '0xF85F8085',    Binary: '11111000010111111000000010000101',      Instruction: 'LDUR      x5,        [x4,     -8]       '},
 ];
 

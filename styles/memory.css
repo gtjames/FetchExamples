@@ -2,7 +2,7 @@ table, tr, td, th { border: 1px solid black; border-collapse: collapse; padding:
 td.left     { width: 30%;}
 td.right    { width: 35%;}
 td.full     { width: 100%;}
-td {width:25%;}
+/* td {width:25%;} */
 .scrolling  { width: 100%;}
 tr.current > td:first-child {  
     background-image: url('../images/rtArrow.png'); 
@@ -11,14 +11,15 @@ tr.current > td:first-child {
     background-position: center right;
 }
 
-td.op   { background-color: green;    width: 15%; font-size: 1.4em; font-family: 'Roboto';  }
-td.op2  { background-color: lightgreen;    width: 5%; font-size: 1.4em; font-family: 'Roboto';  }
-td.shamt{ background-color: lightslategray; width: 10%;    font-size: 1.4em; font-family: 'Roboto';  }
-td.rm   { background-color: lightseagreen; width: 10%;    font-size: 1.4em; font-family: 'Roboto';  }
-td.rn   { background-color: darkturquoise;  width: 10%; font-size: 1.4em; font-family: 'Roboto';  }
-td.rd   { background-color: darkorange;  width: 10%; font-size: 1.4em; font-family: 'Roboto';  }
-td.off  { background-color: skyblue;   width: 40%; font-size: 1.4em; font-family: 'Roboto';  }
-td.inst { background-color: lemonchiffon;   width: 40%; font-size: 1.4em; font-family: 'Roboto';  }
+td.blk    {background-color: #444;}
+td.op   { background-color: lightgray;          width: 22%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.op2  { background-color: lightgreen;     width: 5%;     font-size: 1.2em; font-family: 'Roboto';  }
+td.shamt{ background-color: lightslategray; width: 18%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.rm   { background-color: lightseagreen;  width: 15%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.rn   { background-color: darkturquoise;  width: 15%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.rd   { background-color: darkorange;     width: 15%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.off  { background-color: skyblue;        width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.inst { background-color: lemonchiffon;   width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
 
 td.step     { background-color: lightgreen;    width: .3em;}
 td.tag      { background-color: lightgreen;    width: 20%; font-size: 1.0em; padding: 4px; }
@@ -45,8 +46,8 @@ tr.closed   {height: 0px;     display: none;}
 input.vsmall{ width: 50px; }
 input.small { width: 100px; }
 input.medium{ width: 140px; }
-input.big   { width: 240px; }
-input.vbig  { width: 400px; }
+input.big   { width: 180px; }
+input.vbig  { width: 360px; }
 
 /*  */
 .accordion {
