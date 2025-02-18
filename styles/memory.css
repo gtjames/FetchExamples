@@ -1,6 +1,6 @@
 table, tr, td, th { border: 1px solid black; border-collapse: collapse; padding: 4px 8px;}
-td.left     { width: 30%;}
-td.right    { width: 35%;}
+td.left     { width: 25%;}
+td.right    { width: 70%;}
 td.full     { width: 100%;}
 /* td {width:25%;} */
 .scrolling  { width: 100%;}
