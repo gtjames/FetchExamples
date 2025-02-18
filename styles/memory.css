@@ -12,13 +12,14 @@ tr.current > td:first-child {
 }
 
 td.blk    {background-color: #444;}
-td.op   { background-color: lightgray;          width: 22%;    font-size: 1.2em; font-family: 'Roboto';  }
-td.op2  { background-color: lightgreen;     width: 5%;     font-size: 1.2em; font-family: 'Roboto';  }
+td.op   { background-color: lightgray;      width: 18%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.op2  { background-color: lightgreen;          font-size: 1.2em; font-family: 'Roboto';  }
 td.shamt{ background-color: lightslategray; width: 18%;    font-size: 1.2em; font-family: 'Roboto';  }
-td.rm   { background-color: lightseagreen;  width: 15%;    font-size: 1.2em; font-family: 'Roboto';  }
-td.rn   { background-color: darkturquoise;  width: 15%;    font-size: 1.2em; font-family: 'Roboto';  }
-td.rd   { background-color: darkorange;     width: 15%;    font-size: 1.2em; font-family: 'Roboto';  }
-td.off  { background-color: skyblue;        width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.rm   { background-color: lightseagreen;  width: 13%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.rn   { background-color: darkturquoise;  width: 13%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.rd   { background-color: darkorange;     width: 13%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.off  { background-color: skyblue;        width: 22%;    font-size: 1.2em; font-family: 'Roboto';  }
+td.broff{ background-color: skyblue;        width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
 td.inst { background-color: lemonchiffon;   width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
 
 td.step     { background-color: lightgreen;    width: .3em;}

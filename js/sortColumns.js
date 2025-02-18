@@ -33,11 +33,22 @@ const copyEl = (elToBeCopied) => {
 };
 
 function sortTable(ele, column) {
-    ele.className = (ele.className === "ZTOA" || ele.className.length === 0) ? "ATOZ" : "ZTOA";
-    if (lastSortCol !== null && lastSortCol !== ele)
-        lastSortCol.className = "";
+    if (ele.classList.contains("ZTOA") || ele.classList.length === 0) {
+        ele.classList.remove("ZTOA");
+        ele.classList.add("ATOZ");
+    } else {
+        ele.classList.remove("ATOZ");
+        ele.classList.add("ZTOA");
+    }
+
+    // ele.className = (ele.className === "ZTOA" || ele.className.length === 0) ? "ATOZ" : "ZTOA";
+    if (lastSortCol !== null && lastSortCol !== ele) {
+        // lastSortCol.className = "";
+        lastSortCol.className.remove("ZTOA");
+        lastSortCol.className.remove("ATOZ");
+    }
     lastSortCol = ele;
-    return sort_table_rows(ele, column, (ele.className === "ATOZ") ? 1 : -1)
+    return sort_table_rows(ele, column, (ele.classList.contains("ATOZ")) ? 1 : -1)
 }
 
 let is_number_pattern = /^\d+(\.\d+)?$/;
@@ -50,7 +61,9 @@ function sort_table_rows(ele, column_number, sortOrder) {
         b = stripNoise(b);
 
         /* Special handling for numbers */
-        if (a.match(is_number_pattern) && b.match(is_number_pattern))
+        if (a.match(is_number_pattern) 
+            && b.match(is_number_pattern)
+            && !ele.classList.contains("NAN"))
             return (parseFloat(a) - parseFloat(b)) * sortOrder;
 
         /* All the rest is alphabetical order */
