@@ -22,6 +22,11 @@ export function decToBin(decNum) {
   let floatView = new Float32Array(buffer);
   floatView[0] = decNum;
 
+  let decIntValue = parseInt(decNum);
+  let decFracValue = decNum - decIntValue;
+  let intBin = (decIntValue >>> 0).toString(2);
+  let binFracValue = decFracValue.toString(2);
+
   let uintView = new Uint32Array(buffer);
   let binary = uintView[0].toString(2);
   binary = binary.padStart(32, '0');
@@ -34,13 +39,17 @@ export function decToBin(decNum) {
   let fraction = parseInt(binFraction, 2) / Math.pow(2, 23);
 
   return {
-    sign: sign,
-    exponent: exponent,
-    fraction: fraction,
-    binary: binary,
-    binSign: binSign,
-    binExponent: binExponent,
-    binFraction:  binFraction
+    sign:          sign,
+    exponent:      exponent,
+    fraction:      fraction,
+    binary:        binary,
+    binSign:       binSign,
+    binExponent:   binExponent,
+    binFraction:   binFraction,
+    decIntValue:   decIntValue,
+    decFracValue:  decFracValue,
+    binFracValue:  binFracValue,
+    intBin:        intBin  
   };
 }
 
