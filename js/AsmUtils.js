@@ -17,11 +17,22 @@ export function toEngineering(num) {
   else return [num, '<>'];
 }
 
+export function binToDecimal(binStr) {
+  let sign = binStr[0] === '1' ? -1 : 1;
+  let exponent = parseInt(binStr.substring(1, 9), 2) - 127;
+  let fraction = parseInt(binStr.substring(9), 2) / Math.pow(2, 23);
+  return sign * (1 + fraction) * Math.pow(2, exponent);
+}
+
 export function decToBin(decNum) {
   let buffer = new ArrayBuffer(4);
   let floatView = new Float32Array(buffer);
   floatView[0] = decNum;
 
+  let sign    = decNum < 0 ? '-' : '+';
+  let binSign = decNum < 0 ? 1 : 0;
+
+  decNum = Math.abs(decNum);
   let decIntValue = parseInt(decNum);
   let decFracValue = decNum - decIntValue;
   let intBin = (decIntValue >>> 0).toString(2);
@@ -31,8 +42,6 @@ export function decToBin(decNum) {
   let binary = uintView[0].toString(2);
   binary = binary.padStart(32, '0');
 
-  let sign = binary.charAt(0) === '1' ? '-' : '+';
-  let binSign = binary.substring(0, 1);
   let binExponent = binary.substring(1, 9);
   let exponent = parseInt(binExponent, 2) - 127;
   let binFraction = binary.substring(9);

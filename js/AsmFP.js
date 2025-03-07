@@ -1,4 +1,4 @@
-import {reveal, close, clear, removeAllErrors, decToBin, bin2hex} from './AsmUtils.js';
+import {reveal, close, clear, removeAllErrors, decToBin, bin2hex, binToDecimal} from './AsmUtils.js';
 import {getBinRand, setSeed} from './utils.js';
     
 let dec          = document.getElementById('dec'  );
@@ -16,6 +16,7 @@ let revealOn     = document.getElementById('revealOn');
 let revealBtn    = document.getElementById('reveal');
 let useMe        = document.getElementById('useMe');
 let studentID    = document.getElementById('studentID');
+let roundTrip    = document.getElementById('roundTrip');
 
 document.getElementById(`reset`).addEventListener('click', reset);
 document.getElementById(`submit`).addEventListener('click', submit);
@@ -41,22 +42,23 @@ function reset() {
     setSeed( (id.length > 0) ? "."+id : -1 );
 
     let fltPt;
-    fltPt = (useMe.checked) ? getBinRand() : dec.value;
+    fltPt = (useMe.checked) ? dec.value : getBinRand();
     let binData = decToBin(fltPt);
     dec.value   = fltPt;
 
 
-    frac.dataset.answer    = binData.binFraction;
-    expBin.dataset.answer  = binData.binExponent;
-    expDec.dataset.answer  = binData.exponent;
-    binSign.dataset.answer = binData.binSign;
-    binary.dataset.answer  = binData.binary;
+    frac.dataset.answer         = binData.binFraction;
+    expBin.dataset.answer       = binData.binExponent;
+    expDec.dataset.answer       = binData.exponent;
+    binSign.dataset.answer      = binData.binSign;
+    binary.dataset.answer       = binData.binary;
     decIntValue.dataset.answer  = binData.decIntValue;
     decFracValue.dataset.answer = binData.decFracValue;
     intBin.dataset.answer       = binData.intBin;
     binFracValue.dataset.answer = binData.binFracValue;
 
     hex.dataset.answer     = bin2hex(binData.binary);
+    roundTrip.value = binToDecimal(binData.binary)
     
     removeAllErrors();
     clear();
