@@ -35,7 +35,7 @@ export function decToBin(decNum) {
   decNum = Math.abs(decNum);
   let decIntValue = parseInt(decNum);
   let decFracValue = decNum - decIntValue;
-  let intBin = (decIntValue >>> 0).toString(2);
+  let binInt = (decIntValue >>> 0).toString(2);
   let binFracValue = decFracValue.toString(2);
 
   let uintView = new Uint32Array(buffer);
@@ -58,7 +58,7 @@ export function decToBin(decNum) {
     decIntValue:   decIntValue,
     decFracValue:  decFracValue,
     binFracValue:  binFracValue,
-    intBin:        intBin  
+    binInt:        binInt  
   };
 }
 

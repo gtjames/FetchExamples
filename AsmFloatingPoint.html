@@ -68,24 +68,26 @@
       </tr>
       <tr>
         <td>Decimal -> </td>
-        <td> <input id='expDec'        class='small'> </td>
-        <td> <input id='decIntValue'   class='small'>
-             <input id='decFracValue'  class='small'> </td>
+        <td> <input id='decExp'       maxlength="3"   class='small'> </td>
+        <td> <input id='decIntValue'  maxlength="7"   class='small'>
+             <input id='decFracValue'                 class='small'> </td>
         <td> </td>
-        <td> <input id='hex'    class='small'> </td>
+        <td> <input id='hex'          maxlength="8"   class='small'> </td>
       </tr>
       <tr>
-        <td> <input id='binSign' class='vsmall'>  Binary -></td>
-        <td> <input id='expBin'  class='small'> </td>
-        <td> <input id='intBin'  class='small'>      
-             <input id='binFracValue'  class='small'> </td>
-        <td colspan="2">  <input id='binary' class='big'> </td>
+        <td>  <input id='binSign'     maxlength="1"   class='vsmall'>  Binary -></td>
+        <td>  <input id='binExp'      maxlength="8"   class='small'> </td>
+        <td>  <input id='binInt'                      class='small'>      
+              <input id='binFracValue'                class='small'> </td>
+        <td colspan="2">  
+              <input id='binary'      maxlength="32"  class='big'> </td>
     </tr>
     <tr>
-      <td> </td>
-        <td></td>
-      <td> <input id='frac' class='medium'> </td>
-      <td colspan="2"> <input id='roundTrip' class='big'> </td>
+      <td></td>
+      <td></td>
+      <td>  <input id='frac'          maxlength="23"  class='medium'> </td>
+      <td colspan="2"> 
+            <input id='roundTrip'                     class='big'> </td>
     </tr>
     </tfoot>
   </table>

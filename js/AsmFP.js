@@ -4,11 +4,11 @@ import {getBinRand, setSeed} from './utils.js';
 let dec          = document.getElementById('dec'  );
 let frac         = document.getElementById('frac' );
 let expBin       = document.getElementById('expBin');
-let expDec       = document.getElementById('expDec');
+let decExp       = document.getElementById('decExp');
 let decIntValue  = document.getElementById('decIntValue');
 let decFracValue = document.getElementById('decFracValue');
 let binFracValue = document.getElementById('binFracValue');
-let intBin       = document.getElementById('intBin');
+let binInt       = document.getElementById('binInt');
 let binSign      = document.getElementById('binSign');
 let binary       = document.getElementById('binary' );
 let hex          = document.getElementById('hex' );
@@ -26,13 +26,19 @@ revealBtn.parentElement.addEventListener('dblclick', () => revealBtn.disabled = 
 reset();
 
 export function submit() {
-    close('binSign',      true,  0,     false, 0);
-    close('expBin',       true,  0,     false, 0);
-    close('expDec',       true,  0,     false, 0);
+    //close(el,          exact, pct,    isNum, pad) {
+    close('decExp',       true,  0,     true,  0);
+    close('decIntValue',  true,  0,     true,  0);
+    close('decFracValue', true,  0,     true,  0);
+    close('hex',          true,  0,     false, 8);
+
+    close('binSign',      true,  0,     true,  0);
+    close('binExp',       true,  0,     true,  0);
+    close('binInt',       true,  0,     true,  0);
+    close('binFracValue', true,  0,     true,  0);
+    close('binary',       true,  0,     false, 32);
 
     close('frac',         true,  0,     false, 23);
-    close('hex',          true,  0,     false, 8);
-    close('binary',       true,  0,     false, 32);
 }
 
 function reset() {
@@ -48,13 +54,13 @@ function reset() {
 
 
     frac.dataset.answer         = binData.binFraction;
-    expBin.dataset.answer       = binData.binExponent;
-    expDec.dataset.answer       = binData.exponent;
+    binExp.dataset.answer       = binData.binExponent;
+    decExp.dataset.answer       = binData.exponent;
     binSign.dataset.answer      = binData.binSign;
     binary.dataset.answer       = binData.binary;
     decIntValue.dataset.answer  = binData.decIntValue;
     decFracValue.dataset.answer = binData.decFracValue;
-    intBin.dataset.answer       = binData.intBin;
+    binInt.dataset.answer       = binData.binInt;
     binFracValue.dataset.answer = binData.binFracValue;
 
     hex.dataset.answer     = bin2hex(binData.binary);
