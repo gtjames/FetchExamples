@@ -29,11 +29,11 @@
     <section id="card2"></section>
 </div>
 <template id="cardTemplate">
-    <div id="div" class="w3-col m4 l3 disney-card">
-        <a id="a" href="">character.name</a>
+    <div id="characterCard" class="w3-col m4 l3 disney-card">
+        <a id="linkToCharacter" href="">character.name</a>
         <br>
-        <img id="img" src="" alt="">
-        <ul id="ul" class='' id="movies">
+        <img id="characterImage" src="" alt="">
+        <ul id="listOfMovies" class='' id="movies">
         </ul>
     </div>
 </template>
@@ -98,7 +98,8 @@ function getAllCharacters(page) {
                         ${li}
                     </ul>
                 </div>`;
-				card2.appendChild(createCard(character, li, row));
+				let characterNode = createCard(character, li, row)
+				card2.appendChild(characterNode);
 		}
 	}
 
@@ -115,10 +116,10 @@ function getAllCharacters(page) {
 	function createCard(character, li, row) {
         let cardTemplate = document.getElementById('cardTemplate');
 		const node = cardTemplate.content.cloneNode(true);
-		const div    = node.querySelector('#div');
-		const link   = node.querySelector('#a');
-		const img    = node.querySelector('#img');
-		const ul     = node.querySelector('#ul');
+		const div    = node.querySelector('#characterCard');
+		const link   = node.querySelector('#linkToCharacter');
+		const img    = node.querySelector('#characterImage');
+		const ul     = node.querySelector('#listOfMovies');
 
 		div.id 		   = character._id
 		div.className += ` w3-theme-d${row}`;
