@@ -3,7 +3,6 @@ import {getBinRand, setSeed} from './utils.js';
     
 let dec          = document.getElementById('dec'  );
 let frac         = document.getElementById('frac' );
-let expBin       = document.getElementById('expBin');
 let decExp       = document.getElementById('decExp');
 let decIntValue  = document.getElementById('decIntValue');
 let decFracValue = document.getElementById('decFracValue');
@@ -22,6 +21,10 @@ document.getElementById(`reset`).addEventListener('click', reset);
 document.getElementById(`submit`).addEventListener('click', submit);
 document.getElementById(`reveal`).addEventListener('click', reveal);
 revealBtn.parentElement.addEventListener('dblclick', () => revealBtn.disabled = false);
+useMe.disabled = true;
+studentID.addEventListener('blur', () => {
+    useMe.disabled = studentID.value != '2610'
+});
 
 reset();
 
