@@ -42,16 +42,18 @@
         const carousel   = pNode.querySelector('#carousel');
         const alert      = pNode.querySelector('#alert');
         const webcam     = pNode.querySelector('#webcam');
+        const parkCode   = pNode.querySelector('#code');
 
         parkId.id           = `${park.id}`;
         parkId.className   += ` w3-theme-${row%10>5?"l":"d"}${(row%5)+1}`;
         url.href            = park.url;
-        fullName.innerText  = park.fullName;
+        fullName.innerText  = park.fullName.substring(0, 40);
         desc.innerText      = park.description;
         alert.id            = `alert-${park.id}`;
         alert.name          = park.name;
         webcam.id           = `webcam-${park.id}`;
         webcam.name         = park.name;
+        parkCode.innerText  = park.parkCode;
         
         let cNode = buildCarousel(park);
 

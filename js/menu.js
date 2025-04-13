@@ -12,6 +12,7 @@ let menuOptions = [
     {text: 'Disney',        link: 'disney.html',},
     {text: 'Earthquakes',   link: 'Earthquakes.html',},
     {text: 'Finance',       link: 'finance.html',},
+    {text: 'Football',      link: 'football.html',},
     {text: 'Hockey',        link: 'hockey.html',},
     {text: 'Imdb',          link: 'imdb.html',},
     {text: 'Incompplete',   link: 'incomplete.html',},

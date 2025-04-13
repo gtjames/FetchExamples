@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Football</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css" id="css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .disney-card { height: 400px; }
+        .custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-list {
+  display: none;
+  position: absolute;
+  background: white;
+  list-style: none;
+  padding: 0;
+  border: 1px solid #ccc;
+}
+
+.dropdown-btn {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-list li {
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-list li img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+</style>
+
+</head>
+<body class="w3-theme-l1">
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<div class="w3-container w3-theme w3-padding-16">
+    <button id="leagues">Leagues</button>
+    <div class="custom-dropdown">
+        <button class="dropdown-btn" id="country">Countries</button>
+        <ul class="dropdown-list" id="countries">
+        </ul>
+      </div></div>
+
+<div class="w3-row w3-theme-l3 w3-center">
+    <section id="card"></section>
+</div>
+
+</body>
+<script src="js/allKeys.js"></script>
+<script src="js/football.js"></script>
+<script src="js/menu.js"></script>
+<script>makeMeActive('Football')</script>
+
+</html>
