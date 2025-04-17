@@ -28,7 +28,7 @@ td.index    { background-color: blue;          width: 10%;                   fon
 td.offset   { background-color: lemonchiffon;  width: 40%; font-size: 1.0em; font-family: 'Roboto'; color:black; }
 td.binary   { background-color: lemonchiffon;  width: 40%; font-size: 1em;   font-family: 'Courier New'; }
 td.Hit      { background-color: green;         width: 15%; font-size: 0.8em;}
-tr.current  { background-color: aquamarine; }
+tr.current  { background-color: aquamarine; color:black}
 td.op2Bin-currDecode, tr.op2Bin-currDecode     { background-color: skyblue; }
 td.bin2Op-currDecode, tr.bin2Op-currDecode     { background-color: greenyellow; }
 tr.next     { background-color: gold; color:black;  text-align: right; font-size: 1.2em;}

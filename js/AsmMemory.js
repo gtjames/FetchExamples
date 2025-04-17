@@ -1,6 +1,7 @@
 import {getRandomInt, setSeed} from './utils.js';
 import {getList, getTeams} from './AsmMemoryData.js';
 
+    let     wordSize    = 5;
     let     max         = Math.pow(2,32);
     let     basketball  = getList();
 
@@ -152,8 +153,9 @@ function reset() {
     //  randomly create the addresses with their tag and index bits
     if (binary) {
         for (let i = 0; i < instCnt; i++) {
-            let adrs = '00000000000000000000000000000000'+getRandomInt(max).toString(2);
-            adrs = adrs.substring(adrs.length-32);
+            let width = tagBits + indexBits + 6;
+            let adrs  = '0'.repeat(width)+getRandomInt(max).toString(2);
+            adrs = adrs.substring(adrs.length-width);
             let tag   = adrs.substring(0, tagBits);
             let index = adrs.substring(tagBits, tagBits + indexBits);
             let value = adrs.substring(tagBits + indexBits);
