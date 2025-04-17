@@ -1,6 +1,6 @@
 table, tr, td, th { border: 1px solid black; border-collapse: collapse; padding: 4px 8px;}
-td.left     { width: 25%;}
-td.right    { width: 70%;}
+td.left     { width: 45%;}
+td.right    { width: 55%;}
 td.full     { width: 100%;}
 /* td {width:25%;} */
 .scrolling  { width: 100%;}
@@ -11,7 +11,7 @@ tr.current > td:first-child {
     background-position: center right;
 }
 
-td.blk    {background-color: #444;}
+td.blk  { background-color: #444;}
 td.op   { background-color: lightgray;      width: 18%;    font-size: 1.2em; font-family: 'Roboto';  }
 td.op2  { background-color: lightgreen;          font-size: 1.2em; font-family: 'Roboto';  }
 td.shamt{ background-color: lightslategray; width: 18%;    font-size: 1.2em; font-family: 'Roboto';  }
@@ -22,18 +22,18 @@ td.off  { background-color: skyblue;        width: 22%;    font-size: 1.2em; fon
 td.broff{ background-color: skyblue;        width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
 td.inst { background-color: lemonchiffon;   width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
 
-td.step     { background-color: lightgreen;    width: .3em;}
-td.tag      { background-color: lightgreen;    width: 20%; font-size: 1.0em; padding: 4px; }
-td.index    { background-color: paleturquoise; width: 10%;                   font-family: 'Courier New'; }
-td.offset   { background-color: lemonchiffon;  width: 40%; font-size: 1.4em; font-family: 'Roboto'; color:black; }
+td.step     { background-color: darkgrey;      width: .3em;}
+td.tag      { background-color: darkgreen;     width: 20%; font-size: 1.0em; padding: 4px; color:white;}
+td.index    { background-color: blue;          width: 10%;                   font-family: 'Courier New bold'; color:white;}
+td.offset   { background-color: lemonchiffon;  width: 40%; font-size: 1.0em; font-family: 'Roboto'; color:black; }
 td.binary   { background-color: lemonchiffon;  width: 40%; font-size: 1em;   font-family: 'Courier New'; }
-td.Hit      { background-color: greenyellow;   width: 15%; font-size: 0.8em;}
+td.Hit      { background-color: green;         width: 15%; font-size: 0.8em;}
 tr.current  { background-color: aquamarine; }
 td.op2Bin-currDecode, tr.op2Bin-currDecode     { background-color: skyblue; }
 td.bin2Op-currDecode, tr.bin2Op-currDecode     { background-color: greenyellow; }
-tr.next     { background-color: gold; }
-tr.nextDecode     { background-color: lightgoldenrodyellow; }
-.Miss       { background-color: lightcoral;  font-size: 0.8em;}
+tr.next     { background-color: gold; color:black;  text-align: right; font-size: 1.2em;}
+tr.nextDecode { background-color: lightgoldenrodyellow; }
+.Miss       { background-color: darkorange;  font-size: 0.8em;}
 .found      { background-color: lightskyblue; border-radius: 10%; }
 .top        { vertical-align:top; }
 .lenErr { border-color: blueviolet; border-width: 4px; }

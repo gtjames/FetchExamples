@@ -11,10 +11,13 @@ import {getList, getTeams} from './AsmMemoryData.js';
     let     binary = false;
     let     tagBits = 2;
     let     indexBits = 3;
+    let     totalHits   = 0;
+    let     totalMisses = 0;
     let     checkList = document.getElementById('teamsList');
     let     teamSet = getTeams();
-    let     set = document.getElementById('teams')
-
+    
+    let     set         = document.getElementById('teams');
+    let     hitMiss     = document.getElementById('hitMiss');
     let     bodyCache   = document.getElementById('cache');
     let     body        = document.getElementById('mem');
     let     pc          = document.getElementById('PC');
@@ -97,6 +100,8 @@ function showCacheData() {
 function clearCache() {
     let pcRow;
     cache = [];
+
+    hitMiss.innerText = 'H: 0/M: 0';
     bodyCache.innerHTML = '';
     for (let i = 0; i < numBlocks; i++) {
         let index = '0000000000000000'+Number(i).toString(2);
@@ -130,6 +135,8 @@ function reset() {
     step        = -1;
     cacheBlk    = -1;
     pc.value    = 0;
+    totalHits   = 0;
+    totalMisses = 0;
 
     let id = studentID.value;
     setSeed( (id.length > 0) ? "."+id : -1 );
@@ -226,12 +233,15 @@ function nextStep() {
 
     if (block.tag === fetch[step].tag) {
         block.hit = 'Hit';
+        totalHits++;
         document.getElementById('tr-'+step).classList.add(block.hit);
     } else {
         document.getElementById(fetch[step].index+'.tag').innerText = fetch[step].tag;
         block.tag = fetch[step].tag;
         block.hit = 'Miss';
+        totalMisses++;
     }
+    hitMiss.innerText = `H: ${totalHits}/M: ${totalMisses}`;
 
     let value = document.getElementById(fetch[step].index+'.value');
     let adrsOnly = document.getElementById('adrsOnly').checked;

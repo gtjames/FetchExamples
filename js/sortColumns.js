@@ -44,8 +44,8 @@ function sortTable(ele, column) {
     // ele.className = (ele.className === "ZTOA" || ele.className.length === 0) ? "ATOZ" : "ZTOA";
     if (lastSortCol !== null && lastSortCol !== ele) {
         // lastSortCol.className = "";
-        lastSortCol.className.remove("ZTOA");
-        lastSortCol.className.remove("ATOZ");
+        lastSortCol.classList.remove("ZTOA");
+        lastSortCol.classList.remove("ATOZ");
     }
     lastSortCol = ele;
     return sort_table_rows(ele, column, (ele.classList.contains("ATOZ")) ? 1 : -1)
