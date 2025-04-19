@@ -93,6 +93,7 @@ export function getRandomInt(max) {
     return Math.floor(getRandom(max));
 }
 export function getRandom(max) {
+    let r;
     if (_seed === -1)
         return Math.random() * max;
     else
@@ -103,7 +104,6 @@ export function getNextRandom() {
     let start = Math.floor(_seed*200000);
     let rnd = random.substring(start, start + 6);
     rnd = +("."+rnd);
-    console.log(rnd);
     return setSeed( rnd );
 }
 

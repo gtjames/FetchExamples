@@ -16,11 +16,12 @@
     <div class="w3-container w3-theme-l1">
         <div id="menu" class="w3-bar"></div>
     </div>
-    <label for='tagBits'  ># of Tag Bits</label>   <input id='tagBits'     type='text'>
-    <label for='indexBits'># of Index Bits</label> <input id='indexBits'   type='text'>
-    <label for='fetchCnt' ># of Fetches</label>    <input id='fetchCnt'    type='text'>
-    <input type='radio' name='source' />           <label for='binary'>    Binary</label>
-    <input type='radio' name='source' checked />   <label for='basketball'>Basketball</label>
+    <label for='tagBits'  ># of Tag Bits</label>    <input id='tagBits'     type='text'>
+    <label for='indexBits'># of Index Bits</label>  <input id='indexBits'   type='text'>
+    <label for='blockBits'># of Offset Bits</label> <input id='blockBits'   type='text'>
+    <label for='fetchCnt' ># of Fetches</label>     <input id='fetchCnt'    type='text'>
+    <input type='radio' name='source' />            <label for='binary'>    Binary</label>
+    <input type='radio' name='source' checked />    <label for='basketball'>Basketball</label>
     <button id='reset'  class='btn btn-success'  >Reset</button>
     <div id='teamsList' class='dropdown-check-list' tabindex='100'>
         <span class='anchor'>Exclude Teams</span>
@@ -40,7 +41,7 @@
             <button id='clear' class='btn btn-success'>Clear</button>
             <button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button>
             <input type='checkbox' id='adrsOnly' checked/> <label for='adrsOnly'>Address Only</label>
-            <input type='checkbox' id='scrollOn' checked/> <label for='scrollOn'>Scroll On</label>
+            <input type='checkbox' id='scrollOn' /> <label for='scrollOn'>Scroll On</label>
             <div class='scrolling'>
                 <table class='sortable copyable' style="width: 100%; table-layout: fixed;">
                 <thead>
@@ -76,8 +77,8 @@
       <div class='modal-dialog modal-dialog-scrollable'>
           <div class='modal-content bg-secondary'>
               <div class='modal-header bg-secondary'>
-              <h1 class='modal-title fs-5' id='modalTitle'>Contents of Application Memory</h1>
-              <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                <h1 class='modal-title fs-5' id='modalTitle'>Contents of Application Memory</h1>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
           </div>
           <div class='modal-body bg-secondary-subtle pt-0'>
             <table class='table sortable copyable table-hover table-striped'>
