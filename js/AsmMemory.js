@@ -189,13 +189,7 @@ function nextStep() {
 function createSpan(req, adrsOnly) {
     let rowInfo;
     let block = mainMemory[req.tag+' '+req.cacheIndex].map(b => {
-        if (binary)
-            if (adrsOnly)       rowInfo = b.cacheIndex;
-            else                rowInfo = b.cacheIndex+' '+b.value;
-        else
-            if (adrsOnly)       rowInfo = b.index;
-            else                rowInfo = b.index+' '+b.value;
-    
+        rowInfo = b.index + ((adrsOnly) ?' '+b.value : '');
         return `<span id=${(b.cacheIndex + b.value).replaceAll(' ','-')}>${rowInfo}</span>`;
     });
     return block.join();
@@ -261,7 +255,10 @@ function createInstructionTable() {
 
 function sortTag(e) {
     let dir = (e.target.classList == 'ATOZ') ? 1 : -1
-    fetch.sort((a, b) => a.tag.localeCompare(b.tag) * dir);
+    if (binary)
+        fetch.sort((a, b) => a.bintag.localeCompare(b.bintag) * dir);
+    else
+        fetch.sort((a, b) => a.tag.localeCompare(b.tag) * dir);
     createInstructionTable();
 }
 
