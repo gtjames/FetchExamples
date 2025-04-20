@@ -35,8 +35,9 @@ import {getList, getTeams} from './AsmMemoryData.js';
     document.getElementById('fetchCnt') .value = instCnt;
  
     let     teamSet = getTeams();
+    let i=0;
     for (let t of teamSet) {
-        setTeams.innerHTML += `<li><input type='checkbox' value='${t}' />${t}</li>`;
+        setTeams.innerHTML += `<li><input type='checkbox' value='${t}' ${(i++)%3?'checked':'    '}/>${t}</li>`;
     }
 
     checkList.getElementsByClassName('anchor')[0].addEventListener('click', (e) => {
