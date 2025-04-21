@@ -15,7 +15,7 @@ import {getList, getTeams} from './AsmMemoryData.js';
     let     totalMisses = 0;
     let     totalEvict  = 0;
     let     instCnt     = 20;
-    let     max         = Math.pow(2,tagBits + indexBits + blockBits) - 1;
+    let     running     = false;
     
     let     setTeams    = document.getElementById('teams');
     let     hitMiss     = document.getElementById('hitMiss');
@@ -31,6 +31,7 @@ import {getList, getTeams} from './AsmMemoryData.js';
     document.getElementById('sortTag')   .addEventListener('click', sortTag);
     document.getElementById('sortIndex') .addEventListener('click', sortIndex);
     document.getElementById('showMemory').addEventListener('click', showMainMemory);
+    document.getElementById('runSim')    .addEventListener('click', runSimulation);
 
     document.getElementById('tagBits')  .value = tagBits;
     document.getElementById('indexBits').value = indexBits;
@@ -143,6 +144,29 @@ function createInstructionTable() {
         </tr>`;
         body.innerHTML += inner;
     }
+}
+
+function runSimulation() {
+    if (running) {
+        running = false;
+        return;
+    }
+    document.getElementById('runSim').innerText = "Running";
+
+    running = true;
+    const intervalId = setInterval(() => {
+        nextStep();
+        document.getElementById('runSim').innerText = "PC = " + step; 
+        if (pc.value >= instCnt || !running) {
+            document.getElementById('runSim').innerText = "Run"; 
+            clearInterval(intervalId);
+        }
+    }, 1000); // runs every 1000ms (1 second)
+
+// // Somewhere else in your code, you change the value:
+// setTimeout(() => {
+//   shouldRun = false;
+// }, 15000); // change value after 5 seconds
 }
 
 function nextStep() {
