@@ -13,6 +13,7 @@ import {getList, getTeams} from './AsmMemoryData.js';
     let     blockBits   = 5;
     let     totalHits   = 0;
     let     totalMisses = 0;
+    let     totalEvict  = 0;
     let     instCnt     = 20;
     let     max         = Math.pow(2,tagBits + indexBits + blockBits) - 1;
     
@@ -189,11 +190,15 @@ function nextStep() {
         document.getElementById('tr-'+step).classList.add(block.hit);
     } else {
         document.getElementById(fetch[step].binIndex+'.tag').innerText = fetch[step].tag;
+        if (block.tag.length > 0) {
+            totalEvict++;
+        }
+        document.getElementById(block.index+'.tag').innerText = fetch[step].tag;
         block.tag = fetch[step].tag;
         block.hit = 'Miss';
         totalMisses++;
     }
-    hitMiss.innerText = `H: ${totalHits}/M: ${totalMisses}`;
+    hitMiss.innerText = `H: ${totalHits}/M: ${totalMisses}/E: ${totalEvict}`;
 
     let value = document.getElementById(fetch[step].binIndex+'.value');
     let adrsOnly = document.getElementById('adrsOnly').checked;
@@ -271,12 +276,10 @@ export function showMainMemory() {
 
 function sortTag(e) {
     let dir = (e.target.classList == 'ATOZ') ? 1 : -1
-    if (binary)
-        fetch.sort((a, b) => a.binTag.localeCompare(b.binTag) * dir);
-    else if (random)
-        fetch.sort((a, b) => a.random.localeCompare(b.index) * dir);
-    else
+    if (team)
         fetch.sort((a, b) => a.tag.localeCompare(b.tag) * dir);
+    else
+        fetch.sort((a, b) => a.binTag.localeCompare(b.binTag) * dir);
     createInstructionTable();
 }
 
@@ -304,8 +307,11 @@ function clearCache() {
     cache = [];
 
     let numBlocks     = Math.pow(2, indexBits);
-    hitMiss.innerText = 'H: 0/M: 0';
+    hitMiss.innerText = 'H: 0/M: 0/E: 0';
     bodyCache.innerHTML = '';
+    totalEvict  = 0;
+    totalHits   = 0;
+    totalMisses = 0;
     for (let i = 0; i < numBlocks; i++) {
         let index = '0'.repeat(indexBits)+Number(i).toString(2);
         index = index.slice(0-indexBits);
