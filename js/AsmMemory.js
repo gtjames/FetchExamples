@@ -6,12 +6,14 @@ import {getList, getTeams} from './AsmMemoryData.js';
     let     fetch, cache, mainMemory;
     let     step, cacheBlk;
     let     binary      = false;
-    let     tagBits     = 2;
-    let     indexBits   = 3;
-    let     blockBits   = 6;
+    let     random      = false;
+    let     team        = false;
+    let     tagBits     = 3;
+    let     indexBits   = 4;
+    let     blockBits   = 5;
     let     totalHits   = 0;
     let     totalMisses = 0;
-    let     instCnt     = 40;
+    let     instCnt     = 20;
     let     max         = Math.pow(2,tagBits + indexBits + blockBits) - 1;
     
     let     setTeams    = document.getElementById('teams');
@@ -53,11 +55,14 @@ function rebuildMainMemory() {
 
     mainMemory  = {};
     for (let b of fetch) {
-        key = `${b.tag} ${b.cacheIndex}`;
+        key = `${b.tag} ${b.binIndex}`;
         if ( ! mainMemory[key])     mainMemory[key] = [];            
         mainMemory[key].push(b);
 
-        key = `${b.bintag} ${b.cacheIndex}`;
+        if (! team)   
+            continue;
+        //  for random and binary, the tag is the binTag
+        key = `${b.binTag} ${b.binIndex}`;
         if ( ! mainMemory[key])     mainMemory[key] = [];    
         mainMemory[key].push(b);
     }
@@ -76,6 +81,8 @@ function reset() {
     setSeed( (id.length > 0) ? "."+id : -1 );
 
     binary      = document.getElementsByName('source')[0].checked;
+    team        = document.getElementsByName('source')[1].checked;
+    random      = document.getElementsByName('source')[2].checked;
     tagBits     = +document.getElementById('tagBits').value;
     indexBits   = +document.getElementById('indexBits').value;
     blockBits   = +document.getElementById('blockBits').value;
@@ -88,30 +95,56 @@ function reset() {
     teams = teams.map(t => t.value);
     basketball  = getList(teams);
 
+    let wordLen = indexBits+blockBits
     //  randomly create the addresses with their tag and index bits
     for (let i = 0; i < instCnt; i++) {
-        let b     = basketball[getRandomInt(basketball.length)];
-        let rnd   = getRandomInt(max);      //  both versions use the same random number
-        let bintag = ('0'.repeat(tagBits)+rnd.toString(2)).slice(0-tagBits);
-        let index = ("0".repeat(indexBits)+((+b.index).toString(2))).slice(0-indexBits);
-        let offset = (("0".repeat(blockBits))+((+b.index).toString(2))).slice(0-blockBits)+ " - " +b.index;
+        let b        = basketball[getRandomInt(basketball.length)];
+        
+        let rndTag   = getRandomInt(Math.pow(2,tagBits));        //  binTag is used for binary and random
+        let binTag   = ("0".repeat(tagBits)+(rndTag.toString(2))).slice(0-tagBits);
+
+        let rnd      = getRandomInt(Math.pow(2,wordLen));        //  used only for random
+        let binStr   = ("0".repeat(wordLen)+(rnd.toString(2))).slice(0-wordLen);
+
+        let rndIndex = binStr.substring(0, indexBits);
+        let rndOffset= binStr.slice(0-blockBits) + " - " + rnd;
+
+        let binIndex =  ("0".repeat(indexBits) + ((+b.index).toString(2))).slice(0-indexBits);
+        let binOffset= (("0".repeat(blockBits) + ((+b.index).toString(2))).slice(0-blockBits)) + " - " + b.index;
+                    //  tag: "Cavaliers",   index:	"20",  value:  "Georges Niang"
         fetch.push({pc: `${i}`, 
-                    bintag    : bintag,        //  random tag
-                    tag       : b.tag,         //  team name
-                    cacheIndex: index,         //  cache index from jersey number
-                    index     : b.index,       //  player number
-                    offset    : offset,        //  binary jersey number - jersey number
-                    value     : b.value });    //  player name
-    }
+                    tag       : team   ? b.tag     : binTag,                        //  team name or binary tag
+                    index     : random ? rndIndex  : binary ? binIndex  : b.index,     //  player number
+                    offset    : random ? rndOffset : binary ? binOffset : b.index,     //  binary jersey number - jersey number
+                    value     : b.value,                                            //  jersey number
+                    binTag    : binTag,                                             //  random tag
+                    binIndex  : random ? rndIndex : binIndex,                          //  cache binary index from jersey number
+                    random    : rndIndex,                                           //  random number
+                });
+                // <td class='offset'>${binary ? fetch[i].offset : fetch[i].index}</td>
+}
 
     createInstructionTable();
     clearCache();
     rebuildMainMemory();
 }
 
-function nextStep() {
-    binary   = document.getElementsByName('source')[0].checked;
+function createInstructionTable() {
+    //  create the table for memory addresses to fetch
+    body.innerHTML = '';
+    for (let [i, b] of fetch.entries()) {
+        let inner = `<tr id=tr-${i}>
+            <td class='step'  >${i}</td>
+            <td class='tag'   >${binary ? b.binTag : b.tag}</td>
+            <td class='index' >${b.binIndex}</td>
+            <td class='offset'>${b.offset}</td>
+            <td>${b.value}</td>
+        </tr>`;
+        body.innerHTML += inner;
+    }
+}
 
+function nextStep() {
     let pcRow, cacheRow;
     if (step >= 0) {
         pcRow = document.getElementById('tr-'+(step+1));
@@ -119,7 +152,8 @@ function nextStep() {
             pcRow.classList.remove('next');
 
         pcRow = document.getElementById('tr-'+step);
-        pcRow.classList.remove('current');
+        if(pcRow) 
+            pcRow.classList.remove('current');
         let scrollOn = document.getElementById('scrollOn').checked;
         if (scrollOn)
             pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
@@ -140,7 +174,7 @@ function nextStep() {
     if (pcRow) 
         pcRow.classList.add('next');
 
-    let block = cache.filter(c => c.index === fetch[step].cacheIndex)[0];
+    let block = cache.filter(c => c.index === fetch[step].binIndex)[0];
     cacheBlk = block.blockNum;
 
     cacheRow = document.getElementById(block.index+'.tag');
@@ -154,30 +188,26 @@ function nextStep() {
         totalHits++;
         document.getElementById('tr-'+step).classList.add(block.hit);
     } else {
-        document.getElementById(fetch[step].cacheIndex+'.tag').innerText = fetch[step].tag;
+        document.getElementById(fetch[step].binIndex+'.tag').innerText = fetch[step].tag;
         block.tag = fetch[step].tag;
         block.hit = 'Miss';
         totalMisses++;
     }
     hitMiss.innerText = `H: ${totalHits}/M: ${totalMisses}`;
 
-    let value = document.getElementById(fetch[step].cacheIndex+'.value');
+    let value = document.getElementById(fetch[step].binIndex+'.value');
     let adrsOnly = document.getElementById('adrsOnly').checked;
     if (block.hit == 'Miss') {
         let rowInfo = createSpan(fetch[step], adrsOnly);
         value.innerHTML = rowInfo;
     }
     block.value = fetch[step].value;
-    document.getElementById(fetch[step].cacheIndex+'.hit').innerText = block.hit + ' ' + step;
-    document.getElementById(fetch[step].cacheIndex+'.hit').className = block.hit;
-    try {
-        document.getElementById((fetch[step].cacheIndex+fetch[step].value).replaceAll(' ','-')).className = 'found';
-} catch (e) {
-    console.log('Error: ', e);
-    console.log('Index: ', fetch[step]);
-}
+    document.getElementById(fetch[step].binIndex+'.hit').innerText = block.hit + ' ' + step;
+    document.getElementById(fetch[step].binIndex+'.hit').className = block.hit;
+    document.getElementById((fetch[step].binIndex+fetch[step].value).replaceAll(' ','-')).className = 'found';
+
     if (step+1 < instCnt) {
-        let nextCacheRow = cache.filter( c => c.index === fetch[step+1].cacheIndex)[0];
+        let nextCacheRow = cache.filter( c => c.index === fetch[step+1].binIndex)[0];
         cacheRow = document.getElementById('cache-'+nextCacheRow.blockNum);
         cacheRow.classList.add('next');
         if (nextCacheRow.tag === fetch[step+1].tag) {
@@ -189,9 +219,9 @@ function nextStep() {
 
 function createSpan(req, adrsOnly) {
     let rowInfo;
-    let block = mainMemory[req.tag+' '+req.cacheIndex].map(b => {
-        rowInfo = b.index + ((adrsOnly) ?' '+b.value : '');
-        return `<span id=${(b.cacheIndex + b.value).replaceAll(' ','-')}>${rowInfo}</span>`;
+    let block = mainMemory[req.tag+' '+req.binIndex].map(b => {
+        rowInfo = b.offset + ((adrsOnly) ?' '+b.value : '');
+        return `<span id=${(b.binIndex + b.value).replaceAll(' ','-')}>${rowInfo}</span>`;
     });
     return block.join();
 }
@@ -199,33 +229,18 @@ function createSpan(req, adrsOnly) {
 //  showMainMemory() - show the main memory blocks
 export function showMainMemory() {
     let list, tag1, tag2, index;
+    let players;
 
     let memoryBlocks = document.getElementById('memoryBlocks');
-    binary   = document.getElementsByName('source')[0].checked;
-  
+
     memoryBlocks.innerHTML = '';
 
-    if (binary) {
-        for ( let key in mainMemory ) {
-            if (key.split(' ').length == 2) {
-                [tag1, index] = key.split(' ');
-
-                let players = mainMemory[key].map( b => `${b.offset} ${b.value}`);
-                players = players.join(', ');
-                list = `<tr>
-                    <td class='tag'>${tag1}</td>
-                    <td class='index'>${index}</td>
-                    <td class='offset'>${players}</td>
-                </tr>`;
-                memoryBlocks.innerHTML += list;
-            }
-        }
-    } else {
+    if (team) {
         for ( let key in mainMemory ) {
             if (key.split(' ').length == 3) {
                 [tag1, tag2, index] = key.split(' ');
 
-                let players = mainMemory[key].map( b => `${b.index} ${b.value}`);
+                players = mainMemory[key].map( b => `${b.index} ${b.value}`);
                 players = players.join(', ');
 
                 list = `<tr>
@@ -236,28 +251,30 @@ export function showMainMemory() {
                 memoryBlocks.innerHTML += list;
             }
         }
-    }
-}
+    } else {
+        for ( let key in mainMemory ) {
+            if (key.split(' ').length == 2) {
+                [tag1, index] = key.split(' ');
 
-function createInstructionTable() {
-    //  create the table for memory addresses to fetch
-    body.innerHTML = '';
-    for (let i = 0; i < fetch.length; i++) {
-        let inner = `<tr id=tr-${i}>
-            <td class='step'  >${i}</td>
-            <td class='tag'   >${binary ? fetch[i].bintag : fetch[i].tag}</td>
-            <td class='index' >${fetch[i].cacheIndex}</td>
-            <td class='offset'>${binary ? fetch[i].offset : fetch[i].index}</td>
-            <td>${fetch[i].value}</td>
-        </tr>`;
-        body.innerHTML += inner;
+                players = mainMemory[key].map( b => `${b.offset} ${b.value}`);
+                players = players.join(', ');
+                list = `<tr>
+                    <td class='tag'>${tag1}</td>
+                    <td class='index'>${index}</td>
+                    <td class='offset'>${players}</td>
+                </tr>`;
+                memoryBlocks.innerHTML += list;
+            }
+        }
     }
 }
 
 function sortTag(e) {
     let dir = (e.target.classList == 'ATOZ') ? 1 : -1
     if (binary)
-        fetch.sort((a, b) => a.bintag.localeCompare(b.bintag) * dir);
+        fetch.sort((a, b) => a.binTag.localeCompare(b.binTag) * dir);
+    else if (random)
+        fetch.sort((a, b) => a.random.localeCompare(b.index) * dir);
     else
         fetch.sort((a, b) => a.tag.localeCompare(b.tag) * dir);
     createInstructionTable();
@@ -265,7 +282,7 @@ function sortTag(e) {
 
 function sortIndex(e) {
     let dir = (e.target.classList == 'ATOZ') ? 1 : -1
-    fetch.sort((a, b) => (+a.cacheIndex - +b.cacheIndex) * dir);
+    fetch.sort((a, b) => (+a.binIndex - +b.binIndex) * dir);
     createInstructionTable();
 }
 
