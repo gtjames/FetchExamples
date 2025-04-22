@@ -16,6 +16,7 @@ import {getList, getTeams} from './AsmMemoryData.js';
     let     totalEvict  = 0;
     let     instCnt     = 20;
     let     running     = false;
+    let     teamSet     = getTeams();
     
     let     setTeams    = document.getElementById('teams');
     let     hitMiss     = document.getElementById('hitMiss');
@@ -33,15 +34,21 @@ import {getList, getTeams} from './AsmMemoryData.js';
     document.getElementById('showMemory').addEventListener('click', showMainMemory);
     document.getElementById('runSim')    .addEventListener('click', runSimulation);
 
+    tagBits   = localStorage.getItem('tagBits'   ) || 3;
+    indexBits = localStorage.getItem('indexBits' ) || 5;
+    blockBits = localStorage.getItem('blockBits' ) || 12;
+    instCnt   = localStorage.getItem('instCnt'   ) || 50;
+
     document.getElementById('tagBits')  .value = tagBits;
     document.getElementById('indexBits').value = indexBits;
     document.getElementById('blockBits').value = blockBits;
     document.getElementById('fetchCnt') .value = instCnt;
- 
-    let     teamSet = getTeams();
+
     let i=0;
     for (let t of teamSet) {
-        setTeams.innerHTML += `<li><input type='checkbox' value='${t}' ${(i++)%3?'checked':'    '}/>${t}</li>`;
+        let chkd = JSON.parse(localStorage.getItem(`${t.replaceAll(' ','-')}`))
+        setTeams.innerHTML += `<li><input id=${t.replaceAll(' ','-')} type='checkbox' value='${t}'} ${chkd?'checked':''} />${t}</li>`;
+        console.log(`${t} ${document.getElementById(t.replaceAll(' ','-')).checked}`)
     }
 
     checkList.getElementsByClassName('anchor')[0].addEventListener('click', (e) => {
@@ -89,6 +96,16 @@ function reset() {
     indexBits   = +document.getElementById('indexBits').value;
     blockBits   = +document.getElementById('blockBits').value;
     instCnt     = +document.getElementById('fetchCnt').value;
+    localStorage.setItem('tagBits',   tagBits);
+    localStorage.setItem('indexBits', indexBits);
+    localStorage.setItem('blockBits', blockBits);
+    localStorage.setItem('instCnt',   instCnt);
+    localStorage.setItem('team',      team);
+    localStorage.setItem('binary',    binary);
+    localStorage.setItem('random',    random);
+    for (let t of teamSet) {
+        localStorage.setItem(`${t.replaceAll(' ','-')}`, document.getElementById(t.replaceAll(' ','-')).checked);
+    }
 
     showCacheData();                //  status on the cache overhead
     
@@ -222,7 +239,7 @@ function nextStep() {
         block.hit = 'Miss';
         totalMisses++;
     }
-    hitMiss.innerText = `H: ${totalHits}/M: ${totalMisses}/E: ${totalEvict}`;
+    hitMiss.innerHTML = `H: ${totalHits}<br>M: ${totalMisses}<br>E: ${totalEvict}`;
 
     let value = document.getElementById(fetch[step].binIndex+'.value');
     let adrsOnly = document.getElementById('adrsOnly').checked;

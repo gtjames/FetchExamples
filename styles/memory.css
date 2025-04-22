@@ -23,11 +23,12 @@ td.broff{ background-color: skyblue;        width: 25%;    font-size: 1.2em; fon
 td.inst { background-color: lemonchiffon;   width: 25%;    font-size: 1.2em; font-family: 'Roboto';  }
 
 td.step     { background-color: darkgrey;      width: .3em;}
-td.tag      { background-color: darkgreen;     width: 20%; font-size: 1.0em; padding: 4px; color:white;}
-td.index    { background-color: blue;          width: 10%;                   font-family: 'Courier New bold'; color:white;}
-td.offset   { background-color: lemonchiffon;  width: 40%; font-size: 1.0em; font-family: 'Roboto'; color:black; }
+td.tag      { background-color: darkgreen;     width: 25%; font-size: 1.0em; padding: 4px; color:white;}
+td.index    { background-color: blue;          width: 15%;                   font-family: 'Courier New bold'; color:white;}
+td.offset   { background-color: lemonchiffon;  width: 30%; font-size: 1.0em; font-family: 'Roboto'; color:black; }
 td.binary   { background-color: lemonchiffon;  width: 40%; font-size: 1em;   font-family: 'Courier New'; }
 td.Hit      { background-color: green;         width: 15%; font-size: 0.8em;}
+td.address  {                                    width: 20%;}
 tr.current  { background-color: aquamarine; color:black}
 td.op2Bin-currDecode, tr.op2Bin-currDecode     { background-color: skyblue; }
 td.bin2Op-currDecode, tr.bin2Op-currDecode     { background-color: greenyellow; }

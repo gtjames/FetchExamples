@@ -16,13 +16,11 @@
     <div class="w3-container w3-theme-l1">
         <div id="menu" class="w3-bar"></div>
     </div>
-    <label for='tagBits'  ># of Tag Bits</label>    <input id='tagBits'     type='text'>
-    <label for='indexBits'># of Index Bits</label>  <input id='indexBits'   type='text'>
-    <label for='blockBits'># of Offset Bits</label> <input id='blockBits'   type='text'>
     <label for='fetchCnt' ># of Fetches</label>     <input id='fetchCnt'    type='text'>
     <input type='radio' name='source' />            <label for='binary'>    Binary</label>
     <input type='radio' name='source' checked />    <label for='basketball'>Basketball</label>
     <input type='radio' name='source' />            <label for='random'>    Random</label>
+    <button id='runSim' class='btn btn-success'  >Run</button>
     <button id='reset'  class='btn btn-success'  >Reset</button>
     <div id='teamsList' class='dropdown-check-list' tabindex='100'>
         <span class='anchor'>Exclude Teams</span>
@@ -30,8 +28,16 @@
     </div>
     <label for='studentID' >Last 4 of ID</label>    <input id='studentID'    type='text'>
     <table>
-        <tr><td>Cache Data Bits per Block</td><td id='bitsPerBlock'></td><td>Bits per Offset</td><td id='bitsPerOffset'></td></tr>
-        <tr><td>Total Bits</td><td id='totalBits'></td><td>Overhead</td><td id='overhead'></td></tr>
+        <tr>
+            <td>Cache Data Bits per Block</td>
+            <td id='bitsPerBlock'></td><td>Bits per Offset</td>
+            <td id='bitsPerOffset'></td>
+        </tr>
+        <tr>
+            <td>Total Bits</td><td id='totalBits'></td>
+            <td>Overhead</td>
+            <td id='overhead'></td><
+            /tr>
     </table>
     <hr>
     <table style="width: 100%; table-layout: fixed;">
@@ -41,7 +47,6 @@
             <button id='step' class='btn btn-warning'>Step</button>
             <button id='clear' class='btn btn-success'>Clear</button>
             <button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button>
-            <input type='checkbox' id='adrsOnly' checked/> <label for='adrsOnly'>Address Only</label>
             <input type='checkbox' id='scrollOn' /> <label for='scrollOn'>Scroll On</label>
             <div class='scrolling'>
                 <table class='sortable copyable' style="width: 100%; table-layout: fixed;">
@@ -52,26 +57,39 @@
                             <path fill-rule='evenodd' d='M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z'/>
                         </svg>Tag
                         </td> 
-                        <th style="width: 10%;">Index</th> <th style="width: 50%;">Address - Value</th> <th style="width: 15%;">State<p id=hitMiss></p></th> 
+                        <th style="width: 10%;">Index</th> <th style="width: 50%;">Address - Value
+                            <input type='checkbox' id='adrsOnly' checked/> <label for='adrsOnly'>Address Only</label>   
+                        </th> 
+                        <th style="width: 15%;">State<p id=hitMiss></p>
+                        </th> 
                     </tr>
                 </thead>
                 <tbody id='cache'></tbody>
             </table>
-            </div>
-        </td>
-        <td class='right top'>
-            <div class='scrolling'>
-                <table class='sortable copyable'>
-                    <thead>
-                        <tr> 
-                            <td>
+        </div>
+    </td>
+    <td class='right top'>
+        <div class='scrolling'>
+            <table class='sortable copyable'>
+                <thead>
+                    <tr> 
+                        <td>
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-copy' viewBox='0 0 16 16'>
                                 <path fill-rule='evenodd' d='M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z'/>
                             </svg>
                             PC</td> 
-                            <th id='sortTag'>Tag</th> 
-                            <th id='sortIndex'>Index</th> 
-                            <th>Address</th> 
+                            <th id='sortTag'>Tag<br>
+                                <label for='tagBits'  >Bits</label>    <input id='tagBits'     type='text'>
+
+                            </th> 
+                            <th id='sortIndex'>Index<br>
+                                <label for='indexBits'>Bits</label>  <input id='indexBits'   type='text'>
+
+                            </th> 
+                            <th class="address">Address<br>
+                                <label for='blockBits'> Bits</label> <input id='blockBits'   type='text'>
+                            
+                            </th> 
                             <th>Value</th> 
                         </tr>
                     </thead>
