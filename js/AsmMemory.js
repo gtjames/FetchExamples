@@ -48,7 +48,6 @@ import {getList, getTeams} from './AsmMemoryData.js';
     for (let t of teamSet) {
         let chkd = JSON.parse(localStorage.getItem(`${t.replaceAll(' ','-')}`))
         setTeams.innerHTML += `<li><input id=${t.replaceAll(' ','-')} type='checkbox' value='${t}'} ${chkd?'checked':''} />${t}</li>`;
-        console.log(`${t} ${document.getElementById(t.replaceAll(' ','-')).checked}`)
     }
 
     checkList.getElementsByClassName('anchor')[0].addEventListener('click', (e) => {
@@ -107,7 +106,7 @@ function reset() {
         localStorage.setItem(`${t.replaceAll(' ','-')}`, document.getElementById(t.replaceAll(' ','-')).checked);
     }
 
-    showCacheData();                //  status on the cache overhead
+    showCacheDetails();                //  status on the cache overhead
     
     let teams = document.querySelectorAll('input[type=checkbox]:checked');
     teams = Array.from(teams);
@@ -130,8 +129,15 @@ function reset() {
 
         let binIndex =  ("0".repeat(indexBits) + ((+b.index).toString(2))).slice(0-indexBits);
         let binOffset= (("0".repeat(blockBits) + ((+b.index).toString(2))).slice(0-blockBits)) + " - " + b.index;
-                    //  tag: "Cavaliers",   index:	"20",  value:  "Georges Niang"
-        fetch.push({pc: `${i}`, 
+        //  tag: "Cavaliers",   index:	"20",  value:  "Georges Niang"
+        const keyExists = fetch.some(entry =>
+            entry.tag    === (team ? b.tag : binTag) &&
+            entry.index  === (random ? rndIndex  : binary ? binIndex  : b.index) &&
+            entry.offset === (random ? rndOffset : binary ? binOffset : b.index)
+        );
+
+        if (!keyExists) {
+            fetch.push({pc: `${i}`, 
                     tag       : team   ? b.tag     : binTag,                        //  team name or binary tag
                     index     : random ? rndIndex  : binary ? binIndex  : b.index,     //  player number
                     offset    : random ? rndOffset : binary ? binOffset : b.index,     //  binary jersey number - jersey number
@@ -141,7 +147,8 @@ function reset() {
                     random    : rndIndex,                                           //  random number
                 });
                 // <td class='offset'>${binary ? fetch[i].offset : fetch[i].index}</td>
-}
+            }
+    }
 
     createInstructionTable();
     clearCache();
@@ -330,7 +337,7 @@ function sortIndex(e) {
     createInstructionTable();
 }
 
-function showCacheData() { 
+function showCacheDetails() { 
     let     bitsPerBlock;
 
     tagBits   = +document.getElementById('tagBits').value;

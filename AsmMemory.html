@@ -20,7 +20,6 @@
     <input type='radio' name='source' />            <label for='binary'>    Binary</label>
     <input type='radio' name='source' checked />    <label for='basketball'>Basketball</label>
     <input type='radio' name='source' />            <label for='random'>    Random</label>
-    <button id='runSim' class='btn btn-success'  >Run</button>
     <button id='reset'  class='btn btn-success'  >Reset</button>
     <div id='teamsList' class='dropdown-check-list' tabindex='100'>
         <span class='anchor'>Exclude Teams</span>
@@ -36,18 +35,22 @@
         <tr>
             <td>Total Bits</td><td id='totalBits'></td>
             <td>Overhead</td>
-            <td id='overhead'></td><
-            /tr>
+            <td id='overhead'></td>
+        </tr>
+        <tr>
+            <th><button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button></th>
+            <th><button id='step'   class='btn btn-warning'>Step</button></th>
+            <th><button id='clear'  class='btn btn-success'>Clear</button></th>
+            <th>
+                <button id='runSim'     class='btn btn-success'  >Run</button>
+                <input type='checkbox' id='scrollOn' />
+                <label for='scrollOn'>Scroll On</label>
+            </th>
+        </tr>
     </table>
-    <hr>
     <table style="width: 100%; table-layout: fixed;">
         <tr>
         <td class='left top'>
-            <label for='PC'>Program Counter</label> <input id='PC' type='text'>
-            <button id='step' class='btn btn-warning'>Step</button>
-            <button id='clear' class='btn btn-success'>Clear</button>
-            <button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button>
-            <input type='checkbox' id='scrollOn' /> <label for='scrollOn'>Scroll On</label>
             <div class='scrolling'>
                 <table class='sortable copyable' style="width: 100%; table-layout: fixed;">
                 <thead>
@@ -77,27 +80,28 @@
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-copy' viewBox='0 0 16 16'>
                                 <path fill-rule='evenodd' d='M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z'/>
                             </svg>
-                            PC</td> 
-                            <th id='sortTag'>Tag<br>
-                                <label for='tagBits'  >Bits</label>    <input id='tagBits'     type='text'>
-
-                            </th> 
-                            <th id='sortIndex'>Index<br>
-                                <label for='indexBits'>Bits</label>  <input id='indexBits'   type='text'>
-
-                            </th> 
-                            <th class="address">Address<br>
-                                <label for='blockBits'> Bits</label> <input id='blockBits'   type='text'>
-                            
-                            </th> 
-                            <th>Value</th> 
-                        </tr>
-                    </thead>
-                    <tbody id='mem'></tbody>
-                </table>
-            </div>
-        </td>
-        </tr>
+                            <label for='PC'>PC</label> <input id='PC' type='text'>
+                        </td> 
+                        <th id='sortTag'>Tag<br>
+                            <label for='tagBits'  >Bits</label>    
+                            <input id='tagBits'     type='text'>
+                        </th> 
+                        <th id='sortIndex'>Index<br>
+                            <label for='indexBits'>Bits</label>  
+                            <input id='indexBits'   type='text'>
+                        </th> 
+                        <th class="address">Address<br>
+                            <label for='blockBits'> Bits</label> 
+                            <input id='blockBits'   type='text'>
+                        </th> 
+                        <th>Value</th> 
+                    </tr>
+                </thead>
+                <tbody id='mem'></tbody>
+            </table>
+        </div>
+    </td>
+    </tr>
     </table>
     <div class='modal' id='mainMemory' tabindex='1'>
       <div class='modal-dialog modal-dialog-scrollable'>

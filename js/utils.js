@@ -93,7 +93,6 @@ export function getRandomInt(max) {
     return Math.floor(getRandom(max));
 }
 export function getRandom(max) {
-    let r;
     if (_seed === -1)
         return Math.random() * max;
     else
