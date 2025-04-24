@@ -90,7 +90,8 @@ export function getSeed() { return _seed; }
 export function setSeed(baseSeed) { _seed = baseSeed; return _seed; }
 
 export function getRandomInt(max) {
-    return Math.floor(getRandom(max));
+    let r = getRandom(max);
+    return Math.floor(r);
 }
 export function getRandom(max) {
     if (_seed === -1)

@@ -25,26 +25,33 @@
         <span class='anchor'>Exclude Teams</span>
         <ul id='teams' class='items'></ul>
     </div>
-    <label for='studentID' >Last 4 of ID</label>    <input id='studentID'    type='text'>
+    <label for='studentID' >Last 4 of ID</label>    
+    <input id='studentID'    type='text'>
     <table>
         <tr>
             <td>Cache Data Bits per Block</td>
-            <td id='bitsPerBlock'></td><td>Bits per Offset</td>
+            <td id='bitsPerBlock'></td>
+            <td>Bits per Offset</td>
             <td id='bitsPerOffset'></td>
         </tr>
         <tr>
-            <td>Total Bits</td><td id='totalBits'></td>
+            <td>Total Bits</td>
+            <td id='totalBits'></td>
             <td>Overhead</td>
             <td id='overhead'></td>
         </tr>
         <tr>
             <th><button id='showMemory' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#mainMemory' type='button' >Show Main Memory</button></th>
             <th><button id='step'   class='btn btn-warning'>Step</button></th>
-            <th><button id='clear'  class='btn btn-success'>Clear</button></th>
             <th>
-                <button id='runSim'     class='btn btn-success'  >Run</button>
+                <button id='clear'  class='btn btn-success'>Clear</button>
                 <input type='checkbox' id='scrollOn' />
                 <label for='scrollOn'>Scroll On</label>
+            </th>
+            <th>
+                <button id='runSim'     class='btn btn-success'  >Run</button>
+                <label for='speed' >Speed</label>    
+                <input id='speed'    type='text'>
             </th>
         </tr>
     </table>

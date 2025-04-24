@@ -176,16 +176,18 @@ function runSimulation() {
         return;
     }
     document.getElementById('runSim').innerText = "Running";
+    let speed = document.getElementById('speed').value || 1000;
 
     running = true;
     const intervalId = setInterval(() => {
         nextStep();
         document.getElementById('runSim').innerText = "PC = " + step; 
-        if (pc.value >= instCnt || !running) {
+        if (pc.value >= fetch.length || !running) {
+            running = false;
             document.getElementById('runSim').innerText = "Run"; 
             clearInterval(intervalId);
         }
-    }, 1000); // runs every 1000ms (1 second)
+    }, speed); // runs every 1000ms (1 second)
 
 // // Somewhere else in your code, you change the value:
 // setTimeout(() => {
@@ -214,7 +216,7 @@ function nextStep() {
         cacheRow = document.getElementById('cache-'+cacheBlk);
         cacheRow.classList.remove('current');
     }
-    if (step >= instCnt)
+    if (step >= fetch.length)
         return;
 
     pcRow = document.getElementById('tr-'+step);
@@ -259,7 +261,7 @@ function nextStep() {
     document.getElementById(fetch[step].binIndex+'.hit').className = block.hit;
     document.getElementById((fetch[step].binIndex+fetch[step].value).replaceAll(' ','-')).className = 'found';
 
-    if (step+1 < instCnt) {
+    if (step+1 < fetch.length) {
         let nextCacheRow = cache.filter( c => c.index === fetch[step+1].binIndex)[0];
         cacheRow = document.getElementById('cache-'+nextCacheRow.blockNum);
         cacheRow.classList.add('next');
