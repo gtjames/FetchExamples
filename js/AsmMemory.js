@@ -209,7 +209,7 @@ function nextStep() {
         if (scrollOn)
             pcRow.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'start' });
     }
-    step = +pc.value;
+    step     = +pc.value;
     pc.value = step + 1;
 
     if (cacheBlk >= 0) {
