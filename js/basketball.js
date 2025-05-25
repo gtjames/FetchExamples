@@ -240,4 +240,8 @@ function openTab(target, tabName) {
 }
 function setKey() { 
     theKey = getKey(); 
+    options.headers = {
+        "x-rapidapi-key": theKey,
+        "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
+    }
 }
