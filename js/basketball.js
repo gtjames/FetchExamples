@@ -238,4 +238,6 @@ function openTab(target, tabName) {
     //  make the tab button display as the active tab
     target.className += " active";
 }
-function setKey() { theKey = getKey(); }
+function setKey() { 
+    theKey = getKey(); 
+}

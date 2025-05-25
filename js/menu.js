@@ -25,6 +25,7 @@ let menuOptions = [
     {text: 'News',          link: 'news.html',},
     {text: 'Products',      link: 'productSearch.html',},
     {text: 'Recipes',       link: 'recipes.html',},
+    {text: 'Restaurants',   link: 'restaurant.html',},
     {text: 'Shopping',      link: 'shopping.html',},
     {text: 'Stars',         link: 'stars.html',},
     {text: 'Sky',           link: 'astronomy.html',},
