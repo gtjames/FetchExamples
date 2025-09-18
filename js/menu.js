@@ -29,6 +29,7 @@ let menuOptions = [
     {text: 'Shopping',      link: 'shopping.html',},
     {text: 'Stars',         link: 'stars.html',},
     {text: 'Sky',           link: 'astronomy.html',},
+    {text: 'Stocks',        link: 'stocks.html',},
     {text: 'Translate',     link: 'translate.html',},
     {text: 'Voetball',      link: 'voetball.html',},
     {text: 'Volcanoes',     link: 'Volcanoes.html',},
