@@ -36,7 +36,7 @@ function show(products) {
 //      that matches the columns needed in our table
 //      since the three examples above all need to do the same thing it was
 //      a convenience to put the common work into a function
-function buildRow (data, index) {
+function buildRow (data, index) {   //  test
     return `<tr class="w3-theme-${index%2>0?'l2':'l3'}">
                 <td>${data.country}</td>
                 <td>${data.currency}</td><td>${data.id}</td>
