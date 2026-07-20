@@ -1,5 +1,5 @@
-let theKey = keys.keyRapidAPI;
-let theMDBKey = keys.keyMDB;
+let theKey = keys.keyRapidAPI2;
+let theMDBKey = keys.keyRapidAPI2;
 let search = document.getElementById('search');
 document.getElementById('top250').addEventListener('click', top250);
 search.addEventListener('click', movieSearch);
@@ -12,18 +12,13 @@ const options = {
 	}
 };
 
-const MDBoptions = {
-	method: 'GET',
-	headers: `Authorization: Bearer ${theMDBKey}`
-}
-
 let tableBody = document.getElementById('moviesList');
 
 function movieSearch() {
 	let searchText = document.getElementById('searchTerm').value;
 
 	const url = `https://imdb236.p.rapidapi.com/imdb/search?originalTitle=${searchText}&type=movie&rows=25&sortField=id&sortOrder=ASC`;
-	
+
 	fetch(url, options)
 	.then(response => response.json())
 	.then(moviesList => movies(moviesList.results))
@@ -65,7 +60,7 @@ function movies(movies) {
 
 function movieDetails(movieId) {
 	const url = `https://imdb236.p.rapidapi.com/imdb/${movieId}`;
-	
+
 	fetch(url, options)
 	.then(response => response.json())
 	.then(response => showMovieDetails(response))
@@ -94,7 +89,7 @@ function getActor(actorID) {
           Authorization: `Bearer ${theMDBKey}`
         }
     };
-      
+
 	const url = `https://api.themoviedb.org/3/find/${actorID}?external_source=imdb_id`
 
 	fetch(url, options)
@@ -130,11 +125,11 @@ function actorDetails(details) {
 }
 
 allGenres = {
-    "12"     :"Adventure", "14" :"Fantasy", "16" :"Animation", "18" :"Drama", "27" :"Horror", "28" :"Action", 
-    "35"     :"Comedy", "36" :"History", "37" :"Western", "53" :"Thriller", "80" :"Crime", "878" :"Science Fiction", 
-    "9648"   :"Mystery", "99" :"Documentary", "10402" :"Music", "10749" :"Romance", "10751" :"Family", "10752" :"War", 
-    "10759"  :"Action & Adventure", "10762" :"Kids", "10763" :"News", "10764" :"Reality", "10765" :"Sci-Fi & Fantasy", 
-    "10766"  :"Soap", "10767" :"Talk", "10768" :"War & Politics", "10770" :"TV Movie", 
+    "12"     :"Adventure", "14" :"Fantasy", "16" :"Animation", "18" :"Drama", "27" :"Horror", "28" :"Action",
+    "35"     :"Comedy", "36" :"History", "37" :"Western", "53" :"Thriller", "80" :"Crime", "878" :"Science Fiction",
+    "9648"   :"Mystery", "99" :"Documentary", "10402" :"Music", "10749" :"Romance", "10751" :"Family", "10752" :"War",
+    "10759"  :"Action & Adventure", "10762" :"Kids", "10763" :"News", "10764" :"Reality", "10765" :"Sci-Fi & Fantasy",
+    "10766"  :"Soap", "10767" :"Talk", "10768" :"War & Politics", "10770" :"TV Movie",
 }
 
  function top250() {

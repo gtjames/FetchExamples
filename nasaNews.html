@@ -50,8 +50,8 @@
 */
 function search() {
     let searchText = document.getElementById('searchField').value;
-    buildPage(newsResults, "tbody1", `https://api.spaceflightnewsapi.net/v3/articles`)
-    buildPage(newsResults, "tbody2", `https://api.spaceflightnewsapi.net/v3/reports`)
+    buildPage(newsResults, "tbody1", `https://api.spaceflightnewsapi.net/v4/articles/`)
+    buildPage(newsResults, "tbody2", `https://api.spaceflightnewsapi.net/v4/reports/`)
 }
 
 function buildPage(renderResults, tbody, api) {
@@ -61,14 +61,15 @@ function buildPage(renderResults, tbody, api) {
 }
 function newsResults(news, tbody) {
     let tableBody = document.getElementById(tbody);
-    let arHtml = news.map((b,idx) =>
+    let arHtml = news.results.map((b,idx) =>
         `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
-            <td><a href=${b.url}><img src=${b.imageUrl} height='120px' alt=""></a></td>
+            <td><a href=${b.url}><img src=${b.image_url} height='120px' alt=""></a></td>
             <td>${b.title}</td>
-            <td>${b.newsSite}</td>
+            <td>${b.news_site}</td>
             <td>${b.summary}</td>
         </tr>`
     );
+
     let txt = arHtml.join("\n")
     tableBody.innerHTML = txt;
 }

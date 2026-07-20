@@ -75,16 +75,17 @@ product_title:
         //  which we will put into the tableBody
         let arHtml = products.data.products.map((p,idx) => 
             `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
-                <td><a href=${p.product_page_url}><img src=${p.product_photos[0]} height='120px' width='80px' alt=""></a>${p.offer.price}</td>
-                <td>${p.product_description}</td>
+                <td><a href=${p.product.product_page_url}><img src=${p.product.product_photos[0]} height='120px' width='80px' alt=""></a>${p.product.offer.price}</td>
+                <td>${p.product.product_description}</td>
                 <td>
-                    <a href=${p.product_specs_page_url}>Specs</a>
-                    <a href=${p.product_reviews_page_url}>Reviews</a><br>
-                    <a href=${p.product_offers_page_url}>Offers</a>
-                    <a href=${p.product_page_url}>Product</a>                    
+                    <a href=${p.product.product_specs_page_url}>Specs</a>
+                    <a href=${p.product.product_reviews_page_url}>Reviews</a><br>
+                    <a href=${p.product.product_offers_page_url}>Offers</a>
+                    <a href=${p.product.product_page_url}>Product</a>                    
                 </td>
             </tr>`
         );
+
         let txt = arHtml.join("\n")
         tableBody.innerHTML = txt;
     }

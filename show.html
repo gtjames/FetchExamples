@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Blank Page</title>
+</head>
+<body>
+    <input type="text" id="key" placeholder="Enter your API key" />
+	<button onclick="showMovies()">Show Movies</button>
+    <br>
+    <data id="movieData"></data>
+	<script>
+        movieList = document.getElementById("movieData");
+    function showMovies() {
+       let apiKey = document.getElementById("key").value;
+       let url = `http://www.omdbapi.com/?s=Jaws&apikey=${apiKey}`;
+       movieList.innerHTML = "";     // clear the screen
+        fetch(url)                                            //  make the request
+        .then(response => response.json())
+        .then(movies => {
+            for (let m of movies.Search) {
+                  movieList.innerHTML += `${m.Title} (${m.Year}) <img src="${m.Poster}" style="width:30px;height:20px;" alt="${m.Title}"><BR>`;
+           }
+        } );
+}
+	</script>
+</body>
+</html>

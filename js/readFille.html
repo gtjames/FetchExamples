@@ -1,0 +1,49 @@
+function readFile() {
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Read Local File in JavaScript</title>
+</head>
+<body>
+<h2>Read Local Text File</h2>
+
+<!-- File input -->
+<input type="file" id="fileInput" accept=".txt">
+<pre id="fileContent" style="background:#f4f4f4; padding:10px; border:1px solid #ccc;"></pre>
+
+<script>
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Get the first selected file
+
+    if (!file) {
+        document.getElementById('fileContent').textContent = "No file selected.";
+        return;
+    }
+
+    // Validate file type (optional)
+    if (!file.type && !file.name.endsWith('.txt')) {
+        document.getElementById('fileContent').textContent = "Please select a text file.";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    // Handle successful read
+    reader.onload = function(e) {
+        document.getElementById('fileContent').textContent = e.target.result;
+    };
+
+    // Handle errors
+    reader.onerror = function() {
+        document.getElementById('fileContent').textContent = "Error reading file.";
+    };
+
+    // Read file as text
+    reader.readAsText(file);
+});
+</script>
+</body>
+</html>
+
+}

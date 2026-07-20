@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.searchBar {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 300px;
+    padding: 8px;
+}
+
+button {
+    padding: 8px 16px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.leftPanel {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    height: 650px;
+    overflow-y: auto;
+}
+
+.rightPanel {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 650px;
+}
+
+.movie {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.movie:hover {
+    background: #493333;
+}
+
+.movie:last-child {
+    border-bottom: none;
+}
+
+img {
+    max-width: 250px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+img.poster {
+    max-width: 30px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    padding-right: 10px;
+}
+
+#details h2 {
+    margin-top: 0;
+}
+
+.movie.selected {
+    background: #56677c;
+    font-weight: bold;
+}

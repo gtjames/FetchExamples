@@ -1,5 +1,5 @@
 //  https://rapidapi.com/api-sports/api/api-nba
-//  https://rapidapi.com/developer/dashboard
+//  https://rapidapi.com/developer/dashboardimport {fetchKeys} from './allKeys.js';
 let theKey = keys.keyRapidAPI;
 let options = {
     "method": "GET",
@@ -12,7 +12,7 @@ buildScreen();
 function buildScreen() {
     let btnBar = document.querySelector("#btnBar");
     let yrTabs = document.querySelector("#yrTabs");
-    for (yr = 2015; yr <= 2024; yr++) {
+    for (let yr = 2015; yr <= 2024; yr++) {
         btnBar.innerHTML += `<button id="G${yr}Btn"  class="tablinks" onClick="getNBAGameStats(event.currentTarget, '${yr}')">${yr}</button>`;
         yrTabs.innerHTML += `
         <div id="G${yr}Tab" class="tabcontent w3-theme-d2">

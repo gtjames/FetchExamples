@@ -14,7 +14,7 @@ const options = {
     method: 'GET',
     headers: {
         'X-RapidAPI-Key': theKey,
-        'X-RapidAPI-Host': 'geniuslyrics-api.p.rapidapi.com'
+        'x-rapidapi-host': 'genius-song-lyrics1.p.rapidapi.com',
     }
 };
 
@@ -26,35 +26,38 @@ const options = {
  *              clicking on the song image will call getSongInfo
  *              the surrounding div has an id of card+songID
  */
-function getSongsByTitle() {
+async function getSongsByTitle() {
     let albumList = document.querySelector('#albumList');
     let song = document.querySelector('#songTitle').value;
     console.log(`getSongsByTitle ${song}`);
 
-    const url = `https://geniuslyrics-api.p.rapidapi.com/search_songs?song=${song}`;
+    const url = `https://genius-song-lyrics1.p.rapidapi.com/search/?q=${song}&per_page=30&page=1`;
+
     fetch(url, options)
     .then(resp => resp.json())          //  wait for the response and convert it to JSON
     .then(songs => {                  //  with the resulting JSON data do something
         let innerHTML = "";
 
         let color = 0;
-        for (let song of songs.hits) {
+        for (let hit of songs.hits) {
+            let song = hit.result;
             color++;
             //  let's build a nice card for each day of the weather data
             //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
             innerHTML +=`
-            <div class="grid-item w3-theme-${(color%2)>0 ? 'l2':'d2'}" id=card${song.songID}>
-                <p><img src='${song.artist.artistImageUrls}' id=${song.artist.artistID} alt="" height="80px"></p>
-                <h4>${song.artist.artistName}</h4>
-                <h5>${song.songTitle}</h5>
-                <p><img src='${song.songImageURL}' id=${song.songID} alt="" height="120px"></p>
+            <div class="grid-item w3-theme-${(color%2)>0 ? 'l2':'d2'}" id=card${song.id}>
+                <p><img src='${song.primary_artist.image_url}' id=${song.primary_artist.id} alt="" height="80px"></p>
+                <h4>${song.primary_artist.name}</h4>
+                <h5>${song.title}</h5>
+                <p><img src='${song.image_url}' id=${song.id} alt="" height="120px"></p>
             </div>`;
         }
         //  and finally take the finished URL and stuff it into the web page
         albumList.innerHTML = innerHTML;
-        for (let song of songs.hits) {
+        for (let hit of songs.hits) {
+            let song = hit.result;
             // document.getElementById(album.artist.artistID).addEventListener('click', )
-            document.getElementById(song.songID).addEventListener('click', getSongInfo)
+            document.getElementById(song.id).addEventListener('click', getSongInfo)
         }
     });
 }
@@ -63,12 +66,12 @@ function getSongsByTitle() {
  *          Search for artist by name
  *          HTML    artist name and description and image. Image has id of artist
  *                  List has names of songs which have the ID of the song
- * 
+ *
 */
 function getArtist() {
     let artist = document.querySelector('#artistName').value;
     console.log(`getArtist ${artist}`);
-    const url = `https://geniuslyrics-api.p.rapidapi.com/search_artist?artist=${artist}`;
+    const url = `https://genius-song-lyrics1.p.rapidapi.com/search/?q=${artist}&per_page=20&page=1`;
 
     fetch(url, options)
     .then(resp => resp.json())          //  wait for the response and convert it to JSON
@@ -76,28 +79,28 @@ function getArtist() {
         let innerHTML = "";
         let color = 0;
         innerHTML += `<div class="grid-item w3-theme-${(color%2)>0 ? 'l2':'d2'}"
-        <p>${artist.artistName}</p>
-        <p>${artist.description}</p>
-        <p><img src='${artist.artistImage}' alt="" height="120px" id=${artist.artistID}></p>
+        <p>${artist.hits[0].result.artist_names}</p>
+        <p>${artist.hits[0].result.full_title}</p>
+        <p><img src='${artist.hits[0].result.header_image_thumbnail_url}' alt="" height="120px" id=${artist.artistID}></p>
         <ul>`
-        for (let song of artist.popular) {
+        for (let song of artist.hits) {
             color++;
             //  let's build a nice card for each day of the weather data
             //  this is a GREAT opportunity to Reactify this code. But for now I will keep it simple
             innerHTML += `
-            <li id=${song.songID}>${song.song}</li>`
+            <li id=${song.result.id}>${song.result.title}</li>`
         }
         innerHTML += `</ul></div>`;
         artistList.innerHTML = innerHTML;
-        for (let song of artist.popular) {
-            document.getElementById(song.songID).addEventListener('click', searchSong)
+        for (let song of artist.hits) {
+            document.getElementById(song.result.id).addEventListener('click', searchSong)
         }
         });
 }
 
 /**
  *  Dead API!!!
- * @param {} evt 
+ * @param {} evt
  */
 function searchSong(evt) {
     const url = `https://geniuslyrics-api.p.rapidapi.com/search_songs?song=${evt.target.id}`;
@@ -105,7 +108,7 @@ function searchSong(evt) {
 
     fetch(url, options)
     .then(resp => resp.json())          //  wait for the response and convert it to JSON
-    .then(albums => {     
+    .then(albums => {
         console.log(albums)
     });             //  with the resulting JSON data do something
 }
@@ -116,9 +119,9 @@ function getSongInfo(evt) {
 
     fetch(url, options)
         .then(resp => resp.json())          //  wait for the response and convert it to JSON
-        .then(info => {     
+        .then(info => {
             let card = document.getElementById('card'+evt.target.id);
-            let innerHTML = `<p id=${info.album.albumID}>${info.songTitle} can be heard on the ${info.artist.artistName}'s 
+            let innerHTML = `<p id=${info.album.albumID}>${info.songTitle} can be heard on the ${info.artist.artistName}'s
             album ${info.album.albumName} ${info.songDescription}
             it can also be found on the following streaming services</p>`;
             innerHTML += `<a href='${info.songMedia['spotify']}'>Spotify</a>
@@ -130,7 +133,7 @@ function getSongInfo(evt) {
     });             //  with the resulting JSON data do something
 }
 /*
-artist: {artistName: "Eagles", artistID: 561, 
+artist: {artistName: "Eagles", artistID: 561,
 artistImageUrls: "https://images.genius.com/5e55ed49f9cdab54b012a4a6f89accf8.1000x1000x1.png"}
 songID: "1060"
 songImageURL: "https://images.genius.com/6c7e025561819a4af1476af223c1a7f8.600x600x1.jpg"
@@ -153,7 +156,7 @@ function getSongsByAlbum(evt) {
 
     fetch(url, options)
         .then(resp => resp.json())          //  wait for the response and convert it to JSON
-        .then(album => {     
+        .then(album => {
             evt.target.innerHTML = '<ul>' + album.tracks.map(s => `<li>${s.songTitle}</li>`).join("\n") + '</ul>';
         });             //  with the resulting JSON data do something
 }

@@ -5,14 +5,17 @@
     document.getElementById('prev').addEventListener('click', prev);
     let term     = document.querySelector('#searchTerm');
     let results  = document.querySelector('#resultList');
-    //  498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5
+
+
     const options = {
 	    method: 'GET',
-	    headers: {
-            'x-rapidapi-key': '498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5',
-            'x-rapidapi-key':   `${theKey}`,
+        headers: {
+            'x-rapidapi-key': theKey,
+            'x-rapidapi-host': 'tripadvisor16.p.rapidapi.com',
+            'Content-Type': 'application/json'
         }
     };
+
     document.getElementById("details").addEventListener("click", closeModal);
     function closeModal() {
         document.getElementById('details').style.display='none';
