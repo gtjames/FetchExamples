@@ -1,33 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Deezer Music Search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deezer Album Search</title>
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
     <link rel="stylesheet" href="styles/deezer.css">
 </head>
+
 <body>
-    <div class="w3-container w3-theme-l1">
-        <div id="menu" class="w3-bar"></div>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<header>
+    <h1>🎵 Deezer Album Search</h1>
+</header>
+
+<div class="searchBar">
+    <input id="artist" type="text" placeholder="Artist..." value="Neil Diamond">
+    <button id="searchBtn"> Search </button>
+</div>
+
+<div class="mainLayout">
+    <!-- LEFT SIDE -->
+    <div id="albumList"class="albumList"></div>
+
+    <!-- RIGHT SIDE -->
+    <div class="detailsPanel">
+        <!-- Album Details -->
+        <div id="albumInfo">
+            <img id="albumImage" src="" alt="Album Cover">
+            <h2 id="albumTitle"></h2>
+            <h3 id="artistName"></h3>
+            <p>Click an album on the left to view its tracks.</p>
+        </div>
+
+        <!-- Track List -->
+        <div id="trackPanel" class="hidden">
+            <button id="backBtn"> ← Back to Album </button>
+            <div id="trackList">
+            </div>
+        </div>
     </div>
+</div>
 
-  <header>
-    <h1>🎵 Deezer Music Search</h1>
-    <p>Search for your favourite tracks powered by the Deezer API</p>
-  </header>
-
-  <div class="search-bar">
-    <input type="text" id="query" placeholder="e.g. Neil Diamond" value="neil diamond" />
-    <button id="searchBtn" onclick="search()">Search</button>
-  </div>
-
-  <div id="status">Enter a search term and click Search.</div>
-  <div id="results"></div>
 <script src="js/allKeys.js"></script>
 <script src="js/deezer.js" type="module"></script>
 <script src="js/menu.js"></script>
-<script>makeMeActive('Deezer')</script>
+<script>
+    makeMeActive("Deezer");
+</script>
+
 </body>
 </html>

@@ -1,122 +1,166 @@
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #121212;
-      color: #fff;
-      min-height: 100vh;
-      padding: 2rem;
-    }
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #121212;
+    color: #fff;
+    min-height: 100vh;
+    padding: 2rem;
+}
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-    header h1 {
-      font-size: 2.5rem;
-      color: #a259ff;
-    }
+header h1 {
+    font-size: 2.5rem;
+    color: #a259ff;
+}
 
-    header p {
-      color: #aaa;
-      margin-top: 0.5rem;
-    }
+header p {
+    color: #aaa;
+    margin-top: 0.5rem;
+}
 
-    .search-bar {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
+.hidden {
+    display: none;
+}
 
-    .search-bar input {
-      width: 360px;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      border: none;
-      background: #1e1e2e;
-      color: #fff;
-      font-size: 1rem;
-      outline: 2px solid #a259ff;
-    }
+/* search bar rules */
+.searchBar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
 
-    .search-bar button {
-      padding: 0.6rem 1.4rem;
-      border: none;
-      border-radius: 8px;
-      background: #a259ff;
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+.searchBar input {
+    width: 360px;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #1e1e2e;
+    color: white;
+    font-size: 1rem;
+    outline: 2px solid #a259ff;
+}
 
-    .search-bar button:hover { background: #7c3aed; }
+.searchBar button {
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 8px;
+    background: #a259ff;
+    color: white;
+    cursor: pointer;
+}
 
-    #status {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 1.5rem;
-      min-height: 1.4rem;
-    }
+.searchBar button:hover {
+    background: #7c3aed;
+}
 
-    #results {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+.mainLayout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+}
 
-    .card {
-      background: #1e1e2e;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
+/* Album list */
+.albumList {
+    height: 650px;
+    overflow-y: auto;
+    background: #1d1d1d;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(162,89,255,0.3);
-    }
+.album {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+}
 
-    .card img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-    }
+.album:hover {
+    background: #2b2b2b;
+}
 
-    .card-body {
-      padding: 0.9rem;
-    }
+.album img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
 
-    .card-body h3 {
-      font-size: 0.95rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: #fff;
-    }
+.albumTitle {
+    color: #8cc8ff;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .card-body p {
-      font-size: 0.8rem;
-      color: #aaa;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-top: 0.25rem;
-    }
+.albumTitle:hover {
+    text-decoration: underline;
+}
 
-    .card-body .duration {
-      font-size: 0.75rem;
-      color: #a259ff;
-      margin-top: 0.4rem;
-    }
+/* Right-side details panel */
+.detailsPanel {
+    background: #1d1d1d;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+}
 
-    audio {
-      width: 100%;
-      margin-top: 0.6rem;
-      accent-color: #a259ff;
-    }
+#albumImage {
+    width: 300px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#albumTitle {
+    margin-bottom: 6px;
+}
+
+#artistName {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+/* Back button */
+#backBtn {
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    background: #a259ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#backBtn:hover {
+    background: #7c3aed;
+}
+
+/* Track list */
+#trackList {
+    height: 550px;
+    overflow-y: auto;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+}
+
+#trackList p {
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+audio {
+    float:right;
+    padding:0px 5px;
+    width:150px;
+    height:20px;
+}
