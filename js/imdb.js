@@ -9,6 +9,23 @@ function closeModal() {
 }
 
 let row = 0;
+// movie.budget:25000000
+// contentRating:"R"
+// description:"After a banker is sentenced to life in Shawshank Prison, he forms an unlikely friendship with a seasoned inmate and clings to hope amid cruelty and corruption."
+// externalLinks:(2) ['https://www.facebook.com/shawshankredemptionfilm/', 'https://www.warnerbros.com/movies/shawshank-redemption']
+// genres:['Drama']
+// grossWorldwide:29424909
+// id:"tt0111161"
+// interests:(5) ['Epic', 'Period Drama', 'Prison Drama', 'Psychological Drama', 'Drama']
+// originalTitle:"The Shawshank Redemption"
+// primaryImage:"https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@.jpg"
+// primaryTitle:"The Shawshank Redemption"
+// releaseDate:"1994-10-14"
+// runtimeMinutes:142
+// startYear:1994
+// thumbnails:(3) [{…}, {…}, {…}]
+// trailer:"https://www.youtube.com/watch?v=xyXX8LXiNJ4"
+// url:"https://www.imdb.com/title/tt0111161/"
 
 const options = {
 	method: 'GET',
@@ -66,7 +83,7 @@ function movieCards(movies) {
 		</div>`;
 
 		cards.innerHTML += movieHTML
-	}); 
+	});
 }
 
 function details(e) {

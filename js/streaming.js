@@ -1,4 +1,4 @@
-const apiKey = "498ed225bamshcd02cf5559e10edp179d21jsn59b140b93ec5";
+const apiKey = keys.keyRapidAPI;
 
 const headers = {
     "x-rapidapi-key": apiKey,
@@ -10,8 +10,7 @@ const resultsDiv = document.getElementById("results");
 const detailsDiv = document.getElementById("details");
 
 document
-    .getElementById("searchButton")
-    .addEventListener("click", searchMovies);
+    .getElementById("searchButton").addEventListener("click", searchMovies);
 
 async function searchMovies() {
 
@@ -30,12 +29,7 @@ async function searchMovies() {
 `https://streaming-availability.p.rapidapi.com/shows/search/title?title=${title}&series_granularity=show&show_type=movie&output_language=en&country=US`;
 
     try {
-
-        const response = await fetch(url,{
-            method:"GET",
-            headers
-        });
-
+        const response = await fetch(url,{ method:"GET", headers });
         const data = await response.json();
 		console.log(data[0]);
         displayResults(data);
@@ -70,9 +64,9 @@ function displayResults(data){
 			logos = new Set();
 			movie.streamingOptions.us.forEach(service => {
 				// create a set of logos for each service, so we don't have duplicates
-				if (!logos.has(service.service.imageSet.lightThemeImage)) {
-					logos.add(service.service.imageSet.lightThemeImage);
-				}
+				// if (!logos.has(service.service.imageSet.lightThemeImage)) {
+                logos.add(service.service.imageSet.lightThemeImage);
+				// }
 			});
 			img = "";
 			logos.forEach(logo => {
@@ -84,42 +78,39 @@ function displayResults(data){
 		};
 		div.addEventListener("click", () => {
 		    document.querySelectorAll(".movie").forEach(m =>
-	    	    m.classList.remove("selected"));
-		    div.classList.add("selected");
+	    	    m.classList.remove("w3-theme-action"));
+		    div.classList.add("w3-theme-action");
 		    getMovie(movie.id);
 		});
-
         resultsDiv.appendChild(div);
-
     });
-
 }
 
 async function getMovie(id){
-
     const url =
 `https://streaming-availability.p.rapidapi.com/shows/${id}?series_granularity=episode&output_language=en`;
 
     detailsDiv.innerHTML = "Loading...";
 
     try{
-
-        const response = await fetch(url,{
-            method:"GET",
-            headers
-        });
-
+        const response = await fetch(url,{ method:"GET", headers });
         const movie = await response.json();
         displayMovie(movie);
-
     }
     catch(error){
         console.error(error);
     }
-
 }
 
 function displayMovie(movie){
+    if (!movie.streamingOptions || !movie.streamingOptions.us) {
+        price = ""
+    } else {
+        //  what if movie.streamingOptions.us[0].price?.formatted is undefined?          Then we will get an error.  So let's check for that first
+        price = movie.streamingOptions.us[0].price ? movie.streamingOptions.us[0].price.formatted : "Free";
+    }
+    cast = movie.cast ? movie.cast.join(", ") : "N/A";
+    genres = movie.genres ? movie.genres.map(g => g.name).join(", ") : "N/A";
     detailsDiv.innerHTML = `
 		<h2>${movie.title}</h2>
 		${movie.imageSet?.verticalPoster?.w360
@@ -127,5 +118,8 @@ function displayMovie(movie){
 	    <p><strong>Year:</strong> ${movie.releaseYear}</p>
         <p><strong>Rating:</strong> ${movie.rating}</p>
         <p><strong>Runtime:</strong> ${movie.runtime} minutes</p>
+        <p><strong>Cast:</strong> ${cast}</p>
+        <p><strong>Genres:</strong> ${genres}</p>
+        <p><strong>Price:</strong> ${price}</p>
         <p>${movie.overview}</p>`;
 }

@@ -12,12 +12,6 @@ const options = {
   }
 };
 
-function formatDuration(seconds) {
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}:${s.toString().padStart(2, '0')}`;
-}
-
 async function search() {
 
     const artist = document.getElementById("artist").value.trim();
@@ -76,6 +70,15 @@ async function search() {
                 document.getElementById("albumImage").src = song.album.cover_xl || song.album.cover_medium;
                 document.getElementById("albumTitle").textContent = song.album.title;
                 document.getElementById("artistName").textContent = song.artist.name;
+                const albumInfo  = document.getElementById("albumInfo");
+
+                albumInfo.addEventListener("click", () => {
+                    // Hide the album information
+                    albumInfo.classList.add("hidden");
+
+                    // Show the track list
+                    trackPanel.classList.remove("hidden");
+                });
                 albumDetails(song.album.id);
             });
 

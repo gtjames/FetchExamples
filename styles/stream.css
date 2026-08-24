@@ -47,7 +47,7 @@ button {
 }
 
 .movie:hover {
-    background: #493333;
+    background: #777878;
 }
 
 .movie:last-child {
@@ -60,7 +60,7 @@ img {
     border-radius: 4px;
 }
 img.poster {
-    max-width: 30px;
+    max-width: 50px;
     margin-bottom: 5px;
     border-radius: 4px;
     padding-right: 10px;
@@ -68,9 +68,4 @@ img.poster {
 
 #details h2 {
     margin-top: 0;
-}
-
-.movie.selected {
-    background: #56677c;
-    font-weight: bold;
 }

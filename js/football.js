@@ -24,11 +24,11 @@ async function toggelDropDown() {
         dropdownList.style.display = "block";
     }
 }
-  
+
 getCountries();
 async function getCountries() {
         const url = 'https://api-football-v1.p.rapidapi.com/v3/countries';
-    
+
         try {
             const response = await fetch(url, options);
             const result = await response.json();
