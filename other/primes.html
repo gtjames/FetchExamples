@@ -43,10 +43,20 @@
      *          (actually 1,000,006,000,009)
      *
      *-------------------------------------------------------------------------------------------------*/
-	let max = 100000007;                       //  we can go as high as 71,751,894 squared.
+	let max = 100000007;
+
+
+	const start = performance.now();
+	//  we can go as high as 71,751,894 squared.
 	let primes = getPrimes(max);
+	const end = performance.now();
+
+	console.log(`Primes from 2 through ${max}: ${primes.length}`);
+	console.log(`Calculation time: ${(end - start).toFixed(3)} ms`);
+
 	primefactors.innerHTML = `&Pi;(${nfObject.format(max)}) is ${nfObject.format(primes.length)}
-                        <br>the Largest is ${nfObject.format(primes[primes.length-1])}`;
+                        <br>the Largest is ${nfObject.format(primes[primes.length-1])}
+						<br>Calculation time: ${(end - start).toFixed(3)} ms`;
 	/*-------------------------------------------------------------------------------------------------
      *  Convenience method to test numbers
      -------------------------------------------------------------------------------------------------*/

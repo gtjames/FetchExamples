@@ -6,7 +6,7 @@
 	let card        = document.getElementById('card');
 	let courseList  = document.getElementById('course');
 	let errMessage  = document.getElementById('errMessage');
-    
+
     courseList                                  .addEventListener('change', setCourse);
     document.getElementById('groupsInCourse')   .addEventListener('click',  listAllGroupsForCourse);
 	document.getElementById('search')           .addEventListener('click',  listModules);
@@ -25,7 +25,7 @@
     document.getElementById('untilDate').value = untilDate;
 
     let row = 0;
-    let course = "295338";
+    let course = "51090";
     let edu    = "https://byui.instructure.com/api/v1";
     let headers = { "Authorization" : `Bearer ${theKey}`, };
 
@@ -47,7 +47,7 @@ function setCourse(e) {
 function closeModal() {
     document.getElementById('id01').style.display='none';
     untilDate = document.getElementById('untilDate').value;
-    
+
     let list = asgnQuizzes.querySelectorAll("option");
     list = Array.from(list);
     list = list.sort((a,b) => a.text.localeCompare(b.text));
@@ -71,7 +71,7 @@ curl -H 'Authorization: Bearer 10706~1r7OxhF6t3ksuV4w8HVWN6e4LYwcYuXaqLl3pC0cH9T
         */
     asgnQuizzes.innerHTML = '';
     studentSel.innerHTML = '';
-    
+
     modules = await getFetch(`${edu}/courses/${course}/modules`);
     card.innerHTML = '';
     modules.forEach(mod => {
@@ -120,7 +120,7 @@ async function showDates(e) {
         dates.innerHTML = '';
         return;
     }
-    if (li === undefined) return;    
+    if (li === undefined) return;
     let url = `${li.dataset.url}`;
 
     console.log(url);
@@ -195,17 +195,17 @@ async function updateUntilDate(id, url) {
 async function listAllGroupsForCourse() {
     try {
         const groups = await getGroupCategories();
-        
+
         card.innerHTML = "";
         for (const grp of groups) {
-            card.innerHTML += `<h2>Group: ${grp.name} ${grp.id}`;            
+            card.innerHTML += `<h2>Group: ${grp.name} ${grp.id}`;
             const teams = await getGroupsInCategory(grp.id);
-            
+
             for (const team of teams) {
                 if ( team.members_count == 0)  continue;
                 card.innerHTML += `<h4>Team: ${team.name} ${team.id} ${team.members_count}</h4>`;
                 const members = await getGroupMembers(team.id);
-            
+
                 for (const mbr of members) {
                     const s = await getStudent(mbr.id);
                     card.innerHTML += `<br> - ${s.sortable_name} ${s.primary_email} ${s.time_zone}`;
@@ -222,7 +222,7 @@ async function getIncomplete() {
 
     const students     = await getStudents();
     const assignments  = await getAssignments();
-    const studentAssignments = 
+    const studentAssignments =
         Object.fromEntries( students.map(student => [ student.id, { name: student.name, unsubmitted: [] } ]) );
 
     for (let assignment of assignments) {
@@ -254,7 +254,7 @@ async function getSubmissionByStatus(course, assignmentId, state) {
     const submission = await getFetch(`${edu}/courses/${course}/assignments/${assignmentId}/submissions?per_page=100`, headers=headers);
     submissions = submission.filter(s => s.workflow_state == state);
     return submissions;
-}  
+}
 
 function displayIncomplete(data, container) {
   container.innerHTML = "";
@@ -310,7 +310,7 @@ async function getStudent(studentId) {
 async function getStudents() {
     return await getFetch(`${edu}/courses/${course}/users?enrollment_type[]=student&per_page=100`);
 }
-  
+
 async function getAssignments() {
     return await getFetch(`${edu}/courses/${course}/assignments?per_page=100`);
 }

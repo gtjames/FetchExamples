@@ -1,5 +1,5 @@
-const API_HOST = 'deezerdevs-deezer.p.rapidapi.com';
-let theKey = keys.keyRapidAPI;
+const API_HOST = '';
+let theKey = keys.keyRapidAPI2;
 let searchBtn = document.getElementById('searchBtn');
 searchBtn.addEventListener('click', search);
 
@@ -20,7 +20,8 @@ async function search() {
         return;
     }
 
-    const url = `https://${API_HOST}/search?q=${encodeURIComponent(artist)}`;
+    const url = `https://deezerdevs-deezer.p.rapidapi.com/search?q=${encodeURIComponent(artist)}`;
+    console.log(url);
 
     const albumList = document.getElementById("albumList");
     albumList.innerHTML = "<p>Searching...</p>";
