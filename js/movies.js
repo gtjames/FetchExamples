@@ -17,7 +17,7 @@ let tableBody = document.getElementById('moviesList');
 function movieSearch() {
 	let searchText = document.getElementById('searchTerm').value;
 
-	const url = `https://imdb236.p.rapidapi.com/imdb/search?originalTitle=${searchText}&type=movie&rows=25&sortField=id&sortOrder=ASC`;
+	const url = `https://imdb236.p.rapidapi.com/api/imdb/search?originalTitle=${searchText}&type=movie&rows=25&sortField=id&sortOrder=ASC`;
 
 	fetch(url, options)
 	.then(response => response.json())

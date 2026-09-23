@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blank Page</title>
+</head>
+<body>
+    <input type="password" id="key" placeholder="Enter your API key" />
+    <input type="text" id="search" placeholder="Search for Movie" />
+    <button onclick="showMovies()">Show Movies</button>
+    <br>
+    <data id="movieData"></data>
+    <script>
+    let movieList = document.getElementById("movieData");
+    function showMovies() {
+        let apiKey = document.getElementById("key").value;
+        let search = document.getElementById("search").value;
+        search = search ? search : "batman";  // default search term
+        let url = `http://www.omdbapi.com/?apikey=${apiKey}&s=${search}`;
+        console.log(url);
+        movieList.innerHTML = "";     // clear the screen
+
+        fetch(url)                    //  make the request
+        .then(response => response.json())
+        .then(movies => {
+            for (let m of movies.Search) {
+                  movieList.innerHTML += `<img src="${m.Poster}" style="width:40px;height:60px;" alt="${m.Title}"> ${m.Title} (${m.Year})<BR>`;
+            }
+            //  now with just a little effort use the same loop to create a table of the same data
+        } );
+    }
+    </script>
+</body>
+</html>

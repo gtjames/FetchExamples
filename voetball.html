@@ -114,11 +114,7 @@ async function playersInTeam(id){
         const response = await fetch(url, options);
         const result = await response.json();
         card.innerHTML = "";
-        console.log(result.response.list);
-        result.response.list['coach']
-        for (let position of result.response.list) {
-            card.innerHTML += `<h2>${position.title}</h2>`;
-            console.log(position.members);
+        for (let position of result.response.list.squad) {
             switch (position.title) {
             case "coach"    :
                 for (let mbr of position.members)

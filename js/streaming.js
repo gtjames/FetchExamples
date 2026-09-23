@@ -14,10 +14,7 @@ document
 
 async function searchMovies() {
 
-    const title = document
-        .getElementById("movieTitle")
-        .value
-        .trim();
+    const title = document.getElementById("movieTitle").value.trim();
 
     if (title === "")
         return;
@@ -88,7 +85,7 @@ function displayResults(data){
 
 async function getMovie(id){
     const url =
-`https://streaming-availability.p.rapidapi.com/shows/${id}?series_granularity=episode&output_language=en`;
+`https://streaming-availability.p.rapidapi.com/shows/${id}?series_granularity=episode`;
 
     detailsDiv.innerHTML = "Loading...";
 

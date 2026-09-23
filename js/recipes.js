@@ -1,6 +1,6 @@
     let theKey = keys.keyRapidAPI;
     open = false;
-    document.getElementById('search').addEventListener('click', search);
+    document.getElementById('search').addEventListener('click', () => search(0));
     document.getElementById('next').addEventListener('click', next);
     document.getElementById('prev').addEventListener('click', prev);
     let term     = document.querySelector('#searchTerm');
@@ -9,7 +9,7 @@
     const options = {
 	method: 'GET',
 	headers: {
-		'x-rapidapi-key':   `${theKey}`,
+		'x-rapidapi-key':   theKey,
         'x-rapidapi-host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
         }
     };
@@ -26,7 +26,6 @@ function prev() { search(--page); }
 
 function search(offset=0) {
     offset = offset < 0 ? 0 : offset;
-    //      &includeIngredients=cheese%2Cnuts&excludeIngredients=eggs
     ingredient = term.value;
     const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=${ingredient}&instructionsRequired=true&fillIngredients=false&addRecipeInformation=false&addRecipeInstructions=false&addRecipeNutrition=false&offset=${offset*20}&number=20`;
     fetch(url, options)

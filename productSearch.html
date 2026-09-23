@@ -25,8 +25,7 @@
     <table class='w3-table-all sortable w3-theme'>
         <thead>
         <tr class="w3-theme-l4 w3-bordered">
-            <th>Product</th><th>Description</th>
-            <th>Product Links</th>
+            <th>Product</th><th>Description</th><th>Price</th><th>Product Links</th>
         </tr>
         </thead>
         <tbody id='bookList'>   </tbody>
@@ -39,15 +38,16 @@
     let search = document.getElementById('search');
     search.addEventListener('click', bookSearch);
 
-function bookSearch() {
-    let searchText = document.getElementById('bookSearch').value;
     const options = {
-    	method: 'GET',
-	    headers: {
-		    'X-RapidAPI-Key': theKey,
-		    'X-RapidAPI-Host': 'real-time-product-search.p.rapidapi.com'
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': theKey,
+            'X-RapidAPI-Host': 'real-time-product-search.p.rapidapi.com'
         }
     };
+
+function bookSearch() {
+    let searchText = document.getElementById('bookSearch').value;
 
     fetch(`https://real-time-product-search.p.rapidapi.com/search?q=${searchText}&country=us&language=en`, options)
 	    .then(response => response.json())
@@ -55,14 +55,12 @@ function bookSearch() {
 	    .catch(err => console.error(err));
 }
 /*
-offer.price:
-product_description: "long Description"
-product_offers_page_url:
-product_page_url:
-product_photos:
-product_reviews_page_url:
-product_specs_page_url:
-product_title:
+: "$1.99"
+product_id: "catalogid:15002301341915465173,productid:3800516786308244442,gpcid:3027652340541888778,headlineOfferDocid:8071053847520604602,rds:PC_3027652…"
+: "https://www.google.com/search?ibp=oshop&q=mars&prds=catalogid:15002301341915465173,productid:3800516786308244442,gpcid:3027652340541888778,h…"
+: ["https://encrypted-tbn2.gstatic.com/shopping?q=tbn:…kMQkh9vvrdtZnC8EWgM92kjDw8YTPthBrtJChSCQtLwafPh8v"] (1)
+: "Mars Chocolate Bar"
+store_name: "Taste Of Britain"
 */
     function renderHTMLtoBrowser(products) {
         //  with the resulting JSON data do something
@@ -73,16 +71,12 @@ product_title:
         //  an array representing a TR element
         //  the final join will take these strings in the array and create one BIG string
         //  which we will put into the tableBody
-        let arHtml = products.data.products.map((p,idx) => 
+        let arHtml = products.data.products.map((p,idx) =>
             `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
-                <td><a href=${p.product.product_page_url}><img src=${p.product.product_photos[0]} height='120px' width='80px' alt=""></a>${p.product.offer.price}</td>
-                <td>${p.product.product_description}</td>
-                <td>
-                    <a href=${p.product.product_specs_page_url}>Specs</a>
-                    <a href=${p.product.product_reviews_page_url}>Reviews</a><br>
-                    <a href=${p.product.product_offers_page_url}>Offers</a>
-                    <a href=${p.product.product_page_url}>Product</a>                    
-                </td>
+                <td><img src=${p.product_photos[0]} height='120px' width='80px' alt=""></td>
+                <td>${p.product_title}</td>
+                <td>${p.price}</td>
+                <td><a href=${p.product_page_url}>Product</a></td>
             </tr>`
         );
 

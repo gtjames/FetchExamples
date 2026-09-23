@@ -19,13 +19,14 @@
     <label for="wordSearch">Search for Meaning</label>
     <input type="text" id="wordSearch" value="mars">
     <button id="search">Search</button>
+    <button id="similar" >Similar</button>
     <p>Columns are sortable</p>
 </div>
 <div class="w3-container w3-theme-l3 w3-padding-16">
     <table class='w3-table-all sortable w3-theme'>
         <thead>
         <tr class="w3-theme-l4 w3-bordered">
-            <th>Definition</th>         <th>Synonyms</th>
+            <th>Definition</th>  <th>Instance Of</th> <th>Derivation</th> <th>Synonyms</th> <th>Similar To</th>
         </tr>
         </thead>
         <tbody id='wordList'>   </tbody>
@@ -35,38 +36,59 @@
 <script src="js/allKeys.js"></script>
 <script>
     let theKey = keys.keyRapidAPI;
+    let searchText = '';
     let search = document.getElementById('search');
+    let tableBody = document.getElementById('wordList');
+    let similar = document.getElementById('similar');
+
     search.addEventListener('click', wordSearch);
+    similar.addEventListener('click', () => {
+        fetch(`https://wordsapiv1.p.rapidapi.com/words/${searchText}/similarTo`, options)
+            .then(response => response.json())
+            .then(response => similarTo(response, searchText))
+            .catch(err => console.error(err));
+    });
+
+    const options = {
+        method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': theKey,
+                'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+            }
+    };
 
     function wordSearch() {
-        let searchText = document.getElementById('wordSearch').value;
-        const options = {
-        	method: 'GET',
-	            headers: {
-		            'X-RapidAPI-Key': theKey,
-		            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-	            }
-        };
+        searchText = document.getElementById('wordSearch').value;
 
         fetch(`https://wordsapiv1.p.rapidapi.com/words/${searchText}`, options)
 	        .then(response => response.json())
-	        .then(response => showWords(response))
+	        .then(response => showWords(response, searchText))
 	        .catch(err => console.error(err));
     }
-    function showWords(words) {
-        let tableBody = document.getElementById('wordList');
+    function showWords(words, searchText) {
         let row = '';
         words.results.forEach((word,idx) => {
             if (word.synonyms === undefined)    word.synonyms = [];
-            let synonyms = '<ul>';
-            word.synonyms.forEach(s => synonyms += `<li>${s}</li>`);
-            synonyms += '</ul>';
+            let instanceOf = '';
+            let synonyms     = '';
+            let derivation = '';
+            word.instanceOf?.forEach(s => instanceOf += `<li>${s}</li>`);
+            word.derivation?.forEach(s => derivation += `<li>${s}</li>`);
+            word.synonyms?.forEach(s => synonyms += `<li>${s}</li>`);
             row += `<tr class="w3-theme-${idx%2>0?'l2':'l3'}">
                         <td>${word.definition}</td>
-                        <td>${synonyms}</td>
+                        <td><ul>${instanceOf}</ul></td>
+                        <td><ul>${derivation}</ul></td>
+                        <td><ul>${synonyms}</ul></td>
+                        <td></td>
                     </tr>`
-                });
+        });
         tableBody.innerHTML = row;
+    }
+
+    function similarTo(words, searchText) {
+        let list = words.similarTo?.map(s => `<li>${s}</li>`).join('');
+        tableBody.innerHTML = '<tr class="w3-theme-l3"><td colspan="5"><ul>' + list + '</ul></td></tr>';
     }
     function setKey() { theKey = getKey(); }
 

@@ -1,6 +1,6 @@
     let theKey = keys.keyRapidAPI;
     open = false;
-    document.getElementById('search').addEventListener('click', search);
+    document.getElementById('search').addEventListener('click', () => search(0));
     document.getElementById('next').addEventListener('click', next);
     document.getElementById('prev').addEventListener('click', prev);
     let term     = document.querySelector('#searchTerm');
@@ -31,11 +31,11 @@ function search(offset=0) {
     offset = offset < 0 ? 0 : offset;
     restaurant = term.value;
     let url = `https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchLocation?query=${restaurant}`;
-    console.log(url);
+
     fetch(url, options)
     .then(resp => resp.json())          //  wait for the response and convert it to JSON
     .then(loc => {
-        url = `https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchRestaurants?locationId=${loc.data[0].propertyId}`;
+        url = `https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchRestaurants?locationId=304554`;
         fetch(url, options)
         .then(resp => resp.json())          //  wait for the response and convert it to JSON
         .then(restaurants => {

@@ -19,7 +19,7 @@ function show(word) {
     for (let w of word) {
         let row = `<tr class="w3-theme-${color%2>0?'l2':'l3'}">`;
         color++;
-    
+
         try {
             row += `<td>${w.date}<br>
             ${(w.fl === undefined) ? '' : w.fl}<br>
@@ -51,12 +51,12 @@ function show(word) {
                 }
             }
             row += td+'</td>';
-            
+
             td ='<td>';
             for(let sd of w.shortdef)
                 td += `${sd}<br>`
             row += td+'</td>';
-            
+
             td ='<td>';
             if (w.def !== undefined) {
                 for(let d of w.def) {

@@ -34,40 +34,43 @@
 </body>
 <script src="js/allKeys.js"></script>
 <script>
+    let theKey = keys.keyRapidAPI;
     let search = document.getElementById('search');
     search.addEventListener('click', shoppingSearch);
+
+    const options = {
+        method: 'GET',      //  this BTW is optional since the default is to do a GET
+        headers: {
+            'x-rapidapi-key': theKey,
+    		'x-rapidapi-host': 'axesso-axesso-amazon-data-service-v1.p.rapidapi.com',
+	    	'Content-Type': 'application/json'
+        }
+    };
 
     function shoppingSearch() {
         let searchText = document.getElementById('itemSearch').value;
 
-        const options = {
-            method: 'GET',      //  this BTW is optional since the default is to do a GET
-            headers: {
-                'X-RapidAPI-Key': key.keyRapidAPI,
-                'X-RapidAPI-Host': 'amazon-price1.p.rapidapi.com'
-            }
-        };
-
-        fetch(`https://amazon-price1.p.rapidapi.com/search?keywords=${searchText}&marketplace=US`, options)
+        fetch(`https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-search-by-keyword-asin?domainCode=com&keyword=${searchText}&page=1&excludeSponsored=false&sortBy=relevanceblender&withCache=true`, options)
             .then(response => response.json())
             .then(products => showProducts(products))
             .catch(err => console.error(err));
     }
+
     function showProducts(products) {
         let tableBody = document.getElementById('list');
         //  the map function will take out attributes and merge into
         //  an array representing a TR element
         //  the final join will take these strings in the array and create one BIG string
         //  which we will put into the tableBody
-        tableBody.innerHTML = products.map((b,idx) => buildRow(b, idx) ).join("\n");
+        tableBody.innerHTML = products.searchProductDetails.map((b,idx) => buildRow(b, idx) ).join("\n");
 
         //  Alternate possibilities that do exactly the same thing
         //  We could also do this with a forEach
         //  the += will append each new line of text to the tbody on the page
-        // products.forEach((b,idx) => tableBody.innerHTML += buildRow(b, idx));
+        // products.searchProductDetails.forEach((b,idx) => tableBody.innerHTML += buildRow(b, idx));
 
         // We could also do this with a forEach and a code block
-        // products.forEach((b,idx) => {
+        // products.searchProductDetails.forEach((b,idx) => {
         //     let tr = buildRow(b, idx);
         //     tableBody.innerHTML += tr;
         // });
@@ -80,9 +83,9 @@
     //      a convenience to put the common work into a function
     function buildRow (data, index) {
         return `<tr class="w3-theme-${index%2>0?'l2':'l3'}">
-                    <td><a href='${data.detailPageURL}'><img src='${data.imageUrl}' alt='' height='120px'/></a></td>
+                    <td><a href='${data.detailPageURL}'><img src='${data.imgUrl}' alt='' height='120px'/></a></td>
+                    <td>${data.productDescription}</td>
                     <td>${data.price}</td>
-                    <td>${data.title}</td>
                 </tr>`;
     }
     function setKey() { theKey = getKey(); }

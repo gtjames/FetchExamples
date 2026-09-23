@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>My First App</title>
+</head>
+<body>
+    <input type="password" id="key" placeholder="Enter your API key" />
+    <input type="text" id="search" placeholder="Search for Movie" />
+	<button id="searchBtn">Show Movies</button>
+	<button id="nextBtn">Next</button>
+	<button id="prevBtn">Prev</button>
+    <br>
+    <data id="movieData"></data>
+	<script>
+        let totalResults = currPage = 1;
+        let movieList    = document.getElementById("movieData");
+        let searchButton = document.getElementById("searchBtn");
+        let nextButton   = document.getElementById("nextBtn");
+        let prevButton   = document.getElementById("prevBtn");
+        searchButton.addEventListener("click", () => showMovies(1));
+        nextButton.addEventListener("click", () => showMovies(++currPage));
+        prevButton.addEventListener("click", () => showMovies(--currPage));
+
+    function showMovies(page = 1) {
+        if (page > Math.ceil(totalResults / 10)) {
+            page = 1;  // prevent going to negative pages
+        }
+        nextButton.innerText = `Next Page: ${page+1}`;  // clear the screen
+        prevButton.innerText = `Prev Page: ${page-1}`;  // clear the screen
+        let apiKey = document.getElementById("key").value;
+        let search = document.getElementById("search").value;
+        search = search ? search : "batman";  // default search term
+        let url = `http://www.omdbapi.com/?apikey=${apiKey}&s=${search}&page=${page}`;
+        console.log(url);
+        movieList.innerHTML = "";     // clear the screen
+        fetch(url)                                            //  make the request
+        .then(response => response.json())
+        .then(movies => {
+            totalResults = movies.totalResults;
+        //     for (let m of movies.Search) {
+        //           movieList.innerHTML += `${m.Title} (${m.Year}) <img src="${m.Poster}" style="width:40px;height:60px;" alt="${m.Title}"><BR>`;
+        //    }
+            text = "<table border='1'><tr><th>Title</th><th>Year</th><th>Poster</th></tr>";
+            for (let m of movies.Search) {
+                text += `<tr id="${m.imdbID}"><td>${m.Title}</td><td>${m.Year}</td><td><img src="${m.Poster}" style="width:90px;height:90px;" alt="${m.Title}"></td></tr>`;
+            }
+            movieList.innerHTML += text + "</table>";
+            for (let m of movies.Search) {
+                let row = document.getElementById(m.imdbID);
+                row.addEventListener("click", () => {
+                    let url = `http://www.omdbapi.com/?apikey=${apiKey}&i=${m.imdbID}`;
+                    fetch(url)
+                    .then(response => response.json())
+                    .then(movie => {
+// Genre: "Action, Crime, Drama"
+// Poster: "https://m.media-amazon.com/images/62_.jpg"
+// Rated: "PG-13"
+// Released: "04 Mar 2022"
+// Runtime: "176 min"
+                        alert(`Title: ${movie.Title}\nYear: ${movie.Year}\nDirector: ${movie.Director}\nActors: ${movie.Actors}\nPlot: ${movie.Plot}`);
+                    });
+                });
+            }
+        });
+}
+	</script>
+</body>
+</html>
