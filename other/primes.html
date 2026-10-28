@@ -49,6 +49,14 @@
 	const start = performance.now();
 	//  we can go as high as 71,751,894 squared.
 	let primes = getPrimes(max);
+	let largestGap = p1 = p2 = 0;
+	for (let i = 1; i < primes.length; i++) {
+		if (primes[i] - primes[i - 1] > largestGap) {
+			p1 = primes[i - 1];
+			p2 = primes[i];
+			largestGap = p2 - p1;
+		}
+	}
 	const end = performance.now();
 
 	console.log(`Primes from 2 through ${max}: ${primes.length}`);
@@ -56,6 +64,8 @@
 
 	primefactors.innerHTML = `&Pi;(${nfObject.format(max)}) is ${nfObject.format(primes.length)}
                         <br>the Largest is ${nfObject.format(primes[primes.length-1])}
+						<br>The Largest Gap is ${nfObject.format(largestGap)}
+						<br>between ${nfObject.format(p1)} and ${nfObject.format(p2)}
 						<br>Calculation time: ${(end - start).toFixed(3)} ms`;
 	/*-------------------------------------------------------------------------------------------------
      *  Convenience method to test numbers
