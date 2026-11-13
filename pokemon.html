@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deezer Album Search</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
+    <link rel="stylesheet" href="styles/deezer.css">
+</head>
+
+<body>
+
+<div class="w3-container w3-theme-l1">
+    <div id="menu" class="w3-bar"></div>
+</div>
+
+<header>
+    <h1>🎵 Pokemon Search</h1>
+</header>
+
+<div class="searchBar">
+    <input id="artist" type="text" placeholder="Artist..." value="Ivysaur">
+    <button id="searchBtn"> Search </button>
+</div>
+
+<div id="pagination">
+    <p>Page: <span id="page-number">1</span></p>
+    <button id="prevButton">Previous</button>
+    <button id="nextButton">Next</button>
+    <p id="info"></p>
+</div>
+
+<div class="mainLayout">
+    <!-- LEFT SIDE -->
+    <div id="albumList"class="albumList"></div>
+
+    <!-- RIGHT SIDE -->
+    <div class="detailsPanel">
+        <!-- Album Details -->
+         <div id="albumInfo">
+            <button id="frontBtn"> ← Front to Album </button>
+            <p>Click an Character on the left to view its tracks.</p>
+        </div>
+
+        <!-- Track List -->
+        <div id="trackPanel" class="hidden">
+            <button id="backBtn"> ← Back to Album </button>
+            <div id="pokemonDescription">   </div>
+            <div id="trackList"> </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/poke.js" type="module"></script>
+<script src="js/menu.js"></script>
+<script>
+    makeMeActive("Pokemon");
+</script>
+
+</body>
+</html>

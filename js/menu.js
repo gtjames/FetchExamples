@@ -22,6 +22,7 @@ let menuOptions = [
     {text: 'NASA News',     link: 'nasaNews.html',},
     {text: 'National Parks',link: 'nationalParks.html',},
     {text: 'News',          link: 'news.html',},
+    {text: 'Pokemon',       link: 'pokemon.html',},
     {text: 'Products',      link: 'productSearch.html',},
     {text: 'Recipes',       link: 'recipes.html',},
     {text: 'Restaurants',   link: 'restaurants.html',},

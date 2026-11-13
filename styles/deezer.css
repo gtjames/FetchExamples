@@ -131,7 +131,7 @@ header p {
 }
 
 /* Back button */
-#backBtn {
+#backBtn, #frontBtn {
     margin-bottom: 15px;
     padding: 8px 16px;
     background: #a259ff;
